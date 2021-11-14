@@ -4,32 +4,7 @@ Vue.component('register', {
 	},
 template: `	
 			<div>
-			<header class="container-fluid">
-			<div class="row">
-				<div class="container">
-					<div class="row">
-                    <a href="#/" class="logo"><h1 class="col-sm-4">FishyFinds</h1></a>
-						<nav class="col-sm-8">
-							<a href="#/signIn">Sign in</a>
-							<a href="#/register">Register</a>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</header>
-
-		<div class="container-fluid main-image hidden-xs" >
-			<div class="row">
-				<div class="container"> 
-					<div class="row">
-						<div class="col-xs-12"> 
-							<p class="title"> FishyFinds </p>
-							<p class="slogan"> Plan your next trip with confidence</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+            <nav-bar></nav-bar>
 
         <div class="containter">
             <div class="row">

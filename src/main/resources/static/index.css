@@ -1014,9 +1014,24 @@ header nav a:hover{
 
 .input-text:focus{
 	border: none;
-	border-bottom: 2px solid #3f42db;
+	border-bottom: 2px solid  rgb(63, 161, 106);;
 }
 
 .input-radio{
 	font-size: 20px;
 }
+
+#radio{
+	border:2px solid white;
+	box-shadow:0 0 0 1px #225779;
+	appearance:none;
+	border-radius:50%;
+	width:12px;
+	height:12px;
+	background-color:#fff;
+	transition:all ease-in 0.2s;
+  
+  }
+  #radio:checked{
+	background-color:#225779;
+  }

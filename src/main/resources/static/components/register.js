@@ -61,9 +61,9 @@ template: `
                         </tr>
                         <tr>
                             <td>
-                                <input type="radio" class="input-radio" name="gender" label="Female"/> <label style="font-size:18px;">Female </label>
-                                <input type="radio" class="input-radio" style="margin-left:7%" name="gender" label="Male"/> <label style="font-size:18px;">Male </label>
-                                <input type="radio" class="input-radio" style="margin-left:7%" name="gender" label="Other"/> <label style="font-size:18px;">Other </label>
+                                <input type="radio" id="radio" class="input-radio" name="gender" label="Female"/> <label style="font-size:18px;">Female </label>
+                                <input type="radio" id="radio" class="input-radio" style="margin-left:7%" name="gender" label="Male"/> <label style="font-size:18px;">Male </label>
+                                <input type="radio" id="radio" class="input-radio" style="margin-left:7%" name="gender" label="Other"/> <label style="font-size:18px;">Other </label>
                             </td>
                         </tr>
                         <br>

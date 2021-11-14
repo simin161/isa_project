@@ -36,7 +36,7 @@ template: `
                 <form class="col-md-2 reg-form">    
                     <table style="margin-top: 10%;">
                         <tr>
-                            <td style="font-size:20px;">Username:</td>
+                            <td style="font-size:20px;">E-mail:</td>
                         </tr>
                         <tr>
                             <td><input type="text" class="input-text" /></td>

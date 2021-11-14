@@ -1016,3 +1016,7 @@ header nav a:hover{
 	border: none;
 	border-bottom: 2px solid #3f42db;
 }
+
+.input-radio{
+	font-size: 20px;
+}

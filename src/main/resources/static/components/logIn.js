@@ -11,7 +11,7 @@ template: `
                     <a href="#/" class="logo"><h1 class="col-sm-4">FishyFinds</h1></a>
 						<nav class="col-sm-8">
 							<a href="#/signIn">Sign in</a>
-							<a href="">Register</a>
+							<a href="#/register">Register</a>
 						</nav>
 					</div>
 				</div>

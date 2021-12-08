@@ -1035,3 +1035,21 @@ header nav a:hover{
   #radio:checked{
 	background-color:#225779;
   }
+
+  .lists{
+	margin: auto;
+	margin-bottom: 2rem;
+	border-radius: 10px;
+	width: 35%;
+	transition: box-shadow 0.5s ease, background-color 0.3s ease;
+	background-color: #f6f6f6;
+	box-shadow: 5px 10px 20px rgba(0,0,0,0.3);
+	text-align:center;
+}
+
+.lists:hover{
+	box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.3);
+	background-color: #bcddef;
+	transition: box-shadow 0.5s ease, background-color 0.3s ease;
+	cursor: pointer;
+}

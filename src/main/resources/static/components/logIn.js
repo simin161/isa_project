@@ -4,7 +4,6 @@ Vue.component('sign-in', {
 	},
 template: `	
 			<div>
-			<nav-bar></nav-bar>
 
         <div class="containter">
             <div class="row">

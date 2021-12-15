@@ -1,36 +1,28 @@
 package com.fishyfinds.isa.Model.beans;
 
 import com.fishyfinds.isa.Model.enums.OfferType;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "Price")
 public class Price {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Column(name = "offerId")
 	private int offerId;
+
+	@Column(name = "offerType")
 	private OfferType offerType;
+
+	@Column(name = "cost")
 	private double cost;
-	public int getId() {
-		return id;
-	}
-	public int getOfferId() {
-		return offerId;
-	}
-	public OfferType getOfferType() {
-		return offerType;
-	}
-	public double getCost() {
-		return cost;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setOfferId(int offerId) {
-		this.offerId = offerId;
-	}
-	public void setOfferType(OfferType offerType) {
-		this.offerType = offerType;
-	}
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-	
-	
+
 }

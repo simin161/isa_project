@@ -1,41 +1,30 @@
 package com.fishyfinds.isa.Model.beans;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "LoyaltyProgram")
 public class LoyaltyProgram {
 
-	private int id;
-	private String categoryName;
-	private int requiredPoints;
-	private double categoryDiscount;
-	private double earningRate;
-	public int getId() {
-		return id;
-	}
-	public String getCategoryName() {
-		return categoryName;
-	}
-	public int getRequiredPoints() {
-		return requiredPoints;
-	}
-	public double getCategoryDiscount() {
-		return categoryDiscount;
-	}
-	public double getEarningRate() {
-		return earningRate;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-	public void setRequiredPoints(int requiredPoints) {
-		this.requiredPoints = requiredPoints;
-	}
-	public void setCategoryDiscount(double categoryDiscount) {
-		this.categoryDiscount = categoryDiscount;
-	}
-	public void setEarningRate(double earningRate) {
-		this.earningRate = earningRate;
-	}
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "categoryName")
+    private String categoryName;
+
+    @Column(name = "requiredPoints")
+    private int requiredPoints;
+
+    @Column(name = "categoryDiscount")
+    private double categoryDiscount;
+
+    @Column(name = "earningRate")
+    private double earningRate;
+
 }

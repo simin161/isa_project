@@ -1,4 +1,4 @@
-package com.fishyfinds.isa.Model.beans;
+package com.fishyfinds.isa.Model.beans.offers;
 
 import lombok.Getter;
 import lombok.Setter;

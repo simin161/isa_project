@@ -1,43 +1,32 @@
 package com.fishyfinds.isa.Model.beans;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Getter
+@Setter
+@Table(name = "Term")
 public class Term {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Column(name = "start")
 	private Date start;
+
+	@Column(name = "duration")
 	private int duration;
+
+	@Column(name = "customerCapacity")
 	private int customerCapacity;
+
+	@Column(name = "isReserved")
 	private boolean isReserved;
-	public int getId() {
-		return id;
-	}
-	public Date getStart() {
-		return start;
-	}
-	public int getDuration() {
-		return duration;
-	}
-	public int getCustomerCapacity() {
-		return customerCapacity;
-	}
-	public boolean isReserved() {
-		return isReserved;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setStart(Date start) {
-		this.start = start;
-	}
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-	public void setCustomerCapacity(int customerCapacity) {
-		this.customerCapacity = customerCapacity;
-	}
-	public void setReserved(boolean isReserved) {
-		this.isReserved = isReserved;
-	}
 	
 	
 }

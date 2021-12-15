@@ -1,42 +1,31 @@
 package com.fishyfinds.isa.Model.beans;
-import com.fishyfinds.isa.Model.enums.TargetType;
 
+import com.fishyfinds.isa.Model.enums.TargetType;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "UserFeedback")
 public class UserFeedback {
 
-	private int id;
-	private String content;
-	private int authorId;
-	private int targetId;
-	private TargetType targetType;
-	public int getId() {
-		return id;
-	}
-	public String getContent() {
-		return content;
-	}
-	public int getAuthorId() {
-		return authorId;
-	}
-	public int getTargetId() {
-		return targetId;
-	}
-	public TargetType getTargetType() {
-		return targetType;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
-	}
-	public void setTargetId(int targetId) {
-		this.targetId = targetId;
-	}
-	public void setTargetType(TargetType targetType) {
-		this.targetType = targetType;
-	}
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "authorId")
+    private int authorId;
+
+    @Column(name = "targetId")
+    private int targetId;
+
+    @Column(name = "targetType")
+    private TargetType targetType;
+
 }

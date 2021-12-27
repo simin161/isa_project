@@ -1,12 +1,9 @@
 package com.fishyfinds.isa.Service;
 
-import com.fishyfinds.isa.Model.beans.users.User;
 import com.fishyfinds.isa.Model.beans.users.customers.Customer;
 import com.fishyfinds.isa.Repository.CustomerRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 @Service
 public class RegistrationService {
@@ -29,7 +25,6 @@ public class RegistrationService {
             try {
                 sendVerificationEmail(customer, siteURL);
             } catch (Exception e) {
-                e.printStackTrace();
                 retVal = false;
             }
         }

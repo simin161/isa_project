@@ -1,6 +1,5 @@
 package com.fishyfinds.isa.Mappers;
 
-import com.fishyfinds.isa.Dto.CustomerRegistration;
 import com.fishyfinds.isa.Model.beans.users.customers.Customer;
 
 import java.util.Map;

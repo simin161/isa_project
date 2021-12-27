@@ -1,7 +1,6 @@
 package com.fishyfinds.isa.Controllers;
-import com.fishyfinds.isa.Dto.CustomerRegistration;
+
 import com.fishyfinds.isa.Mappers.DtoToUser;
-import com.fishyfinds.isa.Model.beans.users.customers.Customer;
 import com.fishyfinds.isa.Service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.Map;
 
 @RestController

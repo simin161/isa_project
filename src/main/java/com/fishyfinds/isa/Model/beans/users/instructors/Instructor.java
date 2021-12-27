@@ -1,7 +1,7 @@
 package com.fishyfinds.isa.Model.beans.users.instructors;
 
-import com.fishyfinds.isa.Model.beans.offers.courses.Course;
 import com.fishyfinds.isa.Model.beans.LoyaltyProgram;
+import com.fishyfinds.isa.Model.beans.offers.courses.Course;
 import com.fishyfinds.isa.Model.beans.users.User;
 import lombok.Getter;
 import lombok.Setter;

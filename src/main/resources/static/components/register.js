@@ -14,7 +14,7 @@ Vue.component('register', {
 		    confirmPassword : "",
 		    enabled: false,
 		    backgroundColor: "seagreen",
-		    cursorStyle: "default",
+		    cursorStyle: "default"
 		}
 	},
 template: `	
@@ -119,9 +119,8 @@ template: `
     methods: {
         registerUser : function(){
             if(this.confirmPassword == this.dto.password){
-                event.preventDefault();
-                			axios.post('/api/registerUser', this.dto)
-                			.then(response => console.log(response.data))
+                axios.post('/api/registerUser', this.dto)
+                	 .then(response => console.log(response.data))
             }
             else{
                 console.log("Invalid password")

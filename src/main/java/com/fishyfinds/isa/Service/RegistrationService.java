@@ -25,9 +25,7 @@ public class RegistrationService {
     public boolean registerCustomer(Customer customer, String siteURL){
         boolean retVal = true;
         if(!checkIfEmailExists(customer.getEmail())){
-            String randomCode = RandomString.make(64);
-            customer.setVerificationCode(randomCode);
-            customerRepository.save(customer);
+            setCustomerVerificationCode(RandomString.make(64), customer);
             try {
                 sendVerificationEmail(customer, siteURL);
             } catch (Exception e) {
@@ -78,9 +76,13 @@ public class RegistrationService {
     }
 
     private boolean activateCustomerAccount(Customer customer){
-        customer.setVerificationCode("");
         customer.setActivated(true);
-        customerRepository.save(customer);
+        setCustomerVerificationCode("", customer);
         return true;
+    }
+
+    private void setCustomerVerificationCode(String code, Customer customer){
+        customer.setVerificationCode(code);
+        customerRepository.save(customer);
     }
 }

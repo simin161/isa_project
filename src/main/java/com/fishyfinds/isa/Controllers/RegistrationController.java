@@ -20,9 +20,8 @@ public class RegistrationController {
     private RegistrationService registrationService;
     @PostMapping("/registerUser")
     @PreAuthorize("hasRole('ADMIN')")
-    public String registerUser(@RequestBody Map<String, String> message, HttpServletRequest request){
-        registrationService.registerCustomer(DtoToUser.MapToCustomer(message), getSiteURL(request));
-        return "";
+    public boolean registerUser(@RequestBody Map<String, String> message, HttpServletRequest request){
+        return registrationService.registerCustomer(DtoToUser.MapToCustomer(message), getSiteURL(request));
     }
 
     @GetMapping("/verify")

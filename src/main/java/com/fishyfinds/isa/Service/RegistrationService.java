@@ -22,7 +22,8 @@ public class RegistrationService {
     private CustomerRepository customerRepository;
     @Autowired
     private JavaMailSender mailSender;
-    public void registerCustomer(Customer customer, String siteURL){
+    public boolean registerCustomer(Customer customer, String siteURL){
+        boolean retVal = true;
         if(!checkIfEmailExists(customer.getEmail())){
             String randomCode = RandomString.make(64);
             customer.setVerificationCode(randomCode);
@@ -31,8 +32,10 @@ public class RegistrationService {
                 sendVerificationEmail(customer, siteURL);
             } catch (Exception e) {
                 e.printStackTrace();
+                retVal = false;
             }
         }
+        return retVal;
     }
 
     private boolean checkIfEmailExists(String email){

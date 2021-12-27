@@ -94,7 +94,6 @@ template: `
                     </table>
                 </form>
             </div>
-
         </div>
 		</div>
 		`

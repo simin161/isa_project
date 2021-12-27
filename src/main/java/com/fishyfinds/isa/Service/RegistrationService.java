@@ -24,7 +24,6 @@ public class RegistrationService {
     private JavaMailSender mailSender;
     public void registerCustomer(Customer customer, String siteURL){
         if(!checkIfEmailExists(customer.getEmail())){
-            //TODO: implement logic for sending email
             String randomCode = RandomString.make(64);
             customer.setVerificationCode(randomCode);
             customerRepository.save(customer);
@@ -44,13 +43,13 @@ public class RegistrationService {
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
         String fromAddress = "findsfishy@gmail.com";
-        String senderName = "Fishy finds";
+        String senderName = "Fishy Finds";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
                 + "Thank you,<br>"
-                + "Your company name.";
+                + "Fishy Finds.";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);

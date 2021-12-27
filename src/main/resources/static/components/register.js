@@ -4,7 +4,9 @@ Vue.component('register', {
 		    dto : {firstName: "",
 		           lastName: "",
 		           dateOfBirth: "",
-		           gender: "",
+		           address: "",
+		           city: "",
+		           country: "",
 		           phoneNumber: "",
 		           email: "",
 		           password: ""
@@ -12,8 +14,7 @@ Vue.component('register', {
 		    confirmPassword : "",
 		    enabled: false,
 		    backgroundColor: "seagreen",
-		    cursorStyle: 'default'
-
+		    cursorStyle: "default",
 		}
 	},
 template: `	
@@ -45,16 +46,26 @@ template: `
                             <td><input type="date" class="input-text" style="width:239px;" v-model="dto.dateOfBirth"/></td>
                         </tr>
                         <br>
-                        <tr>
-                            <td style="font-size:20px;">Gender:</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="radio" id="radio" class="input-radio" name="gender" v-model="dto.gender" label="Female"/> <label style="font-size:18px;">Female </label>
-                                <input type="radio" id="radio" class="input-radio" style="margin-left:7%" v-model="dto.gender" name="gender" label="Male"/> <label style="font-size:18px;">Male </label>
-                                <input type="radio" id="radio" class="input-radio" style="margin-left:7%" v-model="dto.gender" name="gender" label="Other"/> <label style="font-size:18px;">Other </label>
-                            </td>
-                        </tr>
+                         <tr>
+                            <td style="font-size:20px;">Address:</td>
+                         </tr>
+                         <tr>
+                            <td><input type="text" class="input-text" v-model="dto.address"/></td>
+                         </tr>
+                        <br>
+                         <tr>
+                            <td style="font-size:20px;">City:</td>
+                         </tr>
+                         <tr>
+                            <td><input type="text" class="input-text" v-model="dto.city"/></td>
+                         </tr>
+                        <br>
+                         <tr>
+                            <td style="font-size:20px;">Country:</td>
+                         </tr>
+                         <tr>
+                            <td><input type="text" class="input-text" v-model="dto.country"/></td>
+                         </tr>
                         <br>
                         <tr>
                             <td style="font-size:20px;">Phone number:</td>
@@ -85,7 +96,7 @@ template: `
                         </tr>
                         <br>
                         <tr>
-                            <td><input v-bind:style="{'margin-left':'23%', 'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register!"/></td>
+                            <td><input v-bind:style="{'margin-left':'23%', 'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register!" @click="registerUser"/></td>
                         </tr>
                     </table>
                 </form>
@@ -102,7 +113,9 @@ template: `
                     correctPhoneNumber = /\S/.test(this.dto.phoneNumber) && /^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,A-Za-z]{8,10}$/.test(this.dto.phoneNumber);
         		    flag = correctFirstName && correctLastName && correctPhoneNumber &&
         		    /\S/.test(this.dto.dateOfBirth) &&
-        		    /\S/.test(this.dto.gender) &&
+        		    /\S/.test(this.dto.address) &&
+        		    /\S/.test(this.dto.city) &&
+        		    /\S/.test(this.dto.country) &&
         		    /\S/.test(this.dto.email) &&
         		    /\S/.test(this.dto.password) &&
         		    /\S/.test(this.confirmPassword);
@@ -113,9 +126,17 @@ template: `
         		  }
 	},
     methods: {
-        checkPasswords : function(){
-            return confirmPassword == dto.password;
+        registerUser : function(){
+            if(this.confirmPassword == this.dto.password){
+                event.preventDefault();
+                			axios.post('/api/registerUser', this.dto)
+                			.then(response => console.log(response.data))
+            }
+            else{
+                console.log("Invalid password")
+            }
         }
+
     }
 
 });

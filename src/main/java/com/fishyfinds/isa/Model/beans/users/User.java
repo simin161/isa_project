@@ -15,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
+    protected Long id;
 
     @Column(name = "firstName", nullable = false)
     protected String firstName;
@@ -32,4 +32,9 @@ public class User {
     @Column(name = "isDeleted", nullable = false)
     protected boolean isDeleted;
 
+    @Column(name="isActivated", nullable=false)
+    protected boolean isActivated;
+
+    @Column(name="verificationCode", nullable=false)
+    protected String verificationCode;
 }

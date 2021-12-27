@@ -1,6 +1,13 @@
 Vue.component('sign-in', {
 	data: function(){
-		return{	}
+		return{
+		    dto: {
+		        email : "",
+		        password : ""
+		    },
+		    backgroundColor : "seagreen",
+            cursorStyle : "default"
+		}
 	},
 template: `	
 			<div>
@@ -13,18 +20,18 @@ template: `
                             <td style="font-size:20px;">E-mail:</td>
                         </tr>
                         <tr>
-                            <td><input type="text" class="input-text" /></td>
+                            <td><input type="text" class="input-text" v-model="dto.email"/></td>
                         </tr>
                         <br>
                         <tr>
                             <td style="font-size:20px;">Password:</td>
                         </tr>
                         <tr>
-                            <td><input type="password" class="input-text"/></td>
+                            <td><input type="password" class="input-text" v-model="dto.password"/></td>
                         </tr>
                         <br>
                         <tr>
-                            <td><input style="margin-left:23%;" class="confirm" type="button" value="Sign in!"/></td>
+                            <td><input @click="logInUser" v-bind:style="{'margin-left':'23%', 'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Sign in!" /></td>
                         </tr>
                     </table>
                 </form>
@@ -34,5 +41,22 @@ template: `
 
 		</div>
 		`
-
+        ,
+        computed : {
+            isComplete () {
+                flag = /\S/.test(this.dto.email) && /\S/.test(this.dto.password) ;
+                this.backgroundColor = flag ? "seagreen" : "#f8f1f1";
+                this.cursorStyle = flag ? "pointer" : "default";
+                return flag;
+            }
+        }
+        ,
+        methods : {
+            logInUser : function(){
+            console.log("DFAFSASFAF")
+                event.preventDefault();
+                	axios.post('/api/logIn', this.dto)
+                         .then(response => console.log("response.data"))
+            }
+        }
 });

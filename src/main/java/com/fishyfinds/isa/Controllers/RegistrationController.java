@@ -26,11 +26,7 @@ public class RegistrationController {
 
     @GetMapping("/verify")
     public String verifyUser(@Param("code") String code) {
-        if (registrationService.verify(code)) {
-            return "verify_success";
-        } else {
-            return "verify_fail";
-        }
+        return registrationService.verify(code) ? "verify_success" : "verify_fail";
     }
 
     private String getSiteURL(HttpServletRequest request) {

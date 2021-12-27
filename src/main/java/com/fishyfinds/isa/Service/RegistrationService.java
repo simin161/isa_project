@@ -74,14 +74,13 @@ public class RegistrationService {
 
     public boolean verify(String verificationCode) {
         Customer user = customerRepository.findByVerificationCode(verificationCode);
+        return (user == null || user.isActivated()) ? false : activateCustomerAccount(user);
+    }
 
-        if (user == null || user.isActivated()) {
-            return false;
-        } else {
-            user.setVerificationCode("");
-            user.setActivated(true);
-            customerRepository.save(user);
-            return true;
-        }
+    private boolean activateCustomerAccount(Customer customer){
+        customer.setVerificationCode("");
+        customer.setActivated(true);
+        customerRepository.save(customer);
+        return true;
     }
 }

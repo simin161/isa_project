@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.Repository;
 
+import com.fishyfinds.isa.Model.beans.users.User;
 import com.fishyfinds.isa.Model.beans.users.customers.Customer;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -13,4 +14,6 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     public Customer findByEmail(String email);
+
+    public Customer findByVerificationCode(String verificationCode);
 }

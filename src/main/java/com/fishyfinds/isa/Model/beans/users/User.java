@@ -32,4 +32,9 @@ public class User {
     @Column(name = "isDeleted", nullable = false)
     protected boolean isDeleted;
 
+    @Column(name="isActivated", nullable=false)
+    protected boolean isActivated;
+
+    @Column(name="verificationCode", nullable=false)
+    protected String verificationCode;
 }

@@ -14,26 +14,14 @@ public class RegistrationService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public Customer findOne(Long id) {
-        return customerRepository.findById(id).orElseGet(null);
-    }
-
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
-    }
-
-    public Page<Customer> findAll(Pageable page) {
-        return customerRepository.findAll(page);
-    }
-
-    public Customer save(Customer customer) {
-        return customerRepository.save(customer);
-    }
-
-    public void remove(Long id) {
-        customerRepository.deleteById(id);
-    }
     public void registerCustomer(Customer customer){
-        save(customer);
+        if(!checkIfEmailExists(customer.getEmail())){
+            //TODO: implement logic for sending email
+            customerRepository.save(customer);
+        }
+    }
+
+    private boolean checkIfEmailExists(String email){
+        return customerRepository.findByEmail(email) != null;
     }
 }

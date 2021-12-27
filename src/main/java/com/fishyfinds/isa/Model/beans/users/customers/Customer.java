@@ -34,6 +34,7 @@ public class Customer extends User {
     @JoinColumn(name="loyaltyProgram", referencedColumnName = "id")
     private LoyaltyProgram loyaltyProgram;
 
+    public Customer() {}
     public Customer(String firstName, String lastName, String address, String city, String country,
                                 String phoneNumber, String email, String password){
         this.firstName = firstName;

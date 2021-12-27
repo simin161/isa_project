@@ -53,7 +53,7 @@ template: `
         logout: function(){
             event.preventDefault();
             axios.get("/api/logOut")
-                 .then(response => {router.push('/'); console.log(this.loggedUser)})
+                 .then(response => {router.push('/signIn'); console.log(this.loggedUser)})
         }
     },
     mounted(){

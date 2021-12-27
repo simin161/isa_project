@@ -3,6 +3,7 @@ package com.fishyfinds.isa.Service;
 import com.fishyfinds.isa.Model.beans.users.User;
 import com.fishyfinds.isa.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +36,10 @@ public class LogInService {
         return userPassword.equals(enteredPassword);
     }
 
-    public void logOut(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public void logOut(HttpSession session) {
+        SecurityContextHolder.clearContext();
         User user = (User) session.getAttribute("user");
-        if(user == null){
+        if(user != null){
             session.invalidate();
         }
     }

@@ -28,8 +28,8 @@ public class LogInController {
 
     @GetMapping("/logOut")
     @PreAuthorize("hasRole('ADMIN')")
-    public void logOut(HttpServletRequest request){
-        logInService.logOut(request);
+    public void logOut(HttpSession session){
+        logInService.logOut(session);
     }
     @GetMapping("/getLoggedUser")
     @PreAuthorize("hasRole('ADMIN')")

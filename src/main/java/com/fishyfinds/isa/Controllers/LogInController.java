@@ -19,15 +19,22 @@ public class LogInController {
 
     @Autowired
     private LogInService logInService;
+
     @PostMapping("/logIn")
     @PreAuthorize("hasRole('ADMIN')")
     public boolean logIn(@RequestBody Map<String, String> message, HttpServletRequest request, HttpSession session){
         return logInService.logIn(message, request, session);
     }
 
+    @GetMapping("/logOut")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void logOut(HttpServletRequest request){
+        logInService.logOut(request);
+    }
     @GetMapping("/getLoggedUser")
-    public User getLoggedUser(HttpSession session){
-        return logInService.getLoggedUser(session);
+    @PreAuthorize("hasRole('ADMIN')")
+    public User getLoggedUser(HttpServletRequest request){
+        return logInService.getLoggedUser(request);
 
         }
 }

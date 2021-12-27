@@ -27,11 +27,19 @@ public class LogInService {
         return retVal;
     }
 
-    public User getLoggedUser(HttpSession session){
-        return (User)session.getAttribute("user");
+    public User getLoggedUser(HttpServletRequest request){
+        return (User)request.getSession().getAttribute("user");
     }
 
     private boolean checkPassword(String userPassword,String enteredPassword){
         return userPassword.equals(enteredPassword);
+    }
+
+    public void logOut(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            session.invalidate();
+        }
     }
 }

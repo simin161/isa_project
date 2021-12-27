@@ -39,13 +39,6 @@ template: `
                             <td><input type="text" class="input-text" v-model="dto.lastName"/></td>
                         </tr>
                         <br>
-                        <tr>
-                            <td style="font-size:20px;">Date of birth:</td>
-                        </tr>
-                        <tr>
-                            <td><input type="date" class="input-text" style="width:239px;" v-model="dto.dateOfBirth"/></td>
-                        </tr>
-                        <br>
                          <tr>
                             <td style="font-size:20px;">Address:</td>
                          </tr>
@@ -112,7 +105,6 @@ template: `
         		    correctLastName = /\S/.test(this.dto.lastName) && /^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,0-9]{1,20}$/.test(this.dto.lastName);
                     correctPhoneNumber = /\S/.test(this.dto.phoneNumber) && /^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,A-Za-z]{8,10}$/.test(this.dto.phoneNumber);
         		    flag = correctFirstName && correctLastName && correctPhoneNumber &&
-        		    /\S/.test(this.dto.dateOfBirth) &&
         		    /\S/.test(this.dto.address) &&
         		    /\S/.test(this.dto.city) &&
         		    /\S/.test(this.dto.country) &&

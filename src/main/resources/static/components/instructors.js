@@ -7,12 +7,14 @@ Vue.component('instructors', {
 template: `	
 			<div>
 			<nav-bar></nav-bar>
-			<div class="div" v-if="instructors != null">
+			<br>
+			<div class="div" v-if="instructors != ''">
 				<div class="col-md-4 lists" v-for="instructor in instructors">
-						<p>{{instructor}}</p>
+						<p>Instructor: {{instructor.firstName}} {{instructor.lastName}}</p>
+						<p>{{instructor.biography}}</p>
 				</div>
 			</div>
-			<div v-if="instructors === null">
+			<div v-if="instructors === ''">
 				<p>Nothing to show</p>
 			</div>
             </div>

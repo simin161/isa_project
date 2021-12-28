@@ -1,7 +1,7 @@
 package com.fishyfinds.isa.Service;
 
 import com.fishyfinds.isa.Model.beans.users.customers.Customer;
-import com.fishyfinds.isa.Repository.CustomerRepository;
+import com.fishyfinds.isa.Repository.UsersRepository.CustomerRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

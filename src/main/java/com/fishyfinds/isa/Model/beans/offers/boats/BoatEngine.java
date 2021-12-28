@@ -16,9 +16,9 @@ public class BoatEngine {
     private int id;
 
     @Column(name="boatId", nullable = false, insertable = false, updatable = false)
-    private int boatId;
+    private Long boatId;
 
-    @Column(name="boatId", nullable = false, insertable = false, updatable = false)
-    private int engineId;
+    @Column(name="engineId", nullable = false, insertable = false, updatable = false)
+    private Long engineId;
 
 }

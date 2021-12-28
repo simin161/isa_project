@@ -17,7 +17,7 @@ import java.util.Set;
 public class Instructor extends User {
 
 	@OneToMany
-	@JoinColumn(name="id")
+	@JoinColumn(name="courses", referencedColumnName = "id")
 	private Set<Course> courses;
 
 	@OneToOne

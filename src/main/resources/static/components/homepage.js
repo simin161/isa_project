@@ -25,8 +25,8 @@ template: `
 					<div class="col-xs-12 col-md-4 boxes">
 						<div class="box">
 							<img src="images/courses-image-ver1.jpg">
-							<h2>Courses</h2>
-							<a href="#/courses">See more ...</a>
+							<h2>Instructors</h2>
+							<a href="#/instructors">See more ...</a>
 						</div>
 					</div>
 				</div>

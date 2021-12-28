@@ -1,20 +1,30 @@
 Vue.component('bungalows', {
 	data: function(){
 		return{
-			bungalows: ['1', '2']
+			bungalows: null
 		};
 	},
 template: `	
 			<div>
 			<nav-bar></nav-bar>
-			<div class="div" v-if="bungalows != null">
+			<br>
+			<br>
+			<div class="div" style="margin-left: 40%" v-if="bungalows != ''">
 				<div class="col-md-4 lists" v-for="bungalow in bungalows">
-						<p>{{bungalow}}</p>
+						<p><i>{{bungalow.offerName}}</i></p>
+						<p>Address: {{bungalow.location.address}}</p>
+						<p><i>{{bungalow.description}}</i></p>
+						<p>Rating: {{bungalow.rating}}</p>
 				</div>
 			</div>
-			<div v-if="bungalows === null">
+			<div v-if="bungalows === ''">
 				<p>Nothing to show</p>
 			</div>
             </div>
-`
+          `
+          ,
+          mounted(){
+            axios.get("/api/allBungalows")
+                 .then(response => (this.bungalows = response.data))
+          }
 });

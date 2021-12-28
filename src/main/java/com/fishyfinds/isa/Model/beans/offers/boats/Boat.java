@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Boat extends Offer {
 
 	@OneToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "engine", referencedColumnName = "id")
 	private Engine engine;
 
 	@Column(name = "boatLength", nullable = false)

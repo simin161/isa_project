@@ -1,7 +1,7 @@
 Vue.component('bungalows', {
 	data: function(){
 		return{
-			bungalows: ['1', '2']
+			bungalows: null
 		};
 	},
 template: `	
@@ -16,5 +16,10 @@ template: `
 				<p>Nothing to show</p>
 			</div>
             </div>
-`
+          `
+          ,
+          mounted(){
+            axios.get("/api/allBungalows")
+                 .then(response => (this.bungalows = response.data))
+          }
 });

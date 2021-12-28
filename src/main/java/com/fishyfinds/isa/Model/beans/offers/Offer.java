@@ -18,7 +18,7 @@ public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
+    protected Long id;
 
     @Column(name = "offerType", nullable = false)
     protected OfferType offerType;

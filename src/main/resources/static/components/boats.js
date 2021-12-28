@@ -1,7 +1,7 @@
 Vue.component('boats', {
 	data: function(){
 		return{
-			boats: ['1', '2']
+			boats: null
 		};
 	}
 	,
@@ -19,4 +19,9 @@ Vue.component('boats', {
 			</div>
 		</div>
 		`
+	,
+	mounted(){
+	    axios.get("/api/allBoats")
+	         .then(response => (this.boats = response.data))
+	}
 });

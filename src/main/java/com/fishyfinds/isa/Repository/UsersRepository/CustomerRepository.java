@@ -1,4 +1,4 @@
-package com.fishyfinds.isa.Repository;
+package com.fishyfinds.isa.Repository.UsersRepository;
 
 import com.fishyfinds.isa.Model.beans.users.customers.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;

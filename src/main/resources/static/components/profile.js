@@ -4,11 +4,15 @@ Vue.component('profile', {
 			dto: null,
 			enable: true,
 			showProfile: true,
+<<<<<<< HEAD
 			confirmPassword: '',
 			passwordDTO: {
 			           id: null,
 			           newPassword: ''
 			}
+=======
+			confirmPassword: ''
+>>>>>>> develop
 		};
 	}
 	,
@@ -26,7 +30,11 @@ Vue.component('profile', {
                             <td style="font-size:20px;">Password:</td>
                          </tr>
                          <tr>
+<<<<<<< HEAD
                             <td><input type="password" class="input-text" v-model="passwordDTO.newPassword"/></td>
+=======
+                            <td><input type="password" class="input-text" v-model="dto.password"/></td>
+>>>>>>> develop
                          </tr>
                          <br>
                          <tr>
@@ -36,7 +44,11 @@ Vue.component('profile', {
                             <td><input type="password" class="input-text" v-model="confirmPassword"/></td>
                          </tr>
                          <tr>
+<<<<<<< HEAD
                             <td><input :disabled="!isCompletePassword" class="confirm" type="button" value="Save!" @click="savePassword"/></td>
+=======
+                            <td><input :disabled="!isCompletePassword" class="confirm" type="button" value="Save!"/></td>
+>>>>>>> develop
                          </tr>
                        </table>
                   </form>
@@ -130,6 +142,7 @@ Vue.component('profile', {
                 return flag;
         }
     },
+<<<<<<< HEAD
     methods : {
         savePassword : function(){
             if(this.passwordDTO.newPassword != this.dto.password && this.passwordDTO.newPassword == this.confirmPassword){
@@ -146,6 +159,8 @@ Vue.component('profile', {
             }
         }
     },
+=======
+>>>>>>> develop
 	mounted(){
 	    axios.get("/api/getLoggedUser")
 	         .then(response => (this.dto = response.data))

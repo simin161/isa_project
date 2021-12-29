@@ -24,4 +24,13 @@ public class UserService {
         }
         return retVal;
     }
+
+    public boolean changeProfile(User user) {
+        boolean retVal = false;
+        if(userRepository.findById(user.getId()).orElse(null) != null){
+            userRepository.save(user);
+            retVal = true;
+        }
+        return retVal;
+    }
 }

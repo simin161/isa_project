@@ -38,6 +38,9 @@ public class User {
     @Column(name = "address", nullable = false)
     protected String address;
 
+    @Column(name = "phoneNumber", nullable = false)
+    protected String phoneNumber;
+
     @Column(name = "isDeleted", nullable = false)
     protected boolean isDeleted;
 
@@ -46,4 +49,16 @@ public class User {
 
     @Column(name="verificationCode", nullable=false)
     protected String verificationCode;
+
+    public User() {}
+    public User(String firstName, String lastName, String address, String city, String country, String phoneNumber, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+    }
 }

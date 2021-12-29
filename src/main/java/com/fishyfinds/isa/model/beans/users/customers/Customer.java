@@ -15,9 +15,6 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "id")
 public class Customer extends User {
 
-    @Column(name = "phoneNumber", nullable = false)
-    private String phoneNumber;
-
     @Column(name = "numberOfPenalty", nullable = false)
     private int numberOfPenalty;
 

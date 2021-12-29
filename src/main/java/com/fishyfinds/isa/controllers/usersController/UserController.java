@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.controllers.usersController;
 
+import com.fishyfinds.isa.mappers.DtoToUser;
 import com.fishyfinds.isa.service.usersService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,5 +21,10 @@ public class UserController {
     @PutMapping("/changePassword")
     public boolean changePassword(@RequestBody Map<String, String> message){
         return userService.changePassword(message);
+    }
+
+    @PutMapping("/changeProfile")
+    public boolean changeProfile(@RequestBody Map<String,String> message){
+        return userService.changeProfile(DtoToUser.MapToUser(message));
     }
 }

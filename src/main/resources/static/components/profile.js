@@ -98,7 +98,7 @@ Vue.component('profile', {
                                  </tr>
                                  <br>
                                  <tr>
-                                     <td><input v-show="!enable" :disabled="!isComplete" class="confirm" type="button" value="Save!" /></td>
+                                     <td><input v-show="!enable" :disabled="!isComplete" class="confirm" type="button" value="Save!" @click="changeProfile"/></td>
                                  </tr>
                              </table>
                          </form>
@@ -144,6 +144,10 @@ Vue.component('profile', {
             else {
                 console.log("invalid password")
             }
+        },
+        changeProfile : function(){
+            axios.put('/api/changeProfile', this.dto)
+                 .then(response =>(console.log(response.data)))
         }
     },
 	mounted(){

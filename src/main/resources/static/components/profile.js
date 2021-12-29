@@ -4,7 +4,11 @@ Vue.component('profile', {
 			dto: null,
 			enable: true,
 			showProfile: true,
-			confirmPassword: ''
+			confirmPassword: '',
+			passwordDTO: {
+			           id: null,
+			           newPassword: ''
+			}
 		};
 	}
 	,
@@ -22,7 +26,7 @@ Vue.component('profile', {
                             <td style="font-size:20px;">Password:</td>
                          </tr>
                          <tr>
-                            <td><input type="password" class="input-text" v-model="dto.password"/></td>
+                            <td><input type="password" class="input-text" v-model="passwordDTO.newPassword"/></td>
                          </tr>
                          <br>
                          <tr>
@@ -32,7 +36,7 @@ Vue.component('profile', {
                             <td><input type="password" class="input-text" v-model="confirmPassword"/></td>
                          </tr>
                          <tr>
-                            <td><input :disabled="!isCompletePassword" class="confirm" type="button" value="Save!"/></td>
+                            <td><input :disabled="!isCompletePassword" class="confirm" type="button" value="Save!" @click="savePassword"/></td>
                          </tr>
                        </table>
                   </form>
@@ -121,9 +125,25 @@ Vue.component('profile', {
                 return flag;
         },
         isCompletePassword () {
-                flag = /\S/.test(this.dto.password) && /\S/.test(this.confirmPassword);
+                flag = /\S/.test(this.passwordDTO.newPassword) && /\S/.test(this.confirmPassword);
 
                 return flag;
+        }
+    },
+    methods : {
+        savePassword : function(){
+            if(this.passwordDTO.newPassword != this.dto.password && this.passwordDTO.newPassword == this.confirmPassword){
+                this.passwordDTO.id = this.dto.id;
+                axios.put('/api/changePassword', this.passwordDTO)
+                     .then(response => {console.log(response.data)
+                           if(response.data){
+                                this.dto.password = this.passwordDTO.newPassword;
+                           }
+                     })
+            }
+            else {
+                console.log("invalid password")
+            }
         }
     },
 	mounted(){

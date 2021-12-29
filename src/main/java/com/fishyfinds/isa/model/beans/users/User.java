@@ -29,6 +29,15 @@ public class User {
     @Column(name = "email", nullable = false)
     protected String email;
 
+    @Column(name = "country", nullable = false)
+    protected String country;
+
+    @Column(name = "city", nullable = false)
+    protected String city;
+
+    @Column(name = "address", nullable = false)
+    protected String address;
+
     @Column(name = "isDeleted", nullable = false)
     protected boolean isDeleted;
 

@@ -26,7 +26,7 @@ template: `
                             <nav class="col-sm-8">
                                 <a href="">menu 1</a>
                                 <a href="">menu 2</a>
-                                <a href="">menu 3</a>
+                                <a href="#/account">Account</a>
                                 <a href="#/" @click="logout">Sign out</a>
                             </nav>
                         </div>

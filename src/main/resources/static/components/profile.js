@@ -142,7 +142,6 @@ Vue.component('profile', {
                 return flag;
         }
     },
-<<<<<<< HEAD
     methods : {
         savePassword : function(){
             if(this.passwordDTO.newPassword != this.dto.password && this.passwordDTO.newPassword == this.confirmPassword){
@@ -159,8 +158,6 @@ Vue.component('profile', {
             }
         }
     },
-=======
->>>>>>> develop
 	mounted(){
 	    axios.get("/api/getLoggedUser")
 	         .then(response => (this.dto = response.data))

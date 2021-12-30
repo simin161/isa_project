@@ -13,7 +13,7 @@ public class DtoToUser {
     }
 
     public static User MapToUser(Map<String, String> map){
-        return new User(map.get("firstName"), map.get("lastName"), map.get("address"),
+        return new User(Long.valueOf(map.get("id")),map.get("firstName"), map.get("lastName"), map.get("address"),
                 map.get("city"), map.get("country"), map.get("phoneNumber"), map.get("email"), map.get("password"));
     }
 }

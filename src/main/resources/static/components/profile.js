@@ -97,8 +97,12 @@ Vue.component('profile', {
                                      <td><input :disabled="true" type="text" class="input-text" v-model="dto.email" /></td>
                                  </tr>
                                  <br>
+                                 <tr v-if="dto.userType == 'CUSTOMER'">
+                                    <td style="font-size:20px;">Category: {{dto.loyaltyProgram.categoryName}}</td>
+                                    <td style="font-size:20px;">Points: {{dto.earnedPoints}}</td>
+                                 </tr>
                                  <tr>
-                                     <td><input v-show="!enable" :disabled="!isComplete" class="confirm" type="button" value="Save!" @click="changeProfile"/></td>
+                                     <td><input v-show="!enable" :disabled="!isComplete" class="confirm" type="button" value="Save!" @click="saveProfile"/></td>
                                  </tr>
                              </table>
                          </form>
@@ -145,9 +149,20 @@ Vue.component('profile', {
                 console.log("invalid password")
             }
         },
-        changeProfile : function(){
-            axios.put('/api/changeProfile', this.dto)
-                 .then(response =>(console.log(response.data)))
+        saveProfile : function(){
+            axios.put('/api/changeProfile', {"id": this.dto.id,
+                                             "firstName":this.dto.firstName,
+                                             "lastName": this.dto.lastName,
+                                             "address": this.dto.address,
+                                             "city": this.dto.city,
+                                             "country": this.dto.country,
+                                             "phoneNumber":this.dto.phoneNumber,
+                                             "email":this.dto.email})
+            .then((response) => {
+                if(response.data){
+                    this.$router.go(0)
+                }
+            })
         }
     },
 	mounted(){

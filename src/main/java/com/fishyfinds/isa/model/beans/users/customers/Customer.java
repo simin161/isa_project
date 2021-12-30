@@ -18,6 +18,9 @@ public class Customer extends User {
     @Column(name = "numberOfPenalty", nullable = false)
     private int numberOfPenalty;
 
+    @Column(name="earnedPoints")
+    private int earnedPoints;
+
     @OneToOne
     @JoinColumn(name="loyaltyProgram", referencedColumnName = "id")
     private LoyaltyProgram loyaltyProgram;

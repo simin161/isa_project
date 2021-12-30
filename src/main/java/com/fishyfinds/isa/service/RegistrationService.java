@@ -1,6 +1,8 @@
 package com.fishyfinds.isa.service;
 
+import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.enums.UserType;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ public class RegistrationService {
     public boolean registerCustomer(Customer customer, String siteURL){
         boolean retVal = true;
         if(!checkIfEmailExists(customer.getEmail())){
+            customer.setUserType(UserType.CUSTOMER);
             setCustomerVerificationCode(RandomString.make(64), customer);
             try {
                 sendVerificationEmail(customer, siteURL);

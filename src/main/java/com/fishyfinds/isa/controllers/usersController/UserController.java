@@ -4,11 +4,9 @@ import com.fishyfinds.isa.mappers.DtoToUser;
 import com.fishyfinds.isa.service.usersService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -24,7 +22,7 @@ public class UserController {
     }
 
     @PutMapping("/changeProfile")
-    public boolean changeProfile(@RequestBody Map<String,String> message){
-        return userService.changeProfile(DtoToUser.MapToUser(message));
+    public boolean changeProfile(@RequestBody Map<String,String> message, HttpServletRequest request){
+        return userService.changeProfile(DtoToUser.MapToUser(message), request);
     }
 }

@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.model.beans.users;
 
+import com.fishyfinds.isa.model.enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,8 +51,12 @@ public class User {
     @Column(name="verificationCode", nullable=false)
     protected String verificationCode;
 
+    @Column(name="userType")
+    protected UserType userType;
+
     public User() {}
-    public User(String firstName, String lastName, String address, String city, String country, String phoneNumber, String email, String password) {
+    public User(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, String email, String password) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -60,5 +65,14 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+    }
+
+    public void update(User user){
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.address = user.address;
+        this.city = user.city;
+        this.country = user.country;
+        this.phoneNumber = user.phoneNumber;
     }
 }

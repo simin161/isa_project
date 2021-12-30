@@ -5,48 +5,43 @@ Vue.component('nav-bar', {
 		};
 	},
 template: `	
-			<div>
+		<div>
 			<header class="container-fluid">
 			<div class="row">
 				<div class="container">
 				    <div v-if="loggedUser == ''">
                         <div class="row">
-                            <a class="logo" href="#/"><h1 class="col-sm-4">FishyFinds</h1></a>
+                            <a class="col-sm-4 text-center" href="#/">
+                                <div class="logo">
+                                    <img class="d-inline align-middle" src="images/logo.png" style="height: 36px; width:auto; margin: auto;">
+                                    <h1 class="d-inline align-middle" style="font-family: poppins-bold; font-size: 28px; text-align: center;">FishyFinds</h1>
+                                </div>
+                            </a>
                             <nav class="col-sm-8">
-                                <a href="#/signIn">Sign in</a>
-                                <a href="#/register">Register</a>
-                                <a href="">menu 3</a>
-                                <a href="">menu 4</a>
+                                <a href="#/register" style="font-family: poppins-bold; font-size: 24px;"> Register </a>
+                                <a href="#/signIn" style="font-family: poppins-bold; font-size: 24px;"> Sign in </a>
                             </nav>
                         </div>
 					</div>
 					<div v-else>
                         <div class="row">
-                            <a class="logo" href="#/"><h1 class="col-sm-4">FishyFinds</h1></a>
+                             <a class="col-sm-4 text-center" href="#/">
+                                 <div class="logo">
+                                     <img class="d-inline align-middle" src="images/logo.png" style="height: 36px; width:auto; margin: auto;">
+                                     <h1 class="d-inline align-middle" style="font-family: poppins-bold; font-size: 28px; text-align: center;">FishyFinds</h1>
+                                 </div>
+                             </a>
                             <nav class="col-sm-8">
                                 <a href="">menu 1</a>
                                 <a href="">menu 2</a>
-                                <a href="#/account">Account</a>
-                                <a href="#/" @click="logout">Sign out</a>
+                                <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">Account</a>
+                                <a href="#/" @click="logout" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
                             </nav>
                         </div>
 				    </div>
 				</div>
 			</div>
 		    </header>
-
-		<div class="container-fluid main-image hidden-xs" >
-			<div class="row">
-				<div class="container"> 
-					<div class="row">
-						<div class="col-xs-12"> 
-							<p class="title"> FishyFinds </p>
-							<p class="slogan"> Plan your next trip with confidence</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
     </div>
 `,
     methods: {

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.TABLE) -> probano i auto i sve, ali iz nekog razloga nesto ne radi
     protected Long id;
 
     @Column(name = "firstName", nullable = false)

@@ -4,6 +4,7 @@ import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.model.enums.UserType;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
+import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,11 +20,14 @@ public class RegistrationService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private JavaMailSender mailSender;
     public boolean registerCustomer(Customer customer, String siteURL){
         boolean retVal = true;
         if(!checkIfEmailExists(customer.getEmail())){
             customer.setUserType(UserType.CUSTOMER);
+            customer.setId(userRepository.count() + 1);
             setCustomerVerificationCode(RandomString.make(64), customer);
             try {
                 sendVerificationEmail(customer, siteURL);

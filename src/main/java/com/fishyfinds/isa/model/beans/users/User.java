@@ -3,6 +3,7 @@ package com.fishyfinds.isa.model.beans.users;
 import com.fishyfinds.isa.model.enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -12,10 +13,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
+@SequenceGenerator(name = "sequence", sequenceName = "mySequence")
 public class User {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.TABLE) -> probano i auto i sve, ali iz nekog razloga nesto ne radi
+    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     protected Long id;
 
     @Column(name = "firstName", nullable = false)

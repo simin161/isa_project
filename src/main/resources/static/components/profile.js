@@ -97,8 +97,13 @@ Vue.component('profile', {
                                      <td><input :disabled="true" type="text" class="input-text" v-model="dto.email" /></td>
                                  </tr>
                                  <br>
-                                 <tr v-if="dto.userType == 'CUSTOMER'">
+                                 <tr v-if="dto.userType == 'CUSTOMER' && dto.loyaltyProgram != null">
                                     <td style="font-size:20px;">Category: {{dto.loyaltyProgram.categoryName}}</td>
+                                 </tr>
+                                 <tr v-if-else="dto.loyaltyProgram == null">
+                                    <td style="font-size:20px;">No category</td>
+                                 </tr>
+                                 <tr>
                                     <td style="font-size:20px;">Points: {{dto.earnedPoints}}</td>
                                  </tr>
                                  <tr>

@@ -5,6 +5,7 @@ import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,6 +21,18 @@ public class UserService {
         if(user != null){
             user.setPassword(password.get("newPassword"));
             userRepository.save(user);
+            retVal = true;
+        }
+        return retVal;
+    }
+
+    public boolean changeProfile(User updatedUser, HttpServletRequest request) {
+        boolean retVal = false;
+        User user = userRepository.findById(updatedUser.getId()).orElse(null);
+        if(user != null){
+            user.update(updatedUser);
+            userRepository.save(user);
+            request.getSession().setAttribute("user", user);
             retVal = true;
         }
         return retVal;

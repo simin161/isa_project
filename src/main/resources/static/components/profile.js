@@ -8,6 +8,11 @@ Vue.component('profile', {
 			passwordDTO: {
 			           id: null,
 			           newPassword: ''
+			},
+			showDelete: false,
+			requestDTO:{
+			    id: null,
+			    explanation: ''
 			}
 		};
 	}
@@ -40,6 +45,22 @@ Vue.component('profile', {
                          </tr>
                        </table>
                   </form>
+                  <form v-show="showDelete" class="col-md-2 reg-form">
+                       <table style="margin-top: 10%;">
+                           <tr>
+                               <td><input class="confirm" type="button" value="Show Profile!" @click="showProfile = true"/></td>
+                           </tr>
+                           <tr>
+                                <td style="font-size:20px;">Explanation:</td>
+                           </tr>
+                           <tr>
+                                <td><input type="text" class="input-text" v-model="requestDTO.explanation"/></td>
+                           </tr>
+                           <tr>
+                                <td><input class="confirm" type="button" value="Send!" @click="sendRequest"/></td>
+                           </tr>
+                      </table>
+                  </form>
                          <form v-show="showProfile" class="col-md-2 reg-form">
                              <table style="margin-top: 10%;">
                                  <tr>
@@ -48,6 +69,10 @@ Vue.component('profile', {
                                  <tr>
                                     <td><input class="confirm" type="button" value="Change password!" @click="showProfile = false"/></td>
                                  </tr>
+                                 <tr>
+                                    <td><input class="confirm" type="button" value="Delete profile!" @click="showDelete = true"/></td>
+                                 </tr>
+
                                  <tr>
                                      <td style="font-size:20px;">First name:</td>
                                  </tr>
@@ -100,7 +125,7 @@ Vue.component('profile', {
                                  <tr v-if="dto.userType == 'CUSTOMER' && dto.loyaltyProgram != null">
                                     <td style="font-size:20px;">Category: {{dto.loyaltyProgram.categoryName}}</td>
                                  </tr>
-                                 <tr v-if-else="dto.loyaltyProgram == null">
+                                 <tr v-else-if="dto.loyaltyProgram == null">
                                     <td style="font-size:20px;">No category</td>
                                  </tr>
                                  <tr>
@@ -168,6 +193,11 @@ Vue.component('profile', {
                     this.$router.go(0)
                 }
             })
+        },
+        sendRequest : function(){
+        this.requestDTO.id = this.dto.id;
+            axios.post('/api/addDeleteRequest', this.requestDTO)
+                 .then((response) => {console.log("finished")})
         }
     },
 	mounted(){

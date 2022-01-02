@@ -1,15 +1,16 @@
 Vue.component('register', {
 	data: function(){
 		return{
-		    dto : {firstName: "",
-		           lastName: "",
-		           dateOfBirth: "",
-		           address: "",
-		           city: "",
-		           country: "",
-		           phoneNumber: "",
-		           email: "",
-		           password: ""
+		    dto : {
+                firstName: "",
+		        lastName: "",
+		        dateOfBirth: "",
+		        address: "",
+		        city: "",
+		        country: "",
+		        phoneNumber: "",
+		        email: "",
+		         password: ""
 		    },
 		    confirmPassword : "",
 		    enabled: false,
@@ -18,56 +19,57 @@ Vue.component('register', {
 		}
 	},
 template: `	
-			<div>
-            <nav-bar></nav-bar>
+		<div>
+        <nav-bar></nav-bar>
 
-        <div class="containter">
-            <div class="row">
-                <form class="col-md-2 reg-form">    
-                    <table style="margin-top: 10%;">
-                        <tr>
-                            <td><input type="text" placeholder="First name" class="input-text" v-model="dto.firstName"/></td>
-                        </tr>
-                        <br>
-                        <tr>
-                            <td><input type="text" placeholder="Last name" class="input-text" v-model="dto.lastName"/></td>
-                        </tr>
-                        <br>
-                         <tr>
-                            <td><input type="text" placeholder="Address" class="input-text" v-model="dto.address"/></td>
-                         </tr>
-                        <br>
-                         <tr>
-                            <td><input type="text" placeholder="City" class="input-text" v-model="dto.city"/></td>
-                         </tr>
-                        <br>
-                         <tr>
-                            <td><input type="text" placeholder="Country"class="input-text" v-model="dto.country"/></td>
-                         </tr>
-                        <br>
-                        <tr>
-                            <td><input type="text" placeholder="Phone number" class="input-text" v-model="dto.phoneNumber" /></td>
-                        </tr>
-                        <br>
-                        <tr>
-                            <td><input type="text" placeholder="E-mail" class="input-text" v-model="dto.email" /></td>
-                        </tr>
-                        <br>
-                        <tr>
-                            <td><input type="password" placeholder="Password" class="input-text"  v-model="dto.password"/></td>
-                        </tr>
-                        <br>
-                        <tr>
-                            <td><input type="password" placeholder="Confirm password" class="input-text" v-model="confirmPassword"/></td>
-                        </tr>
-                        <br>
-                        <tr>
-                            <td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register!" @click="registerUser"/></td>
-                        </tr>
-                    </table>
-                </form>
+            <div class="container">
+                <div class="row">
+                    <form class="col-md-2 reg-form">    
+                        <table style="margin-top: 10%;">
+                            <tr>
+                                <td><input type="text" placeholder="   First name" class="input-text" v-model="dto.firstName"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Last name" class="input-text" v-model="dto.lastName"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Address" class="input-text" v-model="dto.address"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   City" class="input-text" v-model="dto.city"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Country"class="input-text" v-model="dto.country"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Phone number" class="input-text" v-model="dto.phoneNumber" /></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   E-mail" class="input-text" v-model="dto.email" /></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="password" placeholder="   Password" class="input-text"  v-model="dto.password"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="password" placeholder="   Confirm password" class="input-text" v-model="confirmPassword"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register" @click="registerUser"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
             </div>
-        </div>
+            
 		</div>
 		`
 	,

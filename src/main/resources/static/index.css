@@ -85,7 +85,7 @@ header nav a:hover{
 }
 
 .wrapper{
-    margin: auto;
+  margin: auto;
 	display: flex;
 	width: 75%;
 	background-color: #1E4E6C;
@@ -187,19 +187,15 @@ header nav a:hover{
 
   .confirm{
 	  /* Rectangle 22 */
-      width: 480px;
-      height: 50px;
-      width: 480px;
-      height: 81px;
+      width: 400px;
+      height: 40px;
       font-family: Poppins;
       font-style: normal;
       font-weight: bold;
-      font-size: 28px;
+      font-size: 22px;
       line-height: 42px;
       letter-spacing: -0.017em;
-
       color: #FFFFFF;
-
       background: #28A745;
       border-radius: 90px;
   }
@@ -212,9 +208,10 @@ header nav a:hover{
 
   .input-text{
 	/* Group 1 */
-    width: 480px;
-    height: 50px;
-    font-size: 30px;
+    width: 400px;
+    height: 35px;
+    font-size: 18px;
+    font-family: poppins-light;
     color: white;
     background: #225779;
     border-radius: 90px;

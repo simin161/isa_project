@@ -1,7 +1,8 @@
 Vue.component('nav-bar', {
 	data: function(){
 		return{
-			loggedUser: null
+			loggedUser: null,
+			show: false
 		};
 	},
 template: `	
@@ -33,7 +34,15 @@ template: `
                              </a>
                             <nav class="col-sm-8">
                                 <a href="">menu 1</a>
-                                <a href="">menu 2</a>
+                                <div class="dropdown">
+                                  <button class="dropdown-button">Reservations</button>
+                                  <div class="dropdown-content">
+                                  <a href="#/">Bungalows</a>
+                                  <a href="#/">Boats</a>
+                                  <a href="#/">Instructors</a>
+                                  <a href="#/">Upcoming</a>
+                                  </div>
+                                </div>
                                 <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">Account</a>
                                 <a href="#/" @click="logout" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
                             </nav>

@@ -5,7 +5,7 @@ const boats = { template: '<boats></boats>'}
 const bungalows = { template: '<bungalows></bungalows>'}
 const instructors = { template: '<instructors></instructors>'}
 const profile = {template: '<profile></profile>'}
-
+const reservationHistory = {template: '<reservationHistory></reservationHistory>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -15,7 +15,8 @@ const router = new VueRouter({
 		{ path: '/boats', component: boats},
 		{ path: '/bungalows', component: bungalows},
 		{ path: '/instructors', component: instructors},
-		{ path: '/account', component: profile }
+		{ path: '/account', component: profile },
+		{ path: '/reservationHistory', component: reservationHistory}
 	  ]
 });
 

@@ -1,0 +1,91 @@
+.left-div{
+/* Rectangle 8 */
+
+    position: absolute;
+    width: 45%;
+    height: 130%;
+    top: 20%;
+    left:5%;
+    border: 5px solid #225779;
+    box-sizing: border-box;
+    border-radius: 52px;
+}
+
+.right-div{
+    /* Rectangle 7 */
+
+    position: absolute;
+    width: 45%;
+    height: 130%;
+    top: 20%;
+    left: 50%;
+    border: 5px solid #225779;
+    box-sizing: border-box;
+    border-radius: 52px;
+
+}
+
+.input-text-profile{
+    width: 90%;
+    height: 50px;
+    margin-left: 5%;
+    font-size: 30px;
+    color: white;
+    background: #225779;
+    border-radius: 90px;
+}
+.input-text-profile-small{
+    width: 44%;
+    height: 50px;
+    font-size: 30px;
+    float: left;
+    margin-left: 2%;
+    color: white;
+    background: #225779;
+    border-radius: 90px;
+}
+
+.change-data{
+    /* Rectangle 10 */
+    width: 205px;
+    height: 220px;
+    margin-left: 2%;
+    margin-top: 5%;
+
+    background: #225779;
+    border-radius: 90px;
+    cursor: pointer;
+}
+
+.change-pass{
+    /* Rectangle 27 */
+    float:left;
+    width: 205px;
+    height: 220px;
+    margin-left: 35%;
+    margin-top: -33%;
+
+    background: #225779;
+    border-radius: 90px;
+    cursor: pointer;
+}
+
+.delete-acc{
+    /* Rectangle 11 */
+
+    width: 205px;
+    height: 220px;
+    margin-left: 68%;
+    margin-top: -33%;
+
+    background: #225779;
+    border-radius: 90px;
+    cursor: pointer;
+}
+
+.image{
+    widht: 100px;
+    height: 100px;
+    margin-left: 25%;
+    margin-top: 25%;
+}

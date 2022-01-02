@@ -17,21 +17,15 @@ template: `
                     <form class="col-md-2 reg-form">    
                         <table style="margin-top: 10%;">
                             <tr>
-                                <td style="font-size:20px;">E-mail:</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="input-text" v-model="dto.email"/></td>
+                                <td><input type="text" placeholder="E-mail" class="input-text" v-model="dto.email"/></td>
                             </tr>
                             <br>
                             <tr>
-                                <td style="font-size:20px;">Password:</td>
-                            </tr>
-                            <tr>
-                                <td><input type="password" class="input-text" v-model="dto.password"/></td>
+                                <td><input type="password" placeholder="Password" class="input-text" v-model="dto.password"/></td>
                             </tr>
                             <br>
                             <tr>
-                                <td><input :disabled="!isComplete" @click="logInUser" v-bind:style="{'margin-left':'23%', 'background-color':backgroundColor, 'cursor':cursorStyle}"  class="confirm" type="button" value="Sign in!" /></td>
+                                <td><input :disabled="!isComplete" @click="logInUser" v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}"  class="confirm" type="button" value="Sign in!" /></td>
                             </tr>
                         </table>
                     </form>

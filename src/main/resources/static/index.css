@@ -186,12 +186,22 @@ header nav a:hover{
   }
 
   .confirm{
-	  background-color: seagreen;
-	  color: white;
-	  font-size: 22px;
-	  width: 135px;
-	  height: 45px;
-	  border-radius: 5px;
+	  /* Rectangle 22 */
+      width: 480px;
+      height: 50px;
+      width: 480px;
+      height: 81px;
+      font-family: Poppins;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 28px;
+      line-height: 42px;
+      letter-spacing: -0.017em;
+
+      color: #FFFFFF;
+
+      background: #28A745;
+      border-radius: 90px;
   }
 
   .confirm:hover{
@@ -201,14 +211,21 @@ header nav a:hover{
   }
 
   .input-text{
-	outline: 0;
-	border: none;
-	font-size: 20px;
-	background-color: #f8f1f1;
-	border-bottom: 2px solid black;
-	transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
-}
+	/* Group 1 */
+    width: 480px;
+    height: 50px;
+    font-size: 30px;
+    color: white;
+    background: #225779;
+    border-radius: 90px;
 
+}
+input[type="text"][disabled]{
+    color: gray;
+}
+::placeholder{
+	color:white;
+}
 .input-text:focus{
 	border: none;
 	border-bottom: 2px solid  rgb(63, 161, 106);;
@@ -250,3 +267,4 @@ header nav a:hover{
 	transition: box-shadow 0.5s ease, background-color 0.3s ease;
 	cursor: pointer;
 }
+

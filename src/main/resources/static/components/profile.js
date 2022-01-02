@@ -3,13 +3,12 @@ Vue.component('profile', {
 		return{
 			dto: null,
 			enable: true,
-			showProfile: true,
 			confirmPassword: '',
 			passwordDTO: {
 			           id: null,
 			           newPassword: ''
 			},
-			showDelete: false,
+			showForm: 1,
 			requestDTO:{
 			    id: null,
 			    explanation: ''
@@ -22,104 +21,74 @@ Vue.component('profile', {
 		<nav-bar></nav-bar>
          <div class="containter">
              <div class="row">
-                  <form v-show="!showProfile" class="col-md-2 reg-form">
+                  <form v-show="showForm == 2" class="col-md-2 reg-form">
                        <table style="margin-top: 10%;">
                          <tr>
-                            <td><input class="confirm" type="button" value="Show Profile!" @click="showProfile = true"/></td>
+                            <td><input class="confirm" type="button" value="Show Profile!" @click="showForm = 1"/></td>
                          </tr>
                          <tr>
-                            <td style="font-size:20px;">Password:</td>
-                         </tr>
-                         <tr>
-                            <td><input type="password" class="input-text" v-model="passwordDTO.newPassword"/></td>
+                            <td><input type="password" placeholder="Password" class="input-text" v-model="passwordDTO.newPassword"/></td>
                          </tr>
                          <br>
                          <tr>
-                            <td style="font-size:20px;">Confirm password:</td>
-                         </tr>
-                         <tr>
-                            <td><input type="password" class="input-text" v-model="confirmPassword"/></td>
+                            <td><input type="password" placeholder="Confirm password" class="input-text" v-model="confirmPassword"/></td>
                          </tr>
                          <tr>
                             <td><input :disabled="!isCompletePassword" class="confirm" type="button" value="Save!" @click="savePassword"/></td>
                          </tr>
                        </table>
                   </form>
-                  <form v-show="showDelete" class="col-md-2 reg-form">
+                  <form v-show="showForm == 3" class="col-md-2 reg-form">
                        <table style="margin-top: 10%;">
                            <tr>
-                               <td><input class="confirm" type="button" value="Show Profile!" @click="showProfile = true"/></td>
+                               <td><input class="confirm" type="button" value="Show Profile!" @click="showForm = 1"/></td>
                            </tr>
                            <tr>
-                                <td style="font-size:20px;">Explanation:</td>
-                           </tr>
-                           <tr>
-                                <td><input type="text" class="input-text" v-model="requestDTO.explanation"/></td>
+                                <td><input type="text" placeholder="Explanation" class="input-text" v-model="requestDTO.explanation"/></td>
                            </tr>
                            <tr>
                                 <td><input class="confirm" type="button" value="Send!" @click="sendRequest"/></td>
                            </tr>
                       </table>
                   </form>
-                         <form v-show="showProfile" class="col-md-2 reg-form">
+                         <form v-show="showForm == 1" class="col-md-2 reg-form">
                              <table style="margin-top: 10%;">
                                  <tr>
                                     <td><input class="confirm" type="button" value="Edit!" @click="enable = !enable"/></td>
                                  </tr>
                                  <tr>
-                                    <td><input class="confirm" type="button" value="Change password!" @click="showProfile = false"/></td>
+                                    <td><input class="confirm" type="button" value="Change password!" @click="showForm = 2"/></td>
                                  </tr>
                                  <tr>
-                                    <td><input class="confirm" type="button" value="Delete profile!" @click="showDelete = true"/></td>
+                                    <td><input class="confirm" type="button" value="Delete profile!" @click="showForm = 3"/></td>
                                  </tr>
 
                                  <tr>
-                                     <td style="font-size:20px;">First name:</td>
-                                 </tr>
-                                 <tr>
-                                     <td><input :disabled="enable" type="text" class="input-text" v-model="dto.firstName"/></td>
+                                     <td><input placeholder="First name" :disabled="enable" type="text" class="input-text" v-model="dto.firstName"/></td>
                                  </tr>
                                  <br>
                                  <tr>
-                                     <td style="font-size:20px;">Last name:</td>
-                                 </tr>
-                                 <tr>
-                                     <td><input :disabled="enable" type="text" class="input-text" v-model="dto.lastName"/></td>
+                                     <td><input :disabled="enable" placeholder="Last name" type="text" class="input-text" v-model="dto.lastName"/></td>
                                  </tr>
                                  <br>
                                   <tr>
-                                     <td style="font-size:20px;">Address:</td>
-                                  </tr>
-                                  <tr>
-                                     <td><input :disabled="enable" type="text" class="input-text" v-model="dto.address"/></td>
+                                     <td><input :disabled="enable" placeholder="Address" type="text" class="input-text" v-model="dto.address"/></td>
                                   </tr>
                                  <br>
                                   <tr>
-                                     <td style="font-size:20px;">City:</td>
-                                  </tr>
-                                  <tr>
-                                     <td><input :disabled="enable" type="text" class="input-text" v-model="dto.city"/></td>
+                                     <td><input :disabled="enable" placeholder="City" type="text" class="input-text" v-model="dto.city"/></td>
                                   </tr>
                                  <br>
                                   <tr>
-                                     <td style="font-size:20px;">Country:</td>
-                                  </tr>
-                                  <tr>
-                                     <td><input :disabled="enable" type="text" class="input-text" v-model="dto.country"/></td>
+                                     <td><input :disabled="enable" placeholder="Country" type="text" class="input-text" v-model="dto.country"/></td>
                                   </tr>
                                  <br>
                                  <tr>
-                                     <td style="font-size:20px;">Phone number:</td>
-                                 </tr>
-                                 <tr>
-                                     <td><input :disabled="enable" type="text" class="input-text" v-model="dto.phoneNumber" /></td>
+                                     <td><input :disabled="enable" placeholder="Phone number" type="text" class="input-text" v-model="dto.phoneNumber" /></td>
                                  </tr>
                                  <br>
                                  <tr>
-                                     <td style="font-size:20px;">E-mail:</td>
-                                 </tr>
-                                 <tr>
-                                     <td><input :disabled="true" type="text" class="input-text" v-model="dto.email" /></td>
+                                     <td><input :disabled="true" type="text" placeholder="E-mail" class="input-text" v-model="dto.email" /></td>
                                  </tr>
                                  <br>
                                  <tr v-if="dto.userType == 'CUSTOMER' && dto.loyaltyProgram != null">

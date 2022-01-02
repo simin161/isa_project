@@ -24,8 +24,8 @@ template: `
 
             <div class="container">
                 <div class="row">
-                    <form class="col-md-2 reg-form">    
-                        <table style="margin-top: 10%;">
+                    <form class="d-flex justify-content-evenly align-items-center reg-form">    
+                        <table style="margin-top: 10px;">
                             <tr>
                                 <td><input type="text" placeholder="   First name" class="input-text" v-model="dto.firstName"/></td>
                             </tr>

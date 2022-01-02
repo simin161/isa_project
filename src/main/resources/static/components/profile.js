@@ -16,7 +16,7 @@ Vue.component('profile', {
 		};
 	}
 	,
-	template: `
+template: `
 		<div>
 		<nav-bar></nav-bar>
 		<p style="margin-left: 6.5%; font-family: Poppins; font-style: normal; font-weight: bold; font-size: 36px; line-height: 54px; align-items: center; text-align: center; letter-spacing: -0.017em; color: #FFFFFF;">
@@ -132,7 +132,6 @@ Vue.component('profile', {
                          </form>
                      </div>
                  </div>
-
 		</div>
 		`
 	,

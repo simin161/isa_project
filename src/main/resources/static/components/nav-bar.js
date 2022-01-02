@@ -34,7 +34,7 @@ template: `
                              </a>
                             <nav class="col-sm-8">
                                 <a href="">menu 1</a>
-                                <div class="dropdown">
+                                <div v-show="loggedUser.userType == 'CUSTOMER'" class="dropdown">
                                   <button class="dropdown-button">Reservations</button>
                                   <div class="dropdown-content">
                                   <a href="#/">Bungalows</a>

@@ -26,70 +26,43 @@ template: `
                 <form class="col-md-2 reg-form">    
                     <table style="margin-top: 10%;">
                         <tr>
-                            <td style="font-size:20px;">First name:</td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="input-text" v-model="dto.firstName"/></td>
+                            <td><input type="text" placeholder="First name" class="input-text" v-model="dto.firstName"/></td>
                         </tr>
                         <br>
                         <tr>
-                            <td style="font-size:20px;">Last name:</td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="input-text" v-model="dto.lastName"/></td>
+                            <td><input type="text" placeholder="Last name" class="input-text" v-model="dto.lastName"/></td>
                         </tr>
                         <br>
                          <tr>
-                            <td style="font-size:20px;">Address:</td>
-                         </tr>
-                         <tr>
-                            <td><input type="text" class="input-text" v-model="dto.address"/></td>
+                            <td><input type="text" placeholder="Address" class="input-text" v-model="dto.address"/></td>
                          </tr>
                         <br>
                          <tr>
-                            <td style="font-size:20px;">City:</td>
-                         </tr>
-                         <tr>
-                            <td><input type="text" class="input-text" v-model="dto.city"/></td>
+                            <td><input type="text" placeholder="City" class="input-text" v-model="dto.city"/></td>
                          </tr>
                         <br>
                          <tr>
-                            <td style="font-size:20px;">Country:</td>
-                         </tr>
-                         <tr>
-                            <td><input type="text" class="input-text" v-model="dto.country"/></td>
+                            <td><input type="text" placeholder="Country"class="input-text" v-model="dto.country"/></td>
                          </tr>
                         <br>
                         <tr>
-                            <td style="font-size:20px;">Phone number:</td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="input-text" v-model="dto.phoneNumber" /></td>
+                            <td><input type="text" placeholder="Phone number" class="input-text" v-model="dto.phoneNumber" /></td>
                         </tr>
                         <br>
                         <tr>
-                            <td style="font-size:20px;">E-mail:</td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="input-text" v-model="dto.email" /></td>
+                            <td><input type="text" placeholder="E-mail" class="input-text" v-model="dto.email" /></td>
                         </tr>
                         <br>
                         <tr>
-                            <td style="font-size:20px;">Password:</td>
-                        </tr>
-                        <tr>
-                            <td><input type="password" class="input-text"  v-model="dto.password"/></td>
+                            <td><input type="password" placeholder="Password" class="input-text"  v-model="dto.password"/></td>
                         </tr>
                         <br>
                         <tr>
-                            <td style="font-size:20px;">Confirm password:</td>
-                        </tr>
-                        <tr>
-                            <td><input type="password" class="input-text" v-model="confirmPassword"/></td>
+                            <td><input type="password" placeholder="Confirm password" class="input-text" v-model="confirmPassword"/></td>
                         </tr>
                         <br>
                         <tr>
-                            <td><input v-bind:style="{'margin-left':'23%', 'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register!" @click="registerUser"/></td>
+                            <td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register!" @click="registerUser"/></td>
                         </tr>
                     </table>
                 </form>
@@ -111,7 +84,7 @@ template: `
         		    /\S/.test(this.dto.password) &&
         		    /\S/.test(this.confirmPassword);
 
-        		    this.backgroundColor = flag ? "seagreen" : "#f8f1f1";
+        		    this.backgroundColor = flag ? "seagreen" : "#2e4f3c";
         		    this.cursorStyle = flag ? "pointer" : "default";
         		    return flag;
         		  }

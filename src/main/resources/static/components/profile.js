@@ -123,7 +123,7 @@ Vue.component('profile', {
                 /\S/.test(this.dto.email);
 
 
-                this.backgroundColor = flag ? "seagreen" : "#f8f1f1";
+                this.backgroundColor = flag ? "seagreen" : "#2e4f3c";
                 this.cursorStyle = flag ? "pointer" : "default";
                 return flag;
         },

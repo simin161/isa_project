@@ -84,7 +84,7 @@ template: `
         		    /\S/.test(this.dto.password) &&
         		    /\S/.test(this.confirmPassword);
 
-        		    this.backgroundColor = flag ? "seagreen" : "#f8f1f1";
+        		    this.backgroundColor = flag ? "seagreen" : "#2e4f3c";
         		    this.cursorStyle = flag ? "pointer" : "default";
         		    return flag;
         		  }

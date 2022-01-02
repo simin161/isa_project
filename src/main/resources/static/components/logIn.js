@@ -37,7 +37,7 @@ template: `
         computed : {
             isComplete () {
                 flag = /\S/.test(this.dto.email) && /\S/.test(this.dto.password);
-                this.backgroundColor = flag ? "seagreen" : "#f8f1f1";
+                this.backgroundColor = flag ? "seagreen" : "#2e4f3c";
                 this.cursorStyle = flag ? "pointer" : "default";
                 return flag;
             }

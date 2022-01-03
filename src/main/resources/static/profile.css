@@ -42,7 +42,7 @@
 
 }
 
-.input-text-profile{
+.info-text-profile{
     width: 90%;
     height: 36px;
     margin-top: 3%;
@@ -53,7 +53,7 @@
     background: #225779;
     border-radius: 90px;
 }
-.input-text-profile-small{
+.info-text-profile-small{
     width: 42.5%;
     height: 36px;
     margin-top: 3%;
@@ -66,6 +66,32 @@
     border-radius: 90px;
 }
 
+.update-text-profile{
+    width: 100%;
+    height: 36px;
+    
+    margin-top: 3%;
+    font-size: 18px;
+    font-family: poppins-bold;
+    color: white;
+    background: #225779;
+    border-radius: 90px;
+}
+
+
+.confirm-profile{
+    width: 100%;
+    height: 40px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 42px;
+    letter-spacing: -0.017em;
+    color: #FFFFFF;
+    background: #28A745;
+    border-radius: 90px;
+}
 
 .change-data{
     /* Rectangle 10 */

@@ -43,7 +43,7 @@ template: `
                                     <a href="#/">Upcoming</a>
                                   </div>
                                 </div>
-                                <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Profile</a>
+                                <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>
                                 <a href="#/" @click="logout" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
                             </nav>
                         </div>

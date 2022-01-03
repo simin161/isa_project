@@ -1,9 +1,26 @@
+.title-text-bold{
+    margin: 10px 0 10px 0;
+    font-family: poppins-bold; 
+    font-size: 24px; 
+    align-items: center; 
+    text-align: center; 
+    color: #FFFFFF;
+}
+.title-text-light{
+    margin: 10px 0 10px 0;
+    font-family: poppins-light;  
+    font-size: 24px; 
+    align-items: center; 
+    text-align: center; 
+    color: #FFFFFF;
+}
+
 .left-div{
 /* Rectangle 8 */
 
     position: absolute;
+    padding: 0 0 10px 0;
     width: 45%;
-    height: 130%;
     top: 20%;
     left:5%;
     border: 5px solid #225779;
@@ -15,8 +32,8 @@
     /* Rectangle 7 */
 
     position: absolute;
+    padding: 0 0 10px 0;
     width: 45%;
-    height: 130%;
     top: 20%;
     left: 50%;
     border: 5px solid #225779;
@@ -25,32 +42,65 @@
 
 }
 
-.input-text-profile{
+.info-text-profile{
     width: 90%;
-    height: 50px;
+    height: 36px;
+    margin-top: 3%;
     margin-left: 5%;
-    font-size: 30px;
+    font-size: 18px;
+    font-family: poppins-bold;
     color: white;
     background: #225779;
     border-radius: 90px;
 }
-.input-text-profile-small{
-    width: 44%;
-    height: 50px;
-    font-size: 30px;
+.info-text-profile-small{
+    width: 42.5%;
+    height: 36px;
+    margin-top: 3%;
+    margin-left: 5%;
+    font-size: 18px;
+    font-family: poppins-bold;
     float: left;
-    margin-left: 2%;
     color: white;
     background: #225779;
     border-radius: 90px;
 }
 
+.update-text-profile{
+    width: 100%;
+    height: 36px;
+    
+    margin-top: 3%;
+    font-size: 18px;
+    font-family: poppins-bold;
+    color: white;
+    background: #225779;
+    border-radius: 90px;
+}
+
+
+.confirm-profile{
+    width: 100%;
+    height: 40px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 42px;
+    letter-spacing: -0.017em;
+    color: #FFFFFF;
+    background: #28A745;
+    border-radius: 90px;
+}
+
 .change-data{
     /* Rectangle 10 */
-    width: 205px;
-    height: 220px;
-    margin-left: 2%;
+    width: 30%;
+
     margin-top: 5%;
+
+    position: relative;
+
 
     background: #225779;
     border-radius: 90px;
@@ -59,11 +109,12 @@
 
 .change-pass{
     /* Rectangle 27 */
-    float:left;
-    width: 205px;
-    height: 220px;
-    margin-left: 35%;
-    margin-top: -33%;
+    width: 30%;
+
+    margin-top: 5%;
+
+    position: relative;
+
 
     background: #225779;
     border-radius: 90px;
@@ -72,11 +123,12 @@
 
 .delete-acc{
     /* Rectangle 11 */
+    width: 30%;
 
-    width: 205px;
-    height: 220px;
-    margin-left: 68%;
-    margin-top: -33%;
+    margin-top: 5%;
+
+    position: relative;
+
 
     background: #225779;
     border-radius: 90px;
@@ -84,8 +136,11 @@
 }
 
 .image{
-    widht: 100px;
-    height: 100px;
-    margin-left: 25%;
-    margin-top: 25%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: auto;
+    max-width: 96px;
+    max-height: 96px;
 }

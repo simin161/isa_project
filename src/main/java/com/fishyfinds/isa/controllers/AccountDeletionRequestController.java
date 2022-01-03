@@ -1,7 +1,7 @@
 package com.fishyfinds.isa.controllers;
 
-import com.fishyfinds.isa.mappers.DtoToDeleteRequest;
-import com.fishyfinds.isa.service.DeleteRequestService;
+import com.fishyfinds.isa.mappers.DtoToAccountDeletionRequest;
+import com.fishyfinds.isa.service.AccountDeletionRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,14 +13,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
-public class DeleteRequestController {
+public class AccountDeletionRequestController {
 
     @Autowired
-    private DeleteRequestService deleteRequestService;
+    private AccountDeletionRequestService accountDeletionRequestService;
 
-    @PostMapping("/addDeleteRequest")
+    @PostMapping("/sendAccountDeletionRequest")
     public void add(@RequestBody Map<String, String> message){
-        deleteRequestService.add(DtoToDeleteRequest.MapToDeleteRequest(message));
+        accountDeletionRequestService.add(DtoToAccountDeletionRequest.MapToDeleteRequest(message));
     }
 
 }

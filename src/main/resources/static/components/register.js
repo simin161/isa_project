@@ -10,7 +10,8 @@ Vue.component('register', {
 		        country: "",
 		        phoneNumber: "",
 		        email: "",
-		         password: ""
+		        password: "",
+                userType: "CUSTOMER"
 		    },
 		    confirmPassword : "",
 		    enabled: false,

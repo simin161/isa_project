@@ -1,7 +1,7 @@
 package com.fishyfinds.isa.controllers;
 
 import com.fishyfinds.isa.model.beans.users.User;
-import com.fishyfinds.isa.service.LogInService;
+import com.fishyfinds.isa.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,26 +13,27 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
-public class LogInController {
+public class AuthenticationController {
 
     @Autowired
-    private LogInService logInService;
+    private AuthenticationService authenticationService;
 
-    @PostMapping("/logIn")
+    @PostMapping("/signIn")
     @PreAuthorize("hasRole('ADMIN')")
     public boolean logIn(@RequestBody Map<String, String> message, HttpServletRequest request, HttpSession session){
-        return logInService.logIn(message, request, session);
+        return authenticationService.signIn(message, request, session);
     }
 
-    @GetMapping("/logOut")
+    @GetMapping("/signOut")
     @PreAuthorize("hasRole('ADMIN')")
-    public void logOut(HttpSession session){
-        logInService.logOut(session);
+    public void signOut(HttpSession session){
+        authenticationService.signOut(session);
     }
-    @GetMapping("/getLoggedUser")
+
+    @GetMapping("/authenticateUser")
     @PreAuthorize("hasRole('ADMIN')")
     public User getLoggedUser(HttpServletRequest request){
-        return logInService.getLoggedUser(request);
+        return authenticationService.authenticateUser(request);
 
         }
 }

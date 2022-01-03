@@ -13,7 +13,7 @@ template: `
 			<div class="wrapper">
 				
 				<div class="card">
-					<img src="images/bungalow.jpg">
+					<img src="images/homepage-bungalows.jpg">
 					<div class="info">
 						<h1>Bungalows</h1>
 						<p>Lorem Ipsum hehe hu hu hihihi</p>
@@ -22,7 +22,7 @@ template: `
 				</div>
 
 				<div class="card">
-					<img src="images/ship.jpg">
+					<img src="images/homepage-boats.jpg">
 					<div class="info">
 						<h1>Boats</h1>
 						<p>Lorem Ipsum hehe hu hu hihihi</p>
@@ -31,7 +31,7 @@ template: `
 				</div>		
 
 				<div class="card">
-					<img src="images/course.jpg">
+					<img src="images/homepage-courses.jpg">
 					<div class="info">
 						<h1>Courses</h1>
 						<p>Lorem Ipsum hehe hu hu hihihi</p>
@@ -39,38 +39,9 @@ template: `
 					</div>
 				</div>
 
-
 			</div>
 
 		</div>
-
-<!--
-
-			<div class="container-fluid" style="background-color: #1E4E6C;">
-				<div class="row">
-					<div class="col-xs-12 col-md-4 box">
-
-							<img src="images/bungalow.jpg" class="img-rounded">
-							<h2>Bungalows</h2>
-							<a href="#/bungalows">See more ...</a>
-					</div>
-					<div class="col-xs-12 col-md-4 boxes">
-							<img src="images/ship.jpg">
-							<h2>Boats</h2>
-							<a href="#/boats">See more ...</a>
-					</div>
-					<div class="col-xs-12 col-md-4 boxes">
-						<div class="box">
-							<img src="images/course.jpg">
-							<h2>Instructors</h2>
-							<a href="#/instructors">See more ...</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
--->
-
 		`
 
 });

@@ -14,17 +14,20 @@ import java.util.Map;
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
 public class RegistrationController {
+
     @Autowired
     private RegistrationService registrationService;
+
     @PostMapping("/registerUser")
     @PreAuthorize("hasRole('ADMIN')")
     public boolean registerUser(@RequestBody Map<String, String> message, HttpServletRequest request){
-        return registrationService.registerCustomer(DtoToUser.MapToCustomer(message), getSiteURL(request));
+        return registrationService.registerUser(message, getSiteURL(request));
+        //return registrationService.registerCustomer(DtoToUser.MapToCustomer(message), getSiteURL(request));
     }
 
-    @GetMapping("/verify")
+    @GetMapping("/verifyCustomerAccount")
     public String verifyUser(@Param("code") String code) {
-        return registrationService.verify(code) ? "verify_success" : "verify_fail";
+        return registrationService.verifyCustomerAccount(code) ? "verify_success" : "verify_fail";
     }
 
     private String getSiteURL(HttpServletRequest request) {

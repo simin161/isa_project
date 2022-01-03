@@ -37,13 +37,13 @@ template: `
                                 <div v-show="loggedUser.userType == 'CUSTOMER'" class="dropdown">
                                   <button class="dropdown-button">Reservations</button>
                                   <div class="dropdown-content">
-                                  <a href="#/">Bungalows</a>
-                                  <a href="#/">Boats</a>
-                                  <a href="#/">Instructors</a>
-                                  <a href="#/">Upcoming</a>
+                                    <a href="#/">Bungalows</a>
+                                    <a href="#/">Boats</a>
+                                    <a href="#/">Instructors</a>
+                                    <a href="#/">Upcoming</a>
                                   </div>
                                 </div>
-                                <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">Account</a>
+                                <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Profile</a>
                                 <a href="#/" @click="logout" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
                             </nav>
                         </div>

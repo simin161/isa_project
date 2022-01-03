@@ -1,9 +1,26 @@
+.title-text-bold{
+    margin: 10px 0 10px 0;
+    font-family: poppins-bold; 
+    font-size: 24px; 
+    align-items: center; 
+    text-align: center; 
+    color: #FFFFFF;
+}
+.title-text-light{
+    margin: 10px 0 10px 0;
+    font-family: poppins-light;  
+    font-size: 24px; 
+    align-items: center; 
+    text-align: center; 
+    color: #FFFFFF;
+}
+
 .left-div{
 /* Rectangle 8 */
 
     position: absolute;
+    padding: 0 0 10px 0;
     width: 45%;
-    height: 130%;
     top: 20%;
     left:5%;
     border: 5px solid #225779;
@@ -15,8 +32,8 @@
     /* Rectangle 7 */
 
     position: absolute;
+    padding: 0 0 10px 0;
     width: 45%;
-    height: 130%;
     top: 20%;
     left: 50%;
     border: 5px solid #225779;
@@ -27,23 +44,29 @@
 
 .input-text-profile{
     width: 90%;
-    height: 50px;
+    height: 36px;
+    margin-top: 3%;
     margin-left: 5%;
-    font-size: 30px;
+    font-size: 18px;
+    font-family: poppins-bold;
     color: white;
     background: #225779;
     border-radius: 90px;
 }
 .input-text-profile-small{
-    width: 44%;
-    height: 50px;
-    font-size: 30px;
+    width: 42.5%;
+    height: 36px;
+    margin-top: 3%;
+    margin-left: 5%;
+    font-size: 18px;
+    font-family: poppins-bold;
     float: left;
-    margin-left: 2%;
     color: white;
     background: #225779;
     border-radius: 90px;
 }
+
+
 
 .change-data{
     /* Rectangle 10 */

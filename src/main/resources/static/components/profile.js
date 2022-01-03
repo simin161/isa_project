@@ -238,7 +238,7 @@ template: `
         }
     },
 	mounted(){
-	    axios.get("/api/getLoggedUser")
+	    axios.get("/api/authenticateUser")
 	         .then(response => (this.dto = response.data))
 	}
 });

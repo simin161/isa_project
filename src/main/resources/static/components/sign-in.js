@@ -25,7 +25,7 @@ template: `
                             </tr>
                             <br>
                             <tr>
-                                <td><input :disabled="!isComplete" @click="logInUser" v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}"  class="confirm" type="button" value="Sign in" /></td>
+                                <td><input :disabled="!isComplete" @click="signIn" v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}"  class="confirm" type="button" value="Sign in" /></td>
                             </tr>
                         </table>
                     </form>
@@ -43,8 +43,8 @@ template: `
             }
         },
         methods : {
-            logInUser : function(){
-                axios.post('/api/logIn', this.dto)
+            signIn : function(){
+                axios.post('/api/signIn', this.dto)
                      .then(response =>{
                             if(response.data === true){
                                 router.push('/')

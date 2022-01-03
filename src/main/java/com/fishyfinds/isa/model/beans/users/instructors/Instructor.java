@@ -26,5 +26,19 @@ public class Instructor extends User {
 
 	@Column(name = "biography", nullable = false)
 	private String biography;
-	
+
+	public Instructor(String firstName, String lastName, String address, String city, String country,
+				 String phoneNumber, String email, String password){
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.city = city;
+		this.country = country;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.password = password;
+	}
+
+
+
 }

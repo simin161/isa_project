@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name="DeleteRequest")
-public class DeleteRequest {
+public class AccountDeletionRequest {
 
     @Id
     @GenericGenerator(name = "seq", strategy="increment")
@@ -25,9 +25,9 @@ public class DeleteRequest {
     @Column(name="explanation")
     private String explanation;
 
-    public DeleteRequest() {}
+    public AccountDeletionRequest() {}
 
-    public DeleteRequest(Long userId, String explanation){
+    public AccountDeletionRequest(Long userId, String explanation){
         this.user = new User();
         this.user.setId(userId);
         this.explanation = explanation;

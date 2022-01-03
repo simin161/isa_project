@@ -150,7 +150,7 @@ template: `
                                     </tr>
                                     <br>
                                     <tr>
-                                    <td><input style="background-color: red" class="confirm-profile" type="button" value="Send request" @click="sendRequest"/></td>
+                                    <td><input style="background-color: red" class="confirm-profile" type="button" value="Send request" @click="sendAccountDeletionRequest"/></td>
                                     </tr>
                                     <br>
                                     <tr>
@@ -223,9 +223,9 @@ template: `
                 }
             })
         },
-        sendRequest : function(){
+        sendAccountDeletionRequest : function(){
         this.requestDTO.id = this.dto.id;
-            axios.post('/api/addDeleteRequest', this.requestDTO)
+            axios.post('/api/sendAccountDeletionRequest', this.requestDTO)
                  .then((response) => {
                      console.log("SUCCESS - User's request has been sent!");
                      backToOptions();

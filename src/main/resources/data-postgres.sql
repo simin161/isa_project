@@ -2,10 +2,6 @@ INSERT INTO users values (1, 'address', 'city','country', 'mail@mail.com', 'Firs
 INSERT INTO loyalty_program values (1, 23.4, 'shark', 0,  40);
 INSERT INTO customer values (45,0, 1, 1);
 
-INSERT INTO users values (2, 'address', 'city', 'country','instructor@mail.com', 'First1', true, false, 'Last1', 'password', '12345678',2,'');
-INSERT INTO loyalty_program values (2, 23.4, 'shark', 0,  40);
-INSERT INTO instructor values ('Biography, biography, biography', 2, 2);
-
 INSERT INTO loyalty_program values(3, 20.5, 'baby shark', 0, 0);
 
 INSERT INTO location values (1, 'a',34.5, 23.4);

@@ -7,7 +7,6 @@ Vue.component('nav-bar', {
 	},
 template: `	
 		<div>
-
 			<header class="container-fluid">
                 <div class="row">   
                     <div class="container">

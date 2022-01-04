@@ -11,66 +11,98 @@ Vue.component('register', {
 		        phoneNumber: "",
 		        email: "",
 		        password: "",
-                userType: "CUSTOMER"
+                userType: "",
+                reasoning: "",
 		    },
 		    confirmPassword : "",
 		    enabled: false,
 		    backgroundColor: "seagreen",
-		    cursorStyle: "default"
+            registrationTitle: "",
+		    cursorStyle: "default",
+            showForm: 0,
 		}
 	},
 template: `	
 		<div>
-        <nav-bar></nav-bar>
+            <nav-bar></nav-bar>
 
-            <div class="container">
-                <div class="row">
-                    <form class="d-flex justify-content-evenly align-items-center reg-form">    
-                        <table style="margin-top: 10px;">
-                            <tr>
-                                <td><input type="text" placeholder="   First name" class="input-text" v-model="dto.firstName"/></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="text" placeholder="   Last name" class="input-text" v-model="dto.lastName"/></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="text" placeholder="   Address" class="input-text" v-model="dto.address"/></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="text" placeholder="   City" class="input-text" v-model="dto.city"/></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="text" placeholder="   Country"class="input-text" v-model="dto.country"/></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="text" placeholder="   Phone number" class="input-text" v-model="dto.phoneNumber" /></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="text" placeholder="   E-mail" class="input-text" v-model="dto.email" /></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="password" placeholder="   Password" class="input-text"  v-model="dto.password"/></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input type="password" placeholder="   Confirm password" class="input-text" v-model="confirmPassword"/></td>
-                            </tr>
-                            <br>
-                            <tr>
-                                <td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register" @click="registerUser"/></td>
-                            </tr>
-                        </table>
-                    </form>
+            <div class="col-md-4 left-div" style="margin-top:-20px">
+                    <p class="title-text-bold" style="margin-top:30px;"> Registration </p>
+                    <div class="row">
+                        <p class="title-text-light">Create and account!</p>
+                        <p class="title-text-light" style="font-size:15px;">Register to FishyFinds:</p>
+                            </div>
+                            <div class="row options justify-content-evenly">
+                                <div class="change-data justify-content-center" @click="registerCustomer">
+                                    <img class="image" src="images/register-customer.png">
+                                    <p class="title-text-bold" style="font-size:15px"> as a Customer </p>
+                                </div>
+                                <div class="change-pass justify-content-center" @click="registerOwner">
+                                    <img class="image" src="images/register-owner.png">
+                                    <p class="title-text-bold" style="font-size:15px"> as an Owner </p>
+                                </div>
+                                <div class="delete-acc justify-content-center" @click="registerInstructor">
+                                    <img class="image" src="images/register-instructor.png">
+                                    <p class="title-text-bold" style="font-size:15px"> as an Instructor </p>
+                                </div>
+                    </div>
+            </div>
+
+
+            <div class="col-md-4 right-div" style="margin-top:-20px" v-show="showForm == 1 || showForm == 2 || showForm == 3">
+                <div class="container">
+                    <p class="title-text-bold" style="margin-top:10px;"> {{registrationTitle}} </p>
+                    <div class="row">
+                        <form class="d-flex justify-content-evenly align-items-center reg-form">    
+                            <table style="margin-top: 10px;">
+                                <tr>
+                                    <td><input type="text" placeholder="   First name" class="input-text" v-model="dto.firstName"/></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="text" placeholder="   Last name" class="input-text" v-model="dto.lastName"/></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="text" placeholder="   Address" class="input-text" v-model="dto.address"/></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="text" placeholder="   City" class="input-text" v-model="dto.city"/></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="text" placeholder="   Country"class="input-text" v-model="dto.country"/></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="text" placeholder="   Phone number" class="input-text" v-model="dto.phoneNumber" /></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="text" placeholder="   E-mail" class="input-text" v-model="dto.email" /></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="password" placeholder="   Password" class="input-text"  v-model="dto.password"/></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input type="password" placeholder="   Confirm password" class="input-text" v-model="confirmPassword"/></td>
+                                </tr>
+                                <br>
+                                <tr v-show="showForm == 2 || showForm == 3">
+                                    <textarea rows="5" name="text" placeholder="   Reasoning" class="input-text-area" v-model="dto.reasoning" ></textarea>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register" @click="registerUser"/></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
                 </div>
             </div>
-            
 		</div>
 		`
 	,
@@ -101,6 +133,22 @@ template: `
             else{
                 console.log("Invalid password")
             }
+        },
+        registerCustomer : function(){
+            this.showForm = 1;
+            this.dto.userType = "CUSTOMER";
+            this.registrationTitle = "Customer Registration";
+        },
+        registerOwner : function(){
+            this.showForm = 2;
+            this.dto.userType = "OWNER";
+            this.registrationTitle = "Owner Registration";
+        },
+        registerInstructor : function(){
+            this.showForm = 3;
+            this.dto.userType = "INSTRUCTOR";
+            this.registrationTitle = "Instructor Registration";
+
         }
 
     }

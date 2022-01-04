@@ -1,8 +1,10 @@
 package com.fishyfinds.isa.service;
 
 import com.fishyfinds.isa.mappers.DtoToUser;
+import com.fishyfinds.isa.model.beans.users.Admin;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.beans.users.instructors.Instructor;
 import com.fishyfinds.isa.model.beans.users.owners.Owner;
 import com.fishyfinds.isa.model.enums.UserType;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
@@ -45,10 +47,10 @@ public class RegistrationService {
                 successfullyRegistered = registerOwner(DtoToUser.MapToOwner(map), siteURL);
                 break;
             case INSTRUCTOR:
-                System.out.println("Wednesday");
+                successfullyRegistered = registerInstructor(DtoToUser.MapToInstructor(map), siteURL);
                 break;
             case ADMIN:
-                System.out.println("Wednesday");
+                successfullyRegistered = registerAdmin(DtoToUser.MapToAdmin(map), siteURL);
                 break;
         }
         return successfullyRegistered;
@@ -60,6 +62,7 @@ public class RegistrationService {
             customer.setUserType(UserType.CUSTOMER);
             setVerificationCode(RandomString.make(64), customer);
             try {
+                customerRepository.save(customer);
                 mailService.sendVerificationEmail(customer, siteURL);
             } catch (Exception e) {
                 successfullyRegistered = false;
@@ -69,17 +72,40 @@ public class RegistrationService {
     }
 
     public boolean registerOwner(Owner owner, String siteURL){
-        boolean successfullyRegistered = true;
+        boolean successfullyRegistered = false;
         if(!checkIfEmailExists(owner.getEmail())){
             owner.setUserType(UserType.OWNER);
+            activateAccount(owner);
+            ownerRepository.save(owner);
+            successfullyRegistered = true;
+        }
+        return successfullyRegistered;
+    }
+
+    public boolean registerInstructor(Instructor instructor, String siteURL){
+        boolean successfullyRegistered = false;
+        if(!checkIfEmailExists(instructor.getEmail())){
+            instructor.setUserType(UserType.INSTRUCTOR);
+            activateAccount(instructor);
+            instructorRepository.save(instructor);
+            successfullyRegistered = true;
+        }
+        return successfullyRegistered;
+    }
+
+    public boolean registerAdmin(Admin admin, String siteURL){
+        boolean successfullyRegistered = true;
+        if(!checkIfEmailExists(admin.getEmail())){
+            admin.setUserType(UserType.ADMIN);
             try {
-                mailService.sendRegistrationRequest(owner, siteURL);
+                activateAccount(admin);
             } catch (Exception e) {
                 successfullyRegistered = false;
             }
         }
         return successfullyRegistered;
     }
+
 
     private boolean checkIfEmailExists(String email){
         return userRepository.findByEmail(email) != null;
@@ -99,7 +125,6 @@ public class RegistrationService {
 
     private void setVerificationCode(String code, User user){
         user.setVerificationCode(code);
-        userRepository.save(user);
     }
 
 }

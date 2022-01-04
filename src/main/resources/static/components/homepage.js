@@ -16,7 +16,7 @@ template: `
 					<img src="images/homepage-bungalows.jpg">
 					<div class="info">
 						<h1>Bungalows</h1>
-						<p>Lorem Ipsum hehe hu hu hihihi</p>
+						<p>Perfect places to rest after a day full of fishing!</p>
 						<a class="btn btn-light" href="#/bungalows" role="button">Read More</a>
 					</div>
 				</div>
@@ -25,7 +25,7 @@ template: `
 					<img src="images/homepage-boats.jpg">
 					<div class="info">
 						<h1>Boats</h1>
-						<p>Lorem Ipsum hehe hu hu hihihi</p>
+						<p>The easiest eay to get around here</p>
 						<a class="btn btn-light" href="#/boats" role="button">Read More</a>
 					</div>
 				</div>		
@@ -34,7 +34,7 @@ template: `
 					<img src="images/homepage-courses.jpg">
 					<div class="info">
 						<h1>Courses</h1>
-						<p>Lorem Ipsum hehe hu hu hihihi</p>
+						<p>Get prepared for the best adventures!</p>
 						<a class="btn btn-light" href="#/instructors" role="button">Read More</a>
 					</div>
 				</div>

@@ -47,35 +47,4 @@ public class MailService {
 
     }
 
-    // TODO:
-    public void sendRegistrationRequest(Owner user, String siteURL)
-            throws MessagingException, UnsupportedEncodingException {
-        String toAddress = "findsfishy@gmail.com";
-        String fromAddress = "findsfishy@gmail.com";
-        String senderName = user.getFirstName() + " " + user.getLastName();
-        String subject = "Owner Registration for - " + senderName;
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Fishy Finds.";
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", user.getFirstName());
-        String verifyURL = siteURL + "/api/verify?code=" + user.getVerificationCode();
-
-        content = content.replace("[[URL]]", verifyURL);
-
-        helper.setText(content, true);
-
-        mailSender.send(message);
-
-    }
-
 }

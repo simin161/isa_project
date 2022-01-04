@@ -216,6 +216,17 @@ header nav a:hover{
     border-radius: 90px;
 
 }
+
+
+  .input-text-area{
+    width: 400px;
+    font-size: 18px;
+    font-family: poppins-light;
+    color: white;
+    background: #225779;
+    border-radius: 18px;
+  }
+
 input[type="text"][disabled]{
     color: gray;
 }

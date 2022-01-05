@@ -1,7 +1,6 @@
 package com.fishyfinds.isa.service;
 
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
-import com.fishyfinds.isa.model.beans.users.owners.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

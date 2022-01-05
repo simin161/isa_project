@@ -5,6 +5,7 @@ import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,8 +29,14 @@ public class AuthenticationService {
         return retVal;
     }
 
+    @Transactional
     public User authenticateUser(HttpServletRequest request){
-        return (User)request.getSession().getAttribute("user");
+        try{
+            return (User)request.getSession().getAttribute("user");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private boolean checkPassword(String userPassword,String enteredPassword){

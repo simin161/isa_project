@@ -32,7 +32,7 @@ public class AuthenticationController {
 
     @GetMapping("/authenticateUser")
     @PreAuthorize("hasRole('ADMIN')")
-    public User getLoggedUser(HttpServletRequest request){
+    public User authenticateUser(HttpServletRequest request){
         return authenticationService.authenticateUser(request);
 
         }

@@ -26,7 +26,7 @@ public class Offer {
     @Column(name = "offerName", nullable = false)
     protected String offerName;
 
-    @Column(name = "userID", nullable = false)
+    @Column(name = "userID")
     protected int userID;
 
 
@@ -46,8 +46,8 @@ public class Offer {
     @Column(name = "rating", nullable = false)
     protected double rating;
 
-    @OneToMany
-    @JoinColumn(name="id")
+    @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+    //@JoinColumn(name="id")
     protected Set<Term> terms;
 
     @Column(name = "maxCustomerCapacity", nullable = false)
@@ -62,8 +62,8 @@ public class Offer {
     @Column(name = "cancellationPolicy", nullable = false)
     protected String cancellationPolicy;
 
-    @OneToMany
-    @JoinColumn(name="id")
+    @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+    //@JoinColumn(name="id")
     protected Set<UserFeedback> reviews;
 
 

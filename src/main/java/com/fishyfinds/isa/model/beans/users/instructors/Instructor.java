@@ -17,15 +17,15 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "id")
 public class Instructor extends User {
 
-	@OneToMany
-	@JoinColumn(name="courses", referencedColumnName = "id", nullable = true)
+	@OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+	//@JoinColumn(name="courses", referencedColumnName = "id", nullable = true)
 	private Set<Course> courses;
 
 	@OneToOne
 	@JoinColumn(name="loyaltyProgram", referencedColumnName = "id")
 	private LoyaltyProgram loyaltyProgram;
 
-	@Column(name = "biography", nullable = false)
+	@Column(name = "biography", nullable = true)
 	private String biography;
 
 	@Column(name = "reasoning", nullable = false)

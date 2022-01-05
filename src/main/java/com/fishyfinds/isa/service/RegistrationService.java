@@ -5,12 +5,10 @@ import com.fishyfinds.isa.model.beans.users.Admin;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.model.beans.users.instructors.Instructor;
-import com.fishyfinds.isa.model.beans.users.owners.Owner;
+import com.fishyfinds.isa.model.beans.users.owners.BoatOwner;
+import com.fishyfinds.isa.model.beans.users.owners.BungalowOwner;
 import com.fishyfinds.isa.model.enums.UserType;
-import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
-import com.fishyfinds.isa.repository.usersRepository.InstructorRepository;
-import com.fishyfinds.isa.repository.usersRepository.OwnerRepository;
-import com.fishyfinds.isa.repository.usersRepository.UserRepository;
+import com.fishyfinds.isa.repository.usersRepository.*;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -28,7 +26,9 @@ public class RegistrationService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private OwnerRepository ownerRepository;
+    private BoatOwnerRepostory boatOwnerRepository;
+    @Autowired
+    private BungalowOwnerRepository bungalowOwnerRepository;
     @Autowired
     private InstructorRepository instructorRepository;
     @Autowired
@@ -43,8 +43,11 @@ public class RegistrationService {
             case CUSTOMER:
                 successfullyRegistered = registerCustomer(DtoToUser.MapToCustomer(map), siteURL);
                 break;
-            case OWNER:
-                successfullyRegistered = registerOwner(DtoToUser.MapToOwner(map), siteURL);
+            case BUNGALOW_OWNER:
+                successfullyRegistered = registerBungalowOwner(DtoToUser.MapToBungalowOwner(map), siteURL);
+                break;
+            case BOAT_OWNER:
+                successfullyRegistered = registerBoatOwner(DtoToUser.MapToBoatOwner(map), siteURL);
                 break;
             case INSTRUCTOR:
                 successfullyRegistered = registerInstructor(DtoToUser.MapToInstructor(map), siteURL);
@@ -71,12 +74,23 @@ public class RegistrationService {
         return successfullyRegistered;
     }
 
-    public boolean registerOwner(Owner owner, String siteURL){
+    public boolean registerBungalowOwner(BungalowOwner owner, String siteURL){
         boolean successfullyRegistered = false;
         if(!checkIfEmailExists(owner.getEmail())){
-            owner.setUserType(UserType.OWNER);
+            owner.setUserType(UserType.BUNGALOW_OWNER);
             activateAccount(owner);
-            ownerRepository.save(owner);
+            bungalowOwnerRepository.save(owner);
+            successfullyRegistered = true;
+        }
+        return successfullyRegistered;
+    }
+
+    public boolean registerBoatOwner(BoatOwner owner, String siteURL){
+        boolean successfullyRegistered = false;
+        if(!checkIfEmailExists(owner.getEmail())){
+            owner.setUserType(UserType.BOAT_OWNER);
+            activateAccount(owner);
+            boatOwnerRepository.save(owner);
             successfullyRegistered = true;
         }
         return successfullyRegistered;

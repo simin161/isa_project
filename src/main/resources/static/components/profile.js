@@ -61,15 +61,15 @@ template: `
                                 <p class="title-text-light" style="font-size:15px;">Aliquam dapibus tristique ante, vitae ullamcorper sem mollis a.  Maecenas cursus libero ac diam rutrum, at lobortis nunc tincidunt.</p>
                             </div>
                             <div class="row options justify-content-evenly">
-                                <div class="change-data justify-content-center" @click="showForm = 1">
+                                <div class="options-3-horizontal justify-content-center" @click="showForm = 1">
                                     <img class="image" src="images/profile-update-profile.png">
                                     <p class="title-text-bold" style="font-size:15px"> Update your profile </p>
                                 </div>
-                                <div class="change-pass justify-content-center" @click="showForm = 2">
+                                <div class="options-3-horizontal justify-content-center" @click="showForm = 2">
                                     <img class="image" src="images/profile-change-password.png">
                                     <p class="title-text-bold" style="font-size:15px"> Change your password </p>
                                 </div>
-                                <div class="delete-acc justify-content-center" @click="showForm = 3">
+                                <div class="options-3-horizontal justify-content-center" @click="showForm = 3">
                                     <img class="image" src="images/profile-delete-account.png">
                                     <p class="title-text-bold" style="font-size:15px"> Delete your account </p>
                                 </div>

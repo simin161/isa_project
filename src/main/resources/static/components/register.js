@@ -33,17 +33,21 @@ template: `
                         <p class="title-text-light" style="font-size:15px;">Register to FishyFinds:</p>
                             </div>
                             <div class="row options justify-content-evenly">
-                                <div class="change-data justify-content-center" @click="registerCustomer">
+                                <div class="options-4-horizontal justify-content-center" @click="registerCustomer">
                                     <img class="image" src="images/register-customer.png">
-                                    <p class="title-text-bold" style="font-size:15px"> as a Customer </p>
+                                    <p class="title-text-bold" style="font-size:12px"> as a Customer </p>
                                 </div>
-                                <div class="change-pass justify-content-center" @click="registerOwner">
-                                    <img class="image" src="images/register-owner.png">
-                                    <p class="title-text-bold" style="font-size:15px"> as an Owner </p>
+                                <div class="options-4-horizontal justify-content-center" @click="registerBungalowOwner">
+                                    <img class="image" src="images/register-bungalow-owner.png">
+                                    <p class="title-text-bold" style="font-size:12px"> as a Bungalow Owner </p>
                                 </div>
-                                <div class="delete-acc justify-content-center" @click="registerInstructor">
+                                <div class="options-4-horizontal justify-content-center" @click="registerBoatOwner">
+                                    <img class="image" src="images/register-boat-owner.png">
+                                    <p class="title-text-bold" style="font-size:12px"> as a Boat Owner </p>
+                                </div>
+                                <div class="options-4-horizontal justify-content-center" @click="registerInstructor">
                                     <img class="image" src="images/register-instructor.png">
-                                    <p class="title-text-bold" style="font-size:15px"> as an Instructor </p>
+                                    <p class="title-text-bold" style="font-size:12px"> as an Instructor </p>
                                 </div>
                     </div>
             </div>
@@ -139,16 +143,20 @@ template: `
             this.dto.userType = "CUSTOMER";
             this.registrationTitle = "Customer Registration";
         },
-        registerOwner : function(){
+        registerBungalowOwner : function(){
             this.showForm = 2;
-            this.dto.userType = "OWNER";
-            this.registrationTitle = "Owner Registration";
+            this.dto.userType = "BUNGALOW_OWNER";
+            this.registrationTitle = "Bungalow Owner Registration";
+        },
+        registerBoatOwner : function(){
+            this.showForm = 2;
+            this.dto.userType = "BOAT_OWNER";
+            this.registrationTitle = "Boat Owner Registration";
         },
         registerInstructor : function(){
             this.showForm = 3;
             this.dto.userType = "INSTRUCTOR";
             this.registrationTitle = "Instructor Registration";
-
         }
 
     }

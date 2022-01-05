@@ -78,7 +78,6 @@
     border-radius: 90px;
 }
 
-
 .confirm-profile{
     width: 100%;
     height: 40px;
@@ -93,47 +92,24 @@
     border-radius: 90px;
 }
 
-.change-data{
-    /* Rectangle 10 */
+.options-3-horizontal{
     width: 30%;
-
     margin-top: 5%;
-
     position: relative;
-
-
     background: #225779;
-    border-radius: 90px;
+    border-radius: 30px;
     cursor: pointer;
 }
 
-.change-pass{
-    /* Rectangle 27 */
-    width: 30%;
-
+.options-4-horizontal{
+    width: 22.5%;
     margin-top: 5%;
-
     position: relative;
-
-
     background: #225779;
-    border-radius: 90px;
+    border-radius: 22px;
     cursor: pointer;
 }
 
-.delete-acc{
-    /* Rectangle 11 */
-    width: 30%;
-
-    margin-top: 5%;
-
-    position: relative;
-
-
-    background: #225779;
-    border-radius: 90px;
-    cursor: pointer;
-}
 
 .image{
     display: block;

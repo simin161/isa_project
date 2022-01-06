@@ -143,7 +143,7 @@ template: `
                         <div class="container align-items-start" v-show="showForm == 3">
                             <p class="title-text-bold">Delete your account</p>
                             <p class="title-text-light" style="font-size:15px;">Aliquam dapibus tristique ante, vitae ullamcorper sem mollis a.  Maecenas cursus libero ac diam rutrum, at lobortis nunc tincidunt.</p>
-                            <form>
+                            <form class="justify-content-center">
                                 <table class="justify-content-center" style="width:75%; margin: auto;" >
                                     <tr>
                                     <td><input type="text" placeholder="   Explanation" class="update-text-profile" v-model="requestDTO.explanation"/></td>

@@ -52,59 +52,56 @@ template: `
                     </div>
             </div>
 
-
             <div class="col-md-4 right-div" style="margin-top:-20px" v-show="showForm == 1 || showForm == 2 || showForm == 3">
-                <div class="container">
+                <div class="container align-items-start">
                     <p class="title-text-bold" style="margin-top:10px;"> {{registrationTitle}} </p>
-                    <div class="row">
-                        <form class="d-flex justify-content-evenly align-items-center reg-form">    
-                            <table style="margin-top: 10px;">
-                                <tr>
-                                    <td><input type="text" placeholder="   First name" class="input-text" v-model="dto.firstName"/></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="text" placeholder="   Last name" class="input-text" v-model="dto.lastName"/></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="text" placeholder="   Address" class="input-text" v-model="dto.address"/></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="text" placeholder="   City" class="input-text" v-model="dto.city"/></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="text" placeholder="   Country"class="input-text" v-model="dto.country"/></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="text" placeholder="   Phone number" class="input-text" v-model="dto.phoneNumber" /></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="text" placeholder="   E-mail" class="input-text" v-model="dto.email" /></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="password" placeholder="   Password" class="input-text"  v-model="dto.password"/></td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input type="password" placeholder="   Confirm password" class="input-text" v-model="confirmPassword"/></td>
-                                </tr>
-                                <br>
-                                <tr v-show="showForm == 2 || showForm == 3">
-                                    <textarea rows="5" name="text" placeholder="   Reasoning" class="input-text-area" v-model="dto.reasoning" ></textarea>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register" @click="registerUser"/></td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div>
+                    <form class="justify-content-center">
+                        <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+                            <tr>
+                                <td><input type="text" placeholder="   First name" class="input-text" v-model="dto.firstName"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Last name" class="input-text"  v-model="dto.lastName"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Address" class="input-text"  v-model="dto.address"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   City" class="input-text"  v-model="dto.city"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Country" class="input-text"  v-model="dto.country"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   Phone number" class="input-text"  v-model="dto.phoneNumber" /></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="text" placeholder="   E-mail" class="input-text"  v-model="dto.email" /></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="password" placeholder="   Password" class="input-text"  v-model="dto.password"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input type="password" placeholder="   Confirm password" class="input-text"  v-model="confirmPassword"/></td>
+                            </tr>
+                            <br>
+                            <tr v-show="showForm == 2 || showForm == 3">
+                                <textarea rows="5" name="text" placeholder="   Reasoning" class="input-text"  v-model="dto.reasoning" ></textarea>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isComplete" class="confirm" type="button" value="Register" @click="registerUser"/></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
             </div>
 		</div>

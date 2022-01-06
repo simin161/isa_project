@@ -2,6 +2,7 @@ package com.fishyfinds.isa.model.beans.offers;
 
 import com.fishyfinds.isa.model.beans.Term;
 import com.fishyfinds.isa.model.beans.UserFeedback;
+import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.enums.OfferType;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +30,6 @@ public class Offer {
     @Column(name = "userID")
     protected int userID;
 
-
-    //protected List<Image> images;
-
-
     @OneToOne
     @JoinColumn(name="location", referencedColumnName = "id")
     protected Location location;
@@ -47,8 +44,10 @@ public class Offer {
     protected double rating;
 
     @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
-    //@JoinColumn(name="id")
     protected Set<Term> terms;
+
+    @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+    protected Set<Image> images;
 
     @Column(name = "maxCustomerCapacity", nullable = false)
     protected int maxCustomerCapacity;
@@ -63,7 +62,6 @@ public class Offer {
     protected String cancellationPolicy;
 
     @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
-    //@JoinColumn(name="id")
     protected Set<UserFeedback> reviews;
 
 

@@ -7,24 +7,22 @@ import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.RegistrationStatus;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.Set;
-/*
+
+
 @Entity
 @Getter
 @Setter
-@Table(name = "Owner")
+@Table(name = "BungalowOwner")
 @PrimaryKeyJoinColumn(name = "id")
-public class Owner extends User {
+public class BungalowOwner extends User {
 
-    @OneToMany
-    @JoinColumn(name="id", nullable = true)
+    @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+    //@JoinColumn(name="id", nullable = true)
     private Set<Bungalow> bungalows;
-
-    @OneToMany
-    @JoinColumn(name="id", nullable = true)
-    private Set<Boat> boats;
 
     @OneToOne
     @JoinColumn(name="loyaltyProgram", referencedColumnName = "id")
@@ -36,9 +34,9 @@ public class Owner extends User {
     @Column(name = "registrationStatus", nullable = false)
     private RegistrationStatus registrationStatus = RegistrationStatus.WAITING_FOR_RESPONSE;
 
-    public Owner() {}
-    public Owner(String firstName, String lastName, String address, String city, String country,
-                    String phoneNumber, String email, String password, String reasoning){
+    public BungalowOwner() {}
+    public BungalowOwner(String firstName, String lastName, String address, String city, String country,
+                 String phoneNumber, String email, String password, String reasoning){
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -49,7 +47,4 @@ public class Owner extends User {
         this.password = password;
         this.reasoning = reasoning;
     }
-
 }
-
- */

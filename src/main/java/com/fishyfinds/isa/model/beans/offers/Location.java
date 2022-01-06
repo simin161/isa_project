@@ -16,12 +16,30 @@ public class Location{
     private long id;
 
     @Column(name = "longitude")
-    private double longitude;
+    private double longitude = 0;
 
     @Column(name = "latitude")
-    private double latitude;
+    private double latitude = 0;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "street")
+    private String street;
+
+    @Column(name = "streetNumber")
+    private String streetNumber;
+
+    public Location(){}
+
+    public Location(String country, String city, String street, String streetNumber){
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.streetNumber = streetNumber;
+    }
 
 }

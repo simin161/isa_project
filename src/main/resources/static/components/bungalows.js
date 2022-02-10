@@ -121,7 +121,7 @@ Vue.component('bungalows', {
           ,
           methods : {
             showMore : function(bung){
-               this.bungalow = bung;
+               this.bungalowToShow = bung;
                this.showPage = 1;
             }
           }

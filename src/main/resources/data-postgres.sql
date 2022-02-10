@@ -13,7 +13,7 @@ INSERT INTO bungalow values(1);
 
 INSERT INTO engine values (1, 230.0, 4, 3500);
 INSERT INTO location values (2, 'location', 'loc', 23.5, 44.5, 'isda', 4);
-INSERT INTO offer values(2, 'a', 'a', 'a', 3, 'Boat1', 1, 3.5, 'a', 100.5, 0, 2);
+INSERT INTO offer values(2, 'a', 'a', 'a', 3, 'TBoat1', 1, 4.5, 'a', 120.5, 0, 2);
 INSERT INTO boat values(10, 'boat', '', '', 2,1);
 
 INSERT INTO engine values (2, 230.0, 4, 3500);

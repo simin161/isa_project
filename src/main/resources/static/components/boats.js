@@ -2,6 +2,7 @@ Vue.component('boats', {
 data: function(){
     		return{
     			showPage: 0,
+    			sortOption: "",
     			boatToShow: {
     			    offerType: "BOAT",
                     offerName: "",
@@ -39,7 +40,7 @@ data: function(){
     						<br>
     						<tr>
     							<td colspan="2">
-    								<select class="select-sort" name="select" id="format">
+    								<select v-model="sortOption" class="select-sort" name="select" id="format">
     									<option selected disabled>Sort by</option>
     									<option value="AscAlpha">Sort alphabetically (A-Z)</option>
     									<option value="DescAlpha">Sort alphabetically (Z-A)</option>
@@ -49,7 +50,10 @@ data: function(){
     									<option value="DescPrice">Sort by price: hight to low</option>
     								</select>
     							</td>
+    							<td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort" @click="sortedArray"/></td>
     						</tr>
+    						<tr>
+                            </tr>
     					</table>
     				</form>
     				<div class="container mt-5">
@@ -62,6 +66,8 @@ data: function(){
     								<div class="card-body">
     									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{boat.offerName}}</h5>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{boat.description}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{boat.unitPrice}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(boat)">Show more</button>
     								</div>
     							</div>
@@ -103,6 +109,69 @@ data: function(){
                this.boatToShow = bung;
                this.showPage = 1;
             }
+            ,
+             sortedArray: function() {
+                   if(this.sortOption === 'DescAlpha'){
+                       function compare(a, b) {
+                         if (a.offerName > b.offerName)
+                           return -1;
+                         if (a.offerName < b.offerName)
+                           return 1;
+                        return 0;
+                      }
+                       return this.boats.sort(compare);
+                   }
+                    if(this.sortOption === 'AscAlpha'){
+                        function compare(a, b) {
+                            if (a.offerName < b.offerName)
+                               return -1;
+                            if (a.offerName > b.offerName)
+                               return 1;
+                            return 0;
+                        }
+                        return this.boats.sort(compare);
+                    }
+                    if(this.sortOption === 'DescRating'){
+                       function compare(a, b) {
+                         if (a.rating > b.rating)
+                           return -1;
+                         if (a.rating < b.rating)
+                           return 1;
+                        return 0;
+                      }
+                       return this.boats.sort(compare);
+                   }
+                    if(this.sortOption === 'AscRating'){
+                        function compare(a, b) {
+                            if (a.rating < b.rating)
+                               return -1;
+                            if (a.rating > b.rating)
+                               return 1;
+                            return 0;
+                        }
+                        return this.boats.sort(compare);
+                    }
+                    if(this.sortOption === 'DescPrice'){
+                       function compare(a, b) {
+                         if (a.unitPrice > b.unitPrice)
+                           return -1;
+                         if (a.unitPrice < b.unitPrice)
+                           return 1;
+                        return 0;
+                      }
+                       return this.boats.sort(compare);
+                   }
+                    if(this.sortOption === 'AscPrice'){
+                        function compare(a, b) {
+                            if (a.unitPrice < b.unitPrice)
+                               return -1;
+                            if (a.unitPrice > b.unitPrice)
+                               return 1;
+                            return 0;
+                        }
+                        return this.boats.sort(compare);
+                    }
+             }
           }
           ,
 	mounted(){

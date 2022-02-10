@@ -2,6 +2,7 @@ Vue.component('bungalows', {
 	data: function(){
     		return{
     			showPage: 0,
+    			sortOption: "",
     			bungalowToShow: {
     			    offerType: "BUNGALOW",
                     offerName: "",
@@ -39,7 +40,7 @@ Vue.component('bungalows', {
     						<br>
     						<tr>
     							<td colspan="2">
-    								<select class="select-sort" name="select" id="format">
+    								<select v-model="sortOption" class="select-sort" name="select" id="format">
     									<option selected disabled>Sort by</option>
     									<option value="AscAlpha" >Sort alphabetically (A-Z)</option>
     									<option value="DescAlpha">Sort alphabetically (Z-A)</option>
@@ -65,6 +66,8 @@ Vue.component('bungalows', {
     								<div class="card-body">
     									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</h5>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{bungalow.description}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{bungalow.unitPrice}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(bungalow)">Show more</button>
     								</div>
     							</div>
@@ -107,14 +110,66 @@ Vue.component('bungalows', {
                this.showPage = 1;
             },
              sortedArray: function() {
-                function compare(a, b) {
-                   if (a.offerName > b.offerName)
-                      return -1;
-                   if (a.offerName < b.offerName)
-                      return 1;
-                   return 0;
+                   if(this.sortOption === 'DescAlpha'){
+                       function compare(a, b) {
+                         if (a.offerName > b.offerName)
+                           return -1;
+                         if (a.offerName < b.offerName)
+                           return 1;
+                        return 0;
+                      }
+                       return this.bungalows.sort(compare);
                    }
-                   return this.bungalows.sort(compare);
+                    if(this.sortOption === 'AscAlpha'){
+                        function compare(a, b) {
+                            if (a.offerName < b.offerName)
+                               return -1;
+                            if (a.offerName > b.offerName)
+                               return 1;
+                            return 0;
+                        }
+                        return this.bungalows.sort(compare);
+                    }
+                    if(this.sortOption === 'DescRating'){
+                       function compare(a, b) {
+                         if (a.rating > b.rating)
+                           return -1;
+                         if (a.rating < b.rating)
+                           return 1;
+                        return 0;
+                      }
+                       return this.bungalows.sort(compare);
+                   }
+                    if(this.sortOption === 'AscRating'){
+                        function compare(a, b) {
+                            if (a.rating < b.rating)
+                               return -1;
+                            if (a.rating > b.rating)
+                               return 1;
+                            return 0;
+                        }
+                        return this.bungalows.sort(compare);
+                    }
+                    if(this.sortOption === 'DescPrice'){
+                       function compare(a, b) {
+                         if (a.unitPrice > b.unitPrice)
+                           return -1;
+                         if (a.unitPrice < b.unitPrice)
+                           return 1;
+                        return 0;
+                      }
+                       return this.bungalows.sort(compare);
+                   }
+                    if(this.sortOption === 'AscPrice'){
+                        function compare(a, b) {
+                            if (a.unitPrice < b.unitPrice)
+                               return -1;
+                            if (a.unitPrice > b.unitPrice)
+                               return 1;
+                            return 0;
+                        }
+                        return this.bungalows.sort(compare);
+                    }
              }
           }
           ,

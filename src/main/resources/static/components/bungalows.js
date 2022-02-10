@@ -128,6 +128,6 @@ Vue.component('bungalows', {
           ,
           mounted(){
             axios.get("/api/allBungalows")
-                 .then(response => (console.log('upsy')))
+                 .then(response => (this.bungalows = response.data))
           }
 });

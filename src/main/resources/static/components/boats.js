@@ -77,7 +77,7 @@ data: function(){
     						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
     						<form class="justify-content-center">
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-    								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
     								<tr class="d-flex justify-content-evenly">
     									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.country"/></td>
     									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.city"/></td></tr><br>

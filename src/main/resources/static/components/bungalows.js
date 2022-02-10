@@ -20,28 +20,7 @@ Vue.component('bungalows', {
                     additionalServices:"",
                     cancellationPolicy:""
     			},
-    			bungalows:[
-    			    {
-                        offerType: "BUNGALOW",
-                        offerName: "Bungalow uwu",
-                        userID: "1",
-
-                        country: "aaaa",
-                        city: "aaaa",
-                        street: "aaa",
-                        streetNumber:"123",
-                        longitude:"2",
-                        latitude:"2",
-
-                        description:"dasdasda",
-                        unitPrice:"1234",
-                        maxCustomerCapacity:"dafa",
-
-                        maxCustomerCapacity:"dfasfdas",
-                        rulesOfConduct:"dfafda",
-                        additionalServices:"fda",
-                        cancellationPolicy:"dafs"
-                }]
+    			bungalows:[]
     		}
     	},
     template: `

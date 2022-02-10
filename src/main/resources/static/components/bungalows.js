@@ -41,7 +41,7 @@ Vue.component('bungalows', {
     							<td colspan="2">
     								<select class="select-sort" name="select" id="format">
     									<option selected disabled>Sort by</option>
-    									<option value="AscAlpha">Sort alphabetically (A-Z)</option>
+    									<option value="AscAlpha" >Sort alphabetically (A-Z)</option>
     									<option value="DescAlpha">Sort alphabetically (Z-A)</option>
     									<option value="AscRating">Sort by average rating (Asc)</option>
     									<option value="DescRating">Sort by average rating (Desc)</option>
@@ -49,6 +49,9 @@ Vue.component('bungalows', {
     									<option value="DescPrice">Sort by price: hight to low</option>
     								</select>
     							</td>
+    							<tr>
+    							    <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort" @click="sortedArray"/></td>
+    							</tr>
     						</tr>
     					</table>
     				</form>
@@ -102,7 +105,17 @@ Vue.component('bungalows', {
             showMore : function(bung){
                this.bungalowToShow = bung;
                this.showPage = 1;
-            }
+            },
+             sortedArray: function() {
+                function compare(a, b) {
+                   if (a.offerName > b.offerName)
+                      return -1;
+                   if (a.offerName < b.offerName)
+                      return 1;
+                   return 0;
+                   }
+                   return this.bungalows.sort(compare);
+             }
           }
           ,
           mounted(){

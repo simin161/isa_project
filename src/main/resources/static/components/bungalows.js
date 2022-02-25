@@ -21,6 +21,10 @@ Vue.component('bungalows', {
                     additionalServices:"",
                     cancellationPolicy:""
     			},
+    			searchParams: {
+    			    bungalowName : "",
+    			    bungalowLocation: ""
+    			},
     			bungalows:[]
     		}
     	},

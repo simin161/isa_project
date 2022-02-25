@@ -20,14 +20,14 @@ public class BoatService {
         return boatRepository.findAll();
     }
 
-    public List<Boat> searchBoats(String bungalowName, String boatLocation){
-        if( bungalowName.trim().equals("") && boatLocation.trim().equals(""))
+    public List<Boat> searchBoats(String boatName, String boatLocation){
+        if( boatName.trim().equals("") && boatLocation.trim().equals(""))
             return boatRepository.findAll();
 
         List<Boat> retVal = new ArrayList<Boat>();
 
         for(Boat boat : boatRepository.findAll()){
-            if(offerService.checkPatternOffer(boat.getId(), bungalowName, boatLocation))
+            if(offerService.checkPatternOffer(boat.getId(), boatName, boatLocation))
                 retVal.add(boat);
         }
 

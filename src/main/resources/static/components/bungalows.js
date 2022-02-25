@@ -37,9 +37,9 @@ Vue.component('bungalows', {
     			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-    						<tr><td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
-    							<td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
-    							<td rowspan="2"><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+    						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
+    							<td colspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
+    							<td rowspan="2"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
     						</tr>
     						<br>
     						<tr>
@@ -108,11 +108,26 @@ Vue.component('bungalows', {
     	</div>
     		`
           ,
+          computed: {
+              axiosParams() {
+                  const params = new URLSearchParams();
+                  params.append('bungalowName', this.searchParams.bungalowName);
+                  params.append('bungalowLocation', this.searchParams.bungalowLocation);
+                  return params;
+              }
+          }
+          ,
           methods : {
             showMore : function(bung){
                this.bungalowToShow = bung;
                this.showPage = 1;
             },
+            search : function(){
+                axios.get('/api/searchBungalows', {
+                     params: this.axiosParams
+                }).then(response => (this.bungalows = response.data))
+            }
+            ,
              sortedArray: function() {
                    if(this.sortOption === 'DescAlpha'){
                        function compare(a, b) {

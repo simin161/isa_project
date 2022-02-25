@@ -21,6 +21,10 @@ data: function(){
                     additionalServices:"",
                     cancellationPolicy:""
     			},
+                searchParams: {
+                    boatName : "",
+                    boatLocation: ""
+                },
     			boats:[]
     		}
     	},
@@ -33,9 +37,9 @@ data: function(){
     			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-    						<tr><td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
-    							<td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
-    							<td rowspan="2"><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+    						<tr><td colspan="1"><input v-model="searchParams.boatName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's name" /></td>
+    							<td colspan="1"><input v-model="searchParams.boatLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's location"/></td>
+    							<td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
     						</tr>
     						<br>
     						<tr>
@@ -104,10 +108,24 @@ data: function(){
     	</div>
     		`
           ,
+          computed: {
+              axiosParams() {
+                  const params = new URLSearchParams();
+                  params.append('boatName', this.searchParams.boatName);
+                  params.append('boatLocation', this.searchParams.boatLocation);
+                  return params;
+              }
+          }
+          ,
           methods : {
             showMore : function(bung){
                this.boatToShow = bung;
                this.showPage = 1;
+            },
+            search : function(){
+                axios.get('/api/searchBoats', {
+                     params: this.axiosParams
+                }).then(response => (this.boats = response.data))
             }
             ,
              sortedArray: function() {

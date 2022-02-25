@@ -39,18 +39,4 @@ public class BungalowService {
         successfullyAdded = true;
         return successfullyAdded;
     }
-
-    public List<Bungalow> searchBungalows(String bungalowName, String bungalowLocation){
-        if( bungalowName.trim().equals("") && bungalowLocation.trim().equals(""))
-            return bungalowRepository.findAll();
-
-        List<Bungalow> retVal = new ArrayList<Bungalow>();
-
-        for(Bungalow bungalow : bungalowRepository.findAll()){
-            if(offerService.checkPatternOffer(bungalow.getId(), bungalowName, bungalowLocation))
-                retVal.add(bungalow);
-        }
-
-        return retVal;
-    }
 }

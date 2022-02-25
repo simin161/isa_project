@@ -111,8 +111,9 @@ Vue.component('bungalows', {
           computed: {
               axiosParams() {
                   const params = new URLSearchParams();
-                  params.append('bungalowName', this.searchParams.bungalowName);
-                  params.append('bungalowLocation', this.searchParams.bungalowLocation);
+                  params.append('name', this.searchParams.bungalowName);
+                  params.append('location', this.searchParams.bungalowLocation);
+                  params.append('type', 'BUNGALOW');
                   return params;
               }
           }
@@ -123,7 +124,7 @@ Vue.component('bungalows', {
                this.showPage = 1;
             },
             search : function(){
-                axios.get('/api/searchBungalows', {
+                axios.get('/api/search', {
                      params: this.axiosParams
                 }).then(response => (this.bungalows = response.data))
             }

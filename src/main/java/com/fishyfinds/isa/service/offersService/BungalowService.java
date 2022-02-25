@@ -1,6 +1,7 @@
 package com.fishyfinds.isa.service.offersService;
 
 import com.fishyfinds.isa.mappers.DtoToOffer;
+import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.enums.OfferType;
 import com.fishyfinds.isa.model.enums.UserType;
@@ -9,8 +10,11 @@ import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class BungalowService {
@@ -20,6 +24,8 @@ public class BungalowService {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired OfferService offerService;
 
     public List<Bungalow> findAll(){
         return bungalowRepository.findAll();
@@ -34,12 +40,17 @@ public class BungalowService {
         return successfullyAdded;
     }
 
+    public List<Bungalow> searchBungalows(String bungalowName, String bungalowLocation){
+        if( bungalowName.trim().equals("") && bungalowLocation.trim().equals(""))
+            return bungalowRepository.findAll();
 
+        List<Bungalow> retVal = new ArrayList<Bungalow>();
 
+        for(Bungalow bungalow : bungalowRepository.findAll()){
+            if(offerService.checkPatternOffer(bungalow.getId(), bungalowName, bungalowLocation))
+                retVal.add(bungalow);
+        }
 
-
-
-
-
-
+        return retVal;
+    }
 }

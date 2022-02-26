@@ -28,11 +28,4 @@ public class BungalowController {
     public boolean addNewBungalow(@RequestBody Map<String, String> message, HttpServletRequest request){
         return bungalowService.addNewBungalow(DtoToOffer.MapToNewBungalow(message));
     }
-
-    @GetMapping("/searchBungalows")
-    public List<Bungalow> searchBungalows(@RequestParam(name = "bungalowName", required = false) String name, //location = address + num + city + country
-                                  @RequestParam(name = "bungalowLocation", required = false) String location){
-        return bungalowService.searchBungalows(name, location);
-    }
-
 }

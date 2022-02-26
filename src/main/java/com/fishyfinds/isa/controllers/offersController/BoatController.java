@@ -24,9 +24,4 @@ public class BoatController {
         return boatService.findAll();
     }
 
-    @GetMapping("/searchBoats")
-    public List<Boat> searchBungalows(@RequestParam(name = "boatName", required = false) String name, //location = address + num + city + country
-                                          @RequestParam(name = "boatLocation", required = false) String location){
-        return boatService.searchBoats(name, location);
-    }
 }

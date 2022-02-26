@@ -111,8 +111,9 @@ data: function(){
           computed: {
               axiosParams() {
                   const params = new URLSearchParams();
-                  params.append('boatName', this.searchParams.boatName);
-                  params.append('boatLocation', this.searchParams.boatLocation);
+                  params.append('name', this.searchParams.boatName);
+                  params.append('location', this.searchParams.boatLocation);
+                  params.append('type', 'BOAT');
                   return params;
               }
           }
@@ -123,9 +124,9 @@ data: function(){
                this.showPage = 1;
             },
             search : function(){
-                axios.get('/api/searchBoats', {
+                axios.get('/api/search', {
                      params: this.axiosParams
-                }).then(response => (this.boats = response.data))
+                }).then(response => {this.boats = response.data; console.log(this.boats)})
             }
             ,
              sortedArray: function() {
@@ -194,6 +195,6 @@ data: function(){
           ,
 	mounted(){
 	    axios.get("/api/allBoats")
-	         .then(response => (this.boats = response.data))
+	         .then(response => {this.boats = response.data; console.log(this.boats)})
 	}
 });

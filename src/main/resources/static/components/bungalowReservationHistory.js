@@ -73,6 +73,7 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{bungalow.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(bungalow)">Show more</button>
+    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="showPage = 2">Add feedback</button>
     								</div>
     							</div>
     						</div>
@@ -80,7 +81,7 @@ data: function(){
     				</div>
 
                    	</div>
-                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
+                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 1">
                    	<div class="container" v-show="showPage == 1">
     					<div class="container align-items-start">
     						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
@@ -104,7 +105,22 @@ data: function(){
     					</div>
                    	</div>
                	</div>
-    		</div>
+                <div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 2">
+                   	<div class="container" v-show="showPage == 2">
+    					<div class="container align-items-start">
+    						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
+    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
+    						<form class="justify-content-center">
+    							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+    								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Bungalow owner" class="input-text"/></td></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" ></textarea></tr><br>
+    							</table>
+    						</form>
+    					</div>
+                   	</div>
+               	</div>
+            </div>
     	</div>
     		`
           ,
@@ -192,9 +208,5 @@ data: function(){
                     }
              }
           }
-          <!---,
-          mounted(){
-            axios.get("/api/allBungalows")
-                 .then(response => (this.bungalows = response.data))
-          }--->
+
 });

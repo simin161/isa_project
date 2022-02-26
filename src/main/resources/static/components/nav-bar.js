@@ -38,7 +38,7 @@ template: `
                                     <div v-show="loggedUser.userType == 'CUSTOMER'" class="dropdown">
                                     <button class="dropdown-button">Reservations</button>
                                     <div class="dropdown-content">
-                                        <a href="#/">Bungalows</a>
+                                        <a href="#/bungalowReservationHistory">Bungalows</a>
                                         <a href="#/">Boats</a>
                                         <a href="#/">Instructors</a>
                                         <a href="#/">Upcoming</a>

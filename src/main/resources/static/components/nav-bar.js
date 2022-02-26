@@ -39,7 +39,7 @@ template: `
                                     <button class="dropdown-button">Reservations</button>
                                     <div class="dropdown-content">
                                         <a href="#/bungalowReservationHistory">Bungalows</a>
-                                        <a href="#/">Boats</a>
+                                        <a href="#/boatReservationHistory">Boats</a>
                                         <a href="#/">Instructors</a>
                                         <a href="#/">Upcoming</a>
                                     </div>

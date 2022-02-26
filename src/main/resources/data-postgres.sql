@@ -6,7 +6,10 @@ INSERT INTO users values (2, 'address', 'city','country', 'jb', 'James', true, f
 INSERT INTO bungalow_owner values ('reason',1, 2, 1);
 
 INSERT INTO loyalty_program values(3, 20.5, 'baby shark', 0, 0);
-
+INSERT INTO users values (3, 'address', 'city','country', 'instructor@i.com', 'Instructor', true, false, 'I', 'in', '12345673',1, '');
+INSERT INTO public.instructor(
+	biography, reasoning, registration_status, id, loyalty_program)
+	VALUES ('biography', 'reasoning', 1, 3, 3);
 INSERT INTO location values (1, 'a', 'aa', 34.5, 23.4, 'aa', 4);
 INSERT INTO offer values(1, 'a', 'a', 'a', 3, 'Bungalow1', 1, 3.4, 'a', 100.5, 0, 1);
 INSERT INTO bungalow values(1);

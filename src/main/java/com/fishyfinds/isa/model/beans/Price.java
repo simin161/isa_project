@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.model.beans;
 
+import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.enums.OfferType;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,11 +17,9 @@ public class Price {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "offerId")
-	private int offerId;
-
-	@Column(name = "offerType")
-	private OfferType offerType;
+	@OneToOne
+	@JoinColumn(name="offer", referencedColumnName = "id")
+	private Offer offer;
 
 	@Column(name = "cost")
 	private double cost;

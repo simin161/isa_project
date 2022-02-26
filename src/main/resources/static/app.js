@@ -8,7 +8,8 @@ const profile = {template: '<profile></profile>'}
 const boats = { template: '<boats></boats>'}
 const bungalows = { template: '<bungalows></bungalows>'}
 const instructors = { template: '<instructors></instructors>'}
-const reservationHistory = {template: '<reservationHistory></reservationHistory>'}
+const bungalowReservationHistory = {template: '<bungalowReservationHistory></bungalowReservationHistory>'}
+const boatReservationHistory = {template: '<boatReservationHistory></boatReservationHistory>'}
 // -- For owners only
 const myBungalows = {template: '<owner-my-bungalows></owner-my-bungalows>'}
 const myBoats = {template: '<owner-my-boats></owner-my-boats>'}
@@ -16,7 +17,6 @@ const myBoats = {template: '<owner-my-boats></owner-my-boats>'}
 const myCourses = {template: '<instructor-my-courses></instructor-my-courses>'}
 // For admins only
 // ...
-
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
@@ -30,7 +30,9 @@ const router = new VueRouter({
 		{ path: '/bungalows', component: bungalows},
 		{ path: '/boats', component: boats},
 		{ path: '/instructors', component: instructors},
-		{ path: '/reservationHistory', component: reservationHistory},
+		{ path: '/account', component: profile },
+		{ path: '/bungalowReservationHistory', component: bungalowReservationHistory},
+		{ path: '/boatReservationHistory', component: boatReservationHistory},
 		// For owners only
 		{ path: '/my-bungalows', component: myBungalows},
 		{ path: '/my-boats', component: myBoats},

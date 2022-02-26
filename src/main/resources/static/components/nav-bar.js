@@ -25,7 +25,6 @@ template: `
                                 </nav>
                             </div>
                         </div>
-
                         <div v-else>
                             <div class="row">
                                 <a class="col-sm-4 text-center" href="#/">
@@ -39,8 +38,8 @@ template: `
                                     <div v-show="loggedUser.userType == 'CUSTOMER'" class="dropdown">
                                     <button class="dropdown-button">Reservations</button>
                                     <div class="dropdown-content">
-                                        <a href="#/">Bungalows</a>
-                                        <a href="#/">Boats</a>
+                                        <a href="#/bungalowReservationHistory">Bungalows</a>
+                                        <a href="#/boatReservationHistory">Boats</a>
                                         <a href="#/">Instructors</a>
                                         <a href="#/">Upcoming</a>
                                     </div>

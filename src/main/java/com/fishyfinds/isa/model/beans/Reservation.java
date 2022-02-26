@@ -1,6 +1,7 @@
 package com.fishyfinds.isa.model.beans;
 
 
+import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,14 +17,17 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "priceId")
-    private int priceId;
+    @OneToOne
+    @JoinColumn(name="price", referencedColumnName = "id")
+    private Price price;
 
-    @Column(name = "termId")
-    private int termId;
+    @OneToOne
+    @JoinColumn(name="term", referencedColumnName = "id")
+    private Term term;
 
-    @Column(name = "customerId")
-    private int customerId;
+    @OneToOne
+    @JoinColumn(name="customer", referencedColumnName = "id")
+    private Customer customer;
 
     @Column(name = "numberOfGuests")
     private int numberOfGuests;

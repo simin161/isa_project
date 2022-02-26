@@ -27,11 +27,37 @@
 	box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(21,54,74,255);
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+background: rgba(255,0,0,0.4); 
+}
+
 a{
   text-decoration: none;
 }
 html, body{
     background-color: #1E4E6C;
+    height: 100%;
+    margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Our classes */
@@ -85,15 +111,15 @@ header nav a:hover{
 }
 
 .wrapper{
-    margin: auto;
+  margin: auto;
 	display: flex;
 	width: 75%;
 	background-color: #1E4E6C;
 	justify-content: space-between;
 }
 
-.card{
-    width:360;
+.wrapper .card{
+  width:360;
 	height: 405;
 	padding: 2rem 1rem;
 	background: #fff;
@@ -103,11 +129,11 @@ header nav a:hover{
 	box-shadow: 0px 7px rgba(0,0,0,0.5);
 	transition: 0.5s ease-in-out;
 }
-.card:hover{
+.wrapper .card:hover{
 	transform: translateY(20px);
 }
 
-.card:before{
+.wrapper .card:before{
 	content: "";
 	position: absolute;
 	top: 0;
@@ -120,11 +146,11 @@ header nav a:hover{
 	transition: 0.5s all;
 	opacity: 0;
 }
-.card:hover:before{
+.wrapper .card:hover:before{
     opacity: 1;
 }
 
-.card img{
+.wrapper .card img{
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -133,7 +159,7 @@ header nav a:hover{
     left: 0;
 }
 
-.card .info{
+.wrapper .card .info{
 	position: absolute;
 	left: 20px;
 	z-index: 3;
@@ -143,17 +169,17 @@ header nav a:hover{
 	transition: 0.5s all;
 }
 
-.card:hover .info{
+.wrapper .card:hover .info{
     opacity: 1;
 	transition: translateY(0px);
 }
 
-.card .info h1{
+.wrapper .card .info h1{
     font-family: poppins-bold;
     margin: 0;
 }
 
-.card .info p{
+.wrapper .card .info p{
     font-family: poppins-light;
     letter-spacing: 1px;
     font-size: 15px;
@@ -182,24 +208,19 @@ header nav a:hover{
 
   .reg-form{
 	  text-align: center;
-	  margin: auto;
   }
 
   .confirm{
 	  /* Rectangle 22 */
-      width: 480px;
-      height: 50px;
-      width: 480px;
-      height: 81px;
+      width: 95%;
+      height: 40px;
       font-family: Poppins;
       font-style: normal;
       font-weight: bold;
-      font-size: 28px;
+      font-size: 22px;
       line-height: 42px;
       letter-spacing: -0.017em;
-
       color: #FFFFFF;
-
       background: #28A745;
       border-radius: 90px;
   }
@@ -212,14 +233,42 @@ header nav a:hover{
 
   .input-text{
 	/* Group 1 */
-    width: 480px;
-    height: 50px;
-    font-size: 30px;
+    width: 100%;
+    height: 36px;
+
+    margin-top: 3%;
+    font-size: 18px;
+    font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 90px;
+    border-radius: 20px;
 
 }
+
+.input-text-small{
+	/* Group 1 */
+    width: 45%;
+    height: 36px;
+
+    margin-top: 3%;
+    font-size: 18px;
+    font-family: poppins-bold;
+    color: white;
+    background: #225779;
+    border-radius: 20px;
+
+}
+
+  .input-text-area{
+    width: 100%;
+    height: 80px;
+    font-size: 18px;
+    font-family: poppins-bold;
+    color: white;
+    background: #225779;
+    border-radius: 18px;
+  }
+
 input[type="text"][disabled]{
     color: gray;
 }
@@ -268,3 +317,54 @@ input[type="text"][disabled]{
 	cursor: pointer;
 }
 
+select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline:0;
+  box-shadow: none;
+  border:0!important;
+  background: #225779;
+  flex: 1;
+  padding: 0 .5em;
+  color:#fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: poppins-light;
+}
+.select-sort::-ms-expand{
+  display: none;
+}
+.select-sort{
+  
+  position:relative;
+  display:flex;
+  width: 20em;
+  height: 1.8em;
+  line-height: 2;
+  overflow: hidden;
+  border-radius: .25em;
+
+}
+
+.select-sort::after{
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #1b4560;
+  cursor:pointer;
+  pointer-events:none;
+  transition: .25s all ease;
+}
+
+.select-sort:hover::after{
+  color: #1e4e6c;
+}
+
+.select-sort option{
+  font-size: 12px;
+  font-family: poppins-light;
+}

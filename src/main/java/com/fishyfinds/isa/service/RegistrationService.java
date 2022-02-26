@@ -1,10 +1,14 @@
 package com.fishyfinds.isa.service;
 
+import com.fishyfinds.isa.mappers.DtoToUser;
+import com.fishyfinds.isa.model.beans.users.Admin;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.beans.users.instructors.Instructor;
+import com.fishyfinds.isa.model.beans.users.owners.BoatOwner;
+import com.fishyfinds.isa.model.beans.users.owners.BungalowOwner;
 import com.fishyfinds.isa.model.enums.UserType;
-import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
-import com.fishyfinds.isa.repository.usersRepository.UserRepository;
+import com.fishyfinds.isa.repository.usersRepository.*;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,77 +18,127 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 @Service
 public class RegistrationService {
+
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
+    private BoatOwnerRepostory boatOwnerRepository;
+    @Autowired
+    private BungalowOwnerRepository bungalowOwnerRepository;
+    @Autowired
+    private InstructorRepository instructorRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
-    private JavaMailSender mailSender;
-    public boolean registerCustomer(Customer customer, String siteURL){
-        boolean retVal = true;
+    private MailService mailService;
+
+    public boolean registerUser(Map<String, String> map, String siteURL){
+        boolean successfullyRegistered = true;
+        UserType userType = UserType.valueOf(map.get("userType"));
+        switch (userType) {
+            case CUSTOMER:
+                successfullyRegistered = registerCustomer(DtoToUser.MapToCustomer(map), siteURL);
+                break;
+            case BUNGALOW_OWNER:
+                successfullyRegistered = registerBungalowOwner(DtoToUser.MapToBungalowOwner(map), siteURL);
+                break;
+            case BOAT_OWNER:
+                successfullyRegistered = registerBoatOwner(DtoToUser.MapToBoatOwner(map), siteURL);
+                break;
+            case INSTRUCTOR:
+                successfullyRegistered = registerInstructor(DtoToUser.MapToInstructor(map), siteURL);
+                break;
+            case ADMIN:
+                successfullyRegistered = registerAdmin(DtoToUser.MapToAdmin(map), siteURL);
+                break;
+        }
+        return successfullyRegistered;
+    }
+
+    private boolean registerCustomer(Customer customer, String siteURL){
+        boolean successfullyRegistered = true;
         if(!checkIfEmailExists(customer.getEmail())){
             customer.setUserType(UserType.CUSTOMER);
-            customer.setId(userRepository.count() + 1);
-            setCustomerVerificationCode(RandomString.make(64), customer);
+            setVerificationCode(RandomString.make(64), customer);
             try {
-                sendVerificationEmail(customer, siteURL);
+                customerRepository.save(customer);
+                mailService.sendVerificationEmail(customer, siteURL);
             } catch (Exception e) {
-                retVal = false;
+                successfullyRegistered = false;
             }
         }
-        return retVal;
+        return successfullyRegistered;
     }
+
+    public boolean registerBungalowOwner(BungalowOwner owner, String siteURL){
+        boolean successfullyRegistered = false;
+        if(!checkIfEmailExists(owner.getEmail())){
+            owner.setUserType(UserType.BUNGALOW_OWNER);
+            activateAccount(owner);
+            bungalowOwnerRepository.save(owner);
+            successfullyRegistered = true;
+        }
+        return successfullyRegistered;
+    }
+
+    public boolean registerBoatOwner(BoatOwner owner, String siteURL){
+        boolean successfullyRegistered = false;
+        if(!checkIfEmailExists(owner.getEmail())){
+            owner.setUserType(UserType.BOAT_OWNER);
+            activateAccount(owner);
+            boatOwnerRepository.save(owner);
+            successfullyRegistered = true;
+        }
+        return successfullyRegistered;
+    }
+
+    public boolean registerInstructor(Instructor instructor, String siteURL){
+        boolean successfullyRegistered = false;
+        if(!checkIfEmailExists(instructor.getEmail())){
+            instructor.setUserType(UserType.INSTRUCTOR);
+            activateAccount(instructor);
+            instructorRepository.save(instructor);
+            successfullyRegistered = true;
+        }
+        return successfullyRegistered;
+    }
+
+    public boolean registerAdmin(Admin admin, String siteURL){
+        boolean successfullyRegistered = true;
+        if(!checkIfEmailExists(admin.getEmail())){
+            admin.setUserType(UserType.ADMIN);
+            try {
+                activateAccount(admin);
+            } catch (Exception e) {
+                successfullyRegistered = false;
+            }
+        }
+        return successfullyRegistered;
+    }
+
 
     private boolean checkIfEmailExists(String email){
-        return customerRepository.findByEmail(email) != null;
+        return userRepository.findByEmail(email) != null;
     }
 
-    private void sendVerificationEmail(Customer user, String siteURL)
-            throws MessagingException, UnsupportedEncodingException {
-        String toAddress = user.getEmail();
-        String fromAddress = "findsfishy@gmail.com";
-        String senderName = "Fishy Finds";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Fishy Finds.";
 
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", user.getFirstName());
-        String verifyURL = siteURL + "/api/verify?code=" + user.getVerificationCode();
-
-        content = content.replace("[[URL]]", verifyURL);
-
-        helper.setText(content, true);
-
-        mailSender.send(message);
-
-    }
-
-    public boolean verify(String verificationCode) {
+    public boolean verifyCustomerAccount(String verificationCode) {
         Customer user = customerRepository.findByVerificationCode(verificationCode);
-        return (user == null || user.isActivated()) ? false : activateCustomerAccount(user);
+        return (user == null || user.isActivated()) ? false : activateAccount(user);
     }
 
-    private boolean activateCustomerAccount(Customer customer){
-        customer.setActivated(true);
-        setCustomerVerificationCode("", customer);
+    private boolean activateAccount(User user){
+        user.setActivated(true);
+        setVerificationCode("", user);
         return true;
     }
 
-    private void setCustomerVerificationCode(String code, Customer customer){
-        customer.setVerificationCode(code);
-        customerRepository.save(customer);
+    private void setVerificationCode(String code, User user){
+        user.setVerificationCode(code);
     }
+
 }

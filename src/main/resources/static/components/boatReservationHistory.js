@@ -6,13 +6,19 @@ data: function(){
     			boatToShow: {
     			    offerType: "BOAT",
                     offerName: "",
-                    userID: "",
-                    country: "",
-                    city: "",
-                    street: "",
-                    streetNumber:"",
-                    longitude:"",
-                    latitude:"",
+                    user: {
+                        biography: "",
+                        email: "",
+                        firstName: "",
+                        lastName: "",
+                        phoneNumber: ""
+                    },
+                    location:{
+                        country: "",
+                        city: "",
+                        street: "",
+                        streetNumber:""
+                    },
                     description:"",
                     unitPrice:"",
                     maxCustomerCapacity:"",
@@ -73,7 +79,7 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{boat.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(boat)">Show more</button>
-    									<button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showPage = 2">Add feedback</button>
+    									<button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(boat)">Add feedback</button>
     								</div>
     							</div>
     						</div>
@@ -90,10 +96,10 @@ data: function(){
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
     								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
     								<tr class="d-flex justify-content-evenly">
-    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.country"/></td>
-    									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.city"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="boatToShow.street"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="boatToShow.streetNumber"/></td></tr><br>
+    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.location.country"/></td>
+    									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.location.city"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="boatToShow.location.street"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="boatToShow.location.streetNumber"/></td></tr><br>
     								<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="boatToShow.unitPrice"/></td></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="boatToShow.description" ></textarea></tr><br>
     								<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="boatToShow.maxCustomerCapacity"/></td></tr><br>
@@ -109,11 +115,14 @@ data: function(){
                    	<div class="container" v-show="showPage == 2">
     					<div class="container align-items-start">
     						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
+    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Feedback for bungalow and owner </p>
     						<form class="justify-content-center">
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
     								<tr><td><input type="text" placeholder="   Boat's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
-                                    <tr><td><input type="text" placeholder="   Boat owner" class="input-text"/></td></tr><br>
+                                    <tr class="d-flex justify-content-evenly">
+                                        <td><input v-model="boatToShow.user.firstName" type="text" placeholder="   First name" class="input-text"/></td>
+                                        <td><input v-model="boatToShow.user.lastName"  type="text" placeholder="   Last name"  class="input-text"/></td>
+                                    </tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area"></textarea></tr><br>
    							</table>
     						</form>
@@ -135,9 +144,13 @@ data: function(){
           }
           ,
           methods : {
-            showMore : function(bung){
-               this.boatToShow = bung;
+            showMore : function(boat){
+               this.boatToShow = boat;
                this.showPage = 1;
+            },
+            showFeedback : function(bung){
+                this.boatToShow = bung;
+                this.showPage = 2;
             },
             search : function(){
                 axios.get('/api/search', {

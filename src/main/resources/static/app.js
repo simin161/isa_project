@@ -10,6 +10,7 @@ const bungalows = { template: '<bungalows></bungalows>'}
 const instructors = { template: '<instructors></instructors>'}
 const bungalowReservationHistory = {template: '<bungalowReservationHistory></bungalowReservationHistory>'}
 const boatReservationHistory = {template: '<boatReservationHistory></boatReservationHistory>'}
+const courseReservationHistory = {template: '<courseReservationHistory></courseReservationHistory>'}
 // -- For owners only
 const myBungalows = {template: '<owner-my-bungalows></owner-my-bungalows>'}
 const myBoats = {template: '<owner-my-boats></owner-my-boats>'}
@@ -33,6 +34,7 @@ const router = new VueRouter({
 		{ path: '/account', component: profile },
 		{ path: '/bungalowReservationHistory', component: bungalowReservationHistory},
 		{ path: '/boatReservationHistory', component: boatReservationHistory},
+		{ path: '/courseReservationHistory', component: courseReservationHistory},
 		// For owners only
 		{ path: '/my-bungalows', component: myBungalows},
 		{ path: '/my-boats', component: myBoats},

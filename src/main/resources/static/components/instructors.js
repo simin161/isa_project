@@ -61,7 +61,7 @@ template: `
                 						</select>
                 					</td>
                 					<tr>
-                					    <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort"/></td>
+                					    <td><input @click="sortedArray" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort"/></td>
                 					</tr>
                 				</tr>
                 			</table>
@@ -145,6 +145,69 @@ template: `
                             params: this.axiosParams
                    }).then(response => {this.courses = response.data; console.log(this.couses)})
             }
+            ,
+            sortedArray: function() {
+                  if(this.sortOption === 'DescAlpha'){
+                      function compare(a, b) {
+                        if (a.offerName > b.offerName)
+                          return -1;
+                        if (a.offerName < b.offerName)
+                          return 1;
+                       return 0;
+                     }
+                      return this.courses.sort(compare);
+                  }
+                   if(this.sortOption === 'AscAlpha'){
+                       function compare(a, b) {
+                           if (a.offerName < b.offerName)
+                              return -1;
+                           if (a.offerName > b.offerName)
+                              return 1;
+                           return 0;
+                       }
+                       return this.courses.sort(compare);
+                   }
+                   if(this.sortOption === 'DescRating'){
+                      function compare(a, b) {
+                        if (a.rating > b.rating)
+                          return -1;
+                        if (a.rating < b.rating)
+                          return 1;
+                       return 0;
+                     }
+                      return this.courses.sort(compare);
+                  }
+                  if(this.sortOption === 'AscRating'){
+                       function compare(a, b) {
+                           if (a.rating < b.rating)
+                              return -1;
+                           if (a.rating > b.rating)
+                              return 1;
+                           return 0;
+                       }
+                       return this.courses.sort(compare);
+                   }
+                   if(this.sortOption === 'DescPrice'){
+                      function compare(a, b) {
+                        if (a.unitPrice > b.unitPrice)
+                          return -1;
+                        if (a.unitPrice < b.unitPrice)
+                          return 1;
+                       return 0;
+                     }
+                      return this.courses.sort(compare);
+                  }
+                  if(this.sortOption === 'AscPrice'){
+                     function compare(a, b) {
+                          if (a.unitPrice < b.unitPrice)
+                             return -1;
+                          if (a.unitPrice > b.unitPrice)
+                             return 1;
+                          return 0;
+                     }
+                      return this.courses.sort(compare);
+                 }
+             }
 
           }
           ,

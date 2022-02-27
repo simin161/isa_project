@@ -38,7 +38,7 @@ public class OfferService {
         else if(type == OfferType.COURSE){
             searched = courseRepository.findAll();
         }
-        else{  //can be extended to work with courses - add else if and check  the type <3
+        else{
             searched = boatRepository.findAll();
         }
 

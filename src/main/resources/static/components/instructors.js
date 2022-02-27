@@ -12,12 +12,12 @@ Vue.component('instructors', {
                     lastName: "",
                     phoneNumber: ""
                  },
-                 country: "",
-                 city: "",
-                 street: "",
-                 streetNumber:"",
-                 longitude:"",
-                 latitude:"",
+                 location:{
+                    country: "",
+                    city: "",
+                    street: "",
+                    streetNumber:""
+                 },
                  description:"",
                  unitPrice:"",
                  maxCustomerCapacity:"",
@@ -26,6 +26,10 @@ Vue.component('instructors', {
                  additionalServices:"",
                  cancellationPolicy:""
 			},
+            searchParams: {
+                 courseName : "",
+                 courseLocation: ""
+            },
 			showPage: 0,
 			sortOption: ""
 		}
@@ -39,9 +43,9 @@ template: `
                 	<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
                 		<form class="justify-content-center">
                 			<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-                				<tr><td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's name" /></td>
-                					<td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's location"/></td>
-                					<td rowspan="2"><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+                				<tr><td colspan="1"><input v-model="searchParams.courseName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's name" /></td>
+                					<td colspan="1"><input v-model="searchParams.courseLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's location"/></td>
+                					<td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
                 				</tr>
                 				<br>
                 				<tr>
@@ -100,10 +104,10 @@ template: `
                                                 <tr>
                                         		<tr><textarea rowspan="3"name="text" placeholder="   Biography" class="input-text-area"  v-model="courseToShow.user.biography" ></textarea></tr><br>
                                             	<tr class="d-flex justify-content-evenly">
-                                                	<td><input type="text" placeholder="   Country" class="input-text"  v-model="courseToShow.country"/></td>
-                                            	    <td><input type="text" placeholder="   City" class="input-text"  v-model="courseToShow.city"/></td></tr><br>
-                                            	<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="courseToShow.street"/></td></tr><br>
-                                            	<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="courseToShow.streetNumber"/></td></tr><br>
+                                                	<td><input type="text" placeholder="   Country" class="input-text"  v-model="courseToShow.location.country"/></td>
+                                            	    <td><input type="text" placeholder="   City" class="input-text"  v-model="courseToShow.location.city"/></td></tr><br>
+                                            	<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="courseToShow.location.street"/></td></tr><br>
+                                            	<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="courseToShow.location.streetNumber"/></td></tr><br>
                                             	<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="courseToShow.unitPrice"/></td></tr><br>
                                             	<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="courseToShow.description" ></textarea></tr><br>
                                             	<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="courseToShow.maxCustomerCapacity"/></td></tr><br>
@@ -119,12 +123,29 @@ template: `
                     </div>
           `
           ,
+          computed: {
+              axiosParams() {
+                  const params = new URLSearchParams();
+                  params.append('name', this.searchParams.courseName);
+                  params.append('location', this.searchParams.courseLocation);
+                  params.append('type', 'COURSE');
+                  return params;
+              }
+          }
+          ,
           methods : {
             showMore : function(course){
                 this.courseToShow = course;
                 this.courseToShow.user = course.user;
                 this.showPage = 1;
             }
+            ,
+            search : function(){
+                   axios.get('/api/search', {
+                            params: this.axiosParams
+                   }).then(response => {this.courses = response.data; console.log(this.couses)})
+            }
+
           }
           ,
           mounted(){

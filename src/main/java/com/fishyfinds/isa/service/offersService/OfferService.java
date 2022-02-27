@@ -7,6 +7,7 @@ import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.enums.OfferType;
 import com.fishyfinds.isa.repository.offersRepository.BoatRepository;
 import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
+import com.fishyfinds.isa.repository.offersRepository.CourseRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,17 @@ public class OfferService {
     private BoatRepository boatRepository;
     @Autowired
     private BungalowRepository bungalowRepository;
+    @Autowired
+    private CourseRepository courseRepository;
 
     public List<? extends Offer> search(String name, String location, OfferType type){
         List<? extends Offer> searched;
 
         if(type == OfferType.BUNGALOW) {
             searched = bungalowRepository.findAll();
+        }
+        else if(type == OfferType.COURSE){
+            searched = courseRepository.findAll();
         }
         else{  //can be extended to work with courses - add else if and check  the type <3
             searched = boatRepository.findAll();

@@ -6,13 +6,12 @@ data: function(){
     			boatToShow: {
     			    offerType: "BOAT",
                     offerName: "",
-                    userID: "",
-                    country: "",
-                    city: "",
-                    street: "",
-                    streetNumber:"",
-                    longitude:"",
-                    latitude:"",
+                    location:{
+                        country: "",
+                        city: "",
+                        street: "",
+                        streetNumber:""
+                    },
                     description:"",
                     unitPrice:"",
                     maxCustomerCapacity:"",
@@ -89,10 +88,10 @@ data: function(){
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
     								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
     								<tr class="d-flex justify-content-evenly">
-    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.country"/></td>
-    									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.city"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="boatToShow.street"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="boatToShow.streetNumber"/></td></tr><br>
+    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.location.country"/></td>
+    									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.location.city"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="boatToShow.location.street"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="boatToShow.location.streetNumber"/></td></tr><br>
     								<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="boatToShow.unitPrice"/></td></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="boatToShow.description" ></textarea></tr><br>
     								<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="boatToShow.maxCustomerCapacity"/></td></tr><br>

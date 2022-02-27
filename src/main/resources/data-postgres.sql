@@ -35,3 +35,27 @@ INSERT INTO public.offer(
 	VALUES (4, 'blabla', 'blaaa', 'desc desc desc', 3, 'name offer', 0, 3.5, 'ponasanja pravila', 450, 2, 4);
 
 INSERT INTO public.bungalow values (4);
+
+INSERT INTO public.users(
+	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, password, phone_number, user_type, verification_code)
+	VALUES (4, 'address1', 'city1', 'country1', 'instructor1@mail.com', 'Shik', true, false, 'Shak', 'in1', '089222333', 4, '');
+
+INSERT INTO public.instructor(
+	biography, reasoning, registration_status, id, loyalty_program)
+	VALUES ('interesting biography', 'reasons reasons reasons',1, 4, 1);
+
+INSERT INTO public.offer(
+	id, additional_services, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, location, users)
+	VALUES (5, 'afdafasdfa', 'fasdfasdfa', 'gffdfdafafadaf', 5, 'Belly dancing with papa shark', 2, 5.0, 'no rules', 300, 2, 4);
+
+INSERT INTO public.course(
+	fishing_tools, id)
+	VALUES ('sdkfadsfa', 5);
+
+INSERT INTO public.offer(
+	id, additional_services, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, location, users)
+	VALUES (6, 'afdafasdfa1', 'fasdfasdfa1', 'gffdfdafafadaf1', 5, 'Casablanca', 2, 4.5, 'no rules', 250, 2, 3);
+
+INSERT INTO public.course(
+	fishing_tools, id)
+	VALUES ('sdkfadsfa1', 6);

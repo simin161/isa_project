@@ -23,7 +23,8 @@ public class OfferController {
     @GetMapping("/search")
     public List<? extends Offer> searchBungalows(@RequestParam(name = "name", required = false) String name, //location = address + num + city + country
                                                  @RequestParam(name = "location", required = false) String location,
-                                                 @RequestParam(name = "type", required = true) OfferType type){
-        return offerService.search(name, location, type);
+                                                 @RequestParam(name = "type", required = true) OfferType type,
+                                                 @RequestParam(name = "firstLastName", defaultValue = "", required = false) String firstAndLastName){
+        return offerService.search(name, location, type, firstAndLastName);
     }
 }

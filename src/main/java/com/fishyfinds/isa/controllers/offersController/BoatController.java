@@ -23,4 +23,5 @@ public class BoatController {
     public List<Boat> findAll(){
         return boatService.findAll();
     }
+
 }

@@ -39,4 +39,15 @@ public class BungalowService {
         successfullyAdded = true;
         return successfullyAdded;
     }
+
+    public List<Bungalow> findByOwner(int ownerId){
+
+        List<Bungalow> ownersBungalows = new ArrayList<Bungalow>();
+
+        for(Bungalow b : bungalowRepository.findAll()){
+            if(b.getUser().getId() == ownerId)
+                ownersBungalows.add(b);
+        }
+        return ownersBungalows;
+    }
 }

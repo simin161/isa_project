@@ -28,4 +28,9 @@ public class BungalowController {
     public boolean addNewBungalow(@RequestBody Map<String, String> message, HttpServletRequest request){
         return bungalowService.addNewBungalow(DtoToOffer.MapToNewBungalow(message));
     }
+
+    @GetMapping("/allOwnerBungalows")
+    public List<Bungalow> findByOwner(int ownerId) {
+        return bungalowService.findByOwner(ownerId);
+    }
 }

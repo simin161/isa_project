@@ -25,7 +25,8 @@ Vue.component('owner-my-bungalows', {
 				additionalServices:"",
 				cancellationPolicy:"",
 			},
-			item: null
+			item: null,
+			bungalows:[]
 		}
 	},
 template: `	
@@ -64,150 +65,23 @@ template: `
 
 				
 					<div class="container mt-5">
-						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4" style="text-align:center;">
-									<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light" @click="selectBungalow(item)">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="container mt-5">
-						<div class="card mb-3" style="max-width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4 align-middle" style="text-align:center;">
-								<img src="../images/bungalow-images/bungalow-1-in-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text text-truncate" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="container mt-5">
-						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4" style="text-align:center;">
-									<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="container mt-5">
-						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4" style="text-align:center;">
-									<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="container mt-5">
-						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4" style="text-align:center;">
-									<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="container mt-5">
-						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4" style="text-align:center;">
-									<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="container mt-5">
-						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4" style="text-align:center;">
-									<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="container mt-5">
-						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
-							<div class="row g-0">
-								<div class="col-md-4" style="text-align:center;">
-									<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light">Show more</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+                        					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in bungalows">
+                        						<div class="row g-0">
+                        							<div class="col-md-4" style="text-align:center;">
+                        								<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
+                        							</div>
+                        							<div class="col-md-8">
+                        								<div class="card-body">
+                        									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</h5>
+                        									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{bungalow.description}}</p>
+                        									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{bungalow.unitPrice}}</p>
+                        									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
+                        									<button class="float-end btn btn-light" @click="showMore(bungalow)">Show more</button>
+                        								</div>
+                        							</div>
+                        						</div>
+                        					</div>
+                        				</div>
 
 
             	</div>
@@ -258,6 +132,13 @@ template: `
 				this.dtoBungalow.userID = this.loggedUser.id;
 			})
         console.log(this.loggedUser);
+
+
+        axios.get("/api/allOwnerBungalows")
+            .then(response => {
+                this.bungalows = response.data;
+            })
+
     },
 	computed:{
 

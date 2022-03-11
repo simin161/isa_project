@@ -1,34 +1,10 @@
-Vue.component('owner-my-bungalows', {
+Vue.component('owner-my-bungalow-page', {
 	data: function(){
-		return{	
-			loggedUser: null,
-			showPage: 0,
-			bungalows:[],
-			dtoAddNewBungalow: {
-				offerType: "BUNGALOW",
-				offerName: "",
-				userID: "",
-
-				country: "",
-				city: "",
-				street: "",
-				streetNumber:"",
-				longitude:"",
-				latitude:"",
-
-				description:"",
-				unitPrice:"",
-				maxCustomerCapacity:"",
-
-				maxCustomerCapacity:"",
-				rulesOfConduct:"",
-				additionalServices:"",
-				cancellationPolicy:"",
-			},
-			item: null
+		return{
+			loggedUser: null
 		}
 	},
-template: `	
+template: `
 		<div>
 			<nav-bar></nav-bar>
 			<br>
@@ -62,7 +38,7 @@ template: `
 						</table>
 					</form>
 
-				
+
 					<div class="container mt-5">
 						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;">
 							<div class="row g-0">
@@ -74,7 +50,7 @@ template: `
 										<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Bungalow's name</h5>
 										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 										<p class="card-text" style="color:#fff;font-family:poppins-light; font-size:10px;">Last updated 3 mins ago</p>
-										<button class="float-end btn btn-light" @click="selectBungalow(item)">Show more</button>
+										<button class="float-end btn btn-light">Show more</button>
 									</div>
 								</div>
 							</div>
@@ -216,7 +192,7 @@ template: `
 
 					<!-- Add a new bungalow -->
                 	<div class="container" v-show="showPage == 1">
-						
+
 						<div class="container align-items-start">
 							<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
 							<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Add a new Bungalow </p>
@@ -286,17 +262,10 @@ template: `
 			axios.post('/api/addNewBungalow', this.dtoAddNewBungalow)
 				.then(response => console.log(response.data))
 		}
-            
+
 		,
 		showAddNewBungalowForm: function(){
 			this.showPage = 1;
-
-		},
-
-		selectBungalow: function(){
-
-		    axios.post("/api/ownerSelectBungalow", item)
-            				.then(response =>(router.push("my-bungalow-page")))
 
 		}
 

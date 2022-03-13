@@ -115,14 +115,19 @@ data: function(){
                    	<div class="container" v-show="showPage == 2">
     					<div class="container align-items-start">
     						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Feedback for bungalow and owner </p>
+    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Feedback for boat and owner </p>
     						<form class="justify-content-center">
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
     								<tr><td><input type="text" placeholder="   Boat's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
                                     <tr class="d-flex justify-content-evenly">
                                         <td><input v-model="boatToShow.user.firstName" type="text" placeholder="   First name" class="input-text"/></td>
                                         <td><input v-model="boatToShow.user.lastName"  type="text" placeholder="   Last name"  class="input-text"/></td>
-                                    </tr><br>
+                                    </tr>
+                                    <br>
+                                    <tr>
+                                        <td><input type="number" placeholder="    Rating" class="input-text" /></td>
+                                    </tr>
+                                    <br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area"></textarea></tr><br>
    							</table>
     						</form>

@@ -134,6 +134,9 @@ template: `
                                 					    <td><input type="text" placeholder="   First name" class="input-text" v-model="courseToShow.user.firstName"/></td>
                                 					    <td><input type="text" placeholder="   Last name"  class="input-text" v-model="courseToShow.user.lastName"/></td>
                                 					</tr><br>
+                                					<tr>
+                                					    <td><input type="number" placeholder="   Rating" class="input-text"/></td>
+                                					</tr>
                                 					<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" ></textarea></tr><br>
                                 				</table>
                                 			</form>

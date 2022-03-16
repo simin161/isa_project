@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.controllers.offersController;
 
+import com.fishyfinds.isa.controllers.AuthenticationController;
 import com.fishyfinds.isa.mappers.DtoToOffer;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.service.offersService.BungalowService;

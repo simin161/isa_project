@@ -36,7 +36,7 @@ public class BungalowOwner extends User {
 
     public BungalowOwner() {}
     public BungalowOwner(String firstName, String lastName, String address, String city, String country,
-                 String phoneNumber, String email, String password, String reasoning){
+                         String phoneNumber, String email, String password, String reasoning){
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

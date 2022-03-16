@@ -29,11 +29,13 @@ Vue.component('bungalows', {
     	},
     template: `
     	<div>
+
     		<nav-bar></nav-bar>
-    		<br>
-    		<br>
-            <div class="my-bungalows">
+    		<br><br>
+
+        <div class="my-bungalows">
     			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
+
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
@@ -59,6 +61,7 @@ Vue.component('bungalows', {
     						</tr>
     					</table>
     				</form>
+
     				<div class="container mt-5">
     					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in bungalows">
     						<div class="row g-0">
@@ -78,33 +81,40 @@ Vue.component('bungalows', {
     					</div>
     				</div>
 
-                   	</div>
-                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
-                   	<div class="container" v-show="showPage == 1">
+          </div>
+    
+          
+          <div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
+            <div class="container" v-show="showPage == 1">
     					<div class="container align-items-start">
-    						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
-    						<form class="justify-content-center">
-    							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-    								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
-    								<tr class="d-flex justify-content-evenly">
-    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="bungalowToShow.location.country"/></td>
-    									<td><input type="text" placeholder="   City" class="input-text"  v-model="bungalowToShow.location.city"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="bungalowToShow.location.street"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="bungalowToShow.location.streetNumber"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="bungalowToShow.unitPrice"/></td></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="bungalowToShow.description" ></textarea></tr><br>
-    								<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="bungalowToShow.maxCustomerCapacity"/></td></tr><br>
-    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="bungalowToShow.additionalServices" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="bungalowToShow.rulesOfConduct" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="bungalowToShow.cancellationPolicy" ></textarea></tr><br>
-    							</table>
-    						</form>
-    					</div>
-                   	</div>
-               	</div>
-    		</div>
+                <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
+                <p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
+
+                <form class="justify-content-center">
+                  <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+                    <tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
+                    <tr class="d-flex justify-content-evenly">
+                      <td><input type="text" placeholder="   Country" class="input-text"  v-model="bungalowToShow.location.country"/></td>
+                      <td><input type="text" placeholder="   City" class="input-text"  v-model="bungalowToShow.location.city"/></td></tr><br>
+                    <tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="bungalowToShow.location.street"/></td></tr><br>
+                    <tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="bungalowToShow.location.streetNumber"/></td></tr><br>
+                    <tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="bungalowToShow.unitPrice"/></td></tr><br>
+                    <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="bungalowToShow.description" ></textarea></tr><br>
+                    <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="bungalowToShow.maxCustomerCapacity"/></td></tr><br>
+                    <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="bungalowToShow.additionalServices" ></textarea></tr><br>
+                    <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="bungalowToShow.rulesOfConduct" ></textarea></tr><br>
+                    <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="bungalowToShow.cancellationPolicy" ></textarea></tr><br>
+                  </table>
+                </form>
+
+    			  	</div>
+           	</div>
+          </div>
+
+    		 </div>
+
     	</div>
+
     		`
           ,
           computed: {

@@ -4,6 +4,7 @@ import com.fishyfinds.isa.model.beans.offers.Location;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.offers.boats.Boat;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
+import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.OfferType;
 import com.fishyfinds.isa.repository.offersRepository.BoatRepository;
 import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
@@ -97,5 +98,9 @@ public class OfferService {
             retVal = matcher.find();
         }
         return retVal;
+    }
+
+    public ArrayList<Offer> getBungalowsByOwner(User bungalowOwner) {
+        return (ArrayList<Offer>)offerRepository.findAllByUser(bungalowOwner);
     }
 }

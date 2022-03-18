@@ -13,6 +13,7 @@ template: `
 				<h1 v-if="loggedUser == 'BUNGALOW_OWNER'">Plan your next trip with confidence!</h1>
 				<h1 v-if="loggedUser == 'BOAT_OWNER'">Plan your next trip with confidence!</h1>
 				<h1 v-if="loggedUser == 'INSTRUCTOR'">Plan your next trip with confidence!</h1>
+				<h1 v-if="loggedUser == 'ADMIN'">Welcome back dear administrator!</h1>
 			</div>
 
 			<div class="wrapper" v-if="loggedUser == '' || loggedUser.userType == 'CUSTOMER'">
@@ -83,6 +84,18 @@ template: `
 					</div>
 				</div>
 
+			</div>
+
+			<div class="wrapper" v-if="loggedUser.userType == 'ADMIN'">
+
+			    <div class="card">
+			        <img src="images/admin-registrations.jpg">
+			        <div class="info">
+			            <h1>Registrations, Requests and Complaints</h1>
+			            <p>Manage new registrations, user requests and complaints!</p>
+			            <a class="btn btn-light" href="#/admin-reg-req-complaints" role="button">Show more</a>
+			        </div>
+			    </div>
 			</div>
 
 		</div>

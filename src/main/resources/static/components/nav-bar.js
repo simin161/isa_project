@@ -42,6 +42,7 @@ template: `
                                         <a href="#/boatReservationHistory">Boats</a>
                                         <a href="#/courseReservationHistory">Instructors</a>
                                         <a href="#/">Upcoming</a>
+                                        <a href="#/">New reservation</a>
                                     </div>
                                     </div>
                                     <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>

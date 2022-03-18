@@ -11,6 +11,7 @@ const instructors = { template: '<instructors></instructors>'}
 const bungalowReservationHistory = {template: '<bungalowReservationHistory></bungalowReservationHistory>'}
 const boatReservationHistory = {template: '<boatReservationHistory></boatReservationHistory>'}
 const courseReservationHistory = {template: '<courseReservationHistory></courseReservationHistory>'}
+const customerNewReservation = {template: '<customerNewReservation></customerNewReservation>'}
 // -- For owners only
 const myBungalows = {template: '<owner-my-bungalows></owner-my-bungalows>'}
 const myBoats = {template: '<owner-my-boats></owner-my-boats>'}
@@ -35,6 +36,7 @@ const router = new VueRouter({
 		{ path: '/bungalowReservationHistory', component: bungalowReservationHistory},
 		{ path: '/boatReservationHistory', component: boatReservationHistory},
 		{ path: '/courseReservationHistory', component: courseReservationHistory},
+		{ path: '/customerNewReservation', component: customerNewReservation},
 		// For owners only
 		{ path: '/my-bungalows', component: myBungalows},
 		{ path: '/my-boats', component: myBoats},

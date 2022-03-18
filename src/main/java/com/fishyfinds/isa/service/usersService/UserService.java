@@ -26,9 +26,7 @@ public class UserService {
             user.setPassword(password.get("newPassword"));
             if(user.getUserType() == UserType.ADMIN){
 
-                Admin admin = (Admin)user;
-                admin.setNumberOfLogIns(1);
-                adminRepository.save(admin);
+                user.setNumberOfLogIns(1);
 
             }
             userRepository.save(user);

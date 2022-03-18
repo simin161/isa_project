@@ -121,7 +121,7 @@ template: `
 			        </div>
 			    </div>
 
-                <div class="container align-items-start" v-else>
+                <div class="container align-items-start" v-if="loggedUser.numberOfLogIns == 0">
                     <p class="title-text-bold">Please change your password.</p>
                     <p class="title-text-light" style="font-size:15px;">Since this is your first login on Fishy Finds, we require that you change your password.</p>
                     <form class="justify-content-center">
@@ -165,7 +165,7 @@ template: `
                                    if(response.data){
                                         this.loggedUser.password = this.passwordDTO.newPassword;
                                         console.log("SUCCESS - User's password has been changed!");
-                                        this.$router.go();
+                                        this.loggedUser.numberOfLogIns = 1;
                                    }
                              })
                     }

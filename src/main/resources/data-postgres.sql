@@ -1,12 +1,12 @@
-INSERT INTO users values (1, 'address', 'city','country', 'mail@mail.com', 'First', true, false, 'Last', 'password', '12345678',0, '');
+INSERT INTO users(id, address, city, country, email, first_name, is_activated, is_deleted, last_name, password, phone_number, user_type, verification_code, number_of_log_ins) values (1, 'address', 'city','country', 'mail@mail.com', 'First', true, false, 'Last', 'password', '12345678',0, '', 0);
 INSERT INTO loyalty_program values (1, 23.4, 'shark', 0,  40);
 INSERT INTO customer values (45,0, 1, 1);
 
-INSERT INTO users values (2, 'address', 'city','country', 'jb', 'James', true, false, 'Bond', 'jb', '12345678',1, '');
+INSERT INTO users(id, address, city, country, email, first_name, is_activated, is_deleted, last_name, password, phone_number, user_type, verification_code, number_of_log_ins) values (2, 'address', 'city','country', 'jb', 'James', true, false, 'Bond', 'jb', '12345678',1, '', 0);
 INSERT INTO bungalow_owner values ('reason',1, 2, 1);
 
 INSERT INTO loyalty_program values(3, 20.5, 'baby shark', 0, 0);
-INSERT INTO users values (3, 'address', 'city','country', 'instructor@i.com', 'Instructor', true, false, 'I', 'in', '12345673',1, '');
+INSERT INTO users(id, address, city, country, email, first_name, is_activated, is_deleted, last_name, password, phone_number, user_type, verification_code, number_of_log_ins) values (3, 'address', 'city','country', 'instructor@i.com', 'Instructor', true, false, 'I', 'in', '12345673',1, '', 0);
 INSERT INTO public.instructor(
 	biography, reasoning, registration_status, id, loyalty_program)
 	VALUES ('biography', 'reasoning', 1, 3, 3);
@@ -37,8 +37,8 @@ INSERT INTO public.offer(
 INSERT INTO public.bungalow values (4);
 
 INSERT INTO public.users(
-	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, password, phone_number, user_type, verification_code)
-	VALUES (4, 'address1', 'city1', 'country1', 'instructor1@mail.com', 'Shik', true, false, 'Shak', 'in1', '089222333', 4, '');
+	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, password, phone_number, user_type, verification_code, number_of_log_ins)
+	VALUES (4, 'address1', 'city1', 'country1', 'instructor1@mail.com', 'Shik', true, false, 'Shak', 'in1', '089222333', 4, '', 0);
 
 INSERT INTO public.instructor(
 	biography, reasoning, registration_status, id, loyalty_program)

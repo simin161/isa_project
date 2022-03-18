@@ -57,6 +57,9 @@ public class User {
     @Column(name="userType")
     protected UserType userType;
 
+    @Column(name = "numberOfLogIns")
+    private int numberOfLogIns;
+
     public User() {}
     public User(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, String email, String password) {
         this.id = id;
@@ -68,6 +71,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.numberOfLogIns = 0;
     }
 
     public void update(User user){

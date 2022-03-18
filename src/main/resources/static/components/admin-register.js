@@ -1,4 +1,4 @@
-Vue.component('register', {
+Vue.component('admin-register', {
 	data: function(){
 		return{
 		    dto : {
@@ -17,12 +17,12 @@ Vue.component('register', {
 		    confirmPassword : "",
 		    enabled: false,
 		    backgroundColor: "seagreen",
-            registrationTitle: "",
+            registrationTitle: "Administrator Registration",
 		    cursorStyle: "default",
             showForm: 0,
 		}
 	},
-template: `	
+template: `
 		<div>
             <nav-bar></nav-bar>
 
@@ -30,29 +30,17 @@ template: `
                     <p class="title-text-bold" style="margin-top:30px;"> Registration </p>
                     <div class="row">
                         <p class="title-text-light">Create an account!</p>
-                        <p class="title-text-light" style="font-size:15px;">Register to FishyFinds:</p>
+                        <p class="title-text-light" style="font-size:15px;">Register for FishyFinds:</p>
                             </div>
                             <div class="row options justify-content-evenly">
-                                <div class="options-4-horizontal justify-content-center" @click="registerCustomer">
-                                    <img class="image" src="images/register-customer.png">
-                                    <p class="title-text-bold" style="font-size:12px"> as a Customer </p>
-                                </div>
-                                <div class="options-4-horizontal justify-content-center" @click="registerBungalowOwner">
-                                    <img class="image" src="images/register-bungalow-owner.png">
-                                    <p class="title-text-bold" style="font-size:12px"> as a Bungalow Owner </p>
-                                </div>
-                                <div class="options-4-horizontal justify-content-center" @click="registerBoatOwner">
-                                    <img class="image" src="images/register-boat-owner.png">
-                                    <p class="title-text-bold" style="font-size:12px"> as a Boat Owner </p>
-                                </div>
-                                <div class="options-4-horizontal justify-content-center" @click="registerInstructor">
-                                    <img class="image" src="images/register-instructor.png">
-                                    <p class="title-text-bold" style="font-size:12px"> as an Instructor </p>
+                                <div class="options-4-horizontal justify-content-center" @click="registerAdmin">
+                                    <img class="image" src="images/register-admin.png">
+                                    <p class="title-text-bold" style="font-size:12px"> a new Administrator </p>
                                 </div>
                     </div>
             </div>
 
-            <div class="col-md-4 right-div" style="margin-top:-20px" v-show="showForm == 1 || showForm == 2 || showForm == 3">
+            <div class="col-md-4 right-div" style="margin-top:-20px">
                 <div class="container align-items-start">
                     <p class="title-text-bold" style="margin-top:10px;"> {{registrationTitle}} </p>
                     <form class="justify-content-center">
@@ -135,25 +123,9 @@ template: `
                 console.log("Invalid password")
             }
         },
-        registerCustomer : function(){
-            this.showForm = 1;
-            this.dto.userType = "CUSTOMER";
-            this.registrationTitle = "Customer Registration";
-        },
-        registerBungalowOwner : function(){
-            this.showForm = 2;
-            this.dto.userType = "BUNGALOW_OWNER";
-            this.registrationTitle = "Bungalow Owner Registration";
-        },
-        registerBoatOwner : function(){
-            this.showForm = 2;
-            this.dto.userType = "BOAT_OWNER";
-            this.registrationTitle = "Boat Owner Registration";
-        },
-        registerInstructor : function(){
-            this.showForm = 3;
-            this.dto.userType = "INSTRUCTOR";
-            this.registrationTitle = "Instructor Registration";
+        registerAdmin : function(){
+            this.dto.userType = "ADMIN";
+            this.registrationTitle = "Administrator Registration";
         }
 
     }

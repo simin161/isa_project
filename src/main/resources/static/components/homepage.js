@@ -101,7 +101,7 @@ template: `
 			        <img src="images/admin-settings.jpg">
 			        <div class="info">
 			            <h1>Fishy Finds' System</h1>
-			            <p>Track all users, their actions and manage your budget.</p>
+			            <p>Track all users, their actions and manage your budget and statistics.</p>
 			            <a class="btn btn-light" href="#/admin-fishy-finds-system" role="button">Show more</a>
 			        </div>
 			    </div>

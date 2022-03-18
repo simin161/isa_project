@@ -1,4 +1,4 @@
-Vue.component('profile', {
+Vue.component('admin-profile', {
 	data: function(){
 		return{
 			dto: null,
@@ -60,7 +60,7 @@ template: `
                                 <p class="title-text-bold">Options</p>
                                 <p class="title-text-light" style="font-size:15px;">Aliquam dapibus tristique ante, vitae ullamcorper sem mollis a.  Maecenas cursus libero ac diam rutrum, at lobortis nunc tincidunt.</p>
                             </div>
-                            <div class="row options justify-content-evenly" v-if="dto.userType == 'ADMIN'">
+                            <div class="row options justify-content-evenly">
                                 <div class="options-3-horizontal justify-content-center" @click="showForm = 1">
                                     <img class="image" src="images/profile-update-profile.png">
                                     <p class="title-text-bold" style="font-size:15px"> Update your profile </p>
@@ -68,20 +68,6 @@ template: `
                                 <div class="options-3-horizontal justify-content-center" @click="showForm = 2">
                                     <img class="image" src="images/profile-change-password.png">
                                     <p class="title-text-bold" style="font-size:15px"> Change your password </p>
-                                </div>
-                            </div>
-                            <div class="row options justify-content-evenly" v-else>
-                                <div class="options-3-horizontal justify-content-center" @click="showForm = 1">
-                                    <img class="image" src="images/profile-update-profile.png">
-                                    <p class="title-text-bold" style="font-size:15px"> Update your profile </p>
-                                </div>
-                                <div class="options-3-horizontal justify-content-center" @click="showForm = 2">
-                                    <img class="image" src="images/profile-change-password.png">
-                                    <p class="title-text-bold" style="font-size:15px"> Change your password </p>
-                                </div>
-                                <div class="options-3-horizontal justify-content-center" @click="showForm = 3">
-                                    <img class="image" src="images/profile-delete-account.png">
-                                    <p class="title-text-bold" style="font-size:15px"> Delete your account </p>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +155,7 @@ template: `
                                 </table>
                             </form>
                         </div>
- 
+
                     </div>
                 </div>
             </div>
@@ -227,7 +213,7 @@ template: `
                                              "email":this.dto.email})
             .then((response) => {
                 if(response.data){
-                    console.log("SUCCESS - User's data has been changed!"); 
+                    console.log("SUCCESS - User's data has been changed!");
                     this.$router.go(0);
                     backToOptions();
                 }
@@ -239,7 +225,7 @@ template: `
                  .then((response) => {
                      console.log("SUCCESS - User's request has been sent!");
                      backToOptions();
-                    
+
                     })
         },
 

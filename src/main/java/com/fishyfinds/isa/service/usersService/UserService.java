@@ -1,6 +1,9 @@
 package com.fishyfinds.isa.service.usersService;
 
+import com.fishyfinds.isa.model.beans.users.Admin;
 import com.fishyfinds.isa.model.beans.users.User;
+import com.fishyfinds.isa.model.enums.UserType;
+import com.fishyfinds.isa.repository.usersRepository.AdminRepository;
 import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +17,20 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    private AdminRepository adminRepository;
 
     public boolean changePassword(Map<String, String> password){
         boolean retVal = false;
         User user = userRepository.findById(Long.valueOf(password.get("id"))).orElse(null);
         if(user != null){
             user.setPassword(password.get("newPassword"));
+            if(user.getUserType() == UserType.ADMIN){
+
+                Admin admin = (Admin)user;
+                admin.setNumberOfLogIns(1);
+                adminRepository.save(admin);
+
+            }
             userRepository.save(user);
             retVal = true;
         }

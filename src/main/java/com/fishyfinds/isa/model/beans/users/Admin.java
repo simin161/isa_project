@@ -19,6 +19,9 @@ public class Admin extends User {
 	@Column(name = "earningPercentage")
 	private double earningPercentage;
 
+	@Column(name = "numberOfLogIns")
+	private int numberOfLogIns;
+
 	public Admin() {}
 
 	public Admin(String firstName, String lastName, String address, String city, String country,
@@ -31,5 +34,6 @@ public class Admin extends User {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.password = password;
+		this.numberOfLogIns = 0;
 	}
 }

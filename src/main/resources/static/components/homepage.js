@@ -31,7 +31,7 @@ template: `
 					<img src="images/homepage-boats.jpg">
 					<div class="info">
 						<h1>Boats</h1>
-						<p>The easiest eay to get around here</p>
+						<p>The easiest way to get around here</p>
 						<a class="btn btn-light" href="#/boats" role="button">Read More</a>
 					</div>
 				</div>		
@@ -96,6 +96,25 @@ template: `
 			            <a class="btn btn-light" href="#/admin-reg-req-complaints" role="button">Show more</a>
 			        </div>
 			    </div>
+
+			    <div class="card">
+			        <img src="images/admin-settings.jpg">
+			        <div class="info">
+			            <h1>Fishy Finds' System</h1>
+			            <p>Track all users, their actions and manage your budget.</p>
+			            <a class="btn btn-light" href="#/admin-fishy-finds-system" role="button">Show more</a>
+			        </div>
+			    </div>
+
+			    <div class="card">
+			        <img src="images/admin-profile.jpg">
+			        <div class="info">
+			            <h1>Your Profile</h1>
+			            <p>Access and manage your own profile on Fishy Finds!</p>
+			            <a class="btn btn-light" href="#/account" role="button">Show more</a>
+			        </div>
+			    </div>
+
 			</div>
 
 		</div>

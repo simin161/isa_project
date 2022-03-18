@@ -11,6 +11,10 @@ Vue.component('admin-reg-req-complaints', {
         <div class="homepage">
             <nav-bar></nav-bar>
 
+            <div class="welcome-text container-fluid justify-content-center">
+
+            </div>
+
             <div class="wrapper">
                 <div class="card">
                     <img src="images/register-admin.jpg">

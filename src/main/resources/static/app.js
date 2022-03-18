@@ -17,7 +17,7 @@ const myBoats = {template: '<owner-my-boats></owner-my-boats>'}
 // -- For instructors only
 const myCourses = {template: '<instructor-my-courses></instructor-my-courses>'}
 // For admins only
-const adminRegReqComplaints: {template: '<admin-reg-req-complaints></admin-reg-req-complaints>'}
+const adminRegReqComplaints = {template: '<admin-reg-req-complaints></admin-reg-req-complaints>'}
 // ...
 const router = new VueRouter({
 	  mode: 'hash',

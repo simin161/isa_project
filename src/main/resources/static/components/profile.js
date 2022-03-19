@@ -11,6 +11,7 @@ Vue.component('profile', {
 			showForm: 0,
 			requestDTO:{
 			    id: null,
+			    user: null,
 			    explanation: ''
 			}
 		};
@@ -235,11 +236,11 @@ template: `
         },
         sendAccountDeletionRequest : function(){
         this.requestDTO.id = this.dto.id;
+        this.requestDTO.user = this.dto;
             axios.post('/api/sendAccountDeletionRequest', this.requestDTO)
                  .then((response) => {
-                     console.log("SUCCESS - User's request has been sent!");
+                     console.log("SUCCESS - Users' request has been sent!");
                      backToOptions();
-                    
                     })
         },
 

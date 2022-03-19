@@ -81,5 +81,6 @@ public class User {
         this.city = user.city;
         this.country = user.country;
         this.phoneNumber = user.phoneNumber;
+        this.numberOfLogIns = user.numberOfLogIns;
     }
 }

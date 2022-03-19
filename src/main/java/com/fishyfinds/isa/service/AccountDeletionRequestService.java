@@ -5,6 +5,8 @@ import com.fishyfinds.isa.repository.AccountDeletionRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountDeletionRequestService {
 
@@ -13,5 +15,9 @@ public class AccountDeletionRequestService {
 
     public void add(AccountDeletionRequest accountDeletionRequest){
         accountDeletionRequestRepository.save(accountDeletionRequest);
+    }
+
+    public List<AccountDeletionRequest> findAll() {
+        return accountDeletionRequestRepository.findAll();
     }
 }

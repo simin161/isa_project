@@ -65,6 +65,7 @@ public class RegistrationService {
         boolean successfullyRegistered = true;
         if(!checkIfEmailExists(customer.getEmail())){
             customer.setUserType(UserType.CUSTOMER);
+            customer.setNumberOfLogIns(0);
             setVerificationCode(RandomString.make(64), customer);
             try {
                 customerRepository.save(customer);
@@ -80,6 +81,7 @@ public class RegistrationService {
         boolean successfullyRegistered = false;
         if(!checkIfEmailExists(owner.getEmail())){
             owner.setUserType(UserType.BUNGALOW_OWNER);
+            owner.setNumberOfLogIns(0);
             activateAccount(owner);
             bungalowOwnerRepository.save(owner);
             successfullyRegistered = true;
@@ -91,6 +93,7 @@ public class RegistrationService {
         boolean successfullyRegistered = false;
         if(!checkIfEmailExists(owner.getEmail())){
             owner.setUserType(UserType.BOAT_OWNER);
+            owner.setNumberOfLogIns(0);
             activateAccount(owner);
             boatOwnerRepository.save(owner);
             successfullyRegistered = true;
@@ -102,6 +105,7 @@ public class RegistrationService {
         boolean successfullyRegistered = false;
         if(!checkIfEmailExists(instructor.getEmail())){
             instructor.setUserType(UserType.INSTRUCTOR);
+            instructor.setNumberOfLogIns(0);
             activateAccount(instructor);
             instructorRepository.save(instructor);
             successfullyRegistered = true;
@@ -113,6 +117,7 @@ public class RegistrationService {
         boolean successfullyRegistered = true;
         if(!checkIfEmailExists(admin.getEmail())){
             admin.setUserType(UserType.ADMIN);
+            admin.setNumberOfLogIns(0);
             try {
                 activateAccount(admin);
                 adminRepository.save(admin);

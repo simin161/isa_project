@@ -127,7 +127,5 @@ template: `
             this.dto.userType = "ADMIN";
             this.registrationTitle = "Administrator Registration";
         }
-
     }
-
 });

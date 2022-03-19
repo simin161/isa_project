@@ -142,6 +142,7 @@ public class RegistrationService {
     private boolean activateAccount(User user){
         user.setActivated(true);
         setVerificationCode("", user);
+        userRepository.save(user);
         return true;
     }
 

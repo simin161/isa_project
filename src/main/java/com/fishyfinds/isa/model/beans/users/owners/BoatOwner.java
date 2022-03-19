@@ -2,7 +2,6 @@ package com.fishyfinds.isa.model.beans.users.owners;
 
 import com.fishyfinds.isa.model.beans.LoyaltyProgram;
 import com.fishyfinds.isa.model.beans.offers.boats.Boat;
-import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.RegistrationStatus;
 import lombok.Getter;

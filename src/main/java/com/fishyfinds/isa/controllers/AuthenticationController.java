@@ -6,7 +6,11 @@ import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.security.auth.JwtAuthenticationRequest;
 import com.fishyfinds.isa.service.AuthenticationService;
 import com.fishyfinds.isa.service.usersService.CustomUserDetailsService;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
@@ -56,14 +61,21 @@ public class AuthenticationController {
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
-    @GetMapping("/signOut")
-    public void signOut(HttpSession session){
-        authenticationService.signOut(session);
-    }
-
     @GetMapping("/authenticateUser")
-    public User authenticateUser(HttpServletRequest request){
-        return  authenticationService.authenticateUser(request);
+    public User authenticateUser(@RequestHeader("Authorization") HttpHeaders header){
+        final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+
+        try {
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            User retVal = authenticationService.authenticateUser(username);
+            return retVal;
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return  null;
 
         }
 

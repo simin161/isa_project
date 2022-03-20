@@ -46,8 +46,9 @@ template: `
             signIn : function(){
                 axios.post('/api/signIn', this.user)
                      .then(response =>{
-                            console.log(response.data)
+                           window.localStorage.setItem('user',JSON.stringify(response.data))
+                           router.push('/')
                      })
-            }
+             }
         }
 });

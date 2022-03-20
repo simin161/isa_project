@@ -129,7 +129,22 @@ template: `
         registerUser : function(){
             if(this.confirmPassword == this.dto.password){
                 axios.post('/api/registerUser', this.dto)
-                	 .then(response => console.log(response.data))
+                	 .then(response => {
+                	            if(response.data === true){
+                	                Swal.fire('Registered successfuly!',
+                	                          'Please, check your email for further instructions!',
+                	                          'success')
+                	            }
+                	            else{
+                	                Swal.fire('Ooops, something went wron!',
+                	                           'Please, try again later',
+                	                           'error')
+                	            }
+                	        }).catch(
+                	                Swal.fire('Ooops, something went wron!',
+                                              'Please, try again later',
+                                              'error')
+                	        )
             }
             else{
                 console.log("Invalid password")

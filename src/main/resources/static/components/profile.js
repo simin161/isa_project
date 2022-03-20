@@ -6,6 +6,7 @@ Vue.component('profile', {
 			confirmPassword: '',
 			passwordDTO: {
 			           id: null,
+			           oldPassword: '',
 			           newPassword: ''
 			},
 			showForm: 0,
@@ -132,6 +133,9 @@ template: `
                             <form class="justify-content-center">
                                 <table class="justify-content-center" style="width:75%; margin: auto;" >
                                     <tr>
+                                    <td><input type="password" placeholder="   Old password" class="update-text-profile" v-model="passwordDTO.oldPassword"/></td>
+                                    </tr>
+                                    <tr>
                                     <td><input type="password" placeholder="   New password" class="update-text-profile" v-model="passwordDTO.newPassword"/></td>
                                     </tr>
                                     <br>
@@ -200,21 +204,21 @@ template: `
     },
     methods : {
         savePassword : function(){
-            if(this.passwordDTO.newPassword != this.dto.password &&
-               this.passwordDTO.newPassword == this.confirmPassword){
-                this.passwordDTO.id = this.dto.id;
-                axios.put('/api/changePassword', this.passwordDTO)
-                     .then(response => {console.log(response.data)
-                           if(response.data){
-                                this.dto.password = this.passwordDTO.newPassword;
-                                console.log("SUCCESS - User's password has been changed!");
-                                backToOptions();
-                           }
-                     })
-            }
-            else {
-                console.log("ERROR - User's password hasn't been changed!")
-            }
+            this.passwordDTO.id = this.dto.id;
+            axios.put('/api/changePassword', this.passwordDTO)
+                 .then(response => {
+                    if(response.data === true){
+                        Swal.fire('Password changed successfuly!',
+                                  '',
+                                  'success')
+                    }
+                    else{
+                        Swal.fire('Ooops, something went wrong!',
+                                  'Please, try again later!',
+                                  'error')
+                    }
+
+                 })
         },
         saveProfile : function(){
             axios.put('/api/changeProfile', {"id": this.dto.id,
@@ -227,7 +231,8 @@ template: `
                                              "email":this.dto.email})
             .then((response) => {
                 if(response.data){
-                    console.log("SUCCESS - User's data has been changed!"); 
+                    console.log("SUCCESS - User's data has been changed!");
+                    axios.
                     this.$router.go(0);
                     backToOptions();
                 }
@@ -239,7 +244,11 @@ template: `
                  .then((response) => {
                      console.log("SUCCESS - User's request has been sent!");
                      backToOptions();
-                    
+                     axios.defaults.headers.common["Authorization"] =
+                                                         localStorage.getItem("user");
+                     axios.get("/api/refresh")
+                          .then(response => (window.localStorage.setItem("user", response.data)))
+
                     })
         },
 
@@ -248,6 +257,8 @@ template: `
         }
     },
 	mounted(){
+	    axios.defaults.headers.common["Authorization"] =
+                                     localStorage.getItem("user");
 	    axios.get("/api/authenticateUser")
 	         .then(response => (this.dto = response.data))
 	}

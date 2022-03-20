@@ -30,9 +30,10 @@ Vue.component('admin-user-complaints', {
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">
-    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{request.id}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{request.explanation}}</p>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Request ID: {{request.id}}</h5>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Explanation: {{request.explanation}}</p>
     									<button class="float-end btn btn-light" @click="showMore(request)">Show more</button>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">   </p>
     								</div>
     							</div>
     						</div>
@@ -69,17 +70,14 @@ Vue.component('admin-user-complaints', {
             showMore : function(request){
                this.requestToShow.id = request.id;
                this.requestToShow.explanation = request.explanation;
-               findUser(request.id);
-               this.requestToShow.firstName = dto.firstName;
-               this.requestToShow.lastName = dto.lastName;
-               this.requestToShow.email = dto.email;
+
+               axios.get("/api/findUser", request.id)
+               .then(response => (this.dto = response.data))
+
+               this.requestToShow.firstName = this.dto.firstName;
+               this.requestToShow.lastName = this.dto.lastName;
+               this.requestToShow.email = this.dto.email;
                this.showPage = 1;
-            },
-            findUser : function(id){
-
-                axios.get("/api/findUser", id)
-                .then(response => (this.dto = response.data))
-
             }
           }
           ,

@@ -72,6 +72,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
+    @Column(name = "numberOfLogIns")
+    private int numberOfLogIns;
+
     public User() {}
     public User(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, String email, String password) {
         this.id = id;
@@ -83,6 +86,7 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.numberOfLogIns = 0;
     }
 
     public void update(User user){

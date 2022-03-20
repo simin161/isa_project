@@ -30,9 +30,9 @@ public class AuthenticationService {
     }
 
     @Transactional
-    public User authenticateUser(HttpServletRequest request){
+    public User authenticateUser(String username){
         try{
-            return (User)request.getSession().getAttribute("user");
+            return userRepository.findByEmail(username);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -41,13 +41,5 @@ public class AuthenticationService {
 
     private boolean checkPassword(String userPassword,String enteredPassword){
         return userPassword.equals(enteredPassword);
-    }
-
-    public void signOut(HttpSession session) {
-        SecurityContextHolder.clearContext();
-        User user = (User) session.getAttribute("user");
-        if(user != null){
-            session.invalidate();
-        }
     }
 }

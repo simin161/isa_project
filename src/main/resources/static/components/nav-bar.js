@@ -59,13 +59,14 @@ template: `
     methods: {
         signOut: function(){
             event.preventDefault();
-            axios.get("/api/signOut")
-                .then(response => {
-                    router.push('/signIn'); 
-                    console.log(this.loggedUser)})
+            window.localStorage.setItem("user", "");
+            router.push('/signIn');
+            console.log(this.loggedUser)
         }
     },
     mounted(){
+     axios.defaults.headers.common["Authorization"] =
+                             localStorage.getItem("user");
         axios.get("/api/authenticateUser")
             .then(response => this.loggedUser = response.data)
         console.log(this.loggedUser);

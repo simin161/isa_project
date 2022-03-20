@@ -205,37 +205,68 @@ template: `
     methods : {
         savePassword : function(){
             this.passwordDTO.id = this.dto.id;
-            axios.put('/api/changePassword', this.passwordDTO)
-                 .then(response => {
-                    if(response.data === true){
-                        Swal.fire('Password changed successfuly!',
-                                  '',
-                                  'success')
-                    }
-                    else{
-                        Swal.fire('Ooops, something went wrong!',
-                                  'Please, try again later!',
-                                  'error')
-                    }
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, change my password!'
+            }).then((result) => {
+                if(result.isConfirmed){
+                    axios.put('/api/changePassword', this.passwordDTO)
+                         .then(response => {
+                            if(response.data === true){
+                                Swal.fire('Password changed successfuly!',
+                                          '',
+                                          'success')
+                            }
+                            else{
+                                Swal.fire('Ooops, something went wrong!',
+                                          'Please, try again later!',
+                                          'error')
+                            }
 
-                 })
+                         })
+                    }
+            })
         },
         saveProfile : function(){
-            axios.put('/api/changeProfile', {"id": this.dto.id,
-                                             "firstName":this.dto.firstName,
-                                             "lastName": this.dto.lastName,
-                                             "address": this.dto.address,
-                                             "city": this.dto.city,
-                                             "country": this.dto.country,
-                                             "phoneNumber":this.dto.phoneNumber,
-                                             "email":this.dto.email})
-            .then((response) => {
-                if(response.data){
-                    console.log("SUCCESS - User's data has been changed!");
-                    axios.
-                    this.$router.go(0);
-                    backToOptions();
-                }
+             Swal.fire({
+                          title: 'Are you sure?',
+                          text: "You won't be able to revert this!",
+                          icon: 'warning',
+                          showCancelButton: true,
+                          confirmButtonColor: '#3085d6',
+                          cancelButtonColor: '#d33',
+                          confirmButtonText: 'Yes, update my profile!'
+                        }).then((result) => {
+                         if(result.isConfirmed){
+                            axios.put('/api/changeProfile', {"id": this.dto.id,
+                                                             "firstName":this.dto.firstName,
+                                                             "lastName": this.dto.lastName,
+                                                             "address": this.dto.address,
+                                                             "city": this.dto.city,
+                                                             "country": this.dto.country,
+                                                             "phoneNumber":this.dto.phoneNumber,
+                                                             "email":this.dto.email})
+                            .then((response) => {
+                                if(response.data){
+                                    Swal.fire('Profile updated successfuly!',
+                                              '',
+                                              'success')
+                                    .then((result) =>{
+                                    this.$router.go(0);
+                                    backToOptions();})
+                                }
+                                else{
+                                 Swal.fire('Ooops, something went wrong!',
+                                           'Please, try again later!',
+                                           'error')
+                                }
+                            })
+                         }
             })
         },
         sendAccountDeletionRequest : function(){

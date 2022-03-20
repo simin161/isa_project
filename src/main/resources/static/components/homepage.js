@@ -2,6 +2,10 @@ Vue.component('homepage', {
 	data: function(){
 		return{	
 			loggedUser: null,
+			passwordDTO: {
+            			           id: null,
+            			           newPassword: ''
+            			}
 		}
 	},
 template: `	
@@ -88,7 +92,9 @@ template: `
 
 			<div class="wrapper" v-if="loggedUser.userType == 'ADMIN'">
 
-			    <div class="card">
+
+
+			    <div class="card" v-if="loggedUser.numberOfLogIns > 0">
 			        <img src="images/admin-registrations.jpg">
 			        <div class="info">
 			            <h1>Registrations, Requests and Complaints</h1>
@@ -97,7 +103,7 @@ template: `
 			        </div>
 			    </div>
 
-			    <div class="card">
+			    <div class="card" v-if="loggedUser.numberOfLogIns > 0">
 			        <img src="images/admin-settings.jpg">
 			        <div class="info">
 			            <h1>Fishy Finds' System</h1>
@@ -106,7 +112,7 @@ template: `
 			        </div>
 			    </div>
 
-			    <div class="card">
+			    <div class="card" v-if="loggedUser.numberOfLogIns > 0">
 			        <img src="images/admin-profile.jpg">
 			        <div class="info">
 			            <h1>Your Profile</h1>
@@ -115,11 +121,62 @@ template: `
 			        </div>
 			    </div>
 
+                <div class="container align-items-start" v-if="loggedUser.numberOfLogIns == 0">
+                    <p class="title-text-bold">Please change your password.</p>
+                    <p class="title-text-light" style="font-size:15px;">Since this is your first login on Fishy Finds, we require that you change your password.</p>
+                    <form class="justify-content-center">
+                        <table class="justify-content-center" style="width:75%; margin: auto;" >
+                            <tr>
+                            <td><input type="password" placeholder="   New password" class="update-text-profile" v-model="passwordDTO.newPassword"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                            <td><input type="password" placeholder="   Confirm new password" class="update-text-profile" v-model="confirmPassword"/></td>
+                            </tr>
+                            <br>
+                            <tr>
+                            <td><input :disabled="!isCompletePassword" class="confirm-profile" type="button" value="Update your password" @click="savePassword"/></td>
+                            </tr>
+                            <br>
+                        </table>
+                    </form>
+                </div>
 			</div>
-
 		</div>
 		`
 	,
+
+	computed : {
+            isCompletePassword () {
+                    flag = /\S/.test(this.passwordDTO.newPassword) && /\S/.test(this.confirmPassword);
+
+                    return flag;
+            }
+        },
+
+    methods : {
+
+        savePassword : function(){
+                    if(this.passwordDTO.newPassword != this.loggedUser.password &&
+                       this.passwordDTO.newPassword == this.confirmPassword){
+                        this.passwordDTO.id = this.loggedUser.id;
+                        axios.put('/api/changePassword', this.passwordDTO)
+                             .then(response => {console.log(response.data)
+                                   if(response.data){
+                                        this.loggedUser.password = this.passwordDTO.newPassword;
+                                        console.log("SUCCESS - User's password has been changed!");
+                                        this.loggedUser.numberOfLogIns = 1;
+                                   }
+                             })
+                    }
+                    else {
+                        console.log("ERROR - User's password hasn't been changed!")
+                    }
+                }
+
+
+    },
+
     mounted(){
         axios.defaults.headers.common["Authorization"] =
                         localStorage.getItem("user");

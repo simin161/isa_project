@@ -33,6 +33,8 @@ public class RegistrationService {
     private MailService mailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AdminRepository adminRepository;
 
     public boolean registerUser(Map<String, String> map, String siteURL){
         boolean successfullyRegistered = true;
@@ -112,6 +114,7 @@ public class RegistrationService {
             admin.setUserType(UserType.ADMIN);
             try {
                 activateAccount(admin);
+                adminRepository.save(admin);
             } catch (Exception e) {
                 successfullyRegistered = false;
             }

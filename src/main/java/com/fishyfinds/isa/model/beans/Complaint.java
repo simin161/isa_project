@@ -4,6 +4,7 @@ import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.ComplaintStatus;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -32,4 +33,12 @@ public class Complaint {
     @JoinColumn(name="offer", referencedColumnName = "id")
     private Offer offer;
 
+    public Complaint(Long id, String content, ComplaintStatus status, User user, Offer offer) {
+        this.id = id;
+        this.content = content;
+        this.status = status;
+        this.user = user;
+        this.offer = offer;
+
+    }
 }

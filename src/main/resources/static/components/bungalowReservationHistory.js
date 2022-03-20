@@ -196,18 +196,24 @@ data: function(){
             },
             addComplaint : function(){
                 this.complaint.offer = this.bungalowToShow;
-                axios.get('/api/authenticateUser')
-                     .then(response => this.complaint.user = response.data)
-
+                axios.defaults.headers.common["Authorization"] =
+                                    localStorage.getItem("user");
                 axios.post('/api/addComplaint', {"content": this.complaint.content,
-                                                 "userID":1,
                                                  "offerID":this.complaint.offer.id})
-                     .then(response => ( Swal.fire(
-                                                    'Sent!',
-                                                    'Some random message!',
-                                                    'success'
-                                                )))
-
+                     .then(response => {
+                        if(response.data){
+                            Swal.fire(
+                            'Complaint sent successfuly!',
+                            '',
+                            'success'
+                            )
+                       }else{
+                            Swal.fire(
+                            'Ooops, something went wrong!',
+                            'Please, try again later!',
+                            'error')
+                       }
+                     })
             }
             ,
              sortedArray: function() {

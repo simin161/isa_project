@@ -1,8 +1,14 @@
 package com.fishyfinds.isa.controllers.usersController;
 
 import com.fishyfinds.isa.mappers.DtoToUser;
+import com.fishyfinds.isa.model.beans.users.User;
+import com.fishyfinds.isa.security.TokenUtils;
+import com.fishyfinds.isa.service.AuthenticationService;
+import com.fishyfinds.isa.service.usersService.CustomUserDetailsService;
 import com.fishyfinds.isa.service.usersService.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +18,33 @@ import java.util.Map;
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
+    @Autowired
+    private TokenUtils tokenUtils;
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
     @PutMapping("/changePassword")
-    public boolean changePassword(@RequestBody Map<String, String> message){
-        return userService.changePassword(message);
+    public boolean changePassword(@RequestHeader("Authentication") HttpHeaders header, @RequestBody Map<String, String> message){
+        final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+
+        try {
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            customUserDetailsService.changePassword(username,message.get("oldPassword"), message.get("newPassword"));
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @PutMapping("/changeProfile")

@@ -13,7 +13,8 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -62,6 +63,8 @@ public class RegistrationService {
     private boolean registerCustomer(Customer customer, String siteURL){
         boolean successfullyRegistered = true;
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        Date date = new Date();
+        customer.setLastPasswordResetDate(new Timestamp(date.getTime()));
         if(!checkIfEmailExists(customer.getEmail())){
             customer.setUserType(UserType.CUSTOMER);
             setVerificationCode(RandomString.make(64), customer);

@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     protected final Log LOGGER = LogFactory.getLog(getClass());
@@ -38,31 +41,17 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
-
-        // Ocitavamo trenutno ulogovanog korisnika
-        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = currentUser.getName();
-
-        if (authenticationManager != null) {
-            LOGGER.debug("Re-authenticating user '" + username + "' for password change request.");
-
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
-        } else {
-            LOGGER.debug("No authentication manager set. can't change Password!");
-
-            return;
+    public boolean changePassword(String username, String oldPassword, String newPassword){
+        if(oldPassword.equals(newPassword)){
+            return false;
         }
 
-        LOGGER.debug("Changing password for user '" + username + "'");
-
-        User user = (User) loadUserByUsername(username);
-
-        // pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
-        // ne zelimo da u bazi cuvamo lozinke u plain text formatu
+        User user = userRepository.findByEmail(username);
         user.setPassword(passwordEncoder.encode(newPassword));
+        Date date = new Date();
+        user.setLastPasswordResetDate(new Timestamp(date.getTime()));
         userRepository.save(user);
-
+        return true;
     }
 
 }

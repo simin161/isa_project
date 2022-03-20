@@ -15,9 +15,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import java.sql.Timestamp;
 import java.util.Date;
 
+=======
+>>>>>>> develop
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     protected final Log LOGGER = LogFactory.getLog(getClass());

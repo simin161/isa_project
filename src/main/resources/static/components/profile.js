@@ -271,16 +271,38 @@ template: `
         },
         sendAccountDeletionRequest : function(){
         this.requestDTO.id = this.dto.id;
-            axios.post('/api/sendAccountDeletionRequest', this.requestDTO)
-                 .then((response) => {
-                     console.log("SUCCESS - User's request has been sent!");
-                     backToOptions();
-                     axios.defaults.headers.common["Authorization"] =
+             Swal.fire({
+                                      title: 'Are you sure?',
+                                      text: "You won't be able to revert this!",
+                                      icon: 'warning',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'Yes, send request!'})
+             .then((result)=>{
+                if(result.isConfirmed){
+                    axios.defaults.headers.common["Authorization"] =
                                                          localStorage.getItem("user");
-                     axios.get("/api/refresh")
-                          .then(response => (window.localStorage.setItem("user", response.data)))
 
+                    axios.post('/api/sendAccountDeletionRequest', this.requestDTO)
+                         .then((response) => {
+                             if(response.data){
+                                Swal.fire('Request sent successfuly!',
+                                          '',
+                                          'success')
+                                backToOptions();
+                                axios.defaults.headers.common["Authorization"] =
+                                localStorage.getItem("user");
+                                axios.get("/api/refresh")
+                                     .then(response => (window.localStorage.setItem("user", response.data)))
+                             }
+                             else{
+                              Swal.fire('Ooops, something went wrong!',
+                                        'Please, try again later! More than one requests cannot be sent!',
+                                        'error')
+                             }
                     })
+                }})
         },
 
         backToOptions : function(){

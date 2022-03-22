@@ -62,3 +62,7 @@ INSERT INTO public.users(
 --INSERT INTO public.course(
 --	fishing_tools, id)
 --	VALUES ('sdkfadsfa1', 6);
+
+INSERT INTO public.delete_request(
+	id, explanation, status, users)
+	VALUES (1, 'I just want to die, thank you goodbye <3', 0, 1);

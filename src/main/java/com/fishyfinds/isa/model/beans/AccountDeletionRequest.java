@@ -1,6 +1,7 @@
 package com.fishyfinds.isa.model.beans;
 
 import com.fishyfinds.isa.model.beans.users.User;
+import com.fishyfinds.isa.model.enums.DeletionRequestStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +25,9 @@ public class AccountDeletionRequest {
 
     @Column(name="explanation")
     private String explanation;
+
+    @Column(name="status")
+    private DeletionRequestStatus status;
 
     public AccountDeletionRequest() {}
 

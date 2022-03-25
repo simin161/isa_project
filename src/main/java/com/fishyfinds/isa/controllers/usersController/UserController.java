@@ -6,7 +6,6 @@ import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.AuthenticationService;
 import com.fishyfinds.isa.service.usersService.CustomUserDetailsService;
 import com.fishyfinds.isa.service.usersService.UserService;
-import net.minidev.json.JSONObject;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

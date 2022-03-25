@@ -157,20 +157,41 @@ template: `
     methods : {
 
         savePassword : function(){
-                    if(this.passwordDTO.newPassword != this.loggedUser.password &&
-                       this.passwordDTO.newPassword == this.confirmPassword){
-                        this.passwordDTO.id = this.loggedUser.id;
-                        axios.put('/api/changePassword', this.passwordDTO)
-                             .then(response => {console.log(response.data)
-                                   if(response.data){
-                                        this.loggedUser.password = this.passwordDTO.newPassword;
-                                        console.log("SUCCESS - User's password has been changed!");
-                                        this.loggedUser.numberOfLogIns = 1;
-                                   }
-                             })
+                    if(this.passwordDTO.newPassword == this.confirmPassword){
+                        Swal.fire({
+                                      title: 'Are you sure?',
+                                      text: "You won't be able to revert this!",
+                                      icon: 'warning',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'Yes, change my password!'
+                                    }).then((result) => {
+                                        if(result.isConfirmed){
+                                            axios.put('/api/changePassword', this.passwordDTO)
+                                                 .then(response => {
+                                                    if(response.data === true){
+                                                        Swal.fire('Password changed successfuly!',
+                                                                  '',
+                                                                  'success')
+                                                    }
+                                                    else{
+                                                        Swal.fire('Ooops, something went wrong!',
+                                                                  'Please, try again later!',
+                                                                  'error')
+                                                    }
+
+                                                 })
+                                            }
+                                    })
                     }
-                    else {
-                        console.log("ERROR - User's password hasn't been changed!")
+                    else{
+
+                        Swal.fire('Ooops, looks like your passwords don\'t match!',
+                                   'Please, try again later!',
+                                   'error')
+
+
                     }
                 }
 

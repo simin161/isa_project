@@ -33,6 +33,8 @@ public class Complaint {
     @JoinColumn(name="offer", referencedColumnName = "id")
     private Offer offer;
 
+    public Complaint(){}
+
     public Complaint(Long id, String content, ComplaintStatus status, User user, Offer offer) {
         this.id = id;
         this.content = content;

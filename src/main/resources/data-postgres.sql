@@ -5,6 +5,11 @@ INSERT INTO public.users(
 	VALUES (1, 'a', 'a', 'a', 'mail@mail.com', 'Papi', true, false, 'Papi', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 0, '');
 --INSERT INTO customer values (45,0, 1, 1);
 
+INSERT INTO public.users(
+	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
+	VALUES (2, 'Danas sam luda 09', 'Maglovit grad', 'Sotonaland', 'admin@admin.com', 'Josipa', true, false, 'Lisac', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 4, '');
+
+
 --INSERT INTO users values (2, 'address', 'city','country', 'jb', 'James', true, false, 'Bond', 'jb', '12345678',1, '');
 --INSERT INTO bungalow_owner values ('reason',1, 2, 1);
 

@@ -4,6 +4,7 @@ Vue.component('homepage', {
 			loggedUser: null,
 			passwordDTO: {
             			           id: null,
+            			           oldPassword: '',
             			           newPassword: ''
             			}
 		}
@@ -126,6 +127,9 @@ template: `
                     <p class="title-text-light" style="font-size:15px;">Since this is your first login on Fishy Finds, we require that you change your password.</p>
                     <form class="justify-content-center">
                         <table class="justify-content-center" style="width:75%; margin: auto;" >
+                            <tr>
+                            <td><input type="password" placeholder="   Old password" class="update-text-profile" v-model="passwordDTO.oldPassword"/></td>
+                            </tr>
                             <tr>
                             <td><input type="password" placeholder="   New password" class="update-text-profile" v-model="passwordDTO.newPassword"/></td>
                             </tr>

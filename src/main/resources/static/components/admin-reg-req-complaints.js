@@ -50,6 +50,8 @@ Vue.component('admin-reg-req-complaints', {
 
     mounted(){
 
+        axios.defaults.headers.common["Authorization"] =
+                                     localStorage.getItem("user");
         axios.get("/api/authenticateUser")
             .then(response => this.loggedUser = response.data)
         console.log(this.loggedUser);

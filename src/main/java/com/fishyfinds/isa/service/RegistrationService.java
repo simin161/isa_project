@@ -105,6 +105,7 @@ public class RegistrationService {
 
     public boolean registerInstructor(Instructor instructor, String siteURL){
         boolean successfullyRegistered = false;
+        instructor.setPassword(passwordEncoder.encode(instructor.getPassword()));
         if(!checkIfEmailExists(instructor.getEmail())){
             instructor.setUserType(UserType.INSTRUCTOR);
             instructor.setNumberOfLogIns(0);
@@ -117,6 +118,7 @@ public class RegistrationService {
 
     public boolean registerAdmin(Admin admin, String siteURL){
         boolean successfullyRegistered = true;
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         if(!checkIfEmailExists(admin.getEmail())){
             admin.setUserType(UserType.ADMIN);
             admin.setNumberOfLogIns(0);

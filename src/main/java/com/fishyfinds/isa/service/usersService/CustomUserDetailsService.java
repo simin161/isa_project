@@ -50,6 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(newPassword));
         Date date = new Date();
         user.setLastPasswordResetDate(new Timestamp(date.getTime()));
+        user.setNumberOfLogIns(1);
         userRepository.save(user);
         return true;
     }

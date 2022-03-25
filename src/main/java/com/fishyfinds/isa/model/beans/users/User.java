@@ -3,9 +3,15 @@ package com.fishyfinds.isa.model.beans.users;
 import com.fishyfinds.isa.model.enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -14,7 +20,7 @@ import javax.persistence.*;
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "sequence", sequenceName = "mySequence")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GenericGenerator(name = "seq", strategy="increment")
@@ -57,6 +63,15 @@ public class User {
     @Column(name="userType")
     protected UserType userType;
 
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private List<Authority> authorities;
+
     @Column(name = "numberOfLogIns")
     private int numberOfLogIns;
 
@@ -82,5 +97,39 @@ public class User {
         this.country = user.country;
         this.phoneNumber = user.phoneNumber;
         this.numberOfLogIns = user.numberOfLogIns;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

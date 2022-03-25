@@ -19,7 +19,6 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping("/registerUser")
-    @PreAuthorize("hasRole('ADMIN')")
     public boolean registerUser(@RequestBody Map<String, String> message, HttpServletRequest request){
         return registrationService.registerUser(message, getSiteURL(request));
         //return registrationService.registerCustomer(DtoToUser.MapToCustomer(message), getSiteURL(request));

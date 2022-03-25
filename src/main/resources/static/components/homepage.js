@@ -178,8 +178,11 @@ template: `
     },
 
     mounted(){
+        axios.defaults.headers.common["Authorization"] =
+                        localStorage.getItem("user");
+
         axios.get("/api/authenticateUser")
-            .then(response => this.loggedUser = response.data)
+            .then(response =>{this.loggedUser = response.data; console.log(response.data)})
         console.log(this.loggedUser);
     }
 

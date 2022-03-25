@@ -11,13 +11,10 @@ import com.fishyfinds.isa.model.enums.UserType;
 import com.fishyfinds.isa.repository.usersRepository.*;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -35,6 +32,8 @@ public class RegistrationService {
     private UserRepository userRepository;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private AdminRepository adminRepository;
 
@@ -63,6 +62,9 @@ public class RegistrationService {
 
     private boolean registerCustomer(Customer customer, String siteURL){
         boolean successfullyRegistered = true;
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        Date date = new Date();
+        customer.setLastPasswordResetDate(new Timestamp(date.getTime()));
         if(!checkIfEmailExists(customer.getEmail())){
             customer.setUserType(UserType.CUSTOMER);
             customer.setNumberOfLogIns(0);

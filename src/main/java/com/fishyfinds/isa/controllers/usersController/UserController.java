@@ -8,6 +8,7 @@ import com.fishyfinds.isa.service.usersService.CustomUserDetailsService;
 import com.fishyfinds.isa.service.usersService.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/findUser")
-    public User findUser(Long id){
+    public User findUser(@Param("id") Long id){
         return userService.findUser(id);
     }
 }

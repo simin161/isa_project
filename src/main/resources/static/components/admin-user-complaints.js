@@ -11,7 +11,13 @@ Vue.component('admin-user-complaints', {
     			    email: ""
                     },
     			requests:[],
-    			dto: null
+    			dto: {
+
+    			    firstName: "",
+    			    lastName: "",
+    			    email: ""
+
+    			}
     		}
     	},
     template: `
@@ -64,20 +70,35 @@ Vue.component('admin-user-complaints', {
           ,
           computed: {
 
+            axiosParams(){
+
+                const params = new URLSearchParams();
+                params.append('id', this.requestToShow.id);
+                return params;
+
+            }
+
           }
           ,
           methods : {
             showMore : function(request){
+               this.showPage = 1;
                this.requestToShow.id = request.id;
                this.requestToShow.explanation = request.explanation;
 
-               axios.get("/api/findUser", request.id)
-               .then(response => (this.dto = response.data))
+               axios.get("/api/findUser", {
 
-               this.requestToShow.firstName = this.dto.firstName;
-               this.requestToShow.lastName = this.dto.lastName;
-               this.requestToShow.email = this.dto.email;
-               this.showPage = 1;
+                params: this.axiosParams
+
+               })
+               .then(response => {this.dto = response.data;
+                                  this.requestToShow.firstName = this.dto.firstName;
+                                  this.requestToShow.lastName = this.dto.lastName;
+                                  this.requestToShow.email = this.dto.email;
+                                  console.log(this.requestToShow);})
+
+               console.log(this.requestToShow);
+
             }
           }
           ,

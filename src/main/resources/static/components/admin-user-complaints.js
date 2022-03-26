@@ -17,6 +17,12 @@ Vue.component('admin-user-complaints', {
     			    lastName: "",
     			    email: ""
 
+    			},
+    			showDeny: 0,
+    			deny: {
+
+    			    explanation: ''
+
     			}
     		}
     	},
@@ -39,7 +45,7 @@ Vue.component('admin-user-complaints', {
     									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Request ID: {{request.id}}</h5>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Explanation: {{request.explanation}}</p>
     									<button class="float-end btn btn-light" @click="showMore(request)">Show more</button>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">   </p>
+    									<br>
     								</div>
     							</div>
     						</div>
@@ -50,6 +56,7 @@ Vue.component('admin-user-complaints', {
                    	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
                    	<div class="container" v-show="showPage == 1">
     					<div class="container align-items-start">
+    					    <br>
     						<input class="confirm-profile" type="button" value="Close" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
     						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> </p>
     						<form class="justify-content-center">
@@ -59,6 +66,22 @@ Vue.component('admin-user-complaints', {
     									<td><input type="text" placeholder="   Last name" class="input-text"  v-model="requestToShow.lastName"/></td></tr><br>
     								<tr><td><input type="text" placeholder="   Email" class="input-text"  v-model="requestToShow.email"/></td></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Explanation" class="input-text-area"  v-model="requestToShow.explanation" ></textarea></tr><br>
+    							    <br>
+    							    <tr>
+    							        <td><input class="confirm-profile" type="button" value="Approve request" @click="approveRequest"/></td>
+    							    </tr>
+    							    <br>
+    							    <tr>
+                                        <td><input class="confirm-profile" type="button" value="Deny request" @click="showDeny = 1"/></td>
+                                    </tr>
+                                    <br>
+                                    <tr v-show="showDeny == 1">
+                                        <textarea rowspan="3" name="text" placeholder="   Reasoning for rejection" class="input-text-area"  v-model="deny.explanation" ></textarea>
+                                    </tr>
+                                    <br>
+                                    <tr v-show="showDeny == 1">
+                                        <td><input class="confirm-profile" type="button" value="Confirm" @click="denyRequest"/></td>
+                                    </tr>
     							</table>
     						</form>
     					</div>
@@ -98,6 +121,18 @@ Vue.component('admin-user-complaints', {
                                   console.log(this.requestToShow);})
 
                console.log(this.requestToShow);
+
+            },
+
+            approveRequest : function(){
+
+
+
+            },
+
+            denyRequest : function(){
+
+
 
             }
           }

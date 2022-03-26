@@ -130,6 +130,7 @@ template: `
                             <tr>
                             <td><input type="password" placeholder="   Old password" class="update-text-profile" v-model="passwordDTO.oldPassword"/></td>
                             </tr>
+                            <br>
                             <tr>
                             <td><input type="password" placeholder="   New password" class="update-text-profile" v-model="passwordDTO.newPassword"/></td>
                             </tr>

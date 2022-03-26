@@ -21,6 +21,8 @@ Vue.component('admin-user-complaints', {
     			showDeny: 0,
     			deny: {
 
+                    requestId: null,
+                    id: null,
     			    explanation: ''
 
     			}
@@ -107,6 +109,8 @@ Vue.component('admin-user-complaints', {
             showMore : function(request){
                this.showPage = 1;
                this.requestToShow.id = request.id;
+               this.deny.id = request.user.id;
+               this.deny.requestId = request.id;
                this.requestToShow.explanation = request.explanation;
 
                axios.get("/api/findUser", {
@@ -126,7 +130,43 @@ Vue.component('admin-user-complaints', {
 
             approveRequest : function(){
 
+                Swal.fire({
 
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirm'
+
+                }).then((result) => {
+
+                    if(result.isConfirmed){
+
+                        axios.post('/api/approveDeleteRequest', this.deny)
+                            .then(response=> {
+
+                                if(response.data === true){
+
+                                    Swal.fire('Deletion request approved successfuly!',
+                                                '',
+                                                'success')
+
+                                }
+                                else{
+
+                                    Swal.fire('Ooops, something went wrong!',
+                                               'Please, try again later!',
+                                               'error')
+
+                                }
+
+                            })
+
+                    }
+
+                })
 
             },
 
@@ -138,7 +178,7 @@ Vue.component('admin-user-complaints', {
           }
           ,
           mounted(){
-            axios.get("/api/allDeletionRequests")
+            axios.get("/api/allPendingDeletionRequests")
                  .then(response => (this.requests = response.data))
           }
 });

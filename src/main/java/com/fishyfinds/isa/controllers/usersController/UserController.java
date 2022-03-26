@@ -57,4 +57,11 @@ public class UserController {
     public User findUser(@Param("id") Long id){
         return userService.findUser(id);
     }
+
+    public boolean deleteUser(Long id){
+
+        return userService.deleteUser(id);
+
+    }
+
 }

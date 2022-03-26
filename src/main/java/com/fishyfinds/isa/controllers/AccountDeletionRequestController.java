@@ -1,6 +1,8 @@
 package com.fishyfinds.isa.controllers;
 
+import com.fishyfinds.isa.controllers.usersController.UserController;
 import com.fishyfinds.isa.mappers.DtoToAccountDeletionRequest;
+import com.fishyfinds.isa.mappers.DtoToResolveDeleteRequest;
 import com.fishyfinds.isa.model.beans.AccountDeletionRequest;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.security.TokenUtils;
@@ -37,9 +39,30 @@ public class AccountDeletionRequestController {
         }
     }
 
-    @GetMapping("/allDeletionRequests")
-    public List<AccountDeletionRequest> findAll() {
-        return accountDeletionRequestService.findAll();
+    @GetMapping("/allPendingDeletionRequests")
+    public List<AccountDeletionRequest> findAllPending() {
+        return accountDeletionRequestService.findAllPending();
+    }
+
+    @PostMapping("/approveDeleteRequest")
+    public boolean approveDeleteRequest(@RequestBody Map<String, String> message){
+
+        try {
+            UserController userController = new UserController();
+            boolean userReturn = userController.deleteUser(DtoToResolveDeleteRequest.MapToResolveRequest(message).getUser().getId());
+
+            if(userReturn){
+
+                return accountDeletionRequestService.updateRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message).getRequestId());
+
+            }
+            else{
+                return false;
+            }
+
+        }catch(Exception e){
+            return false;
+        }
     }
 
 }

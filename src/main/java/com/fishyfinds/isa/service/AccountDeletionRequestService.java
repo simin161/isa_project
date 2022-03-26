@@ -41,7 +41,25 @@ public class AccountDeletionRequestService {
         accountDeletionRequestRepository.save(accountDeletionRequest);
     }
 
-    public List<AccountDeletionRequest> findAll() {
-        return accountDeletionRequestRepository.findAll();
+    public List<AccountDeletionRequest> findAllPending() {
+        List<AccountDeletionRequest> allPendingRequests= accountDeletionRequestRepository.findAll();
+        for(AccountDeletionRequest a : accountDeletionRequestRepository.findAll()){
+            if(a.getStatus()==DeletionRequestStatus.PENDING){
+                allPendingRequests.add(a);
+            }
+        }
+        return allPendingRequests;
+    }
+
+    public boolean updateRequest(Long id){
+
+        AccountDeletionRequest request = accountDeletionRequestRepository.findById(id).orElse(null);
+        if(request == null){
+            return false;
+        }else{
+            request.setStatus(DeletionRequestStatus.ACCEPTED);
+            accountDeletionRequestRepository.save(request);
+            return true;
+        }
     }
 }

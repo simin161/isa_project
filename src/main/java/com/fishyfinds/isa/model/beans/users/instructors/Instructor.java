@@ -17,9 +17,9 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "id")
 public class Instructor extends User {
 
-	@OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+	/*@OneToMany(mappedBy="id", fetch = FetchType.EAGER)
 	//@JoinColumn(name="courses", referencedColumnName = "id", nullable = true)
-	private Set<Course> courses;
+	private Set<Course> courses;*/
 
 	@OneToOne
 	@JoinColumn(name="loyaltyProgram", referencedColumnName = "id")

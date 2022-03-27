@@ -37,6 +37,11 @@ data: function(){
                    content: "",
                    offer: null,
                    user: null
+                },
+                feedback:{
+                    content: "",
+                    id: null,
+                    rate: null
                 }
     		}
     	},
@@ -132,10 +137,11 @@ data: function(){
                                     </tr>
                                     <br>
                                     <tr>
-                                        <td><input type="number" placeholder="    Rating" class="input-text" /></td>
+                                        <td><input type="number" placeholder="    Rating" v-model="feedback.rate" class="input-text" /></td>
                                     </tr>
                                     <br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area"></textarea></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Feedback" v-model="feedback.content" class="input-text-area"></textarea></tr><br>
+                                	<tr><button type="button" @click="addFeedback" class="float-end btn btn-light">Send</button></tr>
    							</table>
     						</form>
     					</div>
@@ -211,6 +217,28 @@ data: function(){
                                   'error')
                           }
                      })
+            },
+            addFeedback : function(){
+                this.feedback.id = this.boatToShow.id;
+                axios.defaults.headers.common["Authorization"] =
+                                    localStorage.getItem("user");
+                axios.post('/api/addFeedback', this.feedback)
+                     .then(response => {
+                         if(response.data){
+                             Swal.fire(
+                                 'Complaint sent successfuly!',
+                                 '',
+                                 'success'
+                             )
+                         }else{
+                             Swal.fire(
+                                 'Ooops, something went wrong!',
+                                 'Please, try again later!',
+                                 'error'
+                             )
+                         }
+                     })
+
             }
             ,
             search : function(){

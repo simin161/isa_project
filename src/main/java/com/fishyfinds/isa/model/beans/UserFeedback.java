@@ -2,6 +2,7 @@ package com.fishyfinds.isa.model.beans;
 
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.enums.ComplaintStatus;
 import com.fishyfinds.isa.model.enums.TargetType;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,5 +32,8 @@ public class UserFeedback {
 
     @Column(name = "rate")
     private int rate;
+
+    @Column(name = "status")
+    private ComplaintStatus status;
 
 }

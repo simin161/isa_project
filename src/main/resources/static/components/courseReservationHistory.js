@@ -34,11 +34,16 @@ Vue.component('courseReservationHistory', {
 			showPage: 0,
 			sortOption: "",
             complaint:{
-               content: "",
-               offer: null,
-               user: null
+                content: "",
+                offer: null,
+                user: null
+            },
+            feedback:{
+                content: "",
+                id: null,
+                rate: null
             }
-		}
+        }
 	},
 template: `
 			<div>
@@ -141,9 +146,10 @@ template: `
                                 					    <td><input type="text" placeholder="   Last name"  class="input-text" v-model="courseToShow.user.lastName"/></td>
                                 					</tr><br>
                                 					<tr>
-                                					    <td><input type="number" placeholder="   Rating" class="input-text"/></td>
+                                					    <td><input type="number" placeholder="   Rating" class="input-text" v-model="feedback.rate"/></td>
                                 					</tr>
-                                					<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" ></textarea></tr><br>
+                                					<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" v-model="feedback.content"></textarea></tr><br>
+                                					<tr><button type="button" @click="addFeedback" class="float-end btn btn-light">Send</button></tr>
                                 				</table>
                                 			</form>
                                     	</div>
@@ -222,6 +228,29 @@ template: `
                         'error')
                     }
                 })
+            }
+            ,
+            addFeedback : function(){
+                this.feedback.id = this.courseToShow.id;
+                axios.defaults.headers.common["Authorization"] =
+                                    localStorage.getItem("user");
+                axios.post('/api/addFeedback', this.feedback)
+                     .then(response => {
+                         if(response.data){
+                             Swal.fire(
+                                 'Complaint sent successfuly!',
+                                 '',
+                                 'success'
+                             )
+                         }else{
+                             Swal.fire(
+                                 'Ooops, something went wrong!',
+                                 'Please, try again later!',
+                                 'error'
+                             )
+                         }
+                     })
+
             }
             ,
             search : function(){

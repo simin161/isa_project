@@ -22,6 +22,7 @@ const adminRegister = {template: '<admin-register></admin-register>'}
 const adminDeletionRequests = {template: '<admin-user-complaints></admin-user-complaints>'}
 const adminFishySystems = {template: '<admin-fishy-finds-system></admin-fishy-finds-system>'}
 const adminUsersOffers = {template: '<admin-users-offers></admin-users-offers>'}
+const adminUsers = {template: '<admin-users></admin-users>'}
 // ...
 const router = new VueRouter({
 	  mode: 'hash',
@@ -50,7 +51,8 @@ const router = new VueRouter({
         { path: '/admin-register', component: adminRegister},
         { path: '/admin-user-complaints', component: adminDeletionRequests},
         { path: '/admin-fishy-finds-system', component: adminFishySystems},
-        { path: '/admin-users-offers', component: adminUsersOffers}
+        { path: '/admin-users-offers', component: adminUsersOffers},
+        { path: '/admin-users', component: adminUsers}
 		// ...
 	  ]
 });

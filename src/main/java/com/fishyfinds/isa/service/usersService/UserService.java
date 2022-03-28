@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -63,5 +65,21 @@ public class UserService {
             userRepository.save(user);
             return true;
         }
+    }
+
+    public List<User> allUsersWithoutAdmins() {
+
+        List<User> allUsers = userRepository.findAll();
+        List<User> noAdmins = new ArrayList<User>();
+        for(User u : allUsers){
+
+            if(u.getUserType()!=UserType.ADMIN){
+                noAdmins.add(u);
+            }
+
+        }
+
+        return noAdmins;
+
     }
 }

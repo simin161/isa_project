@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.service;
 
+import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -39,6 +40,34 @@ public class MailService {
         String verifyURL = siteURL + "/api/verifyCustomerAccount?code=" + user.getVerificationCode();
 
         content = content.replace("[[URL]]", verifyURL);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+
+    }
+
+    public void sendDeleteReasonEmail(User user, String reasoning)
+        throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress= user.getEmail();
+        String fromAddress= "findsfishy@gmail.com";
+        String senderName= "Fishy Finds";
+        String subject = "Your request for account deletion has been denied.";
+        String content = "Dear [[name]],<br>"
+                + "After reviewing your request we have determined that it can not be resolved due to the following:<br>"
+                + reasoning + "<br>"
+                + "Best regards,<br>"
+                + "Fishy Finds.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", user.getFirstName());
 
         helper.setText(content, true);
 

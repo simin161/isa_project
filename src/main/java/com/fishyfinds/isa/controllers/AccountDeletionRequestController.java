@@ -48,21 +48,25 @@ public class AccountDeletionRequestController {
     public boolean approveDeleteRequest(@RequestBody Map<String, String> message){
 
         try {
-            UserController userController = new UserController();
-            boolean userReturn = userController.deleteUser(DtoToResolveDeleteRequest.MapToResolveRequest(message).getUser().getId());
 
-            if(userReturn){
-
-                return accountDeletionRequestService.updateRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message).getRequestId());
-
-            }
-            else{
-                return false;
-            }
+            return accountDeletionRequestService.updateRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message));
 
         }catch(Exception e){
+            e.printStackTrace();
             return false;
         }
+    }
+
+    @PostMapping("/denyDeleteRequest")
+    public boolean denyDeleteRequest(@RequestBody Map<String, String> message){
+
+        try{
+            return accountDeletionRequestService.denyDeleteRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message));
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 }

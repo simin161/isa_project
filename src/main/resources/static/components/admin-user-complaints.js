@@ -98,7 +98,7 @@ Vue.component('admin-user-complaints', {
             axiosParams(){
 
                 const params = new URLSearchParams();
-                params.append('id', this.requestToShow.id);
+                params.append('id', this.deny.id);
                 return params;
 
             }
@@ -171,6 +171,55 @@ Vue.component('admin-user-complaints', {
             },
 
             denyRequest : function(){
+
+                if(this.deny.explanation != ""){
+
+                    Swal.fire({
+
+                                                        title: 'Are you sure?',
+                                                        text: "You won't be able to revert this!",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: '#3085d6',
+                                                        cancelButtonColor: '#d33',
+                                                        confirmButtonText: 'Confirm'
+
+                                                    }).then((result) => {
+
+                                                        if(result.isConfirmed){
+
+                                                            axios.post('/api/denyDeleteRequest', this.deny)
+                                                                .then(response=> {
+
+                                                                    if(response.data === true){
+
+                                                                        Swal.fire('Deletion request denied successfuly!',
+                                                                                    '',
+                                                                                    'success')
+
+                                                                    }
+                                                                    else{
+
+                                                                        Swal.fire('Ooops, something went wrong!',
+                                                                                   'Please, try again later!',
+                                                                                   'error')
+
+                                                                    }
+
+                                                                })
+
+                                                        }
+
+                                                    })
+
+                }
+                else{
+
+                    Swal.fire('Blank space',
+                             'Please, fill in the required fields.',
+                             'error')
+
+                }
 
 
 

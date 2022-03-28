@@ -32,8 +32,18 @@ Vue.component('courseReservationHistory', {
                  instructorsName: ""
             },
 			showPage: 0,
-			sortOption: ""
-		}
+			sortOption: "",
+            complaint:{
+                content: "",
+                offer: null,
+                user: null
+            },
+            feedback:{
+                content: "",
+                id: null,
+                rate: null
+            }
+        }
 	},
 template: `
 			<div>
@@ -83,6 +93,7 @@ template: `
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{course.rating}}</p>
                                             <button class="float-end btn btn-light" @click="showMore(course)">Show more</button>
                                             <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(course)">Add feedback</button>
+                                            <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showComplaint(course)">Add complaint</button>
                                         </div>
                 					</div>
                 				</div>
@@ -135,13 +146,35 @@ template: `
                                 					    <td><input type="text" placeholder="   Last name"  class="input-text" v-model="courseToShow.user.lastName"/></td>
                                 					</tr><br>
                                 					<tr>
-                                					    <td><input type="number" placeholder="   Rating" class="input-text"/></td>
+                                					    <td><input type="number" placeholder="   Rating" class="input-text" v-model="feedback.rate"/></td>
                                 					</tr>
-                                					<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" ></textarea></tr><br>
+                                					<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" v-model="feedback.content"></textarea></tr><br>
+                                					<tr><button type="button" @click="addFeedback" class="float-end btn btn-light">Send</button></tr>
                                 				</table>
                                 			</form>
                                     	</div>
                                  </div>
+                            </div>
+                            <div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 3">
+                                <div class="container" v-show="showPage == 3">
+                                	<div class="container align-items-start">
+                                		<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
+                                		<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Complaint for course and instructor </p>
+                                		<form class="justify-content-center">
+                                			<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+                                				<tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="courseToShow.offerName"/></td></tr><br>
+                                				<tr class="d-flex justify-content-evenly">
+                                				    <td><input type="text" placeholder="   First name" class="input-text" v-model="courseToShow.user.firstName"/></td>
+                                				    <td><input type="text" placeholder="   Last name"  class="input-text" v-model="courseToShow.user.lastName"/></td>
+                                				</tr>
+                                				<br>
+                                                <br>
+                                				<tr><textarea rowspan="3" name="text" v-model="complaint.content" placeholder="   Feedback" class="input-text-area" ></textarea></tr><br>
+                                				<tr><button type="button" @click="addComplaint" class="float-end btn btn-light">Send</button></tr>
+                                			</table>
+                                		</form>
+                                	</div>
+                              	</div>
                             </div>
                         </div>
                     </div>
@@ -168,6 +201,56 @@ template: `
                 this.courseToShow = course;
                 this.courseToShow.user = course.user;
                 this.showPage = 2;
+            },
+            showComplaint : function(course){
+                this.courseToShow = course;
+                this.courseToShow.user = course.user;
+                this.showPage = 3;
+            }
+            ,
+            addComplaint : function(){
+                this.complaint.offer = this.courseToShow;
+                axios.defaults.headers.common["Authorization"] =
+                                            localStorage.getItem("user");
+                axios.post('/api/addComplaint', {"content": this.complaint.content,
+                                                 "offerID":this.complaint.offer.id})
+                    .then(response => {
+                        if(response.data){
+                            Swal.fire(
+                            'Complaint sent successfuly!',
+                            '',
+                            'success'
+                        )
+                    }else{
+                        Swal.fire(
+                        'Ooops, something went wrong!',
+                        'Please, try again later!',
+                        'error')
+                    }
+                })
+            }
+            ,
+            addFeedback : function(){
+                this.feedback.id = this.courseToShow.id;
+                axios.defaults.headers.common["Authorization"] =
+                                    localStorage.getItem("user");
+                axios.post('/api/addFeedback', this.feedback)
+                     .then(response => {
+                         if(response.data){
+                             Swal.fire(
+                                 'Complaint sent successfuly!',
+                                 '',
+                                 'success'
+                             )
+                         }else{
+                             Swal.fire(
+                                 'Ooops, something went wrong!',
+                                 'Please, try again later!',
+                                 'error'
+                             )
+                         }
+                     })
+
             }
             ,
             search : function(){

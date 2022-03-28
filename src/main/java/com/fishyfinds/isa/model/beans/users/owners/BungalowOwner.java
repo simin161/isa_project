@@ -18,9 +18,9 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "id")
 public class BungalowOwner extends User {
 
-    @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+    /*@OneToMany(mappedBy="id", fetch = FetchType.EAGER)
     //@JoinColumn(name="id", nullable = true)
-    private Set<Bungalow> bungalows;
+    private Set<Bungalow> bungalows;*/
 
     @OneToOne
     @JoinColumn(name="loyaltyProgram", referencedColumnName = "id")

@@ -31,7 +31,7 @@ public class AccountDeletionRequestService {
         AccountDeletionRequest accountDeletionRequestFromDB = accountDeletionRequestRepository.findByUser(accountDeletionRequest.getUser());
         if(accountDeletionRequestFromDB != null){
             if(checkIfStatusIsDeclined(accountDeletionRequestFromDB.getStatus())){
-                updateRequestStatus(accountDeletionRequestFromDB);
+                updateRequest(accountDeletionRequestFromDB, accountDeletionRequest.getExplanation());
                 return true;
             }
             return false;
@@ -45,8 +45,9 @@ public class AccountDeletionRequestService {
         return status == DeletionRequestStatus.DECLINED;
     }
 
-    private void updateRequestStatus(AccountDeletionRequest accountDeletionRequest){
+    private void updateRequest(AccountDeletionRequest accountDeletionRequest, String explanation){
         accountDeletionRequest.setStatus(DeletionRequestStatus.PENDING);
+        accountDeletionRequest.setExplanation(explanation);
         accountDeletionRequestRepository.save(accountDeletionRequest);
     }
 

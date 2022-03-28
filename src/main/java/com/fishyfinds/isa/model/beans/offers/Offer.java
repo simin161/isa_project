@@ -63,8 +63,8 @@ public class Offer {
     @Column(name = "cancellationPolicy", nullable = false)
     protected String cancellationPolicy;
 
-    @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
-    protected Set<UserFeedback> reviews;
+   /* @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+    protected Set<UserFeedback> reviews;*/
 
 
 }

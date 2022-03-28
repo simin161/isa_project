@@ -19,6 +19,7 @@ const myCourses = {template: '<instructor-my-courses></instructor-my-courses>'}
 // For admins only
 const adminRegReqComplaints = {template: '<admin-reg-req-complaints></admin-reg-req-complaints>'}
 const adminRegister = {template: '<admin-register></admin-register>'}
+const adminDeletionRequests = {template: '<admin-user-complaints></admin-user-complaints>'}
 // ...
 const router = new VueRouter({
 	  mode: 'hash',
@@ -44,7 +45,8 @@ const router = new VueRouter({
 		{ path: '/my-courses', component: myCourses},
 		// For admins only
         { path: '/admin-reg-req-complaints', component: adminRegReqComplaints},
-        { path: '/admin-register', component: adminRegister}
+        { path: '/admin-register', component: adminRegister},
+        { path: '/admin-user-complaints', component: adminDeletionRequests}
 		// ...
 	  ]
 });

@@ -116,8 +116,38 @@ template: `
     methods: {
         registerUser : function(){
             if(this.confirmPassword == this.dto.password){
-                axios.post('/api/registerUser', this.dto)
-                	 .then(response => console.log(response.data))
+                Swal.fire({
+
+                    title:'Are you sure?',
+                    text: "By confirming this, you will create a new admin user.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirm'
+
+                })
+                .then((result)=>{
+
+                    if(result.isConfirmed){
+
+                        axios.post('/api/registerUser', this.dto)
+                                        	 .then(response => {
+
+                                        	    if(response.data){
+
+                                        	        Swal.fire('Successfully created a new admin user!',
+                                                                '',
+                                                             'success')
+
+                                        	    }
+
+                                        	 })
+
+                    }
+
+                })
+
             }
             else{
                 console.log("Invalid password")
@@ -127,7 +157,5 @@ template: `
             this.dto.userType = "ADMIN";
             this.registrationTitle = "Administrator Registration";
         }
-
     }
-
 });

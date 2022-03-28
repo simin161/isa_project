@@ -1,6 +1,9 @@
 package com.fishyfinds.isa.controllers;
 
+import com.fishyfinds.isa.controllers.usersController.UserController;
 import com.fishyfinds.isa.mappers.DtoToAccountDeletionRequest;
+import com.fishyfinds.isa.mappers.DtoToResolveDeleteRequest;
+import com.fishyfinds.isa.model.beans.AccountDeletionRequest;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.AccountDeletionRequestService;
@@ -10,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,6 +37,36 @@ public class AccountDeletionRequestController {
         }catch(Exception e){
             return false;
         }
+    }
+
+    @GetMapping("/allPendingDeletionRequests")
+    public List<AccountDeletionRequest> findAllPending() {
+        return accountDeletionRequestService.findAllPending();
+    }
+
+    @PostMapping("/approveDeleteRequest")
+    public boolean approveDeleteRequest(@RequestBody Map<String, String> message){
+
+        try {
+
+            return accountDeletionRequestService.updateRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message));
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @PostMapping("/denyDeleteRequest")
+    public boolean denyDeleteRequest(@RequestBody Map<String, String> message){
+
+        try{
+            return accountDeletionRequestService.denyDeleteRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message));
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 }

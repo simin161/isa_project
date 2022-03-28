@@ -7,7 +7,7 @@ Vue.component('admin-reg-req-complaints', {
     },
 
     template: `
-    
+
         <div class="homepage">
             <nav-bar></nav-bar>
 
@@ -38,18 +38,20 @@ Vue.component('admin-reg-req-complaints', {
                     <img src="images/admin-user-complaints.jpg">
                     <div class="info">
                         <h1>User complaints</h1>
-                        <p>View and manage various user complaints.</p>
+                        <p>View and manage various user complaints and account deletion requests.</p>
                         <a class="btn btn-light" href="#/admin-user-complaints" role="button">Show more</a>
                     </div>
                 </div>
             </div>
         </div>
-    
+
     `
     ,
 
     mounted(){
 
+        axios.defaults.headers.common["Authorization"] =
+                                     localStorage.getItem("user");
         axios.get("/api/authenticateUser")
             .then(response => this.loggedUser = response.data)
         console.log(this.loggedUser);

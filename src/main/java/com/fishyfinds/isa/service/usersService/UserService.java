@@ -46,4 +46,22 @@ public class UserService {
         }
         return retVal;
     }
+
+    public User findUser(Long id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public boolean deleteUser(Long id){
+
+        User user = userRepository.findById(id).orElse(null);
+
+        if(user==null){
+            return false;
+        }
+        else{
+            user.setDeleted(true);
+            userRepository.save(user);
+            return true;
+        }
+    }
 }

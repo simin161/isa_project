@@ -50,12 +50,11 @@ Vue.component('admin-users', {
     					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="user in users">
     						<div class="row g-0">
     							<div class="col-md-4" style="text-align:center;">
-    								
+
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">
-    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{user.id}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">User: {{user.firstName}} {{user.lastName}}</p>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{user.firstName}} {{user.lastName}}</h5>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Email: {{user.email}}</p>
     									<button class="float-end btn btn-light" @click="showMore(user)">Show more</button>
     								</div>
@@ -79,6 +78,9 @@ Vue.component('admin-users', {
     								<tr><td><input type="text" placeholder="   Email" class="input-text"  v-model="userToShow.email"/></td></tr><br>
     								<tr><td><input type="text" placeholder="   Phone number" class="input-text"  v-model="userToShow.phoneNumber"/></td></tr><br>
     								<tr><td><input type="text" placeholder="   User Type" class="input-text"  v-model="userToShow.userType"/></td></tr><br>
+    							    <tr>
+                                        <td><input style="background-color: red" class="confirm-profile" type="button" value="Delete user" @click="deleteUser"/></td>
+                                    </tr>
     							</table>
     						</form>
     					</div>
@@ -104,13 +106,57 @@ Vue.component('admin-users', {
                this.userToShow.surname = user.lastName;
                this.userToShow.email = user.email;
                this.userToShow.phoneNumber = user.phoneNumber;
-               this.userToShow.userType = user.userType;
+               switch(user.userType){
+
+                case "CUSTOMER": this.userToShow.userType = "Customer"; break;
+                case "BUNGALOW_OWNER": this.userToShow.userType = "Bungalow owner"; break;
+                case "BOAT_OWNER": this.userToShow.userType = "Boat owner"; break;
+                case "INSTRUCTOR": this.userToShow.userType = "Instructor"; break;
+                case "ADMIN": this.userToShow.userType = "Admin"; break;
+                default: this.userToShow.userType = "";
+
+               }
                this.showPage = 1;
 
+            },
 
+            deleteUser : function(){
 
+                Swal.fire({
+
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirm'
+
+                }).then((result)=> {
+
+                    if(result.isConfirmed){
+
+                        axios.post('/api/adminDeleteUser', this.userToShow)
+                        .then(response=> {
+
+                            if(response.data === true){
+
+                                Swal.fire('User successfuly deleted!',
+                                          '',
+                                          'success'
+                                          )
+
+                            } else {
+
+                                Swal.fire('Ooops, something went wrong!',
+                                          'Please, try again later!',
+                                          'error'
+                                          )
+                            }
+                        })
+                    }
+                })
             }
-
           }
           ,
           mounted(){

@@ -73,7 +73,7 @@ public class UserService {
         List<User> noAdmins = new ArrayList<User>();
         for(User u : allUsers){
 
-            if(u.getUserType()!=UserType.ADMIN){
+            if(u.getUserType()!=UserType.ADMIN && !u.isDeleted()){
                 noAdmins.add(u);
             }
 
@@ -81,5 +81,18 @@ public class UserService {
 
         return noAdmins;
 
+    }
+
+    public boolean adminDeleteUser(User userToShow) {
+
+        Long id = userToShow.getId();
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            return false;
+        } else {
+            user.setDeleted(true);
+            userRepository.save(user);
+            return true;
+        }
     }
 }

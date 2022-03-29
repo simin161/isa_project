@@ -17,6 +17,11 @@ public class DtoToUser {
                 map.get("city"), map.get("country"), map.get("phoneNumber"), map.get("email"), map.get("password"));
     }
 
+    public static User MapToAdminUser(Map<String, String> map){
+        return new User(Long.valueOf(map.get("id")), map.get("name"), map.get("surname"), map.get("address"),
+                map.get("city"), map.get("country"), map.get("phoneNumber"), map.get("email"), "");
+    }
+
     public static Customer MapToCustomer(Map<String, String> map) {
         return new Customer(map.get("firstName"), map.get("lastName"), map.get("address"),
                 map.get("city"), map.get("country"), map.get("phoneNumber"), map.get("email"), map.get("password"));

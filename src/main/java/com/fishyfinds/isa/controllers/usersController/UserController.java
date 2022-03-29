@@ -70,4 +70,13 @@ public class UserController {
         return userService.allUsersWithoutAdmins();
     }
 
+    @PostMapping("/adminDeleteUser")
+    public boolean adminDeleteUser(@RequestBody Map<String, String> message) {
+        try {
+            return userService.adminDeleteUser(DtoToUser.MapToAdminUser(message));
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

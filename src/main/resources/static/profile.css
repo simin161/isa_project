@@ -53,7 +53,7 @@
     font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 .info-text-profile-small{
     width: 42.5%;
@@ -65,7 +65,7 @@
     float: left;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .update-text-profile{
@@ -77,7 +77,7 @@
     font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .confirm-profile{
@@ -91,7 +91,11 @@
     letter-spacing: -0.017em;
     color: #FFFFFF;
     background: #28A745;
-    border-radius: 20px;
+    border-radius: 5px;
+}
+
+.center-text-button{
+    line-height: 0;
 }
 
 .options-3-horizontal{

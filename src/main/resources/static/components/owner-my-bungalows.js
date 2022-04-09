@@ -1,14 +1,14 @@
 Vue.component('owner-my-bungalows', {
 	data: function(){
 		return{	
-			loggedUser: {},
+			loggedUser: null,
 			ownerId: 0,
 			myBungalows:[],
 
 			dtoAddNewBungalow: {
 				offerType: "BUNGALOW",
 				offerName: "",
-				userID: "",
+				userId: "",
 
 				country: "",
 				city: "",
@@ -41,17 +41,21 @@ template: `
 
 				<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
 
-					<form class="justify-content-center">
+					<form>
 						<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-							<tr><td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
-								<td colspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
-								<td rowspan="2"><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
-								<td rowspan="2"><input class="confirm-profile" type="button" style="background-color: #28a745; font-size: 15px;" @click="showAddNewBungalowForm" value="Add a new bungalow"/></td>
+
+							<tr><td colspan="2" rowspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's name" /></td>
+								<td colspan="1" rowspan="2"><input class="confirm-profile center-text-button" type="button" style="background-color: #1b4560; font-size: 14px; margin:6px; padding:6px; text-align:center;" value="Search" /></td>
+								<td colspan="2" rowspan="2"><input class="confirm-profile center-text-button" type="button" style="background-color: #28a745; font-size: 14px; margin:6px; padding:6px; text-align:center;" @click="showAddNewBungalowForm" value="Add a new bungalow"/></td>
 							</tr>
-							<br>
 							<tr>
-								<td colspan="2">
-									<select class="select-sort" name="select" id="format">
+								<td colspan="2" rowspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's location"/></td>
+							</tr>
+
+							<!--
+							<tr>	
+								<td colspan="2" rowspan="1">
+									<select class="select-sort" name="select" id="format" style="margin-top:6px;">
 										<option selected disabled>Sort by</option>
 										<option value="AscAlpha">Sort alphabetically (A-Z)</option>
 										<option value="DescAlpha">Sort alphabetically (Z-A)</option>
@@ -59,10 +63,45 @@ template: `
 										<option value="DescRating">Sort by average rating (Desc)</option>
 										<option value="AscPrice">Sort by price: low to high</option>
 										<option value="DescPrice">Sort by price: hight to low</option>
-									</select>
+									</select> 
 								</td>
-							</tr>
-						</table>
+							</tr> -->
+						</table> 
+
+						<div class="justify-content-center" style="width:90%; margin-left:5%;">
+							<div class="radio-toolbar" style="display: inline-block;">
+
+								<input type="radio" id="radioAscAlpha" name="radioAlpha" value="AscAlpha" checked>
+								<label for="radioAscAlpha">A➡️Z</label>
+
+								<input type="radio" id="radioDescAlpha" name="radioAlpha" value="DescAlpha">
+								<label for="radioDescAlpha">Z➡️A</label>
+
+							</div>
+
+							<div  class="radio-toolbar"  style="display: inline-block;">
+					
+								<input type="radio" id="radioAscRating"  name="radioRating" value="AscRating" checked>
+								<label for="radioAscRating">Good➡️Bad</label>
+
+								<input type="radio" id="radioDescRating" name="radioRating"   value="DescRating">
+								<label for="radioDescRating">Bad➡️Good</label>
+
+							</div>
+
+							<div  class="radio-toolbar"  style="display: inline-block;">
+					
+								<input type="radio" id="radioAscPrice" name="radioPrice" value="AscPrice" checked>
+								<label for="radioAscPrice">Expensive➡️Cheap</label>
+
+								<input type="radio" id="radioDescPrice" name="radioPrice"  value="DescPrice">
+								<label for="radioDescPrice">Cheap➡️Expensive</label>
+
+							</div>
+
+						</div>
+
+
 					</form>
 				
     				<div class="container mt-5">
@@ -130,9 +169,14 @@ template: `
         axios.get("/api/authenticateUser")
             .then(response => {
 				this.loggedUser = response.data;
-				this.dtoBungalow.userID = this.loggedUser.id;
+				this.dtoBungalow.userId = this.loggedUser.id;
 			})
         console.log(this.loggedUser);
+
+		axios.get("/api/allBungalows")
+		.then(response => (this.myBungalows = response.data))
+
+		/*
 
 		axios.get("/api/allMyBungalows")
 			.then(response => {
@@ -141,7 +185,7 @@ template: `
 				console.log(this.myBungalows);
 			})
 
-
+*/
     },
 	computed:{
 

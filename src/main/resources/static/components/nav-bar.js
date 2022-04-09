@@ -1,7 +1,9 @@
 Vue.component('nav-bar', {
 	data: function(){
 		return{
-			loggedUser: null,
+			loggedUser: {
+                userType:''
+            },
 			show: false
 		};
 	},

@@ -1,24 +1,27 @@
 Vue.component('homepage', {
 	data: function(){
 		return{	
-			loggedUser: null,
+			loggedUser: {
+				userType:''
+			},
 			passwordDTO: {
-            			           id: null,
-            			           oldPassword: '',
-            			           newPassword: ''
-            			}
+               id: null,
+               oldPassword: '',
+               newPassword: ''
+            }
 		}
 	},
-template: `	
+template: `
+
 		<div class="homepage">
 			<nav-bar></nav-bar>
 
 			<div class="welcome-text container-fluid justify-content-center">
-				<h1 v-if="loggedUser == '' || loggedUser == 'CUSTOMER'">Plan your next trip with confidence!</h1>
-				<h1 v-if="loggedUser == 'BUNGALOW_OWNER'">Plan your next trip with confidence!</h1>
-				<h1 v-if="loggedUser == 'BOAT_OWNER'">Plan your next trip with confidence!</h1>
-				<h1 v-if="loggedUser == 'INSTRUCTOR'">Plan your next trip with confidence!</h1>
-				<h1 v-if="loggedUser == 'ADMIN'">Welcome back dear administrator!</h1>
+				<h1 v-if="loggedUser == '' || loggedUser.userType == 'CUSTOMER'">Plan your next trip with confidence!</h1>
+				<h1 v-if="loggedUser.userType == 'BUNGALOW_OWNER'">Plan your next trip with confidence!</h1>
+				<h1 v-if="loggedUser.userType == 'BOAT_OWNER'">Plan your next trip with confidence!</h1>
+				<h1 v-if="loggedUser.userType == 'INSTRUCTOR'">Plan your next trip with confidence!</h1>
+				<h1 v-if="loggedUser.userType == 'ADMIN'">Welcome back dear administrator!</h1>
 			</div>
 
 			<div class="wrapper" v-if="loggedUser == '' || loggedUser.userType == 'CUSTOMER'">

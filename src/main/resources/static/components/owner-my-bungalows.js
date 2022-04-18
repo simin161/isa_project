@@ -2,8 +2,14 @@ Vue.component('owner-my-bungalows', {
 	data: function(){
 		return{	
 			loggedUser: null,
-			ownerId: 0,
 			myBungalows:[],
+
+			showPage: 0,
+			sortOption: "",
+			searchParams: {
+				bungalowName : "",
+				bungalowLocation: ""
+			},
 
 			dtoAddNewBungalow: {
 				offerType: "BUNGALOW",
@@ -27,9 +33,6 @@ Vue.component('owner-my-bungalows', {
 				cancellationPolicy:"",	
 			},
 
-			showPage: 0,
-
-			sortOption: ""
 
 		}
 	},
@@ -44,19 +47,20 @@ template: `
 				<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
 
 					<form>
+
 						<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
 
-							<tr><td colspan="2" rowspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's name" /></td>
-								<td colspan="1" rowspan="2"><input class="confirm-profile center-text-button" type="button" style="background-color: #1b4560; font-size: 14px; margin:6px; padding:6px; text-align:center;" value="Search" /></td>
+							<tr><td colspan="2" rowspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's name" /></td>
+								<td colspan="1" rowspan="2"><input @click="search" class="confirm-profile center-text-button" type="button" style="background-color: #1b4560; font-size: 14px; margin:6px; padding:6px; text-align:center;" value="Search" /></td>
 								<td colspan="2" rowspan="2"><input class="confirm-profile center-text-button" type="button" style="background-color: #28a745; font-size: 14px; margin:6px; padding:6px; text-align:center;" @click="showAddNewBungalowForm" value="Add a new bungalow"/></td>
 							</tr>
 							<tr>
-								<td colspan="2" rowspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's location"/></td>
+								<td colspan="2" rowspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's location"/></td>
 							</tr>
 
 						</table> 
 
-						<div class="justify-content-center" style="width:90%; margin-left:5%;">
+						<div class="justify-content-center" style="width:90%; margin-left:5%; margin-top: 5px;">
 							<div class="radio-toolbar" style="display: inline-block;">
 
 								<input type="radio" id="radioAscAlpha" name="radioSort" value="AscAlpha" v-model="sortOption" @change="sortedArray">
@@ -148,7 +152,7 @@ template: `
 
 		this.loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
 
-		axios.get("/api/allMyBungalows/" + this.loggedUser.id.toString())
+		axios.get('/api/allMyBungalows/' + this.loggedUser.id.toString())
 			.then(response => {
 				this.myBungalows = response.data
 				console.log(this.myBungalows);
@@ -157,9 +161,11 @@ template: `
     },
 	computed:{
 
-		axiosParams() {
+		axiosSearchParams() {
 			const params = new URLSearchParams();
-			params.append('ownerId', this.ownerId);
+			params.append('name', this.searchParams.bungalowName);
+			params.append('location', this.searchParams.bungalowLocation);
+			params.append('type', 'BUNGALOW');
 			return params;
 		},
 
@@ -193,6 +199,13 @@ template: `
 		showAddNewBungalowForm: function(){
 			this.showPage = 1;
 
+		},
+
+		search : function(){
+			axios.get('/api/search/' + this.loggedUser.id.toString(), {params: this.axiosSearchParams})
+				.then(response => {
+					this.myBungalows = response.data
+				})
 		},
 
 		sortedArray: function() {

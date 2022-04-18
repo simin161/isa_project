@@ -39,21 +39,6 @@ public class BungalowController {
     public List<Bungalow> findAllByOwnerId(@PathVariable Long loggedUserId) {
         return bungalowService.findAllByOwnerId(loggedUserId);
     }
-    /*
-    public ArrayList<Offer> findAllByOwnerId(HttpServletRequest request) {
-        User bungalowOwner = null;
-        try{
-            bungalowOwner = (User)request.getSession().getAttribute("user");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        if(bungalowOwner != null){
-            return offerService.getBungalowsByOwner(bungalowOwner);
-        }
-        return new ArrayList<Offer>();
-
-    }*/
-
 
 
     @PostMapping("/addNewBungalow")

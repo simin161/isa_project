@@ -67,7 +67,21 @@ public class OfferService {
         return retVal;
     }
 
-    private  boolean checkPatternOffer(Long id, String name, String location){
+    public List<? extends Offer> searchMyOffers(Long loggedUserId, String name, String location, OfferType type, String firstLastName){
+        List<? extends Offer> searched = search(name, location, type,firstLastName);
+        List<Offer> searchedMyOffers = new ArrayList<>();
+        for(Offer offer : searched){
+            if(offer.getUser().getId() == loggedUserId){
+                searchedMyOffers.add(offer);
+            }
+        }
+        return searchedMyOffers;
+    }
+
+
+
+
+        private  boolean checkPatternOffer(Long id, String name, String location){
         Offer offer = offerRepository.findById(id).orElseGet(null);
         if(!name.equals("") && !location.equals(""))
             return checkPatternName(offer.getOfferName(), name) && checkPatternLocation(offer.getLocation(), location);

@@ -8,6 +8,7 @@ import com.fishyfinds.isa.service.offersService.BungalowService;
 import com.fishyfinds.isa.service.offersService.OfferService;
 import com.fishyfinds.isa.service.usersService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,12 @@ public class BungalowController {
         return bungalowService.findAll();
     }
 
-    @GetMapping("/allMyBungalows")
+
+    @GetMapping("/allMyBungalows/{loggedUserId}")
+    public List<Bungalow> findAllByOwnerId(@PathVariable Long loggedUserId) {
+        return bungalowService.findAllByOwnerId(loggedUserId);
+    }
+    /*
     public ArrayList<Offer> findAllByOwnerId(HttpServletRequest request) {
         User bungalowOwner = null;
         try{
@@ -45,7 +51,10 @@ public class BungalowController {
             return offerService.getBungalowsByOwner(bungalowOwner);
         }
         return new ArrayList<Offer>();
-    }
+
+    }*/
+
+
 
     @PostMapping("/addNewBungalow")
     public boolean addNewBungalow(@RequestBody Map<String, String> message, HttpServletRequest request){

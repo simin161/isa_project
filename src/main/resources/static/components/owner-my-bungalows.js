@@ -27,7 +27,9 @@ Vue.component('owner-my-bungalows', {
 				cancellationPolicy:"",	
 			},
 
-			showPage: 0
+			showPage: 0,
+
+			sortOption: ""
 
 		}
 	},
@@ -52,49 +54,27 @@ template: `
 								<td colspan="2" rowspan="1"><input class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's location"/></td>
 							</tr>
 
-							<!--
-							<tr>	
-								<td colspan="2" rowspan="1">
-									<select class="select-sort" name="select" id="format" style="margin-top:6px;">
-										<option selected disabled>Sort by</option>
-										<option value="AscAlpha">Sort alphabetically (A-Z)</option>
-										<option value="DescAlpha">Sort alphabetically (Z-A)</option>
-										<option value="AscRating">Sort by average rating (Asc)</option>
-										<option value="DescRating">Sort by average rating (Desc)</option>
-										<option value="AscPrice">Sort by price: low to high</option>
-										<option value="DescPrice">Sort by price: hight to low</option>
-									</select> 
-								</td>
-							</tr> -->
 						</table> 
 
 						<div class="justify-content-center" style="width:90%; margin-left:5%;">
 							<div class="radio-toolbar" style="display: inline-block;">
 
-								<input type="radio" id="radioAscAlpha" name="radioAlpha" value="AscAlpha" checked>
+								<input type="radio" id="radioAscAlpha" name="radioSort" value="AscAlpha" v-model="sortOption" @change="sortedArray">
 								<label for="radioAscAlpha">A➡️Z</label>
 
-								<input type="radio" id="radioDescAlpha" name="radioAlpha" value="DescAlpha">
+								<input type="radio" id="radioDescAlpha" name="radioSort" value="DescAlpha" v-model="sortOption" @change="sortedArray">
 								<label for="radioDescAlpha">Z➡️A</label>
-
-							</div>
-
-							<div  class="radio-toolbar"  style="display: inline-block;">
 					
-								<input type="radio" id="radioAscRating"  name="radioRating" value="AscRating" checked>
+								<input type="radio" id="radioAscRating"  name="radioSort" value="AscRating" v-model="sortOption" @change="sortedArray">
 								<label for="radioAscRating">Good➡️Bad</label>
 
-								<input type="radio" id="radioDescRating" name="radioRating"   value="DescRating">
+								<input type="radio" id="radioDescRating" name="radioSort"   value="DescRating" v-model="sortOption" @change="sortedArray">
 								<label for="radioDescRating">Bad➡️Good</label>
 
-							</div>
-
-							<div  class="radio-toolbar"  style="display: inline-block;">
-					
-								<input type="radio" id="radioAscPrice" name="radioPrice" value="AscPrice" checked>
+								<input type="radio" id="radioAscPrice" name="radioSort" value="AscPrice" v-model="sortOption" @change="sortedArray">
 								<label for="radioAscPrice">Expensive➡️Cheap</label>
 
-								<input type="radio" id="radioDescPrice" name="radioPrice"  value="DescPrice">
+								<input type="radio" id="radioDescPrice" name="radioSort"  value="DescPrice" v-model="sortOption" @change="sortedArray">
 								<label for="radioDescPrice">Cheap➡️Expensive</label>
 
 							</div>
@@ -166,28 +146,22 @@ template: `
 	,
     mounted(){
 
-        axios.get("/api/authenticateUser")
-            .then(response => {
-				this.loggedUser = response.data;
-				this.dtoBungalow.userId = this.loggedUser.id;
-			})
-        console.log(this.loggedUser);
+		this.loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
 
-		axios.get("/api/allBungalows")
-		.then(response => (this.myBungalows = response.data))
-
-		/*
-
-		axios.get("/api/allMyBungalows")
+		axios.get("/api/allMyBungalows/" + this.loggedUser.id.toString())
 			.then(response => {
 				this.myBungalows = response.data
-				this.ownerId = loggedUser.id;
 				console.log(this.myBungalows);
 			})
 
-*/
     },
 	computed:{
+
+		axiosParams() {
+			const params = new URLSearchParams();
+			params.append('ownerId', this.ownerId);
+			return params;
+		},
 
 		isAddNewBungalowFormFilled: function() {
 			correctOfferName = /\S/.test(this.dtoAddNewBungalow.offerName) && /^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,0-9]{1,20}$/.test(this.dtoAddNewBungalow.offerName);
@@ -219,7 +193,72 @@ template: `
 		showAddNewBungalowForm: function(){
 			this.showPage = 1;
 
-		}
+		},
+
+		sortedArray: function() {
+			if(this.sortOption === 'DescAlpha'){
+				function compare(a, b) {
+				  if (a.offerName > b.offerName)
+					return -1;
+				  if (a.offerName < b.offerName)
+					return 1;
+				 return 0;
+			   }
+				return this.myBungalows.sort(compare);
+			}
+			 if(this.sortOption === 'AscAlpha'){
+				 function compare(a, b) {
+					 if (a.offerName < b.offerName)
+						return -1;
+					 if (a.offerName > b.offerName)
+						return 1;
+					 return 0;
+				 }
+				 return this.myBungalows.sort(compare);
+			 }
+			 if(this.sortOption === 'AscRating'){
+				function compare(a, b) {
+				  if (a.rating > b.rating)
+					return -1;
+				  if (a.rating < b.rating)
+					return 1;
+				 return 0;
+			   }
+				return this.myBungalows.sort(compare);
+			}
+			 if(this.sortOption === 'DescRating'){
+				 function compare(a, b) {
+					 if (a.rating < b.rating)
+						return -1;
+					 if (a.rating > b.rating)
+						return 1;
+					 return 0;
+				 }
+				 return this.myBungalows.sort(compare);
+			 }
+			 if(this.sortOption === 'AscPrice'){
+				function compare(a, b) {
+				  if (a.unitPrice > b.unitPrice)
+					return -1;
+				  if (a.unitPrice < b.unitPrice)
+					return 1;
+				 return 0;
+			   }
+				return this.myBungalows.sort(compare);
+			}
+			 if(this.sortOption === 'DescPrice'){
+				 function compare(a, b) {
+					 if (a.unitPrice < b.unitPrice)
+						return -1;
+					 if (a.unitPrice > b.unitPrice)
+						return 1;
+					 return 0;
+				 }
+				 return this.myBungalows.sort(compare);
+			 }
+	  }
+
+
 
 	}
 

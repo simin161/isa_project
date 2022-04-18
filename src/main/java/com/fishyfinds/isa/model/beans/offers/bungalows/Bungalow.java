@@ -27,8 +27,7 @@ public class Bungalow extends Offer {
 	{
 		this.offerName = offerName;
 		this.location = new Location(country,city,street,streetNumber);
-
-		this.description = country;
+		this.description = description;
 		this.unitPrice = unitPrice;
 		this.maxCustomerCapacity = maxCustomerCapacity;
 		this.rulesOfConduct = rulesOfConduct;

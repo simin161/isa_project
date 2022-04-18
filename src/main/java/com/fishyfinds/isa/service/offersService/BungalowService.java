@@ -8,7 +8,10 @@ import com.fishyfinds.isa.model.enums.UserType;
 import com.fishyfinds.isa.repository.LocationRepository;
 import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,8 @@ public class BungalowService {
         return bungalowRepository.findAll();
     }
 
+
+
     public boolean addNewBungalow(Bungalow bungalow){
         boolean successfullyAdded = false;
         bungalow.setOfferType(OfferType.BUNGALOW);
@@ -38,5 +43,15 @@ public class BungalowService {
         bungalowRepository.save(bungalow);
         successfullyAdded = true;
         return successfullyAdded;
+    }
+
+    public List<Bungalow> findAllByOwnerId(Long loggedUserId) {
+        List<Bungalow> myBungalows = new ArrayList<Bungalow>();
+        for(Bungalow bungalow : bungalowRepository.findAll()){
+            if(bungalow.getUser().getId() == loggedUserId){
+                myBungalows.add(bungalow);
+            }
+        }
+        return myBungalows;
     }
 }

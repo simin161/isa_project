@@ -47,7 +47,14 @@ template: `
                 axios.post('/api/signIn', this.user)
                      .then(response =>{
                            window.localStorage.setItem('user',JSON.stringify(response.data))
-                           router.push('/')
+                           
+                           axios.defaults.headers.common["Authorization"] =localStorage.getItem("user");
+                           axios.get("/api/authenticateUser")
+                           .then(response => {
+                            window.localStorage.setItem('loggedUser',JSON.stringify(response.data));
+                            router.push('/')
+                           })
+
                      })
              }
         }

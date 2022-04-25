@@ -4,6 +4,7 @@ import com.fishyfinds.isa.model.beans.offers.Location;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.offers.boats.Boat;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
+import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.OfferType;
 import com.fishyfinds.isa.repository.offersRepository.BoatRepository;
 import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
@@ -66,7 +67,21 @@ public class OfferService {
         return retVal;
     }
 
-    private  boolean checkPatternOffer(Long id, String name, String location){
+    public List<? extends Offer> searchMyOffers(Long loggedUserId, String name, String location, OfferType type, String firstLastName){
+        List<? extends Offer> searched = search(name, location, type,firstLastName);
+        List<Offer> searchedMyOffers = new ArrayList<>();
+        for(Offer offer : searched){
+            if(offer.getUser().getId() == loggedUserId){
+                searchedMyOffers.add(offer);
+            }
+        }
+        return searchedMyOffers;
+    }
+
+
+
+
+        private  boolean checkPatternOffer(Long id, String name, String location){
         Offer offer = offerRepository.findById(id).orElseGet(null);
         if(!name.equals("") && !location.equals(""))
             return checkPatternName(offer.getOfferName(), name) && checkPatternLocation(offer.getLocation(), location);
@@ -97,5 +112,9 @@ public class OfferService {
             retVal = matcher.find();
         }
         return retVal;
+    }
+
+    public ArrayList<Offer> getBungalowsByOwner(User bungalowOwner) {
+        return (ArrayList<Offer>)offerRepository.findAllByUser(bungalowOwner);
     }
 }

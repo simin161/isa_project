@@ -3,45 +3,63 @@
 		<title>FishyFinds</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 		<link rel="stylesheet" href="bootstrap/bootstrap.min.css"></link>
 		<link rel="stylesheet" href="index.css"></link>
 		<link rel="stylesheet" href="profile.css"></link>
 		<link rel="stylesheet" href="dropdown.css"></link>
+		<link rel="stylesheet" href="radio-toolbar.css"></link>
+		<link rel="stylesheet" href="cards.css"></link>
+
+		<!-- MAP/CSS-->
+		<link rel="stylesheet" href="/openLayers-v6.14.1/ol.css" type="text/css"></link>
+		<link href="/openLayers-v6.14.1/ol.css.map"></link>
+
 		<!--
 			Bootstrap javascript
 			<script type="text/javascript" src="bootstrap/bootstrap.mis.js">
 		-->
+
+
+
+
 	</head>
 	<body>
 
-	<nav-bar></nav-bar>
-	<div id="app">
-		<router-view></router-view>
-	</div>
-	<script src="js/vue.js"></script>
-	<script src="js/vue-router.js"></script>
-	<script src="js/axios.js"></script>
+		<!-- MAP/JS -->
+		<script src="/openLayers-v6.14.1/ol.js"></script>
+		<!-- <script src="/openLayers-v6.14.1/ol.js.map"></script> -->
 
-	<script src="components/homepage.js"></script>
-	<script src="components/sign-in.js"></script>
-	<script src="components/register.js"></script>
 
-	<script src="components/boats.js"></script>
-	<script src="components/bungalows.js"></script>
-	<script src="components/instructors.js"></script>
-	<script src="components/bungalowReservationHistory.js"></script>
-	<script src="components/boatReservationHistory.js"></script>
-	<script src="components/courseReservationHistory.js"></script>
-	<script src="components/profile.js"></script>
-	<script src="components/owner-my-bungalows.js"></script>
-	<script src="components/owner-my-boats.js"></script>
-	<script src="components/instructor-my-courses.js"></script>
-	<script src="components/admin-reg-req-complaints.js"></script>
-	<script src="components/admin-register.js"><</script>
-	<script src="components/admin-user-complaints.js"></script>
-	<script src="components/nav-bar.js"></script>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<nav-bar></nav-bar>
+		<div id="app">
+			<router-view></router-view>
+		</div>
+		<script src="js/vue.js"></script>
+		<script src="js/vue-router.js"></script>
+		<script src="js/axios.js"></script>
 
-	<script src="app.js"></script>
+		<script src="components/homepage.js"></script>
+		<script src="components/sign-in.js"></script>
+		<script src="components/register.js"></script>
+
+		<script src="components/boats.js"></script>
+		<script src="components/bungalows.js"></script>
+		<script src="components/instructors.js"></script>
+		<script src="components/bungalowReservationHistory.js"></script>
+		<script src="components/boatReservationHistory.js"></script>
+		<script src="components/courseReservationHistory.js"></script>
+		<script src="components/profile.js"></script>
+		<script src="components/owner-my-bungalows.js"></script>
+		<script src="components/owner-my-boats.js"></script>
+		<script src="components/instructor-my-courses.js"></script>
+		<script src="components/admin-reg-req-complaints.js"></script>
+		<script src="components/admin-register.js"></script>
+		<script src="components/admin-user-complaints.js"></script>
+		<script src="components/nav-bar.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+		<script src="app.js"></script>
 	</body>
 </html>

@@ -12,8 +12,10 @@ import javax.persistence.*;
 public class Location{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="mySeqGen_Location", sequenceName = "mySeq_Location", initialValue = 2, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_Location")
+    private Long id;
 
     @Column(name = "longitude")
     private double longitude = 0;

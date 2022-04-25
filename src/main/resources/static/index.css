@@ -222,7 +222,7 @@ header nav a:hover{
       letter-spacing: -0.017em;
       color: #FFFFFF;
       background: #28A745;
-      border-radius: 90px;
+      border-radius: 20px;
   }
 
   .confirm:hover{
@@ -241,7 +241,7 @@ header nav a:hover{
     font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 
 }
 
@@ -255,7 +255,7 @@ header nav a:hover{
     font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 
 }
 
@@ -266,7 +266,7 @@ header nav a:hover{
     font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 18px;
+    border-radius: 5px;
   }
 
 input[type="text"][disabled]{
@@ -368,3 +368,8 @@ select{
   font-size: 12px;
   font-family: poppins-light;
 }
+
+
+
+
+

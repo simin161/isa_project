@@ -53,7 +53,7 @@
     font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 .info-text-profile-small{
     width: 42.5%;
@@ -65,7 +65,7 @@
     float: left;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .update-text-profile{
@@ -77,7 +77,7 @@
     font-family: poppins-bold;
     color: white;
     background: #225779;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .confirm-profile{
@@ -91,7 +91,11 @@
     letter-spacing: -0.017em;
     color: #FFFFFF;
     background: #28A745;
-    border-radius: 20px;
+    border-radius: 5px;
+}
+
+.center-text-button{
+    line-height: 0;
 }
 
 .options-3-horizontal{
@@ -121,4 +125,20 @@
     height: auto;
     max-width: 96px;
     max-height: 96px;
+}
+
+
+
+.button-options{
+    width: 100%;
+    height: 25px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.017em;
+    color: #FFFFFF;
+    background: #1b4560;
+    border-radius: 3px;
 }

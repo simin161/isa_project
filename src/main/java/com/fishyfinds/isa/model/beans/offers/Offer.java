@@ -19,7 +19,9 @@ import java.util.Set;
 public class Offer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="mySeqGen_Offer", sequenceName = "mySeq_Offer", initialValue = 8, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_Offer")
     protected Long id;
 
     @Column(name = "offerType", nullable = false)

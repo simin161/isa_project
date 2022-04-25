@@ -2,6 +2,7 @@ package com.fishyfinds.isa.model.beans.offers.bungalows;
 
 import com.fishyfinds.isa.model.beans.offers.Location;
 import com.fishyfinds.isa.model.beans.offers.Offer;
+import com.fishyfinds.isa.model.beans.users.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,21 +16,28 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "id")
 public class Bungalow extends Offer {
 
-	@OneToMany
-	@JoinColumn(name="id")
-	private Set<Room> rooms;
+	@Column(name = "numberOfBeds", nullable = false)
+	private int numberOfBeds;
+
+	@Column(name = "numberOfRooms", nullable = false)
+	private int numberOfRooms;
 
 	public Bungalow() {}
-	public Bungalow(String offerName, String country,
-					String city, String street, String streetNumber,
-					String description,  int unitPrice, int maxCustomerCapacity,
+	public Bungalow(String offerName, User user,
+					String country, String city, String street, String streetNumber,
+					String description,  int unitPrice,
+					int maxCustomerCapacity, int numberOfBeds, int numberOfRooms,
 					String rulesOfConduct, String additionalServices, String cancellationPolicy)
 	{
+
 		this.offerName = offerName;
+		this.user = user;
 		this.location = new Location(country,city,street,streetNumber);
 		this.description = description;
 		this.unitPrice = unitPrice;
 		this.maxCustomerCapacity = maxCustomerCapacity;
+		this.numberOfBeds = numberOfBeds;
+		this.numberOfRooms = numberOfRooms;
 		this.rulesOfConduct = rulesOfConduct;
 		this.additionalServices = additionalServices;
 		this.cancellationPolicy = cancellationPolicy;

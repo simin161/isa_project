@@ -4,6 +4,7 @@ Vue.component('owner-my-bungalows', {
 			loggedUser: null,
 			myBungalows:[],
 
+
 			showPage: 0,
 			sortOption: "",
 			searchParams: {
@@ -11,29 +12,34 @@ Vue.component('owner-my-bungalows', {
 				bungalowLocation: ""
 			},
 
+			selectedBungalow:{},
+			selectedBungalowsLocation:{},
+			selectedBungalowsOwner:{},
+
 			dtoAddNewBungalow: {
 				offerType: "BUNGALOW",
 				offerName: "",
-				userId: "",
 
 				country: "",
 				city: "",
 				street: "",
 				streetNumber:"",
-				longitude:"",
-				latitude:"",
+
+				longitude:"0",
+				latitude:"0",
 
 				description:"",
 				unitPrice:"",
 				maxCustomerCapacity:"",
+				numberOfRooms:"",
+				numberOfBeds:"",
 
 				maxCustomerCapacity:"",
 				rulesOfConduct:"",
 				additionalServices:"",
 				cancellationPolicy:"",	
 			},
-
-
+			map: {}
 		}
 	},
 template: `	
@@ -89,55 +95,176 @@ template: `
 					</form>
 				
     				<div class="container mt-5">
-    					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in myBungalows">
-    						<div class="row g-0">
-    							<div class="col-md-4" style="text-align:center;">
-    								<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
-    							</div>
-    							<div class="col-md-8">
-    								<div class="card-body">
-    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:10px;">{{bungalow.description}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Initial price: {{bungalow.unitPrice}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(bungalow)">Show more</button>
-    								</div>
-    							</div>
-    						</div>
-    					</div>
+				
+							<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in myBungalows">
+							
+								<div class="row g-0">
+									<div class="col-md-4" style="text-align:center;
+																background-color: #1b4560;
+																background-image:url('./images/bungalow-images/bungalow-1-out-1.jpg');
+																background-size: contain;
+																background-repeat: no-repeat;
+																background-position: center;											
+																"></div>
+									<div class="col-md-8">
+										<div class="card-body" style="padding: 1vh;">
+											<p class="card-title text-start mt-1" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</p>
+											<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:10px;">{{bungalow.description}}</p>
+											<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Initial price: {{bungalow.unitPrice}}</p>
+											<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
+
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showDetails(bungalow)">Show details</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="updateDetails(bungalow)">Update details</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="deleteOffer(bungalow)">Delete offer</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="updateFreeTerms(bungalow)">Update free terms</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;"  @click="updateLastMinuteTerms(bungalow)">Update last minute terms</button>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+					
     				</div>
+
 
             	</div>
 
             	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
 
-					<!-- Add a new bungalow -->
+					<!-- PAGE 1 - Add a new bungalow -->
                 	<div class="container" v-show="showPage == 1">
 						
-						<div class="container align-items-start">
-							<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-							<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Add a new Bungalow </p>
-							<form class="justify-content-center">
+						<form ref="addNewBungalowForm">
+							<div class="container align-items-start">
+
+							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
+								<p class="title-text-bold" style="text-align:center;"> Add a new Bungalow </p>
+
 								<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-									<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="dtoAddNewBungalow.offerName"/></td></tr><br>
+
+									<tr><td><input type="text" id="id_bungalowName" placeholder="   Bungalow's name" class="input-text" v-model="dtoAddNewBungalow.offerName" style="margin-top: 5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td></tr>
 									<tr class="d-flex justify-content-evenly">
-										<td><input type="text" placeholder="   Country" class="input-text"  v-model="dtoAddNewBungalow.country"/></td>
-										<td><input type="text" placeholder="   City" class="input-text"  v-model="dtoAddNewBungalow.city"/></td></tr><br>
-									<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="dtoAddNewBungalow.street"/></td></tr><br>
-									<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="dtoAddNewBungalow.streetNumber"/></td></tr><br>
-									<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="dtoAddNewBungalow.unitPrice"/></td></tr><br>
-									<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="dtoAddNewBungalow.description" ></textarea></tr><br>
-									<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="dtoAddNewBungalow.maxCustomerCapacity"/></td></tr><br>
-									<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="dtoAddNewBungalow.additionalServices" ></textarea></tr><br>
-									<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="dtoAddNewBungalow.rulesOfConduct" ></textarea></tr><br>
-									<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="dtoAddNewBungalow.cancellationPolicy" ></textarea></tr><br>
-									<tr>
-										<td><input v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" :disabled="!isAddNewBungalowFormFilled" class="confirm" type="button" value="Add new bungalow" @click="addNewBungalow"/></td>
+										<td><input type="text" placeholder="   Country" class="input-text"  v-model="dtoAddNewBungalow.country" style="margin-top: 5px; margin-right:2px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td><input type="text" placeholder="   City" class="input-text"  v-model="dtoAddNewBungalow.city" style="margin-top: 5px; margin-right:2px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td><input type="text" placeholder="   Street" class="input-text"  v-model="dtoAddNewBungalow.street" style="margin-top: 5px; margin-right:2px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td><input type="text" placeholder="   Street number" class="input-text"  v-model="dtoAddNewBungalow.streetNumber" style="margin-top: 5px; height:20px; font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" required/></td>
 									</tr>
+									<tr class="d-flex justify-content-evenly"> 
+										<td><input type="text" placeholder="   Unit price" class="input-text"  v-model="dtoAddNewBungalow.unitPrice" style="margin-top: 5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="dtoAddNewBungalow.maxCustomerCapacity" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" required/></td>
+										<td><input type="text" placeholder="   Number of rooms" class="input-text"   v-model="dtoAddNewBungalow.numberOfRooms" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td><input type="text" placeholder="   Number of beds" class="input-text"   v-model="dtoAddNewBungalow.numberOfBeds" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
+									</tr>
+									<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="dtoAddNewBungalow.description" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
+									<tr><textarea rowspan="3" name="text" placeholder="   Additional services (Add keywords: Wi-fi, Parking, etc.)" class="input-text-area"  v-model="dtoAddNewBungalow.additionalServices" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
+									<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="dtoAddNewBungalow.rulesOfConduct" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'" required ></textarea></tr>
+									<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="dtoAddNewBungalow.cancellationPolicy" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
+									<tr class="d-flex justify-content-evenly">
+										<td><input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" class="confirm" type="button" value="Add new bungalow"  @click="addNewBungalow()" style="margin-top:5; width:120%;"/></td>
+										<td><input  class="confirm-profile" type="reset" value="Reset" style="width:120%; font-size:12px; background-color: gray"/></td>
+									</tr>
+
 								</table>
-							</form>
-						</div>
+
+							</div>
+						</form>
+
                 	</div>
+
+					<!-- PAGE 2 - Show Details -->
+
+                	<div class="container" v-show="showPage == 2">
+						
+						<div class="container align-items-start">
+
+							<img src="./images/close.png'" style="float:right;" @click="backButton()"/><br><br><br>
+							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
+
+							<div class="container">
+								<div class="row">
+									<div class="col" style="text-align:center;
+																height:100px;
+																background-color: #1b4560;
+																background-image:url('./images/bungalow-images/bungalow-1-in-1.jpg');
+																background-size: contain;
+																background-repeat: no-repeat;
+																background-position: center;											
+																"></div>
+									<div class="col" style="text-align:center;
+																height:100px;
+																background-color: #1b4560;
+																background-image:url('./images/bungalow-images/bungalow-1-out-1.jpg');
+																background-size: contain;
+																background-repeat: no-repeat;
+																background-position: center;											
+																"></div>
+
+								</div>
+							</div>
+	
+
+
+							<hr>
+							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Description: {{this.selectedBungalow.description}}</p>
+							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Rules of Conduct: {{this.selectedBungalow.rulesOfConduct}}</p>
+							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Cancellation policy: {{this.selectedBungalow.cancellationPolicy}}</p>
+							<hr>
+
+							<div class="container">
+								<div class="row">
+									<div class="col" style="text-align:center;
+																height:100px;
+																background-color: #1b4560;
+																background-image:url('./images/map.jpg');
+																background-size: contain;
+																background-repeat: no-repeat;
+																background-position: center;											
+																"></div>
+			
+							</div>
+
+							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Location: {{this.selectedBungalowsLocation.country}}, 
+																							 {{this.selectedBungalowsLocation.city}},
+																							 {{this.selectedBungalowsLocation.street}}
+																							 {{this.selectedBungalowsLocation.streetNumber}}</p>
+
+							<hr>
+							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Rating: {{this.selectedBungalow.rating}}, Initial price: {{this.selectedBungalow.unitPrice}}</p>
+							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Maximum customer capacity: {{this.selectedBungalow.maxCustomerCapacity}}, Number of rooms: {{this.selectedBungalow.numberOfRooms}} ,Number of beds: {{this.selectedBungalow.numberOfBeds}}</p>
+							<hr>
+
+							<p class="title-text-bold" style="text-align:center; font-size:15px;"> Owner' contact:  {{this.selectedBungalowsOwner.firstName}}
+																									{{this.selectedBungalowsOwner.lastName}},
+																									{{this.selectedBungalowsOwner.email}},
+																									{{this.selectedBungalowsOwner.phoneNumber}}</p>
+
+
+
+
+
+							</div>
+
+						</div>
+
+                	</div>
+
+
+
+
+
+
+					<!-- PAGE 3 - Update Details -->
+
+					<!-- PAGE 4 - Delete Offer -->
+
+					<!-- PAGE 5 - Update free terms -->
+
+					<!-- PAGE 6 - Update last minute terms -->
+
+
+
+
 
 
 
@@ -151,12 +278,8 @@ template: `
     mounted(){
 
 		this.loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
-
-		axios.get('/api/allMyBungalows/' + this.loggedUser.id.toString())
-			.then(response => {
-				this.myBungalows = response.data
-				console.log(this.myBungalows);
-			})
+		this.loadOwnersBungalows();
+		this.initMap();
 
     },
 	computed:{
@@ -169,8 +292,8 @@ template: `
 			return params;
 		},
 
-		isAddNewBungalowFormFilled: function() {
-			correctOfferName = /\S/.test(this.dtoAddNewBungalow.offerName) && /^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,0-9]{1,20}$/.test(this.dtoAddNewBungalow.offerName);
+		isAddNewBungalowFormFilled() {
+			correctOfferName = /\S/.test(this.dtoAddNewBungalow.offerName) && /$/.test(this.dtoAddNewBungalow.offerName);
 			correctMaxCustomerCapacity = /\S/.test(this.dtoAddNewBungalow.maxCustomerCapacity) && /^\d+$/.test(this.dtoAddNewBungalow.maxCustomerCapacity);
 			correctUnitPrice = /\S/.test(this.dtoAddNewBungalow.unitPrice) && /^\d+$/.test(this.dtoAddNewBungalow.unitPrice);
 			flag = correctOfferName && correctMaxCustomerCapacity && correctUnitPrice &&
@@ -178,6 +301,12 @@ template: `
 			/\S/.test(this.dtoAddNewBungalow.city) &&
 			/\S/.test(this.dtoAddNewBungalow.street) &&
 			/\S/.test(this.dtoAddNewBungalow.streetNumber) &&
+
+			/\S/.test(this.dtoAddNewBungalow.unitPrice) &&
+			/\S/.test(this.dtoAddNewBungalow.maxCustomerCapacity) &&
+			/\S/.test(this.dtoAddNewBungalow.numberOfRooms) &&
+			/\S/.test(this.dtoAddNewBungalow.numberOfBeds) &&
+
 			/\S/.test(this.dtoAddNewBungalow.description) &&
 			/\S/.test(this.dtoAddNewBungalow.rulesOfConduct) &&
 			/\S/.test(this.dtoAddNewBungalow.additionalServices) &&
@@ -190,16 +319,76 @@ template: `
 	},
 	methods:{
 
-		addNewBungalow: function(){
-			axios.post('/api/addNewBungalow', this.dtoAddNewBungalow)
-				.then(response => console.log(response.data))
-		}
-            
-		,
-		showAddNewBungalowForm: function(){
-			this.showPage = 1;
+		initMap: function(){
+			this.map = new ol.Map({
+				target: 'map',
+				layers: [
+				new ol.layer.Tile({
+					source: new ol.source.OSM()
+				})
+				],
+				view: new ol.View({
+				center: ol.proj.fromLonLat([37.41, 8.82]),
+				zoom: 14
+				})
+			});
+			console.log(this.map);
+		},
+
+		loadOwnersBungalows(){
+
+			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
+			axios.get('/api/allMyBungalows')
+			.then(response => {
+				this.myBungalows = response.data
+				console.log(this.myBungalows);
+			})
+
 
 		},
+
+		backButton: function(){
+			//this.$ref.addNewBungalowForm.reset();
+			this.hideAddNewBungalowForm();
+		},
+
+		addNewBungalow: function(){
+
+			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
+			axios.post('/api/addNewBungalow' , this.dtoAddNewBungalow)
+				.then(response => { 
+					if(response.data === true){
+						Swal.fire('Added bungalow successfuly!',
+									'Juhu!!',
+									'success')
+						}
+					else{
+						Swal.fire('Ooops, something went wron!',
+								'Please, try again later',
+								'error')
+						}
+				}).catch(
+						Swal.fire('Ooops, something went wron!',
+								'Please, try again later',
+								'error')
+			)
+			this.loadOwnersBungalows();
+
+		},
+
+		showDetails: function(bungalow){
+			this.selectedBungalow = bungalow;
+			this.selectedBungalowsLocation = bungalow.location;
+			this.selectedBungalowsOwner = bungalow.user;
+			console.log(this.selectedBungalow.location.country);
+			this.showPage = 2;
+
+		},
+
+
+
+		hideAddNewBungalowForm: function() {this.showPage = 0;},
+		showAddNewBungalowForm: function() {this.showPage = 1;},
 
 		search : function(){
 			axios.get('/api/search/' + this.loggedUser.id.toString(), {params: this.axiosSearchParams})

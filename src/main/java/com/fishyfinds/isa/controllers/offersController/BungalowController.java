@@ -1,19 +1,18 @@
 package com.fishyfinds.isa.controllers.offersController;
 
-import com.fishyfinds.isa.mappers.DtoToOffer;
-import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
+import com.fishyfinds.isa.security.TokenUtils;
+import com.fishyfinds.isa.service.AuthenticationService;
 import com.fishyfinds.isa.service.offersService.BungalowService;
 import com.fishyfinds.isa.service.offersService.OfferService;
 import com.fishyfinds.isa.service.usersService.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,21 +27,43 @@ public class BungalowController {
     private UserService userService;
     @Autowired
     private OfferService offerService;
+    @Autowired
+    private TokenUtils tokenUtils;
+    @Autowired
+    private AuthenticationService authenticationService;
+
 
     @GetMapping("/allBungalows")
     public List<Bungalow> findAll(){
         return bungalowService.findAll();
     }
 
-
-    @GetMapping("/allMyBungalows/{loggedUserId}")
-    public List<Bungalow> findAllByOwnerId(@PathVariable Long loggedUserId) {
-        return bungalowService.findAllByOwnerId(loggedUserId);
+    @GetMapping("/allMyBungalows")
+    public List<Bungalow> findAllByOwnerId(@RequestHeader("Authorization") HttpHeaders header) {
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            User owner = userService.findUserByEmail(username);
+            return bungalowService.findAllByOwnerId(owner.getId());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ArrayList<Bungalow>();
     }
 
-
     @PostMapping("/addNewBungalow")
-    public boolean addNewBungalow(@RequestBody Map<String, String> message, HttpServletRequest request){
-        return bungalowService.addNewBungalow(DtoToOffer.MapToNewBungalow(message));
+    public boolean addNewBungalow(@RequestHeader("Authorization") HttpHeaders header, @RequestBody Map<String, String> message){
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return bungalowService.addNewBungalow(username, message);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return  false;
     }
 }

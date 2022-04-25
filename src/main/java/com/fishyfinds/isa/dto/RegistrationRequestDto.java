@@ -17,6 +17,5 @@ public class RegistrationRequestDto {
 	private String registrationReasoning;
 	private RegistrationStatus registrationStatus;
 	private String statusReasoning;
-	
-	
+
 }

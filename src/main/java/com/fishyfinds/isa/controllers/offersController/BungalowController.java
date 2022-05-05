@@ -54,7 +54,7 @@ public class BungalowController {
     }
 
     @PostMapping("/addNewBungalow")
-    public boolean addNewBungalow(@RequestHeader("Authorization") HttpHeaders header, @RequestBody Map<String, String> message){
+    public boolean addNewBungalow(@RequestHeader("Authorization") HttpHeaders header, @RequestBody Map<String, ArrayList<String>> message){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);

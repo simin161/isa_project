@@ -15,7 +15,31 @@ Vue.component('owner-my-bungalows', {
 			selectedBungalow:{},
 			selectedBungalowsLocation:{},
 			selectedBungalowsOwner:{},
+            dataToSend: {
+                offerType: [],
+                				offerName: [],
 
+                				country: [],
+                				city: [],
+                				street: [],
+                				streetNumber:[],
+
+                				longitude:[],
+                				latitude:[],
+
+                				description:[],
+                				unitPrice:[],
+                				maxCustomerCapacity:[],
+                				numberOfRooms:[],
+                				numberOfBeds:[],
+
+                				maxCustomerCapacity:[],
+                				rulesOfConduct:[],
+                				additionalServices:[],
+                				cancellationPolicy:[],
+                								image: []
+
+            },
 			dtoAddNewBungalow: {
 				offerType: "BUNGALOW",
 				offerName: "",
@@ -37,7 +61,9 @@ Vue.component('owner-my-bungalows', {
 				maxCustomerCapacity:"",
 				rulesOfConduct:"",
 				additionalServices:"",
-				cancellationPolicy:"",	
+				cancellationPolicy:"",
+				image: []
+
 			},
 			map: {}
 		}
@@ -160,6 +186,7 @@ template: `
 									<tr><textarea rowspan="3" name="text" placeholder="   Additional services (Add keywords: Wi-fi, Parking, etc.)" class="input-text-area"  v-model="dtoAddNewBungalow.additionalServices" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="dtoAddNewBungalow.rulesOfConduct" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'" required ></textarea></tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="dtoAddNewBungalow.cancellationPolicy" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
+									<tr><td><input type="file" name="file[]" @change="imageSelected" multiple="multiple"></input></td></tr>
 									<tr class="d-flex justify-content-evenly">
 										<td><input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" class="confirm" type="button" value="Add new bungalow"  @click="addNewBungalow()" style="margin-top:5; width:120%;"/></td>
 										<td><input  class="confirm-profile" type="reset" value="Reset" style="width:120%; font-size:12px; background-color: gray"/></td>
@@ -318,7 +345,33 @@ template: `
 		}
 	},
 	methods:{
-
+        imageSelected(event){
+        	const file = document.querySelector('input[type=file]')
+                    	var readers = new Array(file.files.length)
+                    	for(var i = 0; i < file.files.length; ++i){
+                    	    readers[i] = new FileReader();
+                    	    readers[i].name = i;
+                    	}
+                    	var i = 0;
+                        while(i < file.files.length){
+                            var cFile = file.files[i];
+                            if(cFile != null){
+                                let rawImg;
+                                this.imagePath = true;
+                                readers[i].onloadend = () => {
+                                    i = 0;
+                                    this.dtoAddNewBungalow.image.push(readers[i].result);
+                                    alreadyLoaded = false;
+            						++i;
+                                }
+            	                readers[i].readAsDataURL(cFile);
+                    	        ++i;
+                    	    }
+                    	    else{
+                               this.imagePath = false
+                            }
+                    	}
+        },
 		initMap: function(){
 			this.map = new ol.Map({
 				target: 'map',
@@ -353,9 +406,26 @@ template: `
 		},
 
 		addNewBungalow: function(){
-
+		    this.dataToSend.offerType.push(this.dtoAddNewBungalow.offerType);
+		    this.dataToSend.offerName.push(this.dtoAddNewBungalow.offerName);
+		    this.dataToSend.country.push(this.dtoAddNewBungalow.country);
+            this.dataToSend.city.push(this.dtoAddNewBungalow.city);
+            this.dataToSend.street.push(this.dtoAddNewBungalow.street);
+            this.dataToSend.streetNumber.push(this.dtoAddNewBungalow.streetNumber);
+            this.dataToSend.longitude.push(this.dtoAddNewBungalow.longitude);
+            this.dataToSend.latitude.push(this.dtoAddNewBungalow.latitude);
+            this.dataToSend.description.push(this.dtoAddNewBungalow.description);
+            this.dataToSend.unitPrice.push(this.dtoAddNewBungalow.unitPrice);
+            this.dataToSend.maxCustomerCapacity.push(this.dtoAddNewBungalow.maxCustomerCapacity);
+            this.dataToSend.numberOfRooms.push(this.dtoAddNewBungalow.numberOfRooms);
+			this.dataToSend.numberOfBeds.push(this.dtoAddNewBungalow.numberOfBeds);
+			this.dataToSend.maxCustomerCapacity.push(this.dtoAddNewBungalow.maxCustomerCapacity);
+            this.dataToSend.rulesOfConduct.push(this.dtoAddNewBungalow.rulesOfConduct);
+            this.dataToSend.additionalServices.push(this.dtoAddNewBungalow.additionalServices);
+            this.dataToSend.cancellationPolicy.push(this.dtoAddNewBungalow.cancellationPolicy);
+            this.dataToSend.image = this.dtoAddNewBungalow.image;
 			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
-			axios.post('/api/addNewBungalow' , this.dtoAddNewBungalow)
+			axios.post('/api/addNewBungalow' , this.dataToSend)
 				.then(response => { 
 					if(response.data === true){
 						Swal.fire('Added bungalow successfuly!',

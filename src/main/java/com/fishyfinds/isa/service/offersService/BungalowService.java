@@ -10,6 +10,7 @@ import com.fishyfinds.isa.repository.LocationRepository;
 import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import com.fishyfinds.isa.repository.usersRepository.UserRepository;
+import com.fishyfinds.isa.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,11 @@ public class BungalowService {
     public boolean addNewBungalow(String username, Map<String, String> message){
         User user = userRepository.findByEmail(username);
         Bungalow bungalow = DtoToOffer.MapToNewBungalow(message, user);
+        try{
+            ImageService.getInstance().saveImage(message.get("image"), "test");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         bungalow.setOfferType(OfferType.BUNGALOW);
         locationRepository.save(bungalow.getLocation());
         bungalowRepository.save(bungalow);

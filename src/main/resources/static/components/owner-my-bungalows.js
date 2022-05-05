@@ -37,7 +37,8 @@ Vue.component('owner-my-bungalows', {
 				maxCustomerCapacity:"",
 				rulesOfConduct:"",
 				additionalServices:"",
-				cancellationPolicy:"",	
+				cancellationPolicy:"",
+				image: null
 			},
 			map: {}
 		}
@@ -160,6 +161,7 @@ template: `
 									<tr><textarea rowspan="3" name="text" placeholder="   Additional services (Add keywords: Wi-fi, Parking, etc.)" class="input-text-area"  v-model="dtoAddNewBungalow.additionalServices" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="dtoAddNewBungalow.rulesOfConduct" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'" required ></textarea></tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="dtoAddNewBungalow.cancellationPolicy" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
+									<tr><td><input type="file" @change="imageSelected"></input></td></tr>
 									<tr class="d-flex justify-content-evenly">
 										<td><input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" class="confirm" type="button" value="Add new bungalow"  @click="addNewBungalow()" style="margin-top:5; width:120%;"/></td>
 										<td><input  class="confirm-profile" type="reset" value="Reset" style="width:120%; font-size:12px; background-color: gray"/></td>
@@ -318,7 +320,22 @@ template: `
 		}
 	},
 	methods:{
+        imageSelected(event){
+        	const file = document.querySelector('input[type=file]').files[0]
+        	const reader = new FileReader()
 
+        	if(file != null){
+        		let rawImg;
+        		this.imagePath = true;
+        		reader.onloadend = () => {
+        		    this.dtoAddNewBungalow.image = reader.result;
+        		}
+        		reader.readAsDataURL(file);
+        	    }
+        		else{
+        			this.imagePath = false
+        		}
+        },
 		initMap: function(){
 			this.map = new ol.Map({
 				target: 'map',

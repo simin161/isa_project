@@ -362,7 +362,7 @@ template: `
                                 readers[i].onloadend = () => {
                                     this.dtoAddNewBungalow.image.push(readers[j].result);
                                     alreadyLoaded = false;
-            						++j;
+            						            ++j;     
                                 }
             	                readers[i].readAsDataURL(cFile);
                     	        ++i;

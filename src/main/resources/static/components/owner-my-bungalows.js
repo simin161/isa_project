@@ -353,16 +353,16 @@ template: `
                     	    readers[i].name = i;
                     	}
                     	var i = 0;
+                    	var j = 0;
                         while(i < file.files.length){
                             var cFile = file.files[i];
                             if(cFile != null){
                                 let rawImg;
                                 this.imagePath = true;
                                 readers[i].onloadend = () => {
-                                    i = 0;
-                                    this.dtoAddNewBungalow.image.push(readers[i].result);
+                                    this.dtoAddNewBungalow.image.push(readers[j].result);
                                     alreadyLoaded = false;
-            						++i;
+            						++j;
                                 }
             	                readers[i].readAsDataURL(cFile);
                     	        ++i;

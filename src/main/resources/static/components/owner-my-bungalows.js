@@ -4,7 +4,6 @@ Vue.component('owner-my-bungalows', {
 			loggedUser: null,
 			myBungalows:[],
 
-
 			showPage: 0,
 			sortOption: "",
 			searchParams: {
@@ -17,27 +16,27 @@ Vue.component('owner-my-bungalows', {
 			selectedBungalowsOwner:{},
             dataToSend: {
                 offerType: [],
-                				offerName: [],
+				offerName: [],
 
-                				country: [],
-                				city: [],
-                				street: [],
-                				streetNumber:[],
+				country: [],
+				city: [],
+				street: [],
+				streetNumber:[],
 
-                				longitude:[],
-                				latitude:[],
+				longitude:[],
+				latitude:[],
 
-                				description:[],
-                				unitPrice:[],
-                				maxCustomerCapacity:[],
-                				numberOfRooms:[],
-                				numberOfBeds:[],
+				description:[],
+				unitPrice:[],
+				maxCustomerCapacity:[],
+				numberOfRooms:[],
+				numberOfBeds:[],
 
-                				maxCustomerCapacity:[],
-                				rulesOfConduct:[],
-                				additionalServices:[],
-                				cancellationPolicy:[],
-                								image: []
+				maxCustomerCapacity:[],
+				rulesOfConduct:[],
+				additionalServices:[],
+				cancellationPolicy:[],
+				image: []
 
             },
 			dtoAddNewBungalow: {
@@ -140,10 +139,10 @@ template: `
 											<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
 
 											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showDetails(bungalow)">Show details</button>
-											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="updateDetails(bungalow)">Update details</button>
-											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="deleteOffer(bungalow)">Delete offer</button>
-											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="updateFreeTerms(bungalow)">Update free terms</button>
-											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;"  @click="updateLastMinuteTerms(bungalow)">Update last minute terms</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showUpdateDetails(bungalow)">Update details</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showDeleteOffer(bungalow)">Delete offer</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showUpdateAvailableTerms(bungalow)">Update available terms</button>
+											<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showMakeQuickReservation(bungalow)">Make quick reservations</button>
 
 										</div>
 									</div>
@@ -205,7 +204,7 @@ template: `
 						
 						<div class="container align-items-start">
 
-							<img src="./images/close.png'" style="float:right;" @click="backButton()"/><br><br><br>
+							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
 							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
 
 							<div class="container">
@@ -229,8 +228,6 @@ template: `
 
 								</div>
 							</div>
-	
-
 
 							<hr>
 							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Description: {{this.selectedBungalow.description}}</p>
@@ -247,28 +244,24 @@ template: `
 																background-size: contain;
 																background-repeat: no-repeat;
 																background-position: center;											
-																"></div>
-			
-							</div>
+																">
+									</div>
+								</div>
 
-							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Location: {{this.selectedBungalowsLocation.country}}, 
-																							 {{this.selectedBungalowsLocation.city}},
-																							 {{this.selectedBungalowsLocation.street}}
-																							 {{this.selectedBungalowsLocation.streetNumber}}</p>
+								<p class="title-text-bold" style="text-align:center; font-size:13px;"> Location: {{this.selectedBungalowsLocation.country}}, 
+																								{{this.selectedBungalowsLocation.city}},
+																								{{this.selectedBungalowsLocation.street}}
+																								{{this.selectedBungalowsLocation.streetNumber}}</p>
 
-							<hr>
-							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Rating: {{this.selectedBungalow.rating}}, Initial price: {{this.selectedBungalow.unitPrice}}</p>
-							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Maximum customer capacity: {{this.selectedBungalow.maxCustomerCapacity}}, Number of rooms: {{this.selectedBungalow.numberOfRooms}} ,Number of beds: {{this.selectedBungalow.numberOfBeds}}</p>
-							<hr>
+								<hr>
+								<p class="title-text-bold" style="text-align:center; font-size:13px;"> Rating: {{this.selectedBungalow.rating}}, Initial price: {{this.selectedBungalow.unitPrice}}</p>
+								<p class="title-text-bold" style="text-align:center; font-size:13px;"> Maximum customer capacity: {{this.selectedBungalow.maxCustomerCapacity}}, Number of rooms: {{this.selectedBungalow.numberOfRooms}} ,Number of beds: {{this.selectedBungalow.numberOfBeds}}</p>
+								<hr>
 
-							<p class="title-text-bold" style="text-align:center; font-size:15px;"> Owner' contact:  {{this.selectedBungalowsOwner.firstName}}
-																									{{this.selectedBungalowsOwner.lastName}},
-																									{{this.selectedBungalowsOwner.email}},
-																									{{this.selectedBungalowsOwner.phoneNumber}}</p>
-
-
-
-
+								<p class="title-text-bold" style="text-align:center; font-size:15px;"> Owner' contact:  {{this.selectedBungalowsOwner.firstName}}
+																										{{this.selectedBungalowsOwner.lastName}},
+																										{{this.selectedBungalowsOwner.email}},
+																										{{this.selectedBungalowsOwner.phoneNumber}}</p>
 
 							</div>
 
@@ -277,24 +270,84 @@ template: `
                 	</div>
 
 
-
-
-
-
 					<!-- PAGE 3 - Update Details -->
+
+					<div class="container" v-show="showPage == 3">
+						
+						<div class="container align-items-start">
+
+							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
+							<p class="title-text-bold" style="text-align:center;"> Update:</p>
+							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
+
+						</div>
+
+                	</div>
 
 					<!-- PAGE 4 - Delete Offer -->
 
+					<div class="container" v-show="showPage == 4">
+						
+						<div class="container align-items-start">
+
+							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
+							<p class="title-text-bold" style="text-align:center;"> Delete:</p>
+							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
+
+						</div>
+
+                	</div>
+
 					<!-- PAGE 5 - Update free terms -->
 
+					<div class="container" v-show="showPage == 5">
+						
+						<div class="container align-items-start">
+
+							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
+							<p class="title-text-bold" style="text-align:center;"> Update available terms:</p>
+							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
+
+							<hr>
+							
+							<div class="container align-items-start">
+
+								<label for="start-time" style="font-family:poppins-bold; color:#fff;">Choose a start time for available terms:</label>
+								<span><input class="datetime-local" type="datetime-local" id="start-time" name="start-time" 
+											 value="2022-05-07T19:30" min="2022-05-07T00:00" max="2022-12-12T00:00"></span>
+								<br><br>
+
+								<label for="end-time"style="font-family:poppins-bold; color:#fff;">Choose an end time for available terms:</label>
+								<span><input class="datetime-local" type="datetime-local" id="end-time"name="end-time" 
+											 value="2022-05-07T19:30" min="2022-05-07T00:00" max="2022-12-12T00:00"></span>
+								<br>
+
+								<table class="flat-table flat-table-1">
+									<thead> <th>Start time</th> <th>End time</th> </thead>
+									<tbody> <tr> <td>start time 1</td> <td>end time 1</td> </tr>
+											<tr> <td>start time 2</td> <td>end time 2</td> </tr>
+									</tbody>
+								</table>
+
+							<div>
+
+						</div>
+
+                	</div>
+					
 					<!-- PAGE 6 - Update last minute terms -->
 
+					<div class="container" v-show="showPage == 6">
+						
+						<div class="container align-items-start">
 
+							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
+							<p class="title-text-bold" style="text-align:center;"> Make quick reservation:</p>
+							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
 
+						</div>
 
-
-
-
+                	</div>
 
             	</div>
 
@@ -446,19 +499,49 @@ template: `
 
 		},
 
+		hideAddNewBungalowForm: function() {this.showPage = 0;},
+		showAddNewBungalowForm: function() {this.showPage = 1;},
+
 		showDetails: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
 			this.selectedBungalowsOwner = bungalow.user;
 			console.log(this.selectedBungalow.location.country);
 			this.showPage = 2;
-
 		},
 
+		showUpdateDetails: function(bungalow){
+			this.selectedBungalow = bungalow;
+			this.selectedBungalowsLocation = bungalow.location;
+			this.selectedBungalowsOwner = bungalow.user;
+			console.log(this.selectedBungalow.location.country);
+			this.showPage = 3;
+		},
 
+		showDeleteOffer: function(bungalow){
+			this.selectedBungalow = bungalow;
+			this.selectedBungalowsLocation = bungalow.location;
+			this.selectedBungalowsOwner = bungalow.user;
+			console.log(this.selectedBungalow.location.country);
+			this.showPage = 4;
+		},
 
-		hideAddNewBungalowForm: function() {this.showPage = 0;},
-		showAddNewBungalowForm: function() {this.showPage = 1;},
+		showUpdateAvailableTerms: function(bungalow){
+			this.selectedBungalow = bungalow;
+			this.selectedBungalowsLocation = bungalow.location;
+			this.selectedBungalowsOwner = bungalow.user;
+			console.log(this.selectedBungalow.location.country);
+			this.showPage = 5;
+		},
+
+		showMakeQuickReservation: function(bungalow){
+			this.selectedBungalow = bungalow;
+			this.selectedBungalowsLocation = bungalow.location;
+			this.selectedBungalowsOwner = bungalow.user;
+			console.log(this.selectedBungalow.location.country);
+			this.showPage = 6;
+		},
+
 
 		search : function(){
 			axios.get('/api/search/' + this.loggedUser.id.toString(), {params: this.axiosSearchParams})

@@ -14,7 +14,9 @@ import java.time.LocalDateTime;
 public class BungalowTerm {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="mySeqGen_BungalowTerm", sequenceName = "mySeq_BungalowTerm", initialValue = 5, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_BungalowTerm")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,8 +31,7 @@ public class BungalowTerm {
 
     public BungalowTerm() {}
 
-    public BungalowTerm(Long id, Bungalow bungalow, LocalDateTime startTime, LocalDateTime endTime) {
-        this.id = id;
+    public BungalowTerm(Bungalow bungalow, LocalDateTime startTime, LocalDateTime endTime) {
         this.bungalow = bungalow;
         this.startTime = startTime;
         this.endTime = endTime;

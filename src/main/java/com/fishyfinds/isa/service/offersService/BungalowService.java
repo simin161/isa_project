@@ -32,8 +32,6 @@ public class BungalowService {
         return bungalowRepository.findAll();
     }
 
-
-
     public boolean addNewBungalow(String username, Map<String, ArrayList<String>> message){
         User user = userRepository.findByEmail(username);
         Bungalow bungalow = DtoToOffer.MapToNewBungalow(message, user);
@@ -59,5 +57,14 @@ public class BungalowService {
             }
         }
         return myBungalows;
+    }
+
+    public Bungalow findByBungalowId(Long bungalowId){
+        for(Bungalow bungalow : bungalowRepository.findAll()){
+            if(bungalow.getId().equals(bungalowId)){
+                return bungalow;
+            }
+        }
+        return null;
     }
 }

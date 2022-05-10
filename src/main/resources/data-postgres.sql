@@ -77,9 +77,18 @@ INSERT INTO public.offer(
     values(5, 'A lot of additional services _namyg_', 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Boaty Wumby', 1, 4.8, 'Sex, drugs and alcohol', 10.5, 4, 1);
 INSERT INTO public.boat(boat_length, boat_type, fishing_tools, navigation_tools, id, engine)
     VALUES(500.0,'very big boat', 'your stick is a fishing tool', 'and also navigation tool', 5, 1);
-
-
 --OFFERS END--
+
+--TERMS START--
+INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+    values(1, '2022-06-06 10:00:00',  '2022-06-12 10:00:00' , 1);
+INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+        values(2, '2022-06-13 10:00:00',  '2022-06-14 10:00:00' , 1);
+INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+    values(3, '2022-05-22 10:00:00',  '2022-05-23 10:00:00' , 2);
+INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+    values(4, '2022-05-30 10:00:00',  '2022-07-23 10:00:00' , 2);
+--TERMS END--
 
 --DELETE REQUEST BEGIN--
 INSERT INTO public.delete_request(id, explanation, status, users)

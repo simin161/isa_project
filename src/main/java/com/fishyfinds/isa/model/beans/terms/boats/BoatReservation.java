@@ -3,6 +3,7 @@ package com.fishyfinds.isa.model.beans.terms.boats;
 import com.fishyfinds.isa.model.beans.offers.boats.Boat;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.enums.ReservationType;
 import com.fishyfinds.isa.model.enums.StatusOfReservation;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,22 +39,34 @@ public class BoatReservation {
     @Column(name="statusOfReservation", nullable = false)
     private StatusOfReservation statusOfReservation;
 
-    // TODO: additionalServices, navigationalTools, fishingTools
-    //  (price zavisi od additionalServices i unitPrice)
+    @Enumerated(EnumType.STRING)
+    @Column(name="reservationType")
+    private ReservationType reservationType;
+
+    // TODO: Additional Services for Reservation, if reservationType = QUICK
 
     @Column(name="price", nullable = false)
     private double price;
 
+    @Column(name="maxNumberOfPeople")
+    private int maxNumberOfPeople;
+
     public BoatReservation() { }
 
-    public BoatReservation(Long id, Customer customer, Boat boat, LocalDateTime startTime, LocalDateTime endTime, StatusOfReservation statusOfReservation, double price) {
+    public BoatReservation(Long id,
+                           Customer customer,
+                           Boat boat,
+                           LocalDateTime startTime,
+                           LocalDateTime endTime,
+                           StatusOfReservation statusOfReservation,
+                           ReservationType reservationType) {
         this.id = id;
         this.customer = customer;
         this.boat = boat;
         this.startTime = startTime;
         this.endTime = endTime;
         this.statusOfReservation = statusOfReservation;
-        this.price = price;
+        this.reservationType = reservationType;
     }
 
 

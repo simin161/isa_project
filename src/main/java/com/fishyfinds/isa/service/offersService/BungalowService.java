@@ -1,12 +1,14 @@
 package com.fishyfinds.isa.service.offersService;
 
 import com.fishyfinds.isa.mappers.DtoToOffer;
+import com.fishyfinds.isa.model.beans.offers.ImageItem;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.OfferType;
 import com.fishyfinds.isa.repository.LocationRepository;
 import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
+import com.fishyfinds.isa.repository.usersRepository.ImageItemRepository;
 import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import com.fishyfinds.isa.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class BungalowService {
     private LocationRepository locationRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ImageItemRepository imageItemRepository;
 
     public List<Bungalow> findAll(){
         return bungalowRepository.findAll();
@@ -35,17 +39,22 @@ public class BungalowService {
     public boolean addNewBungalow(String username, Map<String, ArrayList<String>> message){
         User user = userRepository.findByEmail(username);
         Bungalow bungalow = DtoToOffer.MapToNewBungalow(message, user);
+        bungalow.setOfferType(OfferType.BUNGALOW);
+        locationRepository.save(bungalow.getLocation());
+        bungalowRepository.save(bungalow);
         try{
             for(int i = 0; i < message.get("image").size(); ++i) {
-                if(message.get("image").get(i) != null)
+                if (message.get("image").get(i) != null) {
+                    Long idOfTheNewImage = (long) (imageItemRepository.findAll().size() + 1);
                     ImageService.getInstance().saveImage(message.get("image").get(i), "bung" + bungalowRepository.findAll().size() + "_" + i);
+                    //ImageService.getInstance().saveImage(message.get("image").get(i), ""+idOfTheNewImage);
+                    ImageItem image = new ImageItem(idOfTheNewImage, bungalow, false);
+                    imageItemRepository.save(image);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        bungalow.setOfferType(OfferType.BUNGALOW);
-        locationRepository.save(bungalow.getLocation());
-        bungalowRepository.save(bungalow);
         return true;
     }
 

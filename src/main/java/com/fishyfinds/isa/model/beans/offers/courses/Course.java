@@ -16,8 +16,5 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class Course extends Offer {
 
-	@Column(name = "fishingTools", nullable = false)
-	private String fishingTools;
-
 	
 }

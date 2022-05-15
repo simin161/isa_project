@@ -26,7 +26,7 @@ public class Bungalow extends Offer {
 					String country, String city, String street, String streetNumber,
 					String description,  int unitPrice,
 					int maxCustomerCapacity, int numberOfBeds, int numberOfRooms,
-					String rulesOfConduct, String additionalServices, String cancellationPolicy)
+					String rulesOfConduct, String cancellationPolicy)
 	{
 
 		this.offerName = offerName;
@@ -38,11 +38,8 @@ public class Bungalow extends Offer {
 		this.numberOfBeds = numberOfBeds;
 		this.numberOfRooms = numberOfRooms;
 		this.rulesOfConduct = rulesOfConduct;
-		this.additionalServices = additionalServices;
 		this.cancellationPolicy = cancellationPolicy;
 
 	}
-
-
 
 }

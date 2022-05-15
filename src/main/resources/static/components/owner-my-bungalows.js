@@ -3,6 +3,7 @@ Vue.component('owner-my-bungalows', {
 		return{	
 			loggedUser: null,
 			myBungalows:[],
+			allImages:[],
 			bungalowTimeSlots: [],
 
 			showPage: 0,
@@ -114,7 +115,9 @@ template: `
 					</form>
     				<div class="container mt-5">
 						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in myBungalows">
+							
 							<div class="row g-0">
+								<!--
 								<div class="col-md-4" style="text-align:center;
 																background-color: #1b4560;
 																background-image:url('./images/bungalow-images/bungalow-1-out-1.jpg');
@@ -122,7 +125,19 @@ template: `
 																background-repeat: no-repeat;
 																background-position: center;											
 																">
-								</div>
+								</div> -->
+								<div class="col-md-4" style="text-align:center; background-color: #1b4560;">
+									<div v-for="image in allImages">
+										<div v-if="image.offer.id == bungalow.id"> 
+											<p> BungalowId: {{bungalow.id}} - ImageId: {{image.id}} </p>
+											<!-- <img :src=" './upload/' + image.id" style="height:auto; width:auto;" alt=" 'bungalowpic-' + image.id + '-' + bungalow.id "/> -->
+											<img v-bind:src="getBungalowImg(image)"/>
+										</div>
+									</div>
+								</div> 
+
+
+
 								<div class="col-md-8">
 									<div class="card-body" style="padding: 1vh;">
 										<p class="card-title text-start mt-1" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</p>
@@ -138,6 +153,7 @@ template: `
 									</div>
 								</div>
 							</div>
+
 						</div>
     				</div>
             	</div>
@@ -389,10 +405,28 @@ template: `
 			axios.get('/api/allMyBungalows')
 			.then(response => {
 				this.myBungalows = response.data
+
+				axios.get('/api/getAllImages')
+				.then(response => {
+					this.allImages = response.data
+					console.log(this.allImages);
+
+				})
+
 				//console.log(this.myBungalows);
 			})
 
 		},
+
+		getBungalowImg(image){
+	
+			console.log(image.id);
+			return 'http://localhost:8080/api/getImage/'+ image.id;
+
+		},
+
+
+
 
 		loadBungalowTimeSlots(bungalow){
 			//axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
@@ -483,6 +517,7 @@ template: `
 								'Please, try again later',
 								'error')
 			)
+			this.location.reload();
 			this.loadOwnersBungalows();
 
 		},

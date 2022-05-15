@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.service.offersService;
 
+import com.fishyfinds.isa.model.beans.offers.ImageItem;
 import com.fishyfinds.isa.model.beans.offers.Location;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.offers.boats.Boat;
@@ -10,6 +11,7 @@ import com.fishyfinds.isa.repository.offersRepository.BoatRepository;
 import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
 import com.fishyfinds.isa.repository.offersRepository.CourseRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
+import com.fishyfinds.isa.repository.usersRepository.ImageItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,10 @@ public class OfferService {
     private BungalowRepository bungalowRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private ImageItemRepository imageItemRepository;
+
+
 
     public List<? extends Offer> search(String name, String location, OfferType type, String firstLastName){
         List<? extends Offer> searched;
@@ -78,9 +84,6 @@ public class OfferService {
         return searchedMyOffers;
     }
 
-
-
-
         private  boolean checkPatternOffer(Long id, String name, String location){
         Offer offer = offerRepository.findById(id).orElseGet(null);
         if(!name.equals("") && !location.equals(""))
@@ -116,5 +119,13 @@ public class OfferService {
 
     public ArrayList<Offer> getBungalowsByOwner(User bungalowOwner) {
         return (ArrayList<Offer>)offerRepository.findAllByUser(bungalowOwner);
+    }
+
+
+    public List<ImageItem> getAllImages(){
+        if(!imageItemRepository.findAll().isEmpty()){
+            return imageItemRepository.findAll();
+        }
+        return new ArrayList<ImageItem>();
     }
 }

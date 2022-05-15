@@ -84,7 +84,7 @@ public class RegistrationService {
         if(!checkIfEmailExists(owner.getEmail())){
             owner.setUserType(UserType.BUNGALOW_OWNER);
             owner.setNumberOfLogIns(0);
-            activateAccount(owner);
+            //activateAccount(owner);
             bungalowOwnerRepository.save(owner);
             successfullyRegistered = true;
         }
@@ -96,7 +96,7 @@ public class RegistrationService {
         if(!checkIfEmailExists(owner.getEmail())){
             owner.setUserType(UserType.BOAT_OWNER);
             owner.setNumberOfLogIns(0);
-            activateAccount(owner);
+            //activateAccount(owner);
             boatOwnerRepository.save(owner);
             successfullyRegistered = true;
         }
@@ -109,7 +109,7 @@ public class RegistrationService {
         if(!checkIfEmailExists(instructor.getEmail())){
             instructor.setUserType(UserType.INSTRUCTOR);
             instructor.setNumberOfLogIns(0);
-            activateAccount(instructor);
+            //activateAccount(instructor);
             instructorRepository.save(instructor);
             successfullyRegistered = true;
         }

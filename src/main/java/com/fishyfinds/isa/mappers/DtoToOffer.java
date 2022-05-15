@@ -22,7 +22,7 @@ public class DtoToOffer {
                 Integer.parseInt(map.get("numberOfBeds").get(0)),
                 Integer.parseInt(map.get("numberOfRooms").get(0)),
                 map.get("rulesOfConduct").get(0),
-                map.get("additionalServices").get(0),
+                //map.get("additionalServices").get(0),
                 map.get("cancellationPolicy").get(0)
         );
     }

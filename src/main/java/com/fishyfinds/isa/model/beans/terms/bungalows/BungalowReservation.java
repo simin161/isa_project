@@ -2,6 +2,7 @@ package com.fishyfinds.isa.model.beans.terms.bungalows;
 
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.enums.ReservationType;
 import com.fishyfinds.isa.model.enums.StatusOfReservation;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,20 +38,36 @@ public class BungalowReservation {
     @Column(name="statusOfReservation", nullable = false)
     private StatusOfReservation statusOfReservation;
 
-    // TODO: additionalServices (price zavisi od additionalServices i unitPrice)
+    @Enumerated(EnumType.STRING)
+    @Column(name="reservationType", nullable = false)
+    private ReservationType reservationType;
+
+    // TODO: Additional Services for Reservation, if reservationType = QUICK
 
     @Column(name="price", nullable = false)
     private double price;
 
+    @Column(name="maxNumberOfPeople")
+    private int maxNumberOfPeople;
+
+
     public BungalowReservation() { }
 
-    public BungalowReservation(Long id, Customer customer, Bungalow bungalow, LocalDateTime startTime, LocalDateTime endTime, StatusOfReservation statusOfReservation, double price) {
+    public BungalowReservation(Long id,
+                               Customer customer,
+                               Bungalow bungalow,
+                               LocalDateTime startTime,
+                               LocalDateTime endTime,
+                               StatusOfReservation statusOfReservation,
+                               ReservationType reservationType,
+                               double price) {
         this.id = id;
         this.customer = customer;
         this.bungalow = bungalow;
         this.startTime = startTime;
         this.endTime = endTime;
         this.statusOfReservation = statusOfReservation;
+        this.reservationType = reservationType;
         this.price = price;
     }
 }

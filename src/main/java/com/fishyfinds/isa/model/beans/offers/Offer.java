@@ -1,14 +1,13 @@
 package com.fishyfinds.isa.model.beans.offers;
 
 import com.fishyfinds.isa.model.beans.Term;
-import com.fishyfinds.isa.model.beans.UserFeedback;
-import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.OfferType;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -49,18 +48,21 @@ public class Offer {
 
     @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
     protected Set<Term> terms;
-
+ /*
     @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
-    protected Set<Image> images;
-
+    protected Set<ImageItem> images;
+*/
     @Column(name = "maxCustomerCapacity", nullable = false)
     protected int maxCustomerCapacity;
 
     @Column(name = "rulesOfConduct", nullable = false)
     protected String rulesOfConduct;
 
-    @Column(name = "additionalServices", nullable = false)
-    protected String additionalServices;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "offerAdditionalService",
+               joinColumns = @JoinColumn(name = "offerId", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "additionalServiceId", referencedColumnName = "id"))
+    private Set<AdditionalService> additionalServices = new HashSet<AdditionalService>();
 
     @Column(name = "cancellationPolicy", nullable = false)
     protected String cancellationPolicy;

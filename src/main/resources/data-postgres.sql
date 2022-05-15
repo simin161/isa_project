@@ -50,34 +50,57 @@ INSERT INTO public.engine(
 
 --OFFERS BEGIN--
 INSERT INTO public.offer(
-    id, additional_services, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(1, 'A lot of additional services _namyg_', 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 5, 'Bungy Wumby', 0, 4.0, 'Sex, drugs and alcohol', 10.5, 2, 1);
+    id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
+    values(1, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 5, 'Bungy Wumby', 0, 4.0, 'Sex, drugs and alcohol', 10.5, 2, 1);
 INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
     VALUES(2, 2, 1);
 
 INSERT INTO public.offer(
-    id, additional_services, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(2, 'A lot of additional services _namyg_', 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Bungy Lumby', 0, 5.0, 'Sex, drugs and alcohol', 12.5, 2, 1);
+    id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
+    values(2, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Bungy Lumby', 0, 5.0, 'Sex, drugs and alcohol', 12.5, 2, 1);
 INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
     VALUES(4, 2, 2);
 
 INSERT INTO public.offer(
-    id, additional_services, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(3, 'A lot of additional services _namyg_', 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 10, 'Bungy Expensive Jumby', 0, 5.0, 'Sex, drugs and alcohol', 50.0, 3, 1);
+    id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
+    values(3, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 10, 'Bungy Expensive Jumby', 0, 5.0, 'Sex, drugs and alcohol', 50.0, 3, 1);
 INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
     VALUES(10, 2, 3);
 
 INSERT INTO public.offer(
-    id, additional_services, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(4, 'A lot of additional services _namyg_', 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Coursy Wumby', 2, 3.5, 'Sex, drugs and alcohol', 10.5, 6, 1);
-INSERT INTO course values('fishing tool broo', 4);
+    id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
+    values(4, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Coursy Wumby', 2, 3.5, 'Sex, drugs and alcohol', 10.5, 6, 1);
 
 INSERT INTO public.offer(
-    id, additional_services, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(5, 'A lot of additional services _namyg_', 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Boaty Wumby', 1, 4.8, 'Sex, drugs and alcohol', 10.5, 4, 1);
-INSERT INTO public.boat(boat_length, boat_type, fishing_tools, navigation_tools, id, engine)
-    VALUES(500.0,'very big boat', 'your stick is a fishing tool', 'and also navigation tool', 5, 1);
+    id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
+    values(5, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Boaty Wumby', 1, 4.8, 'Sex, drugs and alcohol', 10.5, 4, 1);
+INSERT INTO public.boat(boat_length, boat_type, id, engine)
+    VALUES(500.0,'very big boat', 5, 1);
 --OFFERS END--
+
+-- ADDITIONAL SERVICES START --
+insert into additional_service(name, type) values ('Wi-fi', 'ADDITIONAL_SERVICE'); -- 1
+insert into additional_service(name, type) values ('Parking', 'ADDITIONAL_SERVICE'); -- 2
+
+insert into additional_service(name, type) values ('Nets', 'FISHING_TOOL'); -- 3
+insert into additional_service(name, type) values ('Hooks', 'FISHING_TOOL'); -- 4
+insert into additional_service(name, type) values ('Traps', 'FISHING_TOOL'); -- 5
+
+insert into additional_service(name, type) values ('GPS', 'NAVIGATIONAL_TOOL'); -- 6
+insert into additional_service(name, type) values ('Compass', 'NAVIGATIONAL_TOOL'); -- 7
+insert into additional_service(name, type) values ('Auto Pilot', 'NAVIGATIONAL_TOOL'); -- 8
+
+insert into offer_additional_service(offer_id, additional_service_id) values(1,1);
+insert into offer_additional_service(offer_id, additional_service_id) values(2,2);
+insert into offer_additional_service(offer_id, additional_service_id) values(3,1);
+
+insert into offer_additional_service(offer_id, additional_service_id) values(4,3);
+
+insert into offer_additional_service(offer_id, additional_service_id) values(5,3);
+insert into offer_additional_service(offer_id, additional_service_id) values(5,6);
+
+
+-- ADDITIONAL SERVICES END --
 
 --TERMS START--
 INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)

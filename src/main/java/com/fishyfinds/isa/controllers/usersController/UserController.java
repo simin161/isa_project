@@ -42,7 +42,6 @@ public class UserController {
             customUserDetailsService.changePassword(username,message.get("oldPassword"), message.get("newPassword"));
             return true;
         }catch(Exception e){
-            e.printStackTrace();
         }
 
         return false;

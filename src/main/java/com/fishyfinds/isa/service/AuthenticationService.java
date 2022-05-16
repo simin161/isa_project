@@ -34,7 +34,6 @@ public class AuthenticationService {
         try{
             return userRepository.findByEmail(username);
         }catch (Exception e){
-            e.printStackTrace();
         }
         return null;
     }

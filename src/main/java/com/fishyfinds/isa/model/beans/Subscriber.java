@@ -24,4 +24,7 @@ public class Subscriber {
     @JoinColumn(name="follower", referencedColumnName = "id")
     private Customer follower;
 
+    @Column(name="isRelevant")
+    private boolean isRelevant;
+
 }

@@ -52,7 +52,6 @@ public class AccountDeletionRequestController {
             return accountDeletionRequestService.updateRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message));
 
         }catch(Exception e){
-            e.printStackTrace();
             return false;
         }
     }
@@ -63,7 +62,6 @@ public class AccountDeletionRequestController {
         try{
             return accountDeletionRequestService.denyDeleteRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message));
         }catch(Exception e){
-            e.printStackTrace();
             return false;
         }
 

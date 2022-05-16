@@ -9,6 +9,7 @@ import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,12 +24,38 @@ public class SubscriberService {
 
     public void addSubscription(Map<String, String> message){
         Subscriber subscriber = new Subscriber();
-        Customer follower = customerRepository.findByEmail(message.get("follower"));
-        Offer following = offerRepository.findById(Integer.parseInt(message.get("following")));
-        //TODO: check if pair already exists
-        subscriber.setFollower(follower);
-        subscriber.setFollowing(following);
+        Customer follower = customerRepository.findByEmail(message.get("user"));
+        Offer following = offerRepository.findById(Long.parseLong(message.get("id"))).orElseGet(null);
+        List<Subscriber> subByUser = subscriberRepository.findAllByFollower(follower);
+        List<Subscriber> subByOff = subscriberRepository.findAllByFollowing(following);
+
+        if( !subByUser.isEmpty() &&  !subByOff.isEmpty()){
+            for(Subscriber s1 : subByUser){
+                for(Subscriber s2 : subByOff){
+                    if(s1.equals(s2)){
+                        subscriber = s1;
+                        subscriber.setRelevant(!subscriber.isRelevant());
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            addNew(subscriber, follower, following);
+        }
+
         subscriberRepository.save(subscriber);
 
+    }
+
+    private void addNew(Subscriber subscriber, Customer follower,Offer following){
+        subscriber.setFollower(follower);
+        subscriber.setFollowing(following);
+        subscriber.setRelevant(true);
+    }
+
+    public List<Subscriber> getSubscriptionsByUser(String username) {
+        Customer user = customerRepository.findByEmail(username);
+        return subscriberRepository.findAllByFollower(user);
     }
 }

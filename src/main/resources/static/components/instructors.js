@@ -1,6 +1,9 @@
 Vue.component('instructors', {
 	data: function(){
 		return{
+		    loggedUser: {
+                userType:''
+            },
 			courses: null,
 			courseToShow: {
 			     offerType: "COURSE",
@@ -76,12 +79,15 @@ template: `
                 					</div>
                 					<div class="col-md-8">
                 						<div class="card-body">
-                                            <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{course.offerName}}</h5>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Instructor: {{course.user.firstName}} {{course.user.lastName}}</p>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{course.description}}</p>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{course.unitPrice}}</p>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{course.rating}}</p>
-                                            <button class="float-end btn btn-light" @click="showMore(course)">Show more</button>
+                                            <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{course.offer.offerName}}</h5>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Instructor: {{course.offer.user.firstName}} {{course.offer.user.lastName}}</p>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{course.offer.description}}</p>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{course.offer.unitPrice}}</p>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{course.offer.rating}}</p>
+                                            <button class="float-end btn btn-light" @click="showMore(course.offer)">Show more</button>
+                                            <span v-show="loggedUser.userType === 'CUSTOMER'">
+                                            <button v-show="!course.followed" class="float-end btn btn-light" @click="follow(course.offer)">Follow</button>
+                                            </span>
                                         </div>
                 					</div>
                 				</div>
@@ -143,6 +149,19 @@ template: `
                 this.showPage = 1;
             }
             ,
+            follow : function(bung){
+                axios.defaults.headers.common["Authorization"] =
+                                       localStorage.getItem("user");
+                axios.post("/api/addFollower",{"id" : bung.id})
+                                                                   .then(response => {
+                                                                    axios.defaults.headers.common["Authorization"] =
+                                                                                             localStorage.getItem("user");
+                                                                               axios.get("/api/allBoats")
+                                                                                    .then(response => {
+                                                                                       this.boats = response.data;
+                                                                                })
+                                                                   });
+            },
             search : function(){
                    axios.get('/api/search', {
                             params: this.axiosParams
@@ -216,7 +235,12 @@ template: `
           ,
           mounted(){
             axios.get("/api/allCourses")
-                 .then(response => {this.courses = response.data; console.log(this.courses)})
+                 .then(response => {this.courses = response.data;
+                    axios.defaults.headers.common["Authorization"] =
+                                   localStorage.getItem("user");
+                    axios.get("/api/authenticateUser")
+                         .then(response => this.loggedUser = response.data);
+                    })
           }
 
 });

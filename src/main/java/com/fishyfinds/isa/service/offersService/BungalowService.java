@@ -32,8 +32,6 @@ public class BungalowService {
         return bungalowRepository.findAll();
     }
 
-
-
     public boolean addNewBungalow(String username, Map<String, ArrayList<String>> message){
         User user = userRepository.findByEmail(username);
         Bungalow bungalow = DtoToOffer.MapToNewBungalow(message, user);
@@ -43,7 +41,6 @@ public class BungalowService {
                     ImageService.getInstance().saveImage(message.get("image").get(i), "bung" + bungalowRepository.findAll().size() + "_" + i);
             }
         }catch (Exception e){
-            e.printStackTrace();
         }
         bungalow.setOfferType(OfferType.BUNGALOW);
         locationRepository.save(bungalow.getLocation());

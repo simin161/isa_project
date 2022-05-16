@@ -1,9 +1,12 @@
 package com.fishyfinds.isa.controllers.offersController;
 
+import com.fishyfinds.isa.dto.OfferDTO;
+import com.fishyfinds.isa.model.beans.Subscriber;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.AuthenticationService;
+import com.fishyfinds.isa.service.SubscriberService;
 import com.fishyfinds.isa.service.offersService.BungalowService;
 import com.fishyfinds.isa.service.offersService.OfferService;
 import com.fishyfinds.isa.service.usersService.UserService;
@@ -31,11 +34,42 @@ public class BungalowController {
     private TokenUtils tokenUtils;
     @Autowired
     private AuthenticationService authenticationService;
-
+    @Autowired
+    private SubscriberService subscriberService;
 
     @GetMapping("/allBungalows")
-    public List<Bungalow> findAll(){
-        return bungalowService.findAll();
+    public List<OfferDTO> findAll(@RequestHeader("Authorization") HttpHeaders header){
+        List<Bungalow> bungalows  = bungalowService.findAll();
+        List<OfferDTO> retVal = new ArrayList<OfferDTO>();
+        try {
+            final String value = header.getFirst(HttpHeaders.AUTHORIZATION);
+            if(value != null && !value.isEmpty()){
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            List<Subscriber> subscribers = subscriberService.getSubscriptionsByUser(username);
+            for(Bungalow b : bungalows){
+                OfferDTO dto = new OfferDTO();
+                dto.setOffer(b);
+                for(Subscriber s : subscribers){
+                    if(s.isRelevant() && s.getFollowing().getId().equals(b.getId())){
+                        dto.setFollowed(true);
+                        break;
+                    }
+                }
+                retVal.add(dto);
+            }}
+            else{
+                for(Bungalow b : bungalows){
+                    OfferDTO dto = new OfferDTO();
+                    dto.setOffer(b);
+                    retVal.add(dto);
+                }
+            }
+        }catch(Exception e){
+
+        }
+        return retVal;
     }
 
     @GetMapping("/allMyBungalows")
@@ -48,7 +82,6 @@ public class BungalowController {
             User owner = userService.findUserByEmail(username);
             return bungalowService.findAllByOwnerId(owner.getId());
         }catch(Exception e){
-            e.printStackTrace();
         }
         return new ArrayList<Bungalow>();
     }
@@ -62,7 +95,6 @@ public class BungalowController {
             String username = tokenUtils.getUsernameFromToken(user);
             return bungalowService.addNewBungalow(username, message);
         }catch(Exception e){
-            e.printStackTrace();
         }
         return  false;
     }

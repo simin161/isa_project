@@ -36,7 +36,7 @@ template: `
                                     </div>
                                 </a>
                                 <nav class="col-sm-8">
-                                    <a href="">menu 1</a>
+                                    <a href="#/following">Following</a>
                                     <div v-show="loggedUser.userType == 'CUSTOMER'" class="dropdown">
                                     <button class="dropdown-button">Reservations</button>
                                     <div class="dropdown-content">

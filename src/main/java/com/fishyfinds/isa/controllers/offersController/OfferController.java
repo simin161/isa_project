@@ -1,13 +1,18 @@
 package com.fishyfinds.isa.controllers.offersController;
 
+import com.fishyfinds.isa.model.beans.offers.ImageItem;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.offers.boats.Boat;
+import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.enums.OfferType;
+import com.fishyfinds.isa.service.ImageService;
 import com.fishyfinds.isa.service.offersService.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -33,4 +38,21 @@ public class OfferController {
                                                    @RequestParam(name = "firstLastName", defaultValue = "", required = false) String firstAndLastName){
         return offerService.searchMyOffers(loggedUserId, name, location, type, firstAndLastName);
     }
+/*
+    @GetMapping("/getAllImages/{imageId}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long imageId) throws IOException {
+        byte[] img = ImageService.getInstance().getImage()
+        if(img != null){
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(img);
+        }else{
+            return ResponseEntity
+                    .badRequest()
+                    .contentType(MediaType.IMAGE_JPEG).body(null);
+        }
+    }
+*/
+
 }

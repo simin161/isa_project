@@ -1,4 +1,5 @@
 Vue.component('homepage', {
+
 	data: function(){
 		return{	
 			loggedUser: {
@@ -8,13 +9,16 @@ Vue.component('homepage', {
                id: null,
                oldPassword: '',
                newPassword: ''
-            }
+            },
+			map:{}
 		}
 	},
 template: `
 
 		<div class="homepage">
 			<nav-bar></nav-bar>
+
+			<div id="map" class="map" style="width: 100%; height: 300px;"> </div>
 
 			<div class="welcome-text container-fluid justify-content-center">
 				<h1 v-if="loggedUser == '' || loggedUser.userType == 'CUSTOMER'">Plan your next trip with confidence!</h1>
@@ -52,7 +56,8 @@ template: `
 						<a class="btn btn-light" href="#/instructors" role="button">Read More</a>
 					</div>
 				</div>
-			
+		
+
 			</div>
 
 			<div class="wrapper" v-if="loggedUser.userType == 'BUNGALOW_OWNER'">
@@ -201,18 +206,82 @@ template: `
 
 
                     }
-                }
+                },
+
+			loadMap: function () {
+				//this.$nextTick(function () {
+					/*
+					const iconFeature = new ol.Feature({
+						geometry: new ol.geom.Point(ol.proj.fromLonLat([20, 45])),
+						name: '',
+						});
+					*/
+
+					var myView = new ol.View({
+						center: [0,0],
+						zoom: 4
+					})
+
+					var myLayer = new ol.layer.Tile({
+						source: new ol.source.OSM()
+					})
+
+					var layer = [myLayer]
+
+					this.map = new ol.Map({
+						target: 'map',
+						layers: layer,
+						view: myView,
+						// style: myStyle
+					})
+
+/*
+					this.map = new ol.Map({
+					target: 'mapindex',
+					layers: [
+						new ol.layer.Tile({
+						source: new ol.source.OSM()
+						}),
+						new ol.layer.Vector({
+						source: new ol.source.Vector({
+							features: [iconFeature]
+						}),
+						style: new ol.style.Style({
+							image: new ol.style.Icon({
+							anchor: [0.5, 46],
+							anchorXUnits: 'fraction',
+							anchorYUnits: 'pixels',
+							src: 'icon-marker.png'
+							})
+						})
+						})
+					],
+					view: new ol.View({
+						center: ol.proj.fromLonLat([20, 45]), 
+						//center: ol.proj.fromLonLat([this.openLayerMapa.GD, this.openLayerMapa.GS]), 
+						zoom: 14
+					})
+					});
+
+					*/
+				}
 
 
     },
 
     mounted(){
+
+		this.loadMap();
+
         axios.defaults.headers.common["Authorization"] =
                         localStorage.getItem("user");
 
         axios.get("/api/authenticateUser")
             .then(response =>{this.loggedUser = response.data; console.log(response.data)})
         console.log(this.loggedUser);
+
+
+
     }
 
 });

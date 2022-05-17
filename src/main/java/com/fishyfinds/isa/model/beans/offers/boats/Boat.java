@@ -23,13 +23,6 @@ public class Boat extends Offer {
 	@Column(name = "boatType", nullable = false)
 	private String boatType;
 
-	//OVO ISPOD CE VRV BITI OBJEKTI ALI ZA POCETAK STRINGICIII
-
-	@Column(name = "navigationTools", nullable = false)
-	private String navigationTools;
-
-	@Column(name = "fishingTools", nullable = false)
-	private String fishingTools;
-
+	public Boat() {}
 
 }

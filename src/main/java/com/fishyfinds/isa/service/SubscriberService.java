@@ -9,6 +9,7 @@ import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,12 @@ public class SubscriberService {
 
     public List<Subscriber> getSubscriptionsByUser(String username) {
         Customer user = customerRepository.findByEmail(username);
-        return subscriberRepository.findAllByFollower(user);
+        List<Subscriber> retVal = new ArrayList<>();
+        for(Subscriber s : subscriberRepository.findAllByFollower(user)){
+            if(s.isRelevant()){
+                retVal.add(s);
+            }
+        }
+        return retVal;
     }
 }

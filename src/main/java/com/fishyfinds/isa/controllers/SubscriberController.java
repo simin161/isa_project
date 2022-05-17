@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.controllers;
 
+import com.fishyfinds.isa.dto.OfferDTO;
 import com.fishyfinds.isa.model.beans.Subscriber;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.SubscriberService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,14 +39,21 @@ public class SubscriberController {
     }
 
     @GetMapping("/getSubscriptionsByUser")
-    public List<Subscriber> getSubscriptionsByUser(@RequestHeader("Authorization") HttpHeaders header){
+    public List<OfferDTO> getSubscriptionsByUser(@RequestHeader("Authorization") HttpHeaders header){
         try {
             final String value = header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = null;
             user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return subscriberService.getSubscriptionsByUser(username);
+            List<OfferDTO> offers = new ArrayList<>();
+            for(Subscriber s : subscriberService.getSubscriptionsByUser(username)){
+                OfferDTO dto = new OfferDTO();
+                dto.setOffer(s.getFollowing());
+                dto.setFollowed(s.isRelevant());
+                offers.add(dto);
+            }
+            return offers;
         } catch (JSONException e) {
             return null;
         }

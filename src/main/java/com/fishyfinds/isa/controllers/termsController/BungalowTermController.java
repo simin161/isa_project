@@ -37,9 +37,7 @@ public class BungalowTermController {
 
     @GetMapping("/bungalow/getBungalowTimeSlots/{bungalowId}")
     public List<TermDto> findAll(@PathVariable Long bungalowId) {
-       // ArrayList<TermDto> bungalowTerms = (ArrayList<TermDto>) bungalowTermService.findAll();
-        ArrayList<TermDto> bungalowTerms = (ArrayList<TermDto>) bungalowTermService.findAllByBungalowId(bungalowId);
-        return bungalowTerms;
+        return bungalowTermService.findAllByBungalowId(bungalowId);
     }
 
     @PostMapping("/bungalow/addNewTimeSlotToBungalow/{bungalowId}")

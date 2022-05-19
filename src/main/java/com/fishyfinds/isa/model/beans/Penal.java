@@ -3,6 +3,7 @@ package com.fishyfinds.isa.model.beans;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -10,10 +11,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name="penal")
+@SequenceGenerator(name = "sequence", sequenceName = "mySequence")
 public class Penal {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     private Long id;
     @OneToOne
     @JoinColumn(name="customer", referencedColumnName = "id")

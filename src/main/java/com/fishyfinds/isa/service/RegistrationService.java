@@ -36,7 +36,8 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AdminRepository adminRepository;
-
+    @Autowired
+    private PenalService penalService;
     public boolean registerUser(Map<String, String> map, String siteURL){
         boolean successfullyRegistered = true;
         UserType userType = UserType.valueOf(map.get("userType"));
@@ -140,7 +141,11 @@ public class RegistrationService {
 
     public boolean verifyCustomerAccount(String verificationCode) {
         Customer user = customerRepository.findByVerificationCode(verificationCode);
-        return (user == null || user.isActivated()) ? false : activateAccount(user);
+        boolean retVal= user == null || user.isActivated() ? false : activateAccount(user);
+        if(retVal)
+            penalService.addNewPenal(user);
+
+        return retVal;
     }
 
     private boolean activateAccount(User user){

@@ -32,4 +32,17 @@ public class PenalService {
             penalRepository.save(penal);
         }
     }
+
+    public void addNewPenal(Customer user) {
+        Penal penal = new Penal();
+        penal.setCustomer(user);
+        penal.setNumber(0);
+        penalRepository.save(penal);
+    }
+
+    public void updateExistingPenal(String username, int number){
+        Penal penal = getPenalForUser(username);
+        penal.setNumber(penal.getNumber() + number);
+        penalRepository.save(penal);
+    }
 }

@@ -1,9 +1,12 @@
+// import $ from 'jquery'
 Vue.component('owner-my-bungalows', {
 	data: function(){
 		return{	
 			loggedUser: null,
 			myBungalows:[],
 			allImages:[],
+
+			allAdditionalServices: [],
 			bungalowTimeSlots: [],
 
 			showPage: 0,
@@ -42,6 +45,7 @@ Vue.component('owner-my-bungalows', {
 				image: []
 
             },
+
 			dtoAddNewBungalow: {
 				offerType: "BUNGALOW",
 				offerName: "",
@@ -76,7 +80,13 @@ Vue.component('owner-my-bungalows', {
 
 			map: {},
 			backgroundColor: {},
-			cursorStyle: {}
+			cursorStyle: {},
+
+			// New Bungalow
+			imagesFrontend:[],
+			imagesBackend:[],
+			imageCount: 0
+
 		}
 	},
 template: `	
@@ -179,14 +189,32 @@ template: `
 										<td><input type="text" placeholder="   Number of rooms" class="input-text"   v-model="dtoAddNewBungalow.numberOfRooms" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
 										<td><input type="text" placeholder="   Number of beds" class="input-text"   v-model="dtoAddNewBungalow.numberOfBeds" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
 									</tr>
-									<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="dtoAddNewBungalow.description" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
-									<tr><textarea rowspan="3" name="text" placeholder="   Additional services (Add keywords: Wi-fi, Parking, etc.)" class="input-text-area"  v-model="dtoAddNewBungalow.additionalServices" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
+									<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="dtoAddNewBungalow.description" style="margin-top:5px; margin-bottom: 5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
+									<tr> <h3 class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff; margin-top:5px;"> Add additional services to the new bungalow: </h3></tr>
+									<tr>
+
+										<div class="list-group text-start overflow-auto card m-2" style="height:60px; max-height:max-content; width: 100%; background-color:#1b4560">
+											<label v-for="additionalServ in allAdditionalServices" :key="additionalServ" class="list-group-item" style="font-family: poppins-light; font-size: 12px; color:#fff; background-color:#1b4560">
+												<div v-if="additionalServ.type == 'ADDITIONAL_SERVICE' "> 
+													<input class="form-check-input me-1" type="checkbox" value="" > {{additionalServ.name}}
+											</label>
+										</div>								
+									</tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="dtoAddNewBungalow.rulesOfConduct" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'" required ></textarea></tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="dtoAddNewBungalow.cancellationPolicy" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
 									<tr><td><input type="file" name="file[]" @change="imageSelected" multiple="multiple"></input></td></tr>
+
+									<tr> 
+										<div class="overflow-auto card pb-3" style="height: 200px; background-color:#1b4560 ">
+											<div v-for="(image, index) in imagesFrontend" :key="(image, index)">
+												<button v-on:click="removeImage(image, index)" class="btn btn-danger rounded-circle removeImageBtn end-0 m-4">Remove</button>
+												<img class="ms-3 me-3 mt-3 newImage img-fluid" v-bind:src="image.path" >
+											</div>
+										</div>
+									</tr>
+
 									<tr class="d-flex justify-content-evenly">
 										<td><input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" class="confirm" type="button" value="Add new bungalow"  @click="addNewBungalow()" style="margin-top:5; width:120%;"/></td>
-										<td><input  class="confirm-profile" type="reset" value="Reset" style="width:120%; font-size:12px; background-color: gray"/></td>
 									</tr>
 								</table>
 							</div>
@@ -274,7 +302,9 @@ template: `
 							<p class="title-text-bold" style="text-align:center;"> Update available terms:</p>
 							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
 							<hr>
+							<!--
 							<form ref="addNewTimeSlotToBungalow">
+							
 								<label for="start-time" style="font-family:poppins-bold; color:#fff;">Choose a start time for available terms:</label>
 								<span><input class="datetime-local" type="datetime-local" id="start-time" name="start-time" 
 												value="2022-05-07T19:30" min="2022-05-07T00:00" max="2022-12-12T00:00"></span>
@@ -285,15 +315,27 @@ template: `
 								<br><br><br>
 								<input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" 
 										class="confirm" type="button" value="Add new available time slot"  @click="addNewTimeSlotToBungalow(this.selectedBungalow)" 
-										style=""/>
+										style=""/>	
+								<input type="text" name="datetimes" />
 							</form>
+							-->
+							<div class="container mt-5 mb-5" style="width: 400px">
+								<input type="text" id="picker" name="datetimes" class="form-control" style="background-color: #1b4560; color: #fff;" >
+								<br>
+								<p style="font-family:poppins-light; color:#fff"> Start date: <b id="startDate"> ...... </b></p>
+								<p style="font-family:poppins-light; color:#fff"> End date:   <b id="endDate"> ...... </b></p>
+								<input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" 
+										class="confirm" type="button" value="Add new available time slot"  
+										@click="addNewTimeSlotToBungalow(this.selectedBungalow)" 
+										style=""/>	
+							</div>
 							<br><br><br>
 							<p class="title-text-bold" style="text-align:center;"> Available terms:</p>
 							<table class="flat-table flat-table-1">
 								<thead> <th>Start time</th> <th>End time</th> </thead>
 								<tbody v-for="timeSlot in bungalowTimeSlots"> 
-										<tr> <td>{{timeSlot.startTime}}</td> 
-												<td>{{timeSlot.endTime}}</td> </tr>
+										<tr> <td>{{timeSlot.startTime }}</td> 
+											 <td>{{timeSlot.endTime }}</td> </tr>
 								</tbody>
 							</table>
 						</div>
@@ -315,6 +357,7 @@ template: `
 
 		this.loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
 		this.loadOwnersBungalows();
+		this.loadAllAdditionalServices();
 		this.initMap();
 
     },
@@ -345,7 +388,6 @@ template: `
 
 			/\S/.test(this.dtoAddNewBungalow.description) &&
 			/\S/.test(this.dtoAddNewBungalow.rulesOfConduct) &&
-			/\S/.test(this.dtoAddNewBungalow.additionalServices) &&
 			/\S/.test(this.dtoAddNewBungalow.cancellationPolicy);
 
 			this.backgroundColor = flag ? "seagreen" : "#2e4f3c";
@@ -357,30 +399,32 @@ template: `
 
         imageSelected(event){
         	const file = document.querySelector('input[type=file]')
-                    	var readers = new Array(file.files.length)
-                    	for(var i = 0; i < file.files.length; ++i){
-                    	    readers[i] = new FileReader();
-                    	    readers[i].name = i;
-                    	}
-                    	var i = 0;
-                    	var j = 0;
-                        while(i < file.files.length){
-                            var cFile = file.files[i];
-                            if(cFile != null){
-                                let rawImg;
-                                this.imagePath = true;
-                                readers[i].onloadend = () => {
-                                    this.dtoAddNewBungalow.image.push(readers[j].result);
-                                    alreadyLoaded = false;
-            						            ++j;     
-                                }
-            	                readers[i].readAsDataURL(cFile);
-                    	        ++i;
-                    	    }
-                    	    else{
-                               this.imagePath = false
-                            }
-                    	}
+			var readers = new Array(file.files.length)
+			for(var i = 0; i < file.files.length; ++i){
+				readers[i] = new FileReader();
+				readers[i].name = i;
+			}
+			var i = 0;
+			var j = 0;
+			while(i < file.files.length){
+				var cFile = file.files[i];
+				if(cFile != null){
+					let rawImg;
+					this.imagePath = true;
+					readers[i].onloadend = () => {
+						this.dtoAddNewBungalow.image.push(readers[j].result);
+						this.imageCount++;
+						this.imagesFrontend.push({id: this.imageCount, name:""+this.imageCount, path: URL.createObjectURL(cFile)})
+						alreadyLoaded = false;
+						++j;     
+					}
+					readers[i].readAsDataURL(cFile);
+					++i;
+				}
+				else{
+					this.imagePath = false
+				}
+			}
         },
 
 		initMap: function(){
@@ -399,22 +443,67 @@ template: `
 			console.log(this.map);
 		},
 
+		initDateRangePicker(){
+			var today = new Date();
+			$('input[name="datetimes"]').daterangepicker({
+				autoUpdateInput: true,
+				timePicker24Hour: true,
+				timePicker: true,
+				autoApply: true,
+				minDate: today,
+				startDate: moment().startOf('hour'),
+				endDate: moment().startOf('hour').add(32, 'hour'),
+				locale: {
+				  format: 'YYYY/MM/DD HH:mm',
+				  "weekLabel": "W",
+				  "daysOfWeek": [
+					  "Su",
+					  "Mo",
+					  "Tu",
+					  "We",
+					  "Th",
+					  "Fr",
+					  "Sa"
+				  ],
+				  firstDay: 1
+
+				}}
+				,
+				function(startDate, endDate, label){
+					$('#startDate').text(startDate.format('YYYY-MM-DD HH:mm'))
+					$('#endDate').text(endDate.format('YYYY-MM-DD HH:mm'))
+				});
+		},
+
 		loadOwnersBungalows(){
 
 			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
-			axios.get('/api/allMyBungalows')
-			.then(response => {
+			axios.get('/api/allMyBungalows').then(response => {
 				this.myBungalows = response.data
-
-				axios.get('/api/getAllImages')
-				.then(response => {
+				// console.log(response.data)
+				axios.get('/api/getAllImages').then(response => {
 					this.allImages = response.data
 					console.log(this.allImages);
-
 				})
 
 				//console.log(this.myBungalows);
 			})
+
+		},
+
+		loadAllAdditionalServices(){
+			axios.get('api/getAllAdditionalServicesForBungalows').then(response => {
+            this.allAdditionalServices = response.data;
+            //console.log(response.data);
+        });
+
+
+		},
+
+		resetAddNewBungalow(){
+			this.imagesFrontend = [];
+			this.dtoAddNewBungalow = {};
+			this.$router.go(this.$router.currentRoute)
 
 		},
 
@@ -424,9 +513,6 @@ template: `
 			return 'http://localhost:8080/api/getImage/'+ image.id;
 
 		},
-
-
-
 
 		loadBungalowTimeSlots(bungalow){
 			//axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
@@ -439,45 +525,53 @@ template: `
 		},
 
 		backButton: function(){
-			//this.$ref.addNewBungalowForm.reset();
+			this.$router.go(this.$router.currentRoute)
 			this.hideAddNewBungalowForm();
 		},
 
-		addNewTimeSlotToBungalow(bungalow){
-
+		addNewTimeSlotToBungalow(){
 			console.log("AddNewTimeSlotToBungalow(bungalow)... START")
-
-			this.dataToSend_AvailbleTimeSlot.startTime = document.getElementById("start-time").value.toString();
-			// this.dataToSend_AvailbleTimeSlot.startTime  = Date(inputStartTime).toLocaleString();
-			//console.log(inputStartTime); //e.g. 2015-11-13
-			console.log(this.dataToSend_AvailbleTimeSlot.startTime);
-
-			this.dataToSend_AvailbleTimeSlot.endTime = document.getElementById("end-time").value.toString();
-			// this.dataToSend_AvailbleTimeSlot.endTime  = Date(inputEndTime).toLocaleString();
-			//console.log(inputEndTime); //e.g. 2015-11-13
-			console.log(this.dataToSend_AvailbleTimeSlot.endTime);
-
-
-			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
-			axios.post('/api/bungalow/addNewTimeSlotToBungalow/' + this.selectedBungalow.id , this.dataToSend_AvailbleTimeSlot)
-			.then(response => { 
-				if(response.data === true){
-					Swal.fire('Added available time slot successfully!',
-								'Juhu!!' ,
-								'success')
-					}
-				else{
-					Swal.fire('Ooops, something went wrong!',
-							'Please, try again later',
-							'error')
-					}
-			}).catch(
-					Swal.fire('Ooops, something went wrong!',
-							'Please, try again later',
-							'error')
-		)
-		
-
+			let startDate = moment($('input[name="datetimes"]').data('daterangepicker').startDate).toDate();
+			let endDate = moment($('input[name="datetimes"]').data('daterangepicker').endDate).toDate();
+			//console.log(startDate);
+			//console.log(endDate);
+			this.dataToSend_AvailbleTimeSlot.startTime = startDate;
+			this.dataToSend_AvailbleTimeSlot.endTime = endDate;
+			var isValidNewTimeSlot = !this.multipleDateRangeOverlaps();
+			console.log(isValidNewTimeSlot);
+			if(!isValidNewTimeSlot){
+				Swal.fire('Invalid new time slot!', 'Timeslots cannot intersect!','error')
+			}
+			else{
+				axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
+				axios.post('/api/bungalow/addNewTimeSlotToBungalow/' + this.selectedBungalow.id , this.dataToSend_AvailbleTimeSlot)
+				.then(response => { 
+					if(response.data === true){ 
+						Swal.fire('Added available time slot successfully!', 'Hurray!!', 'success')
+						this.showUpdateAvailableTerms(this.selectedBungalow) }
+					else{ Swal.fire('Ooops, something went wrong!', 'Please, try again later', 'error') }
+				}).catch( Swal.fire('Ooops, something went wrong!', 'Please, try again later', 'error') )
+				
+			}
+		},
+		multipleDateRangeOverlaps(){
+			let timeIntervals = this.bungalowTimeSlots
+			let newStartTime = this.dataToSend_AvailbleTimeSlot.startTime;
+			let newEndTime = this.dataToSend_AvailbleTimeSlot.endTime;
+			if(timeIntervals.length>0){
+				for(let i = 0; i < timeIntervals.length; i++){
+					if (this.dateRangeOverlaps(
+							Date.parse(timeIntervals[i].startTime), Date.parse(timeIntervals[i].endTime),
+							Date.parse(newStartTime), Date.parse(newEndTime)
+							)
+						) return true;
+				}
+			}
+			return false;
+		},
+		dateRangeOverlaps(a_start, a_end, b_start, b_end) {
+			if((a_end < b_start) || (b_end < a_start)) return false;
+			return true;
 		},
 
 		addNewBungalow: function(){
@@ -523,7 +617,10 @@ template: `
 		},
 
 		hideAddNewBungalowForm: function() {this.showPage = 0;},
-		showAddNewBungalowForm: function() {this.showPage = 1;},
+
+
+		showAddNewBungalowForm: function() {
+			this.showPage = 1;},
 
 		showDetails: function(bungalow){
 			this.selectedBungalow = bungalow;
@@ -556,6 +653,7 @@ template: `
 			console.log(this.selectedBungalow.location.country);
 			this.loadBungalowTimeSlots(this.selectedBungalow)
 			this.showPage = 5;
+			this.initDateRangePicker();
 		},
 
 		showMakeQuickReservation: function(bungalow){

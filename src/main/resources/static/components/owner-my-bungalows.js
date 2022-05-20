@@ -40,7 +40,10 @@ Vue.component('owner-my-bungalows', {
 				rulesOfConduct:"",
 				additionalServices: [],
 				cancellationPolicy:"",
-				image: []
+				image: [],
+
+				imageCount: 0,
+				imagesFrontend: []
 
 			},
 
@@ -54,10 +57,7 @@ Vue.component('owner-my-bungalows', {
 			backgroundColor: {},
 			cursorStyle: {},
 
-			// New Bungalow
-			imagesFrontend:[],
-			imagesBackend:[],
-			imageCount: 0
+
 
 		}
 	},
@@ -170,7 +170,7 @@ template: `
 									<tr> <h3 class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff; margin-top:5px;"> Add additional services to the new bungalow: </h3></tr>
 									<tr>
 										<div class="list-group text-start overflow-auto card m-2" style="height:60px; max-height:max-content; width: 100%; background-color:#1b4560">
-											<label v-for="additionalServ in allAdditionalServices" :key="additionalServ" class="list-group-item" style="font-family: poppins-light; font-size: 12px; color:#fff; background-color:#1b4560">
+											<label v-for="additionalServ in allAdditionalServices" class="list-group-item" style="font-family: poppins-light; font-size: 12px; color:#fff; background-color:#1b4560">
 												<div v-if="additionalServ.type == 'ADDITIONAL_SERVICE' "> 
 													<input class="form-check-input me-1" type="checkbox" value="" v-on:click="clickAdditionalServ(additionalServ)"> {{additionalServ.name}}
 												</div>
@@ -182,9 +182,9 @@ template: `
 									<tr><td><input type="file" name="file[]" @change="imageSelected" multiple="multiple"></td></tr>
 									<tr> 
 										<div class="overflow-auto card pb-3" style="height: 200px; background-color:#1b4560 ">
-											<div v-for="(image, index) in imagesFrontend" :key="(image, index)">
-												<button v-on:click="removeImage(image, index)" class="btn btn-danger rounded-circle removeImageBtn end-0 m-4">Remove</button>
-												<img class="ms-3 me-3 mt-3 newImage img-fluid" v-bind:src="image.path" >
+											<div v-for="(image, ind) in dtoAddNewBungalow.imagesFrontend" >
+												<button v-on:click="removeImage(image, ind)"  class="btn btn-danger rounded-circle end-0 m-4" style ="position:absolute:">Remove</button>
+												<img class="ms-3 me-3 mt-3 img-fluid" v-bind:src="image.path" style="width:400px;" >
 											</div>
 										</div>
 									</tr>
@@ -327,31 +327,6 @@ template: `
 			params.append('type', 'BUNGALOW');
 			return params;
 		},
-		/*
-		isAddNewBungalowFormFilled() {
-			correctOfferName = /\S/.test(this.dtoAddNewBungalow.offerName) && /$/.test(this.dtoAddNewBungalow.offerName);
-			correctMaxCustomerCapacity = /\S/.test(this.dtoAddNewBungalow.maxCustomerCapacity) && /^\d+$/.test(this.dtoAddNewBungalow.maxCustomerCapacity);
-			correctUnitPrice = /\S/.test(this.dtoAddNewBungalow.unitPrice) && /^\d+$/.test(this.dtoAddNewBungalow.unitPrice);
-			flag = correctOfferName && correctMaxCustomerCapacity && correctUnitPrice &&
-			/\S/.test(this.dtoAddNewBungalow.country) &&
-			/\S/.test(this.dtoAddNewBungalow.city) &&
-			/\S/.test(this.dtoAddNewBungalow.street) &&
-			/\S/.test(this.dtoAddNewBungalow.streetNumber) &&
-
-			/\S/.test(this.dtoAddNewBungalow.unitPrice) &&
-			/\S/.test(this.dtoAddNewBungalow.maxCustomerCapacity) &&
-			/\S/.test(this.dtoAddNewBungalow.numberOfRooms) &&
-			/\S/.test(this.dtoAddNewBungalow.numberOfBeds) &&
-
-			/\S/.test(this.dtoAddNewBungalow.description) &&
-			/\S/.test(this.dtoAddNewBungalow.rulesOfConduct) &&
-			/\S/.test(this.dtoAddNewBungalow.cancellationPolicy);
-
-			this.backgroundColor = flag ? "seagreen" : "#2e4f3c";
-			this.cursorStyle = flag ? "pointer" : "default";
-			return flag;
-		}
-		*/
 	},
 	methods:{
         imageSelected(event){
@@ -370,8 +345,8 @@ template: `
 					this.imagePath = true;
 					readers[i].onloadend = () => {
 						this.dtoAddNewBungalow.image.push(readers[j].result);
-						this.imageCount++;
-						this.imagesFrontend.push({id: this.imageCount, name:""+this.imageCount, path: URL.createObjectURL(cFile)})
+						this.dtoAddNewBungalow.imageCount++;
+						this.dtoAddNewBungalow.imagesFrontend.push({id: this.imageCount, name:""+this.imageCount, path: URL.createObjectURL(cFile)})
 						alreadyLoaded = false;
 						++j;     
 					}
@@ -383,6 +358,11 @@ template: `
 				}
 			}
         },
+		removeImage: function(image, index){
+			this.dtoAddNewBungalow.imageCount--;
+			this.dtoAddNewBungalow.imagesFrontend.splice(index,1);
+			this.dtoAddNewBungalow.image.splice(index,1);
+		},
 		initMap: function(){
 			this.map = new ol.Map({
 				target: 'map',
@@ -422,10 +402,6 @@ template: `
 			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
 			axios.get('/api/allMyBungalows').then(response => {
 				this.myBungalows = response.data
-				axios.get('/api/getAllImages').then(response => {
-					this.allImages = response.data
-					console.log(this.allImages);
-				})
 			})
 		},
 		loadAllAdditionalServices(){
@@ -434,30 +410,26 @@ template: `
         	});
 		},
 		resetAddNewBungalow(){
-			this.imagesFrontend = [];
 			this.dtoAddNewBungalow = {
 				offerType: "BUNGALOW",
 				offerName: "",
-
 				country: "",
 				city: "",
 				street: "",
 				streetNumber:"",
-
 				longitude: 45.24,
 				latitude: 19.82,
-
 				description:"",
 				unitPrice: 0 ,
 				maxCustomerCapacity:0,
 				numberOfRooms: 0,
 				numberOfBeds: 0,
-
 				rulesOfConduct:"",
 				additionalServices: [],
 				cancellationPolicy:"",
-				image: []
-
+				image: [],
+				imageCount: 0,
+				imagesFrontend: []
 			};
 		},
 		getBungalowImg(image){
@@ -470,7 +442,6 @@ template: `
 			.then(response => {
 				this.bungalowTimeSlots = response.data
 			})
-
 		},
 		backButton: function(){
 			this.resetAddNewBungalow();
@@ -532,7 +503,7 @@ template: `
 		},
 		isValidAddNewBungalowDto() {
 			for (const property in this.dtoAddNewBungalow) {
-				if (!this.dtoAddNewBungalow[property]) {
+				if (property!=='imageCount' && property!=='image' && property!=='imagesFrontend' && !this.dtoAddNewBungalow[property]) {
 					return false;
 				}
 			}
@@ -543,7 +514,7 @@ template: `
 				if(this.dtoAddNewBungalow.additionalServices[i].id == additionalServ.id){
 					//remove
 					this.dtoAddNewBungalow.additionalServices.splice(i, 1);
-					console.log("removed element from additionalServ with id="+additionalServices.id);
+					console.log("removed element from additionalServ with id="+additionalServ.id);
 					return;
 				}
 			}

@@ -67,7 +67,7 @@ public class AddNewBungalowDto {
                 ", rulesOfConduct='" + rulesOfConduct + '\'' +
                 ", cancellationPolicy='" + cancellationPolicy + '\'' +
                 ", additionalServices=" + additionalServices +
-                ", image=" + image +
+                //", image=" + image +
                 '}';
     }
 

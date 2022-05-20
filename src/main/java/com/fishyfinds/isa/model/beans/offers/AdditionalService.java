@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "AdditionalService")
 public class AdditionalService{
 
     @Id
@@ -31,4 +32,12 @@ public class AdditionalService{
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "AdditionalService{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

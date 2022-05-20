@@ -1,4 +1,3 @@
-// import $ from 'jquery'
 Vue.component('owner-my-bungalows', {
 	data: function(){
 		return{	
@@ -20,32 +19,6 @@ Vue.component('owner-my-bungalows', {
 			selectedBungalowsLocation:{},
 			selectedBungalowsOwner:{},
 
-            dataToSend: {
-                offerType: [],
-				offerName: [],
-
-				country: [],
-				city: [],
-				street: [],
-				streetNumber:[],
-
-				longitude:[],
-				latitude:[],
-
-				description:[],
-				unitPrice:[],
-				maxCustomerCapacity:[],
-				numberOfRooms:[],
-				numberOfBeds:[],
-
-				maxCustomerCapacity:[],
-				rulesOfConduct:[],
-				additionalServices:[],
-				cancellationPolicy:[],
-				image: []
-
-            },
-
 			dtoAddNewBungalow: {
 				offerType: "BUNGALOW",
 				offerName: "",
@@ -55,18 +28,17 @@ Vue.component('owner-my-bungalows', {
 				street: "",
 				streetNumber:"",
 
-				longitude:"0",
-				latitude:"0",
+				longitude: 45.24,
+				latitude: 19.82,
 
 				description:"",
-				unitPrice:"",
-				maxCustomerCapacity:"",
-				numberOfRooms:"",
-				numberOfBeds:"",
+				unitPrice: 0 ,
+				maxCustomerCapacity:0,
+				numberOfRooms: 0,
+				numberOfBeds: 0,
 
-				maxCustomerCapacity:"",
 				rulesOfConduct:"",
-				additionalServices:"",
+				additionalServices: [],
 				cancellationPolicy:"",
 				image: []
 
@@ -75,8 +47,8 @@ Vue.component('owner-my-bungalows', {
 			dataToSend_AvailbleTimeSlot:{
 				startTime:"",
 				endTime:""
-			},
 
+			},
 
 			map: {},
 			backgroundColor: {},
@@ -92,11 +64,11 @@ Vue.component('owner-my-bungalows', {
 template: `	
 		<div>
 			<nav-bar></nav-bar><br><br>
-
             <div class="my-bungalows" v-if="loggedUser.userType == 'BUNGALOW_OWNER'">
-
+				<!-- PAGE 0 - List of all bungalows (with search and sort) -->
 				<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
 					<form>
+						<!-- PAGE 0-A - Search bungalows-->
 						<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
 							<tr><td colspan="2" rowspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's name" /></td>
 								<td colspan="1" rowspan="2"><input @click="search" class="confirm-profile center-text-button" type="button" style="background-color: #1b4560; font-size: 14px; margin:6px; padding:6px; text-align:center;" value="Search" /></td>
@@ -106,6 +78,7 @@ template: `
 								<td colspan="2" rowspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="  Bungalow's location"/></td>
 							</tr>
 						</table> 
+						<!-- PAGE 0-B - Sort bungalows-->
 						<div class="justify-content-center" style="width:90%; margin-left:5%; margin-top: 5px;">
 							<div class="radio-toolbar" style="display: inline-block;">
 								<input type="radio" id="radioAscAlpha" name="radioSort" value="AscAlpha" v-model="sortOption" @change="sortedArray">
@@ -123,9 +96,9 @@ template: `
 							</div>
 						</div>
 					</form>
+						<!-- PAGE 0-C - List of all bungalows (sorted, filtered)-->
     				<div class="container mt-5">
 						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in myBungalows">
-							
 							<div class="row g-0">
 								<!--
 								<div class="col-md-4" style="text-align:center;
@@ -146,8 +119,6 @@ template: `
 									</div>
 								</div> 
 
-
-
 								<div class="col-md-8">
 									<div class="card-body" style="padding: 1vh;">
 										<p class="card-title text-start mt-1" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</p>
@@ -167,7 +138,7 @@ template: `
 						</div>
     				</div>
             	</div>
-
+				<!-- PAGE [1-6] -->
             	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
 					<!-- PAGE 1 - Add a new bungalow -->
                 	<div class="container" v-show="showPage == 1">
@@ -181,29 +152,34 @@ template: `
 										<td><input type="text" placeholder="   Country" class="input-text"  v-model="dtoAddNewBungalow.country" style="margin-top: 5px; margin-right:2px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
 										<td><input type="text" placeholder="   City" class="input-text"  v-model="dtoAddNewBungalow.city" style="margin-top: 5px; margin-right:2px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
 										<td><input type="text" placeholder="   Street" class="input-text"  v-model="dtoAddNewBungalow.street" style="margin-top: 5px; margin-right:2px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
-										<td><input type="text" placeholder="   Street number" class="input-text"  v-model="dtoAddNewBungalow.streetNumber" style="margin-top: 5px; height:20px; font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" required/></td>
+										<td><input type="text" placeholder="   Street number" class="input-text"  v-model="dtoAddNewBungalow.streetNumber" style="margin-top: 5px; margin-bottom: 5px; height:20px; font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" required/></td>
 									</tr>
 									<tr class="d-flex justify-content-evenly"> 
-										<td><input type="text" placeholder="   Unit price" class="input-text"  v-model="dtoAddNewBungalow.unitPrice" style="margin-top: 5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
-										<td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="dtoAddNewBungalow.maxCustomerCapacity" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" required/></td>
-										<td><input type="text" placeholder="   Number of rooms" class="input-text"   v-model="dtoAddNewBungalow.numberOfRooms" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
-										<td><input type="text" placeholder="   Number of beds" class="input-text"   v-model="dtoAddNewBungalow.numberOfBeds" style="margin-top:5px; height:20px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td style=" text-align: center;vertical-align: middle;"> <p class="d-inline align-middle" style="margin-top: 5px; font-family: poppins-light; font-size: 12px; text-align: center; color:#fff; margin-top:5px;"> Unit price: </p> </td>
+										<td><input type="number" placeholder="   Unit price" class="input-text"  v-model="dtoAddNewBungalow.unitPrice" style="margin-top: 5px; height:20px; width:60px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td style=" text-align: center;vertical-align: middle;"> <p class="d-inline align-middle" style="margin-top: 5px; font-family: poppins-light; font-size: 12px; text-align: center; color:#fff; margin-top:5px;"> Maximum capacity: </p> </td>
+										<td><input type="number" placeholder="   Maximum capacity" class="input-text"  v-model="dtoAddNewBungalow.maxCustomerCapacity" style="margin-top:5px;  margin-bottom: 5px; height:20px; width:60px;  font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" required/></td>					
+									</tr>
+									<tr class="d-flex justify-content-evenly"> 
+										<td style=" text-align: center;vertical-align: middle;"> <p class="d-inline align-middle" style="margin-top: 5px; font-family: poppins-light; font-size: 12px; text-align: center; color:#fff; margin-top:5px;"> Number of rooms: </p> </td>
+										<td><input type="number" placeholder="   Number of rooms" class="input-text"   v-model="dtoAddNewBungalow.numberOfRooms" style="margin-top:5px; height:20px; width:60px; font-size:12px; font-family:'poppins-light'" required/></td>
+										<td style=" text-align: center;vertical-align: middle;"> <p class="d-inline align-middle" style="margin-top: 5px; font-family: poppins-light; font-size: 12px; text-align: center; color:#fff; margin-top:5px;"> Number of beds: </p> </td>
+										<td><input type="number" placeholder="   Number of beds" class="input-text"   v-model="dtoAddNewBungalow.numberOfBeds" style="margin-top:5px; height:20px; width:60px;  font-size:12px; font-family:'poppins-light'" required/></td>
 									</tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="dtoAddNewBungalow.description" style="margin-top:5px; margin-bottom: 5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
 									<tr> <h3 class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff; margin-top:5px;"> Add additional services to the new bungalow: </h3></tr>
 									<tr>
-
 										<div class="list-group text-start overflow-auto card m-2" style="height:60px; max-height:max-content; width: 100%; background-color:#1b4560">
 											<label v-for="additionalServ in allAdditionalServices" :key="additionalServ" class="list-group-item" style="font-family: poppins-light; font-size: 12px; color:#fff; background-color:#1b4560">
 												<div v-if="additionalServ.type == 'ADDITIONAL_SERVICE' "> 
-													<input class="form-check-input me-1" type="checkbox" value="" > {{additionalServ.name}}
+													<input class="form-check-input me-1" type="checkbox" value="" v-on:click="clickAdditionalServ(additionalServ)"> {{additionalServ.name}}
+												</div>
 											</label>
 										</div>								
 									</tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="dtoAddNewBungalow.rulesOfConduct" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'" required ></textarea></tr>
 									<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="dtoAddNewBungalow.cancellationPolicy" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  required></textarea></tr>
-									<tr><td><input type="file" name="file[]" @change="imageSelected" multiple="multiple"></input></td></tr>
-
+									<tr><td><input type="file" name="file[]" @change="imageSelected" multiple="multiple"></td></tr>
 									<tr> 
 										<div class="overflow-auto card pb-3" style="height: 200px; background-color:#1b4560 ">
 											<div v-for="(image, index) in imagesFrontend" :key="(image, index)">
@@ -212,7 +188,6 @@ template: `
 											</div>
 										</div>
 									</tr>
-
 									<tr class="d-flex justify-content-evenly">
 										<td><input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" class="confirm" type="button" value="Add new bungalow"  @click="addNewBungalow()" style="margin-top:5; width:120%;"/></td>
 									</tr>
@@ -302,23 +277,6 @@ template: `
 							<p class="title-text-bold" style="text-align:center;"> Update available terms:</p>
 							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
 							<hr>
-							<!--
-							<form ref="addNewTimeSlotToBungalow">
-							
-								<label for="start-time" style="font-family:poppins-bold; color:#fff;">Choose a start time for available terms:</label>
-								<span><input class="datetime-local" type="datetime-local" id="start-time" name="start-time" 
-												value="2022-05-07T19:30" min="2022-05-07T00:00" max="2022-12-12T00:00"></span>
-								<br><br>
-								<label for="end-time"style="font-family:poppins-bold; color:#fff;">Choose an end time for available terms:</label>
-								<span><input class="datetime-local" type="datetime-local" id="end-time"name="end-time" 
-												value="2022-05-07T19:30" min="2022-05-07T00:00" max="2022-12-12T00:00"></span>
-								<br><br><br>
-								<input  v-bind:style="{'background-color':backgroundColor, 'cursor':cursorStyle}" 
-										class="confirm" type="button" value="Add new available time slot"  @click="addNewTimeSlotToBungalow(this.selectedBungalow)" 
-										style=""/>	
-								<input type="text" name="datetimes" />
-							</form>
-							-->
 							<div class="container mt-5 mb-5" style="width: 400px">
 								<input type="text" id="picker" name="datetimes" class="form-control" style="background-color: #1b4560; color: #fff;" >
 								<br>
@@ -340,7 +298,7 @@ template: `
 							</table>
 						</div>
                 	</div>
-					<!-- PAGE 6 - Update last minute terms -->
+					<!-- PAGE 6 - Make quick reservations -->
 					<div class="container" v-show="showPage == 6">
 						<div class="container align-items-start">
 							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
@@ -362,7 +320,6 @@ template: `
 
     },
 	computed:{
-
 		axiosSearchParams() {
 			const params = new URLSearchParams();
 			params.append('name', this.searchParams.bungalowName);
@@ -370,7 +327,7 @@ template: `
 			params.append('type', 'BUNGALOW');
 			return params;
 		},
-
+		/*
 		isAddNewBungalowFormFilled() {
 			correctOfferName = /\S/.test(this.dtoAddNewBungalow.offerName) && /$/.test(this.dtoAddNewBungalow.offerName);
 			correctMaxCustomerCapacity = /\S/.test(this.dtoAddNewBungalow.maxCustomerCapacity) && /^\d+$/.test(this.dtoAddNewBungalow.maxCustomerCapacity);
@@ -394,9 +351,9 @@ template: `
 			this.cursorStyle = flag ? "pointer" : "default";
 			return flag;
 		}
+		*/
 	},
 	methods:{
-
         imageSelected(event){
         	const file = document.querySelector('input[type=file]')
 			var readers = new Array(file.files.length)
@@ -426,7 +383,6 @@ template: `
 				}
 			}
         },
-
 		initMap: function(){
 			this.map = new ol.Map({
 				target: 'map',
@@ -442,7 +398,6 @@ template: `
 			});
 			console.log(this.map);
 		},
-
 		initDateRangePicker(){
 			var today = new Date();
 			$('input[name="datetimes"]').daterangepicker({
@@ -455,18 +410,7 @@ template: `
 				endDate: moment().startOf('hour').add(32, 'hour'),
 				locale: {
 				  format: 'YYYY/MM/DD HH:mm',
-				  "weekLabel": "W",
-				  "daysOfWeek": [
-					  "Su",
-					  "Mo",
-					  "Tu",
-					  "We",
-					  "Th",
-					  "Fr",
-					  "Sa"
-				  ],
 				  firstDay: 1
-
 				}}
 				,
 				function(startDate, endDate, label){
@@ -474,67 +418,67 @@ template: `
 					$('#endDate').text(endDate.format('YYYY-MM-DD HH:mm'))
 				});
 		},
-
 		loadOwnersBungalows(){
-
 			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
 			axios.get('/api/allMyBungalows').then(response => {
 				this.myBungalows = response.data
-				// console.log(response.data)
 				axios.get('/api/getAllImages').then(response => {
 					this.allImages = response.data
 					console.log(this.allImages);
 				})
-
-				//console.log(this.myBungalows);
 			})
-
 		},
-
 		loadAllAdditionalServices(){
 			axios.get('api/getAllAdditionalServicesForBungalows').then(response => {
             this.allAdditionalServices = response.data;
-            //console.log(response.data);
-        });
-
-
+        	});
 		},
-
 		resetAddNewBungalow(){
 			this.imagesFrontend = [];
-			this.dtoAddNewBungalow = {};
-			this.$router.go(this.$router.currentRoute)
+			this.dtoAddNewBungalow = {
+				offerType: "BUNGALOW",
+				offerName: "",
 
+				country: "",
+				city: "",
+				street: "",
+				streetNumber:"",
+
+				longitude: 45.24,
+				latitude: 19.82,
+
+				description:"",
+				unitPrice: 0 ,
+				maxCustomerCapacity:0,
+				numberOfRooms: 0,
+				numberOfBeds: 0,
+
+				rulesOfConduct:"",
+				additionalServices: [],
+				cancellationPolicy:"",
+				image: []
+
+			};
 		},
-
 		getBungalowImg(image){
-	
 			console.log(image.id);
 			return 'http://localhost:8080/api/getImage/'+ image.id;
-
 		},
-
 		loadBungalowTimeSlots(bungalow){
 			//axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
 			axios.get('/api/bungalow/getBungalowTimeSlots/' + bungalow.id)
 			.then(response => {
 				this.bungalowTimeSlots = response.data
-				//console.log(this.bungalowTimeSlots);
 			})
 
 		},
-
 		backButton: function(){
+			this.resetAddNewBungalow();
 			this.$router.go(this.$router.currentRoute)
-			this.hideAddNewBungalowForm();
 		},
-
 		addNewTimeSlotToBungalow(){
-			console.log("AddNewTimeSlotToBungalow(bungalow)... START")
 			let startDate = moment($('input[name="datetimes"]').data('daterangepicker').startDate).toDate();
 			let endDate = moment($('input[name="datetimes"]').data('daterangepicker').endDate).toDate();
-			//console.log(startDate);
-			//console.log(endDate);
 			this.dataToSend_AvailbleTimeSlot.startTime = startDate;
 			this.dataToSend_AvailbleTimeSlot.endTime = endDate;
 			var isValidNewTimeSlot = !this.multipleDateRangeOverlaps();
@@ -549,9 +493,8 @@ template: `
 					if(response.data === true){ 
 						Swal.fire('Added available time slot successfully!', 'Hurray!!', 'success')
 						this.showUpdateAvailableTerms(this.selectedBungalow) }
-					else{ Swal.fire('Ooops, something went wrong!', 'Please, try again later', 'error') }
-				}).catch( Swal.fire('Ooops, something went wrong!', 'Please, try again later', 'error') )
-				
+					else{ Swal.fire('Ooops, something went wrong!', 'Please, try again later!', 'error') }
+				}).catch( Swal.fire('Ooops, something went wrong!', 'Please, try again later!', 'error') )
 			}
 		},
 		multipleDateRangeOverlaps(){
@@ -573,55 +516,45 @@ template: `
 			if((a_end < b_start) || (b_end < a_start)) return false;
 			return true;
 		},
-
 		addNewBungalow: function(){
-		    this.dataToSend.offerType.push(this.dtoAddNewBungalow.offerType);
-		    this.dataToSend.offerName.push(this.dtoAddNewBungalow.offerName);
-		    this.dataToSend.country.push(this.dtoAddNewBungalow.country);
-            this.dataToSend.city.push(this.dtoAddNewBungalow.city);
-            this.dataToSend.street.push(this.dtoAddNewBungalow.street);
-            this.dataToSend.streetNumber.push(this.dtoAddNewBungalow.streetNumber);
-            this.dataToSend.longitude.push(this.dtoAddNewBungalow.longitude);
-            this.dataToSend.latitude.push(this.dtoAddNewBungalow.latitude);
-            this.dataToSend.description.push(this.dtoAddNewBungalow.description);
-            this.dataToSend.unitPrice.push(this.dtoAddNewBungalow.unitPrice);
-            this.dataToSend.maxCustomerCapacity.push(this.dtoAddNewBungalow.maxCustomerCapacity);
-            this.dataToSend.numberOfRooms.push(this.dtoAddNewBungalow.numberOfRooms);
-			this.dataToSend.numberOfBeds.push(this.dtoAddNewBungalow.numberOfBeds);
-			this.dataToSend.maxCustomerCapacity.push(this.dtoAddNewBungalow.maxCustomerCapacity);
-            this.dataToSend.rulesOfConduct.push(this.dtoAddNewBungalow.rulesOfConduct);
-            this.dataToSend.additionalServices.push(this.dtoAddNewBungalow.additionalServices);
-            this.dataToSend.cancellationPolicy.push(this.dtoAddNewBungalow.cancellationPolicy);
-            this.dataToSend.image = this.dtoAddNewBungalow.image;
+			if(!this.isValidAddNewBungalowDto()){ 
+				Swal.fire('Ooops, you must fill the form properly!', 'Please, try again later!', 'error');
+				return;
+			}
 			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
-			axios.post('/api/addNewBungalow' , this.dataToSend)
+			axios.post('/api/addNewBungalow' , this.dtoAddNewBungalow)
 				.then(response => { 
-					if(response.data === true){
-						Swal.fire('Added bungalow successfuly!',
-									'Juhu!!',
-									'success')
-						}
-					else{
-						Swal.fire('Ooops, something went wrongg!',
-								'Please, try again later',
-								'error')
-						}
-				}).catch(
-						Swal.fire('Ooops, something went wrong!',
-								'Please, try again later',
-								'error')
+					if(response.data === true){ Swal.fire('Added bungalow successfuly!','Hurray!!', 'success'); this.resetAddNewBungalow();}
+					else{ Swal.fire('Ooops, something went wrong!', 'Please, try again later!', 'error')}
+				}).catch( Swal.fire('Ooops, something went wrong!', 'Please, try again later!', 'error')
 			)
-			this.location.reload();
 			this.loadOwnersBungalows();
-
+		},
+		isValidAddNewBungalowDto() {
+			for (const property in this.dtoAddNewBungalow) {
+				if (!this.dtoAddNewBungalow[property]) {
+					return false;
+				}
+			}
+			return true;
+		},
+		clickAdditionalServ(additionalServ){
+			for (var i = 0; i < this.dtoAddNewBungalow.additionalServices.length; i++) {
+				if(this.dtoAddNewBungalow.additionalServices[i].id == additionalServ.id){
+					//remove
+					this.dtoAddNewBungalow.additionalServices.splice(i, 1);
+					console.log("removed element from additionalServ with id="+additionalServices.id);
+					return;
+				}
+			}
+			//add
+			this.dtoAddNewBungalow.additionalServices.push(additionalServ);
+			console.log("added element from additionalServ with id="+additionalServ.id);
 		},
 
-		hideAddNewBungalowForm: function() {this.showPage = 0;},
-
-
 		showAddNewBungalowForm: function() {
-			this.showPage = 1;},
-
+			this.showPage = 1;
+		},
 		showDetails: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
@@ -629,7 +562,6 @@ template: `
 			console.log(this.selectedBungalow.location.country);
 			this.showPage = 2;
 		},
-
 		showUpdateDetails: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
@@ -637,7 +569,6 @@ template: `
 			console.log(this.selectedBungalow.location.country);
 			this.showPage = 3;
 		},
-
 		showDeleteOffer: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
@@ -645,7 +576,6 @@ template: `
 			console.log(this.selectedBungalow.location.country);
 			this.showPage = 4;
 		},
-
 		showUpdateAvailableTerms: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
@@ -655,7 +585,6 @@ template: `
 			this.showPage = 5;
 			this.initDateRangePicker();
 		},
-
 		showMakeQuickReservation: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
@@ -663,80 +592,62 @@ template: `
 			console.log(this.selectedBungalow.location.country);
 			this.showPage = 6;
 		},
-
-
 		search : function(){
 			axios.get('/api/search/' + this.loggedUser.id.toString(), {params: this.axiosSearchParams})
 				.then(response => {
 					this.myBungalows = response.data
 				})
 		},
-
 		sortedArray: function() {
 			if(this.sortOption === 'DescAlpha'){
-				function compare(a, b) {
-				  if (a.offerName > b.offerName)
-					return -1;
-				  if (a.offerName < b.offerName)
-					return 1;
-				 return 0;
+				function compare(a, b) { 
+					if (a.offerName > b.offerName) return -1;
+					if (a.offerName < b.offerName) return 1;
+				 	return 0;
 			   }
 				return this.myBungalows.sort(compare);
 			}
-			 if(this.sortOption === 'AscAlpha'){
+			if(this.sortOption === 'AscAlpha'){
 				 function compare(a, b) {
-					 if (a.offerName < b.offerName)
-						return -1;
-					 if (a.offerName > b.offerName)
-						return 1;
-					 return 0;
+					if (a.offerName < b.offerName) return -1;
+					if (a.offerName > b.offerName) return 1;
+				 	return 0;
 				 }
 				 return this.myBungalows.sort(compare);
 			 }
-			 if(this.sortOption === 'AscRating'){
+			if(this.sortOption === 'AscRating'){
 				function compare(a, b) {
-				  if (a.rating > b.rating)
-					return -1;
-				  if (a.rating < b.rating)
-					return 1;
-				 return 0;
+					if (a.rating > b.rating) return -1;
+					if (a.rating < b.rating) return 1;
+					return 0;
 			   }
 				return this.myBungalows.sort(compare);
 			}
-			 if(this.sortOption === 'DescRating'){
-				 function compare(a, b) {
-					 if (a.rating < b.rating)
-						return -1;
-					 if (a.rating > b.rating)
-						return 1;
-					 return 0;
+			if(this.sortOption === 'DescRating'){
+				function compare(a, b) {
+					if (a.rating < b.rating) return -1;
+					if (a.rating > b.rating) return 1;
+					return 0;
 				 }
 				 return this.myBungalows.sort(compare);
 			 }
-			 if(this.sortOption === 'AscPrice'){
+			if(this.sortOption === 'AscPrice'){
 				function compare(a, b) {
-				  if (a.unitPrice > b.unitPrice)
-					return -1;
-				  if (a.unitPrice < b.unitPrice)
-					return 1;
-				 return 0;
+					if (a.unitPrice > b.unitPrice) return -1;
+					if (a.unitPrice < b.unitPrice) return 1;
+				 	return 0;
 			   }
 				return this.myBungalows.sort(compare);
 			}
-			 if(this.sortOption === 'DescPrice'){
-				 function compare(a, b) {
-					 if (a.unitPrice < b.unitPrice)
-						return -1;
-					 if (a.unitPrice > b.unitPrice)
-						return 1;
-					 return 0;
-				 }
-				 return this.myBungalows.sort(compare);
-			 }
-	  }
-
-
+			if(this.sortOption === 'DescPrice'){
+				function compare(a, b) {
+					if (a.unitPrice < b.unitPrice) return -1;
+					if (a.unitPrice > b.unitPrice) return 1;
+					return 0;
+				}
+				return this.myBungalows.sort(compare);
+			}
+	  	}
 
 	}
-
 });

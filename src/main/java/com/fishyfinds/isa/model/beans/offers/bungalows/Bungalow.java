@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.model.beans.offers.bungalows;
 
+import com.fishyfinds.isa.model.beans.offers.AdditionalService;
 import com.fishyfinds.isa.model.beans.offers.Location;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.users.User;
@@ -7,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,9 +27,10 @@ public class Bungalow extends Offer {
 	public Bungalow() {}
 	public Bungalow(String offerName, User user,
 					String country, String city, String street, String streetNumber,
-					String description,  int unitPrice,
+					String description, int unitPrice,
 					int maxCustomerCapacity, int numberOfBeds, int numberOfRooms,
-					String rulesOfConduct, String cancellationPolicy)
+					String rulesOfConduct, String cancellationPolicy,
+					Set<AdditionalService> additionalServices)
 	{
 
 		this.offerName = offerName;
@@ -39,6 +43,7 @@ public class Bungalow extends Offer {
 		this.numberOfRooms = numberOfRooms;
 		this.rulesOfConduct = rulesOfConduct;
 		this.cancellationPolicy = cancellationPolicy;
+		this.additionalServices = additionalServices;
 
 	}
 

@@ -48,10 +48,10 @@ public class Offer {
 
     @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
     protected Set<Term> terms;
- /*
-    @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
-    protected Set<ImageItem> images;
-*/
+
+    @OneToMany(mappedBy="id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    protected Set<ImageItem> images = new HashSet<ImageItem>();
+
     @Column(name = "maxCustomerCapacity", nullable = false)
     protected int maxCustomerCapacity;
 
@@ -62,7 +62,7 @@ public class Offer {
     @JoinTable(name = "offerAdditionalService",
                joinColumns = @JoinColumn(name = "offerId", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "additionalServiceId", referencedColumnName = "id"))
-    private Set<AdditionalService> additionalServices = new HashSet<AdditionalService>();
+    protected Set<AdditionalService> additionalServices = new HashSet<AdditionalService>();
 
     @Column(name = "cancellationPolicy", nullable = false)
     protected String cancellationPolicy;

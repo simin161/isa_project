@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.controllers.offersController;
 
+import com.fishyfinds.isa.dto.AddNewBungalowDto;
 import com.fishyfinds.isa.dto.OfferDTO;
 import com.fishyfinds.isa.model.beans.Subscriber;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
@@ -10,6 +11,7 @@ import com.fishyfinds.isa.service.SubscriberService;
 import com.fishyfinds.isa.service.offersService.BungalowService;
 import com.fishyfinds.isa.service.offersService.OfferService;
 import com.fishyfinds.isa.service.usersService.UserService;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +41,7 @@ public class BungalowController {
 
     @GetMapping("/allBungalows")
     public List<OfferDTO> findAll(@RequestHeader("Authorization") HttpHeaders header){
+        System.out.println("[BungalowController]-[api/allBungalows]");
         List<Bungalow> bungalows  = bungalowService.findAll();
         List<OfferDTO> retVal = new ArrayList<OfferDTO>();
         try {
@@ -67,33 +70,41 @@ public class BungalowController {
                 }
             }
         }catch(Exception e){
-
         }
         return retVal;
     }
 
     @GetMapping("/allMyBungalows")
     public List<Bungalow> findAllByOwnerId(@RequestHeader("Authorization") HttpHeaders header) {
+        System.out.println("[BungalowController]-[api/allMyBungalows]");
+        final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+        final JSONObject obj;
+        String user = "";
         try {
-            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
-            final JSONObject obj = new JSONObject(value);
-            String user = obj.getString("accessToken");
-            String username = tokenUtils.getUsernameFromToken(user);
-            User owner = userService.findUserByEmail(username);
-            return bungalowService.findAllByOwnerId(owner.getId());
-        }catch(Exception e){
+            obj = new JSONObject(value);
+            user = obj.getString("accessToken");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new ArrayList<Bungalow>();
         }
-        return new ArrayList<Bungalow>();
+        String username = tokenUtils.getUsernameFromToken(user);
+        User owner = userService.findUserByEmail(username);
+        return bungalowService.findAllByOwnerId(owner.getId());
     }
 
     @PostMapping("/addNewBungalow")
-    public boolean addNewBungalow(@RequestHeader("Authorization") HttpHeaders header, @RequestBody Map<String, ArrayList<String>> message){
+    public boolean addNewBungalow(@RequestHeader("Authorization") HttpHeaders header,
+                                  @RequestBody AddNewBungalowDto addNewBungalowDto){
+        System.out.println("[BungalowController]-[api/addNewBungalow]");
+        System.out.println(addNewBungalowDto.toString());
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return bungalowService.addNewBungalow(username, message);
+            //return bungalowService.addNewBungalow(username, message);
+            return bungalowService.addNewBungalow(addNewBungalowDto, username);
+
         }catch(Exception e){
         }
         return  false;

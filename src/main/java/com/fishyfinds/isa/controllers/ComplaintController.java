@@ -30,6 +30,7 @@ public class ComplaintController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/addComplaint")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean addComplaint(@RequestHeader("Authorization") HttpHeaders header, @RequestBody Map<String, String> message){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);

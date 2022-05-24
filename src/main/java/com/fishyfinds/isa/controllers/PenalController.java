@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -21,6 +22,7 @@ public class PenalController {
     private PenalService penalService;
 
     @GetMapping("/getPenalForUser")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public Penal getPenalForUser(@RequestHeader("Authorization") HttpHeaders headers){
         final String value =headers.getFirst(HttpHeaders.AUTHORIZATION);
         try {

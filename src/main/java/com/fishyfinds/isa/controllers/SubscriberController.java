@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class SubscriberController {
     private TokenUtils tokenUtils;
 
     @PostMapping("/addFollower")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public void addSubscriber(@RequestHeader("Authorization") HttpHeaders header, @RequestBody Map<String, String> message) {
         try {
             final String value = header.getFirst(HttpHeaders.AUTHORIZATION);
@@ -39,6 +41,7 @@ public class SubscriberController {
     }
 
     @GetMapping("/getSubscriptionsByUser")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public List<OfferDTO> getSubscriptionsByUser(@RequestHeader("Authorization") HttpHeaders header){
         try {
             final String value = header.getFirst(HttpHeaders.AUTHORIZATION);

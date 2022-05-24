@@ -34,7 +34,6 @@ public class AccountDeletionRequestService {
                 updateRequest(accountDeletionRequestFromDB, accountDeletionRequest.getExplanation());
                 return true;
             }
-            return false;
         }
         accountDeletionRequest.setStatus(DeletionRequestStatus.PENDING);
         accountDeletionRequestRepository.save(accountDeletionRequest);

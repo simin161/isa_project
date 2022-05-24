@@ -42,11 +42,13 @@ public class AccountDeletionRequestController {
     }
 
     @GetMapping("/allPendingDeletionRequests")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<AccountDeletionRequest> findAllPending() {
         return accountDeletionRequestService.findAllPending();
     }
 
     @PostMapping("/approveDeleteRequest")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public boolean approveDeleteRequest(@RequestBody Map<String, String> message){
 
         try {
@@ -59,6 +61,7 @@ public class AccountDeletionRequestController {
     }
 
     @PostMapping("/denyDeleteRequest")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public boolean denyDeleteRequest(@RequestBody Map<String, String> message){
 
         try{

@@ -36,9 +36,10 @@ template: `
                                     </div>
                                 </a>
                             <nav class="col-sm-8">
-                                <div v-show="loggedUser.userType == 'CUSTOMER'" class="dropdown">
-                                    <a href="#/penals">Penals</a>
-                                    <a href="#/following">Following</a>
+                                <div v-show="loggedUser.userType == 'CUSTOMER'">
+                                    <a href="#/penals" style="font-family: poppins-bold; font-size: 24px;">Penals</a>
+                                    <a href="#/following" style="font-family: poppins-bold; font-size: 24px;">Following</a>
+                                    <span class="dropdown">
                                     <button class="dropdown-button">Reservations</button>
                                         <div class="dropdown-content">
                                             <a href="#/bungalowReservationHistory">Bungalows</a>
@@ -46,6 +47,7 @@ template: `
                                             <a href="#/courseReservationHistory">Instructors</a>
                                             <a href="#/">Upcoming</a>
                                         </div>
+                                    </span>
                                     <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>
                                     <a href="#/" @click="signOut" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
                                 </div>

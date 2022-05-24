@@ -278,6 +278,7 @@ template: `
 
         axios.get("/api/authenticateUser")
             .then(response =>{this.loggedUser = response.data; console.log(response.data)})
+            .catch(error => this.loggedUser.userType = "")
         console.log(this.loggedUser);
 
 

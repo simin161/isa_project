@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class AccountDeletionRequestController {
     private AccountDeletionRequestService accountDeletionRequestService;
 
     @PostMapping("/sendAccountDeletionRequest")
+    @PreAuthorize("hasRole('ROLE_COMMON')")
     public boolean add(@RequestHeader("Authorization") HttpHeaders headers, @RequestBody Map<String, String> message){
         final String value =headers.getFirst(HttpHeaders.AUTHORIZATION);
         try {

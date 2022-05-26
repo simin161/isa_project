@@ -64,7 +64,33 @@ public class AccountDeletionRequestController {
         }catch(Exception e){
             return false;
         }
+    }
 
+    @GetMapping("/getAllCreationPendingRequests")
+    public List<AccountDeletionRequest> getAllCreationPendingRequests(){
+        return accountDeletionRequestService.findAllCreationPending();
+    }
+
+    @PostMapping("/approveCreationRequest")
+    public boolean approveCreationRequest(@RequestBody AccountDeletionRequest request){
+        boolean retVal = false;
+        try{
+            accountDeletionRequestService.approveCreationRequest(request);
+            retVal = true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return retVal;
+    }
+
+    @PostMapping("/denyCreationRequest")
+    public boolean denyCreationRequest(@RequestBody Map<String, String> message){
+        try{
+            return accountDeletionRequestService.denyCreationRequest(DtoToResolveDeleteRequest.MapToResolveRequest(message));
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

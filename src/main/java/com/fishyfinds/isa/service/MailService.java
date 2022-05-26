@@ -75,4 +75,9 @@ public class MailService {
 
     }
 
+    public void sendCreationApprovalMail(String email) {
+    }
+
+    public void sendCreationDenyReasonEmail(User user, String explanation) {
+    }
 }

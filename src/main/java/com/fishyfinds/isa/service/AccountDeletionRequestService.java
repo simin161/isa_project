@@ -87,4 +87,16 @@ public class AccountDeletionRequestService {
             return true;
         }
     }
+
+    public boolean addCreationRequest(String email, String reasoning) {
+        try {
+            AccountDeletionRequest accountDeletionRequest = new AccountDeletionRequest();
+            accountDeletionRequest.setUser(userRepository.findByEmail(email));
+            accountDeletionRequest.setStatus(DeletionRequestStatus.PENDING_CREATION);
+            accountDeletionRequestRepository.save(accountDeletionRequest);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
 }

@@ -41,6 +41,10 @@ INSERT INTO public.users(
 	VALUES (7, 'a', 'a', 'a', 'woderwoman@mail.com', 'Wunder', true, false, 'Wuman', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 3, '');
 INSERT INTO instructor values ('This is healthy, and this is healthy ooooaaa','Hjaaaa hjaaaoooaaaaaa hjaaaa',0, 7, 1);
 
+INSERT INTO public.users(
+	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
+	VALUES (8, 'a', 'a', 'a', 'admin@admin.com', 'Papi', true, false, 'Papi', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 4, '');
+
 --USERS END--
 --ENGINES BEGIN--
 INSERT INTO public.engine(

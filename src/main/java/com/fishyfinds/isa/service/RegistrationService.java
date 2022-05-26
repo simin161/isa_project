@@ -1,6 +1,7 @@
 package com.fishyfinds.isa.service;
 
 import com.fishyfinds.isa.mappers.DtoToUser;
+import com.fishyfinds.isa.model.beans.AccountDeletionRequest;
 import com.fishyfinds.isa.model.beans.users.Admin;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
@@ -36,6 +37,8 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private AccountDeletionRequestService accountDeletionRequestService;
 
     public boolean registerUser(Map<String, String> map, String siteURL){
         boolean successfullyRegistered = true;
@@ -84,6 +87,7 @@ public class RegistrationService {
         if(!checkIfEmailExists(owner.getEmail())){
             owner.setUserType(UserType.BUNGALOW_OWNER);
             owner.setNumberOfLogIns(0);
+            accountDeletionRequestService.addCreationRequest(owner.getEmail(), owner.getReasoning());
             //activateAccount(owner);
             bungalowOwnerRepository.save(owner);
             successfullyRegistered = true;
@@ -96,6 +100,7 @@ public class RegistrationService {
         if(!checkIfEmailExists(owner.getEmail())){
             owner.setUserType(UserType.BOAT_OWNER);
             owner.setNumberOfLogIns(0);
+            accountDeletionRequestService.addCreationRequest(owner.getEmail(), owner.getReasoning());
             //activateAccount(owner);
             boatOwnerRepository.save(owner);
             successfullyRegistered = true;
@@ -109,6 +114,7 @@ public class RegistrationService {
         if(!checkIfEmailExists(instructor.getEmail())){
             instructor.setUserType(UserType.INSTRUCTOR);
             instructor.setNumberOfLogIns(0);
+            accountDeletionRequestService.addCreationRequest(instructor.getEmail(), instructor.getReasoning());
             //activateAccount(instructor);
             instructorRepository.save(instructor);
             successfullyRegistered = true;

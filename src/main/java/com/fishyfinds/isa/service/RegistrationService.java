@@ -39,6 +39,8 @@ public class RegistrationService {
     private AdminRepository adminRepository;
     @Autowired
     private AccountDeletionRequestService accountDeletionRequestService;
+    @Autowired
+    private PenalService penalService;
 
     public boolean registerUser(Map<String, String> map, String siteURL){
         boolean successfullyRegistered = true;
@@ -146,7 +148,11 @@ public class RegistrationService {
 
     public boolean verifyCustomerAccount(String verificationCode) {
         Customer user = customerRepository.findByVerificationCode(verificationCode);
-        return (user == null || user.isActivated()) ? false : activateAccount(user);
+        boolean retVal= user == null || user.isActivated() ? false : activateAccount(user);
+        if(retVal)
+            penalService.addNewPenal(user);
+
+        return retVal;
     }
 
     private boolean activateAccount(User user){

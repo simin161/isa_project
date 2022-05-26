@@ -53,7 +53,6 @@ public class BungalowService {
                 }
             }
         }catch (Exception e){
-            e.printStackTrace();
         }
         return true;
     }

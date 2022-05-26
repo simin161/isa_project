@@ -36,15 +36,16 @@ template: `
                                     </div>
                                 </a>
                                 <nav class="col-sm-8">
-                                    <a href="">menu 1</a>
                                     <div v-show="loggedUser.userType == 'CUSTOMER'" class="dropdown">
+                                    <a href="#/penals">Penals</a>
+                                    <a href="#/following">Following</a>
                                     <button class="dropdown-button">Reservations</button>
-                                    <div class="dropdown-content">
-                                        <a href="#/bungalowReservationHistory">Bungalows</a>
-                                        <a href="#/boatReservationHistory">Boats</a>
-                                        <a href="#/courseReservationHistory">Instructors</a>
-                                        <a href="#/">Upcoming</a>
-                                    </div>
+                                        <div class="dropdown-content">
+                                            <a href="#/bungalowReservationHistory">Bungalows</a>
+                                            <a href="#/boatReservationHistory">Boats</a>
+                                            <a href="#/courseReservationHistory">Instructors</a>
+                                            <a href="#/">Upcoming</a>
+                                        </div>
                                     </div>
                                     <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>
                                     <a href="#/" @click="signOut" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>

@@ -1,6 +1,9 @@
 Vue.component('boats', {
 data: function(){
     		return{
+    		    loggedUser: {
+                    userType:''
+                },
     			showPage: 0,
     			sortOption: "",
     			boatToShow: {
@@ -67,11 +70,14 @@ data: function(){
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">
-    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{boat.offerName}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{boat.description}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{boat.unitPrice}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(boat)">Show more</button>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{boat.offer.offerName}}</h5>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{boat.offer.description}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{boat.offer.unitPrice}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.offer.rating}}</p>
+    									<button class="float-end btn btn-light" @click="showMore(boat.offer)">Show more</button>
+    									<span v-show="loggedUser.userType === 'CUSTOMER'">
+    									<button v-show="!boat.followed" class="float-end btn btn-light" @click="follow(boat.offer)">Follow/unfollow</button>
+    								    </span>
     								</div>
     							</div>
     						</div>
@@ -121,6 +127,19 @@ data: function(){
             showMore : function(bung){
                this.boatToShow = bung;
                this.showPage = 1;
+            },
+            follow : function(bung){
+                axios.defaults.headers.common["Authorization"] =
+                               localStorage.getItem("user");
+                axios.post("/api/addFollower", {"id" : bung.id})
+                      .then(response => {
+                       axios.defaults.headers.common["Authorization"] =
+                                                localStorage.getItem("user");
+                                  axios.get("/api/allBoats")
+                                       .then(response => {
+                                          this.boats = response.data;
+                                   })
+                      });
             },
             search : function(){
                 axios.get('/api/search', {
@@ -194,6 +213,11 @@ data: function(){
           ,
 	mounted(){
 	    axios.get("/api/allBoats")
-	         .then(response => {this.boats = response.data; console.log(this.boats)})
+	         .then(response => {this.boats = response.data;
+	         axios.defaults.headers.common["Authorization"] =
+                            localStorage.getItem("user");
+             axios.get("/api/authenticateUser")
+                  .then(response => this.loggedUser = response.data);
+             })
 	}
 });

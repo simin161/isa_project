@@ -42,7 +42,6 @@ public class ComplaintController {
             return complaintService.add(username, message.get("content"), message.get("offerID"));
 
         }catch(Exception e){
-            e.printStackTrace();
         }
         return  false;
     }

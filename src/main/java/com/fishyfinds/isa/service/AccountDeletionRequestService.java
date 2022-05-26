@@ -99,4 +99,39 @@ public class AccountDeletionRequestService {
             return false;
         }
     }
+
+    public List<AccountDeletionRequest> findAllCreationPending() {
+        List<AccountDeletionRequest> allPendingRequests= new ArrayList<AccountDeletionRequest>();
+        for(AccountDeletionRequest a : accountDeletionRequestRepository.findAll()){
+            if(a.getStatus()==DeletionRequestStatus.PENDING_CREATION){
+                allPendingRequests.add(a);
+            }
+        }
+        return allPendingRequests;
+    }
+
+    public boolean approveCreationRequest(AccountDeletionRequest request) {
+        AccountDeletionRequest req = accountDeletionRequestRepository.findById(request.getRequestId()).orElse(null);
+        if(request == null){
+            return false;
+        }else{
+            userService.activateUser(request.getUser().getId());
+            mailService.sendCreationApprovalMail(userService.findUser(request.getUser().getId()).getEmail());
+            request.setStatus(DeletionRequestStatus.ACCEPTED_CREATION);
+            accountDeletionRequestRepository.save(request);
+            return true;
+        }
+    }
+
+    public boolean denyCreationRequest(ResolveDeletionRequest creationRequest) throws MessagingException, UnsupportedEncodingException {
+        AccountDeletionRequest request = accountDeletionRequestRepository.findById(creationRequest.getRequestId()).orElse(null);
+        if(request == null){
+            return false;
+        }else {
+            request.setStatus(DeletionRequestStatus.DECLINED_CREATION);
+            accountDeletionRequestRepository.save(request);
+            mailService.sendCreationDenyReasonEmail(userService.findUser(request.getUser().getId()), creationRequest.getExplanation());
+            return true;
+        }
+    }
 }

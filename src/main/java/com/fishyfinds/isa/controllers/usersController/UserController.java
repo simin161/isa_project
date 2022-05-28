@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ public class UserController {
     private CustomUserDetailsService customUserDetailsService;
 
     @PutMapping("/changePassword")
+    @PreAuthorize("hasRole('ROLE_COMMON')")
     public boolean changePassword(@RequestHeader("Authentication") HttpHeaders header, @RequestBody Map<String, String> message){
         final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
 
@@ -48,11 +50,13 @@ public class UserController {
     }
 
     @PutMapping("/changeProfile")
+    @PreAuthorize("hasRole('ROLE_COMMON')")
     public boolean changeProfile(@RequestBody Map<String,String> message, HttpServletRequest request){
         return userService.changeProfile(DtoToUser.MapToUser(message), request);
     }
 
     @GetMapping("/findUser")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public User findUser(@Param("id") Long id){
         return userService.findUser(id);
     }

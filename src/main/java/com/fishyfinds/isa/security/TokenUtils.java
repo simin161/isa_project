@@ -4,6 +4,8 @@ import com.fishyfinds.isa.model.beans.users.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -155,10 +157,15 @@ public class TokenUtils {
 
             // JWT se prosledjuje kroz header Authorization u formatu:
             // Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                return authHeader.substring(7);
+            if (authHeader != null) {
+                final JSONObject obj;
+                try {
+                    obj = new JSONObject(authHeader);
+                    authHeader = obj.getString("accessToken");
+                    return authHeader;
+                } catch (JSONException e) {
+                }
             }
-
             return null;
         }
 

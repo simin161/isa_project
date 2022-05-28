@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class FeedbackController {
     private TokenUtils tokenUtils;
 
     @PostMapping("/addFeedback")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean addFeedback(@RequestHeader("Authorization") HttpHeaders header,@RequestBody Map<String, String> params) {
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);

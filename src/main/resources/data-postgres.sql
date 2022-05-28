@@ -1,6 +1,17 @@
-INSERT INTO loyalty_program values (1, 23.4, 'shark', 0,  40);
+--AUTHORITIES BEGIN--
+INSERT INTO authority values (1, 'ROLE_CUSTOMER');
+INSERT INTO authority values (2, 'ROLE_BUNGALOW');
+INSERT INTO authority values (3, 'ROLE_BOAT');
+INSERT INTO authority values (4, 'ROLE_INSTRUCTOR');
+INSERT INTO authority values (5, 'ROLE_ADMIN');
+INSERT INTO authority values (6, 'ROLE_COMMON');
+--AUTHORITIES END--
+--LOCATIONS BEGIN--
 INSERT INTO location values (1, 'Forgotten town', 'Belgrade', 23.5, 44.5, '64', 4);
-
+--LOCATIONS END--
+--LOYALTY PROGRAM BEGIN--
+INSERT INTO loyalty_program values (1, 23.4, 'shark', 0,  40);
+--LOYALTY PROGRAM END--
 --USERS BEGIN--
 -- User 1: - Customer -> UserType = 0
 INSERT INTO public.users(
@@ -103,8 +114,6 @@ insert into offer_additional_service(offer_id, additional_service_id) values(4,3
 
 insert into offer_additional_service(offer_id, additional_service_id) values(5,3);
 insert into offer_additional_service(offer_id, additional_service_id) values(5,6);
-
-
 -- ADDITIONAL SERVICES END --
 
 --TERMS START--
@@ -127,3 +136,48 @@ INSERT INTO public.delete_request(id, explanation, status, users)
  INSERT INTO public.user_feedback VALUES (2, 'I don''t know why "coursy wumby"???', 4, 0, 1, 4);
  INSERT INTO public.user_feedback VALUES (3, 'Belly dancing with papa shark was better than this sh*t', 2, 0, 1, 3);
 --USER FEEDBACK END--
+
+--USER AUTHORITIES BEGIN--
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (1, 1);
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (1, 6);
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (2, 2);
+INSERT INTO public.user_authority(
+    user_id, authority_id)
+    VALUES (2, 6);
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (3, 2);
+INSERT INTO public.user_authority(
+    user_id, authority_id)
+    VALUES (3, 6);
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (4, 3);
+INSERT INTO public.user_authority(
+    user_id, authority_id)
+    VALUES (4, 6);
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (5, 3);
+INSERT INTO public.user_authority(
+    user_id, authority_id)
+    VALUES (5, 6);
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (6, 4);
+INSERT INTO public.user_authority(
+    user_id, authority_id)
+    VALUES (6, 6);
+INSERT INTO public.user_authority(
+	user_id, authority_id)
+	VALUES (7, 4);
+INSERT INTO public.user_authority(
+    user_id, authority_id)
+    VALUES (7, 6);
+--USER AUTHORITIES END--

@@ -2,7 +2,11 @@ Vue.component('makeReservation', {
 	data: function(){
 		return{
 			number: "",
-			show: false
+            filterDto: {
+                offerType: 'BUNGALOW',
+                start: '',
+                end: ''
+            }
 		};
 	},
 template: `
@@ -11,17 +15,23 @@ template: `
         <div v-if="number >= 3">
             <p style="color: white">You have more than 3 penals, you cannot make a reservation</p>
         </div>
-        <div v-else>
-            <select>
+        <div style="margin-left: 35%; margin-top: 2.5%">
+            <select v-model="filterDto.offerType">
                 <option>BUNGALOW</option>
                 <option>BOAT</option>
                 <option>COURSE</option>
             </select>
-            <input class="datetime-local" type="datetime-local" id="start-time" name="start-time" />
-            <input class="datetime-local" type="datetime-local" id="start-time" name="end-time" />
+            <input v-model="filterDto.start" style="margin-left: 15px;" class="datetime-local" type="datetime-local" id="start-time" name="start-time" />
+            <input v-model="filterDto.end" style="margin-left: 15px" class="datetime-local" type="datetime-local" id="start-time" name="end-time" />
+            <input :disabled="isComplete" type="button" value="Go!"/>
 		<div>
     </div>
 `,
+    computed: {
+        isComplete(){
+            return !(/\S/.test(this.filterDto.offerType) && /\S/.test(this.filterDto.start) && /\S/.test(this.filterDto.end));
+        }
+    },
     methods: {
 
     },

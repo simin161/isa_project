@@ -23,7 +23,7 @@ template: `
             </select>
             <input v-model="filterDto.start" style="margin-left: 15px;" class="datetime-local" type="datetime-local" id="start-time" name="start-time" />
             <input v-model="filterDto.end" style="margin-left: 15px" class="datetime-local" type="datetime-local" id="start-time" name="end-time" />
-            <input :disabled="isComplete" type="button" value="Go!"/>
+            <input :disabled="isComplete" type="button" value="Go!" @click="filterTerms"/>
 		<div>
     </div>
 `,
@@ -33,7 +33,10 @@ template: `
         }
     },
     methods: {
-
+        filterTerms : function(){
+            axios.post("/api/filterAvailableTerms", this.filterDto)
+                 .this((response) => console.log(response.data))
+        }
     },
     mounted(){
      axios.defaults.headers.common["Authorization"] =

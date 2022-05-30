@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public class TermDto {
-
+    public Long id;
     public LocalDateTime startTime;
     public LocalDateTime endTime;
 

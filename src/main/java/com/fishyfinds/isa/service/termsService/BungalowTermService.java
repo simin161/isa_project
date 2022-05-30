@@ -39,7 +39,9 @@ public class BungalowTermService {
         ArrayList<BungalowTerm> bungalowTerms = (ArrayList<BungalowTerm>) bungalowTermRepository.findAll();
         ArrayList<TermDto> dto = new ArrayList<TermDto>();
         for(BungalowTerm bt: bungalowTerms){
-            dto.add(new TermDto(bt.getStartTime(), bt.getEndTime()));
+            TermDto d = new TermDto(bt.getStartTime(), bt.getEndTime());
+            d.id = bt.getId();
+            dto.add(d);
         }
         return dto;
     }

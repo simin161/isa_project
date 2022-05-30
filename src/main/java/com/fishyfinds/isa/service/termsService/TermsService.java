@@ -25,7 +25,10 @@ public class TermsService {
         else
             //retVal = courseTermService.findAll();
             System.out.println("sdfa");
+        //DateFormat: yyyy-mm-ddThh:mm
+        for(TermDto dto : retVal){
 
+        }
 
         return retVal;
     }

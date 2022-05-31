@@ -4,5 +4,8 @@ public enum DeletionRequestStatus {
     PENDING,
     ACCEPTED,
     DECLINED,
-    RESENT
+    RESENT,
+    PENDING_CREATION,
+    ACCEPTED_CREATION,
+    DECLINED_CREATION
 }

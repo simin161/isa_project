@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -62,6 +63,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/authenticateUser")
+    @PreAuthorize("hasRole('ROLE_COMMON')")
     public User authenticateUser(@RequestHeader("Authorization") HttpHeaders header){
         final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
 

@@ -36,4 +36,8 @@ public class AccountDeletionRequest {
         this.user.setId(userId);
         this.explanation = explanation;
     }
+
+    public Long getRequestId() {
+        return id;
+    }
 }

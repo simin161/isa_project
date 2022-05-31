@@ -70,4 +70,15 @@ public class UserService {
     }
 
 
+    public boolean activateUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if(user==null){
+            return false;
+        }
+        else{
+            user.setActivated(true);
+            userRepository.save(user);
+            return true;
+        }
+    }
 }

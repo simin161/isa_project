@@ -18,22 +18,24 @@ public class TermsService {
     private BungalowTermService bungalowTermService;
 
     public List<TermDto> filterAvailableTerms(Map<String, String> message) {
-        List<TermDto> retVal = new ArrayList<>();
+        List<TermDto> temp = new ArrayList<>();
         if(message.get("offerType").equals("BUNGALOW"))
-            retVal = bungalowTermService.findAll();
+            temp = bungalowTermService.findAll();
         else if(message.get("offerType").equals("BOAT"))
-            //retVal = boatTermService.findAll();
+            //temp = boatTermService.findAll();
             System.out.println("todo");
         else
-            //retVal = courseTermService.findAll();
+            //temp = courseTermService.findAll();
             System.out.println("sdfa");
         //DateFormat: yyyy-mm-ddThh:mm
         LocalDateTime startDateTime = LocalDateTime.parse(message.get("start"), DateTimeFormatter.ISO_DATE_TIME);
         LocalDateTime endDateTime = LocalDateTime.parse(message.get("end"), DateTimeFormatter.ISO_DATE_TIME);
-        for(TermDto dto : retVal){
-
+        List<TermDto> retVal = new ArrayList<>();
+        for(TermDto dto : temp){
+            if((startDateTime.isBefore(dto.startTime) || startDateTime.isEqual(dto.startTime)) && (dto.endTime.isBefore(endDateTime) || endDateTime.isEqual(dto.endTime))
+                && !startDateTime.isAfter(dto.endTime) && !dto.endTime.isAfter(endDateTime))
+                retVal.add(dto);
         }
-
         return retVal;
     }
 }

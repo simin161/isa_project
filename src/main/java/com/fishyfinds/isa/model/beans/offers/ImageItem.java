@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.model.beans.offers;
 
+import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "ImageItem")
+@Table
 public class ImageItem {
 
     @Id
@@ -18,27 +19,19 @@ public class ImageItem {
     //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_Image")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name="offerId", referencedColumnName = "id")
-    protected Offer offer;
+    @Column(name="name")
+    protected String name;
+
+    @Column(name="filepath")
+    protected String path;
 
     @Column(name="isDeleted")
     protected boolean isDeleted = false;
 
-    /*
-        @Column(name = "filepath")
-        private String filepath;
-
-        @Column(name = "isDeleted")
-        private boolean isDeleted = false;
-    */
-    public ImageItem() {
-    }
-
-    public ImageItem(Long id, Offer offer, boolean isDeleted) {
-        this.id = id;
-        this.offer = offer;
+    public ImageItem() {}
+    public ImageItem(String name, String path, boolean isDeleted) {
+        this.name = name;
+        this.path = path;
         this.isDeleted = isDeleted;
     }
-
 }

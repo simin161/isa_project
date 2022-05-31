@@ -14,6 +14,21 @@ template: `
             <nav-bar></nav-bar>
             <div class="container">
                 <div class="row">
+                    <div class="d-flex justify-content-evenly align-items-center reg-form">
+                        <img  src="images/fishy-finds-logo.png" style="height: 36px; width:auto; margin-top:45px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-evenly align-items-center reg-form"> 
+                        <h1 class="d-inline align-middle" style="font-family: poppins-bold; font-size: 20px; text-align: center; color:#fff;">Hello Again!</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-evenly align-items-center reg-form"> 
+                        <h3 class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff;"> Welcome back, you've <br> been missed!</h3>
+                    </div>
+                </div>
+                <div class="row">
                     <form class="d-flex justify-content-evenly align-items-center reg-form">    
                         <table style="margin-top: 10px;">
                             <tr>

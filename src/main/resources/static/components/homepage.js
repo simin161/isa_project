@@ -209,13 +209,6 @@ template: `
                 },
 
 			loadMap: function () {
-				//this.$nextTick(function () {
-					/*
-					const iconFeature = new ol.Feature({
-						geometry: new ol.geom.Point(ol.proj.fromLonLat([20, 45])),
-						name: '',
-						});
-					*/
 
 					var myView = new ol.View({
 						center: [0,0],
@@ -235,35 +228,6 @@ template: `
 						// style: myStyle
 					})
 
-/*
-					this.map = new ol.Map({
-					target: 'mapindex',
-					layers: [
-						new ol.layer.Tile({
-						source: new ol.source.OSM()
-						}),
-						new ol.layer.Vector({
-						source: new ol.source.Vector({
-							features: [iconFeature]
-						}),
-						style: new ol.style.Style({
-							image: new ol.style.Icon({
-							anchor: [0.5, 46],
-							anchorXUnits: 'fraction',
-							anchorYUnits: 'pixels',
-							src: 'icon-marker.png'
-							})
-						})
-						})
-					],
-					view: new ol.View({
-						center: ol.proj.fromLonLat([20, 45]), 
-						//center: ol.proj.fromLonLat([this.openLayerMapa.GD, this.openLayerMapa.GS]), 
-						zoom: 14
-					})
-					});
-
-					*/
 				}
 
 

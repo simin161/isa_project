@@ -58,7 +58,9 @@ INSERT INTO public.users(
 	VALUES (8, 'a', 'a', 'a', 'admin@admin.com', 'Papi', true, false, 'Papi', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 4, '');
 
 --USERS END--
+
 --ENGINES BEGIN--
+
 INSERT INTO public.engine(
 	id, max_speed, number_of_engines, power)
 	VALUES (1, 450, 5, 2500);

@@ -19,7 +19,7 @@ public class BungalowTerm {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_BungalowTerm")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "bungalowId", referencedColumnName = "id")
     private Bungalow bungalow;
 

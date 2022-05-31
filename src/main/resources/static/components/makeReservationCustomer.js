@@ -59,7 +59,9 @@ template: `
     methods: {
         filterTerms : function(){
             axios.post("/api/filterAvailableTerms", this.filterDto)
-                 .this((response) => this.allTerms = response.data)
+                 .then((response) =>
+                    this.allTerms = response.data
+                 )
         }
     },
     mounted(){

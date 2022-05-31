@@ -25,6 +25,7 @@ template: `
             <input v-model="filterDto.start" style="margin-left: 15px;" class="datetime-local" type="datetime-local" id="start-time" name="start-time" />
             <input v-model="filterDto.end" style="margin-left: 15px" class="datetime-local" type="datetime-local" id="start-time" name="end-time" />
             <input :disabled="isComplete" type="button" value="Go!" @click="filterTerms"/>
+        </div>
         <div class="col-md-1 left-div overflow-auto" style="margin-top: 60px; height:60vh">
             <div class="container" v-for="term in allTerms">
                <div class="container align-items-start">
@@ -45,7 +46,6 @@ template: `
                             <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="term.offer.cancellationPolicy" ></textarea></tr><br>
                         </table>
                     </form>
-                 </div>
                </div>
           	</div>>
 		<div>

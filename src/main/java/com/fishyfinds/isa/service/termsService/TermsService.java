@@ -16,14 +16,15 @@ public class TermsService {
 
     @Autowired
     private BungalowTermService bungalowTermService;
+    @Autowired
+    private BoatTermService boatTermService;
 
     public List<TermDto> filterAvailableTerms(Map<String, String> message) {
         List<TermDto> temp = new ArrayList<>();
         if(message.get("offerType").equals("BUNGALOW"))
             temp = bungalowTermService.findAll();
         else if(message.get("offerType").equals("BOAT"))
-            //temp = boatTermService.findAll();
-            System.out.println("todo");
+            temp = boatTermService.findAll();
         else
             //temp = courseTermService.findAll();
             System.out.println("sdfa");

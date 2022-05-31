@@ -84,13 +84,14 @@ public class BungalowService {
         try {
             for (int i = 0; i < addNewBungalowDto.getImage().size(); ++i) {
                 if (addNewBungalowDto.getImage().get(i) != null) {
-                    String imageName = "bung" + bungalowRepository.findAll().size() + "_" + i;
+                    String imageName = "bung" + "_"  +  (offerRepository.findAll().size()+1) + "_" + i + "_";
                     String imagePath = ImageService.getInstance().saveImage(addNewBungalowDto.getImage().get(i), imageName);
                     images.add(new ImageItem(imageName,imagePath,false));
                 }
             }
         } catch (Exception e) {}
         bungalow.setImages(new HashSet<ImageItem>(images));
+        System.out.println(images);
         bungalow.setUser(user);
         locationRepository.saveAndFlush(bungalow.getLocation());
         bungalowRepository.saveAndFlush(bungalow);

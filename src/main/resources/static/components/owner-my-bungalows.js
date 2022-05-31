@@ -2,6 +2,7 @@ Vue.component('owner-my-bungalows', {
 	data: function(){
 		return{	
 			loggedUser: null,
+			
 			myBungalows:[],
 			allImages:[],
 
@@ -99,33 +100,51 @@ template: `
 						<!-- PAGE 0-C - List of all bungalows (sorted, filtered)-->
     				<div class="container mt-5">
 						<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in myBungalows">
+
 							<div class="row g-0">
-								<!--
-								<div class="col-md-4" style="text-align:center;
-																background-color: #1b4560;
-																background-image:url('./images/bungalow-images/bungalow-1-out-1.jpg');
-																background-size: contain;
-																background-repeat: no-repeat;
-																background-position: center;											
-																">
-								</div> -->
-								<div class="col-md-4" style="text-align:center; background-color: #1b4560;">
-									<div v-for="image in allImages">
-										<div v-if="image.offer.id == bungalow.id"> 
-											<p> BungalowId: {{bungalow.id}} - ImageId: {{image.id}} </p>
-											<!-- <img :src=" './upload/' + image.id" style="height:auto; width:auto;" alt=" 'bungalowpic-' + image.id + '-' + bungalow.id "/> -->
-											<img v-bind:src="getBungalowImg(image)"/>
+								<div class="col-md-4" style="text-align:center; background-color:#1b4560; padding:1px;">
+										<div class="overflow-auto pb-2 pt-2" style="height:225px; background-color:#1b4560 margin:5%">
+											<div v-if="bungalow.images.length">
+												<div v-for="(image, idx) in bungalow.images" >
+													<img class="ms-3 me-3 mt-3 img-fluid" v-bind:src="setImage(image)" alt="SomePhoto" style="max-width: 80%;" >
+												</div>
+											</div>
+											<div v-else class="d-flex align-items-center flex-column">
+												<p style="text-align:center; color:gray margin-bottom:0px"> There's no picture of this bungalow.  </p>
+												<img src="images/no-pictures.jpg" style="width: 90%; height: auto;">
+											</div>	
 										</div>
-									</div>
 								</div> 
 
 								<div class="col-md-8">
-									<div class="card-body" style="padding: 1vh;">
-										<p class="card-title text-start mt-1" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</p>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:10px;">{{bungalow.description}}</p>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Initial price: {{bungalow.unitPrice}}</p>
-										<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
 
+									<table class="justify-content-center" style="width:95%; margin: auto; table-layout:fixed;">
+										<tr>
+											<td colspan="6">
+												<p class="card-title text-start mt-1" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</p>
+											</td>
+											<td colspan="2">
+												<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-bold; font-size:13px; background-color:#1b4560; border: 2px #123247 solid; border-radius: 5px;"> &nbsp; Rating: {{bungalow.rating}}</p>
+											</td>
+
+										</tr>
+										<tr>
+											<td colspan="6">
+												<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:10px;">{{bungalow.location.city}}</p>
+											</td>
+											<td colspan="2">
+												<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-bold; font-size:13px; background-color:#1b4560; border: 2px #123247 solid; border-radius: 5px;"> &nbsp; Price: {{bungalow.unitPrice}} $</p>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="8">
+												<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:10px;">{{bungalow.description}}</p>
+											</td>
+										</tr>
+
+									</table>
+	
+									<div class="card-body" style="padding: 1vh;">
 										<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showDetails(bungalow)">Show details</button>
 										<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showUpdateDetails(bungalow)">Update details</button>
 										<button class="float-end btn btn-light button-options" style="background-color: #1b4560; margin-right: 2px;" @click="showDeleteOffer(bungalow)">Delete offer</button>
@@ -200,58 +219,76 @@ template: `
 						<div class="container align-items-start">
 							<img src="images/close-icon.png" style="float:right; width:3vh; height:3vh" @click="backButton()"/><br><br><br>
 							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
-							<div class="container">
-								<div class="row">
-									<div class="col" style="text-align:center;
-																height:100px;
-																background-color: #1b4560;
-																background-image:url('./images/bungalow-images/bungalow-1-in-1.jpg');
-																background-size: contain;
-																background-repeat: no-repeat;
-																background-position: center;											
-																">
-									</div>
-									<div class="col" style="text-align:center;
-																height:100px;
-																background-color: #1b4560;
-																background-image:url('./images/bungalow-images/bungalow-1-out-1.jpg');
-																background-size: contain;
-																background-repeat: no-repeat;
-																background-position: center;											
-																">
-									</div>
-								</div>
+							<form ref="showBungalowForm">
+							<div class="container align-items-start">
+								<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;">
+									<tr>
+										<td colspan="2" style="padding:2.5px; text-align:left; vertical-align:middle;"> <p class="d-inline align-middle" style="font-family:poppins-light; font-size: 12px; text-align:center; color:#fff;"> Bungalow's name: </p> </td>
+										<td colspan="5"><input type="text" id="id_bungalowName" placeholder="   Bungalow's name" class="input-text" v-model="this.selectedBungalow.offerName" style="margin:0; height:20px; font-size:12px; font-family:'poppins-light' color:#fff;" disabled/></td>
+									</tr>
+									<tr>
+										<td colspan="2" style="padding:2.5px; text-align:left; vertical-align:middle;"> <p class="d-inline align-middle" style="font-family:poppins-light; font-size: 12px; text-align:center; color:#fff;"> Bungalow's location: </p> </td>
+										<td colspan="2"><input type="text" placeholder="   Country" class="input-text"  v-model="this.selectedBungalowsLocation.country" style="margin:0; height:20px; font-size:12px; font-family:'poppins-light'" disabled/></td>
+										<td colspan="2"><input type="text" placeholder="   City" class="input-text"  v-model="this.selectedBungalowsLocation.city" style="margin:0; height:20px; font-size:12px; font-family:'poppins-light'" disabled/></td>
+										<td colspan="1"><input type="text" placeholder="   Street" class="input-text"  v-model="this.selectedBungalowsLocation.street" style="margin:0; height:20px; font-size:12px; font-family:'poppins-light'" disabled/></td>
+										<td colspan="1"><input type="text" placeholder="   Street number" class="input-text"  v-model="this.selectedBungalowsLocation.streetNumber" style="margin:0; height:20px; font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" disabled/></td>
+									</tr>
+									<tr> 
+										<td colspan="1" style="padding:2.5px; text-align:center; vertical-align:middle;"> <p class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff;"> Unit price: </p> </td>
+										<td colspan="1" > <input type="number" placeholder="   Unit price" class="input-text"  v-model="this.selectedBungalow.unitPrice" style="height:20px; width:45px; font-size:12px; font-family:'poppins-light'" disabled/></td>
+										<td colspan="1" style=" padding:2.5px; text-align:center; vertical-align:middle; "> <p class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff;"> Maximum capacity: </p> </td>
+										<td colspan="1" ><input type="number" placeholder="   Maximum capacity" class="input-text"  v-model="this.selectedBungalow.maxCustomerCapacity" style="height:20px; width:60px;  font-size:12px; font-family:'poppins-light'; text-overflow: ellipsis;" disabled/></td>					
+										<td colspan="1" style=" padding:2.5px; text-align: center;vertical-align: middle; "> <p class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff;"> Number of rooms: </p> </td>
+										<td colspan="1" ><input type="number" placeholder="   Number of rooms" class="input-text"   v-model="this.selectedBungalow.numberOfRooms" style="height:20px; width:60px; font-size:12px; font-family:'poppins-light'" disabled/></td>
+										<td colspan="1" style=" padding:2.5px; text-align: center;vertical-align: middle;"> <p class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff;;"> Number of beds: </p> </td>
+										<td colspan="1" ><input type="number" placeholder="   Number of beds" class="input-text"   v-model="this.selectedBungalow.numberOfBeds" style="height:20px; width:60px;  font-size:12px; font-family:'poppins-light'" disabled/></td>
+									</tr>
+									<tr> 
+										<td colspan="3" style="padding:2.5px; text-align:left; vertical-align:middle;"> <p class="d-inline align-middle" style="font-family:poppins-light; font-size: 12px; text-align:center; color:#fff;"> Bungalow's description: </p> </td>
+									</tr>
+									<tr>
+										<td colspan="8"><textarea  name="text" placeholder="   Description" class="input-text-area"  v-model="this.selectedBungalow.description" style="height:40px; font-size:12px; font-family:'poppins-light'" disabled></textarea></td>
+									</tr>
+									<tr> 
+										<td colspan="3"> <h3 class="d-inline align-middle" style="font-family: poppins-light; font-size: 12px; text-align: center; color:#fff;"> Bungalow's additional services: </h3> </td>
+									</tr>
+									<tr>
+										<td colspan="8">
+											<label v-for="additionalServ in this.selectedBungalow.additionalServices" class="list-group-item" style="font-family: poppins-light; font-size: 12px; color:#fff; background-color:#1b4560">
+												<input class="form-check-input me-1" type="checkbox" value="" v-on:click="clickAdditionalServ(additionalServ)" checked disabled> {{additionalServ.name}}
+											</label>
+										</td>					
+									</tr>
+									<tr> 
+										<td colspan="3" style="padding:2.5px; text-align:left; vertical-align:middle;"> <p class="d-inline align-middle" style="font-family:poppins-light; font-size: 12px; text-align:center; color:#fff;"> Bungalow's rules of conduct: </p> </td>
+									</tr>
+									<tr>
+										<td colspan="8">
+											<textarea name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="this.selectedBungalow.rulesOfConduct" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'" disabled ></textarea>
+										</td>
+									</tr>
+									<tr> 
+										<td colspan="3" style="padding:2.5px; text-align:left; vertical-align:middle;"> <p class="d-inline align-middle" style="font-family:poppins-light; font-size: 12px; text-align:center; color:#fff;"> Bungalow's cancellation policy: </p> </td>
+									</tr>
+									<tr>
+										<td colspan="8">
+											<textarea name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="this.selectedBungalow.cancellationPolicy" style="margin-top:5px; height:40px; font-size:12px; font-family:'poppins-light'"  disabled></textarea>
+										</td>
+									</tr>
+
+									<tr>
+										<td colspan="8">
+											<div class="overflow-auto card pb-3" style="height: 200px; background-color:#1b4560 ">
+												<div v-for="(image, ind) in this.selectedBungalow.images" style="text-align:center;" >
+													<img class="ms-3 me-3 mt-3 img-fluid" v-bind:src="setImage(image)" alt="SomePhoto" style="width: 80%" >
+												</div>
+											</div>
+										</td>
+									</tr>
+									
+								</table>
 							</div>
-							<hr>
-							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Description: {{this.selectedBungalow.description}}</p>
-							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Rules of Conduct: {{this.selectedBungalow.rulesOfConduct}}</p>
-							<p class="title-text-bold" style="text-align:center; font-size:13px;"> Cancellation policy: {{this.selectedBungalow.cancellationPolicy}}</p>
-							<hr>
-							<div class="container">
-								<div class="row">
-									<div class="col" style="text-align:center;
-																height:100px;
-																background-color: #1b4560;
-																background-image:url('./images/map.jpg');
-																background-size: contain;
-																background-repeat: no-repeat;
-																background-position: center;											
-																">
-									</div>
-								</div>
-								<p class="title-text-bold" style="text-align:center; font-size:13px;"> Location: {{this.selectedBungalowsLocation.country}}, 
-																								{{this.selectedBungalowsLocation.city}},
-																								{{this.selectedBungalowsLocation.street}}
-																								{{this.selectedBungalowsLocation.streetNumber}}</p>
-								<hr>
-								<p class="title-text-bold" style="text-align:center; font-size:13px;"> Rating: {{this.selectedBungalow.rating}}, Initial price: {{this.selectedBungalow.unitPrice}}</p>
-								<p class="title-text-bold" style="text-align:center; font-size:13px;"> Maximum customer capacity: {{this.selectedBungalow.maxCustomerCapacity}}, Number of rooms: {{this.selectedBungalow.numberOfRooms}} ,Number of beds: {{this.selectedBungalow.numberOfBeds}}</p>
-								<hr>
-								<p class="title-text-bold" style="text-align:center; font-size:15px;"> Owner' contact:  {{this.selectedBungalowsOwner.firstName}}
-																										{{this.selectedBungalowsOwner.lastName}},
-																										{{this.selectedBungalowsOwner.email}},
-																										{{this.selectedBungalowsOwner.phoneNumber}}</p>
-							</div>
+						</form>
 						</div>
                 	</div>
 					<!-- PAGE 3 - Update Details -->
@@ -312,12 +349,7 @@ template: `
 		`
 	,
     mounted(){
-
-		this.loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
-		this.loadOwnersBungalows();
-		this.loadAllAdditionalServices();
-		this.initMap();
-
+		this.loadData();
     },
 	computed:{
 		axiosSearchParams() {
@@ -329,6 +361,13 @@ template: `
 		},
 	},
 	methods:{
+		loadData(){
+			this.loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
+			this.loadOwnersBungalows();
+			this.loadAllAdditionalServices();
+			this.initMap();
+		}
+		,
         imageSelected(event){
         	const file = document.querySelector('input[type=file]')
 			var readers = new Array(file.files.length)
@@ -402,13 +441,19 @@ template: `
 			axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
 			axios.get('/api/allMyBungalows').then(response => {
 				this.myBungalows = response.data
+				console.log(this.myBungalows)
 			})
+		},
+		setImage(image){
+			console.log(image.path)
+			return 'http://localhost:8080/api/getImage/'+image.name;
 		},
 		loadAllAdditionalServices(){
 			axios.get('api/getAllAdditionalServicesForBungalows').then(response => {
             this.allAdditionalServices = response.data;
         	});
 		},
+
 		resetAddNewBungalow(){
 			this.dtoAddNewBungalow = {
 				offerType: "BUNGALOW",
@@ -431,10 +476,6 @@ template: `
 				imageCount: 0,
 				imagesFrontend: []
 			};
-		},
-		getBungalowImg(image){
-			console.log(image.id);
-			return 'http://localhost:8080/api/getImage/'+ image.id;
 		},
 		loadBungalowTimeSlots(bungalow){
 			//axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
@@ -527,32 +568,33 @@ template: `
 			this.showPage = 1;
 		},
 		showDetails: function(bungalow){
+			this.selectedBungalow.images = [];
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
 			this.selectedBungalowsOwner = bungalow.user;
-			console.log(this.selectedBungalow.location.country);
+			this.loadData();
 			this.showPage = 2;
 		},
 		showUpdateDetails: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
 			this.selectedBungalowsOwner = bungalow.user;
-			console.log(this.selectedBungalow.location.country);
+			this.loadData();
 			this.showPage = 3;
 		},
 		showDeleteOffer: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
 			this.selectedBungalowsOwner = bungalow.user;
-			console.log(this.selectedBungalow.location.country);
+			this.loadData();
 			this.showPage = 4;
 		},
 		showUpdateAvailableTerms: function(bungalow){
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
 			this.selectedBungalowsOwner = bungalow.user;
-			console.log(this.selectedBungalow.location.country);
-			this.loadBungalowTimeSlots(this.selectedBungalow)
+			this.loadBungalowTimeSlots(this.selectedBungalow);
+			this.loadData();
 			this.showPage = 5;
 			this.initDateRangePicker();
 		},
@@ -560,7 +602,7 @@ template: `
 			this.selectedBungalow = bungalow;
 			this.selectedBungalowsLocation = bungalow.location;
 			this.selectedBungalowsOwner = bungalow.user;
-			console.log(this.selectedBungalow.location.country);
+			this.loadData();
 			this.showPage = 6;
 		},
 		search : function(){

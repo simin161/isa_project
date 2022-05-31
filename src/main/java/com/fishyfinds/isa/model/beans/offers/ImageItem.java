@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.model.beans.offers;
 
+import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "ImageItem")
+@Table
 public class ImageItem {
 
     @Id
@@ -27,9 +28,7 @@ public class ImageItem {
     @Column(name="isDeleted")
     protected boolean isDeleted = false;
 
-
-    public ImageItem() { }
-
+    public ImageItem() {}
     public ImageItem(String name, String path, boolean isDeleted) {
         this.name = name;
         this.path = path;

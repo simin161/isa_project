@@ -43,7 +43,7 @@ public class BoatReservation {
     @Column(name="reservationType")
     private ReservationType reservationType;
 
-    // TODO: Additional Services for Reservation, if reservationType = QUICK
+    // TODO: Additional Services for Reservation, if reservationType =
 
     @Column(name="price", nullable = false)
     private double price;

@@ -277,6 +277,12 @@ header nav a:hover{
 input[type="text"][disabled]{
     color: gray;
 }
+input[type="number"][disabled]{
+  color: gray;
+}
+textarea[disabled]{
+  color: gray;
+}
 ::placeholder{
 	color:white;
 }

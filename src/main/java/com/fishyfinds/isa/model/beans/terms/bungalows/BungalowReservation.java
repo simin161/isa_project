@@ -21,11 +21,11 @@ public class BungalowReservation {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customerId", referencedColumnName = "id")
+    @JoinColumn(name = "customer", referencedColumnName = "id")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "bungalowId", referencedColumnName = "id")
+    @JoinColumn(name = "bungalow", referencedColumnName = "id")
     private Bungalow bungalow;
 
     @Column(name="startTime", nullable = false)

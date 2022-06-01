@@ -43,8 +43,8 @@ public class BoatReservation {
     @Column(name="reservationType")
     private ReservationType reservationType;
 
-    // TODO: Additional Services for Reservation, if reservationType =
-
+    @Column(name="additionalServices")
+    private String additionalServices; //can't be changed => doesn't have to be object
     @Column(name="price", nullable = false)
     private double price;
 

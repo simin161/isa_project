@@ -20,6 +20,7 @@ public class BoatTermService {
         for(BoatTerm bt: boatTerms){
             TermDto d = new TermDto(bt.getStartTime(), bt.getEndTime());
             d.offer = bt.getBoat();
+            d.id = bt.getId();
             dto.add(d);
         }
         return dto;

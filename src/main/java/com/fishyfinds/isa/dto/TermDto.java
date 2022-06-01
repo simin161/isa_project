@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public class TermDto {
+    public Long id;
     public Offer offer;
     public LocalDateTime startTime;
     public LocalDateTime endTime;

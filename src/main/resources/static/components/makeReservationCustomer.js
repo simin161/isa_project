@@ -13,9 +13,6 @@ Vue.component('makeReservation', {
 template: `
 	<div>
         <nav-bar></nav-bar>
-        <div v-if="number >= 3">
-            <p style="color: white">You have more than 3 penals, you cannot make a reservation</p>
-        </div>
         <div style="margin-left: 35%; margin-top: 2.5%">
             <select v-model="filterDto.offerType">
                 <option>BUNGALOW</option>
@@ -41,7 +38,12 @@ template: `
                             <tr><td><input disabled type="text" style="color:white" placeholder="   Unit price" class="input-text"  v-model="term.offer.unitPrice"/></td></tr><br>
                             <tr><textarea disabled rowspan="3" style="color:white" name="text" placeholder="   Description" class="input-text-area"  v-model="term.offer.description" ></textarea></tr><br>
                             <tr><td><input disabled type="text" style="color:white" placeholder="   Maximum capacity" class="input-text"  v-model="term.offer.maxCustomerCapacity"/></td></tr><br>
-                            <tr><textarea disabled rowspan="3" style="color:white" name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="term.offer.additionalServices" ></textarea></tr><br>
+                            <tr>
+                                <td v-for="a in term.offer.additionalServices">
+                                    <input type="checkbox" style="color: white" v-model="a.id" checked />
+                                    <label>{{a.name}}</label>
+                                </td>
+                            </tr><br>
                             <tr><textarea disabled rowspan="3" style="color:white" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="term.offer.rulesOfConduct" ></textarea></tr><br>
                             <tr><textarea disabled rowspan="3" style="color:white" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="term.offer.cancellationPolicy" ></textarea></tr><br>
                             <td><td><input type="button" value="Book!" @click="makeReservation(term)"/></td></tr>

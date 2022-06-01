@@ -41,6 +41,7 @@ public class BungalowTermService {
         for(BungalowTerm bt: bungalowTerms){
             TermDto d = new TermDto(bt.getStartTime(), bt.getEndTime());
             d.offer = bt.getBungalow();
+            d.id = bt.getId();
             dto.add(d);
         }
         return dto;

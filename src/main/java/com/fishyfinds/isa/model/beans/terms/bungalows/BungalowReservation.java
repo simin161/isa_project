@@ -42,7 +42,8 @@ public class BungalowReservation {
     @Column(name="reservationType", nullable = false)
     private ReservationType reservationType;
 
-    // TODO: Additional Services for Reservation, if reservationType = QUICK
+    @Column(name="additionalServices")
+    private String additionalServices;
 
     @Column(name="price", nullable = false)
     private double price;

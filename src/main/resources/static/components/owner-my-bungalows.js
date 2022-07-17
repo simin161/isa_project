@@ -419,12 +419,12 @@ template: `
 			var today = new Date();
 			$('input[name="daterange"]').daterangepicker({
 				autoUpdateInput: true,
-				//timePicker24Hour: true,
-				//timePicker: true,
+				timePicker24Hour: true,
+				timePicker: true,
 				autoApply: true,
 				minDate: today,
-				//startDate: moment().startOf('hour'),
-				//endDate: moment().startOf('hour').add(32, 'hour'),
+				startDate: moment().startOf('hour'),
+				endDate: moment().startOf('hour').add(32, 'hour'),
 				locale: {
 				  format: 'YYYY/MM/DD HH:mm',
 				  firstDay: 1
@@ -484,7 +484,7 @@ template: `
 				this.bungalowTimeSlots.forEach((element,index) => {
 					this.bungalowTimeSlots[index].startTime = element.startTime.replace("T", " ");
 					this.bungalowTimeSlots[index].endTime = element.endTime.replace("T", " ");
-					this.bungalowTimeSlots[index].endTime = element.endTime.substring(0, element.endTime.indexOf("."))
+					//this.bungalowTimeSlots[index].endTime = element.endTime.substring(0, element.endTime.indexOf("."))
 				});
 			})
 		},

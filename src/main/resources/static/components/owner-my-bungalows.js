@@ -58,8 +58,6 @@ Vue.component('owner-my-bungalows', {
 			backgroundColor: {},
 			cursorStyle: {},
 
-
-
 		}
 	},
 template: `	
@@ -315,7 +313,7 @@ template: `
 							<p class="title-text-bold" style="text-align:center;"> {{this.selectedBungalow.offerName}}</p>
 							<hr>
 							<div class="container mt-5 mb-5" style="width: 400px">
-								<input type="text" id="picker" name="datetimes" class="form-control" style="background-color: #1b4560; color: #fff;" >
+								<input type="text" id="picker" name="daterange" class="form-control" style="background-color: #1b4560; color: #fff;" >
 								<br>
 								<p style="font-family:poppins-light; color:#fff"> Start date: <b id="startDate"> ...... </b></p>
 								<p style="font-family:poppins-light; color:#fff"> End date:   <b id="endDate"> ...... </b></p>
@@ -329,8 +327,8 @@ template: `
 							<table class="flat-table flat-table-1">
 								<thead> <th>Start time</th> <th>End time</th> </thead>
 								<tbody v-for="timeSlot in bungalowTimeSlots"> 
-										<tr> <td>{{timeSlot.startTime }}</td> 
-											 <td>{{timeSlot.endTime }}</td> </tr>
+										<tr> <td>{{ timeSlot.startTime }}</td> 
+											 <td>{{ timeSlot.endTime }}</td> </tr>
 								</tbody>
 							</table>
 						</div>
@@ -419,22 +417,22 @@ template: `
 		},
 		initDateRangePicker(){
 			var today = new Date();
-			$('input[name="datetimes"]').daterangepicker({
+			$('input[name="daterange"]').daterangepicker({
 				autoUpdateInput: true,
-				timePicker24Hour: true,
-				timePicker: true,
+				//timePicker24Hour: true,
+				//timePicker: true,
 				autoApply: true,
 				minDate: today,
-				startDate: moment().startOf('hour'),
-				endDate: moment().startOf('hour').add(32, 'hour'),
+				//startDate: moment().startOf('hour'),
+				//endDate: moment().startOf('hour').add(32, 'hour'),
 				locale: {
 				  format: 'YYYY/MM/DD HH:mm',
 				  firstDay: 1
 				}}
 				,
 				function(startDate, endDate, label){
-					$('#startDate').text(startDate.format('YYYY-MM-DD HH:mm'))
-					$('#endDate').text(endDate.format('YYYY-MM-DD HH:mm'))
+					$('#startDate').text(startDate.format('YYYY-MM-DD'))
+					$('#endDate').text(endDate.format('YYYY-MM-DD'))
 				});
 		},
 		loadOwnersBungalows(){
@@ -479,9 +477,15 @@ template: `
 		},
 		loadBungalowTimeSlots(bungalow){
 			//axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
-			axios.get('/api/bungalow/getBungalowTimeSlots/' + bungalow.id)
+			axios.get('/api/getTermsByOfferId/' + bungalow.id)
 			.then(response => {
+				console.log("EEE - ",response)
 				this.bungalowTimeSlots = response.data
+				this.bungalowTimeSlots.forEach((element,index) => {
+					this.bungalowTimeSlots[index].startTime = element.startTime.replace("T", " ");
+					this.bungalowTimeSlots[index].endTime = element.endTime.replace("T", " ");
+					this.bungalowTimeSlots[index].endTime = element.endTime.substring(0, element.endTime.indexOf("."))
+				});
 			})
 		},
 		backButton: function(){
@@ -489,8 +493,8 @@ template: `
 			this.$router.go(this.$router.currentRoute)
 		},
 		addNewTimeSlotToBungalow(){
-			let startDate = moment($('input[name="datetimes"]').data('daterangepicker').startDate).toDate();
-			let endDate = moment($('input[name="datetimes"]').data('daterangepicker').endDate).toDate();
+			let startDate = moment($('input[name="daterange"]').data('daterangepicker').startDate).toDate();
+			let endDate = moment($('input[name="daterange"]').data('daterangepicker').endDate).toDate();
 			this.dataToSend_AvailbleTimeSlot.startTime = startDate;
 			this.dataToSend_AvailbleTimeSlot.endTime = endDate;
 			var isValidNewTimeSlot = !this.multipleDateRangeOverlaps();
@@ -500,7 +504,7 @@ template: `
 			}
 			else{
 				axios.defaults.headers.common["Authorization"] = localStorage.getItem("user");
-				axios.post('/api/bungalow/addNewTimeSlotToBungalow/' + this.selectedBungalow.id , this.dataToSend_AvailbleTimeSlot)
+				axios.post('/api/addNewTermToOffer/' + this.selectedBungalow.id , this.dataToSend_AvailbleTimeSlot)
 				.then(response => { 
 					if(response.data === true){ 
 						Swal.fire('Added available time slot successfully!', 'Hurray!!', 'success')

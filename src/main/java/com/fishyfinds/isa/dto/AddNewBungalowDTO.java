@@ -4,7 +4,7 @@ import com.fishyfinds.isa.model.beans.offers.AdditionalService;
 
 import java.util.ArrayList;
 
-public class AddNewBungalowDto {
+public class AddNewBungalowDTO {
 
     private String offerName;
 
@@ -28,9 +28,9 @@ public class AddNewBungalowDto {
     private ArrayList<AdditionalService> additionalServices;
     private ArrayList<String> image;
 
-    public AddNewBungalowDto(){}
+    public AddNewBungalowDTO(){}
 
-    public AddNewBungalowDto(String offerName, String country, String city, String street, String streetNumber, double longitude, double latitude, String description, double unitPrice, int maxCustomerCapacity, int numberOfRooms, int numberOfBeds, String rulesOfConduct, String cancellationPolicy, ArrayList<AdditionalService> additionalServices, ArrayList<String> image) {
+    public AddNewBungalowDTO(String offerName, String country, String city, String street, String streetNumber, double longitude, double latitude, String description, double unitPrice, int maxCustomerCapacity, int numberOfRooms, int numberOfBeds, String rulesOfConduct, String cancellationPolicy, ArrayList<AdditionalService> additionalServices, ArrayList<String> image) {
         this.offerName = offerName;
         this.country = country;
         this.city = city;

@@ -119,14 +119,14 @@ insert into offer_additional_service(offer_id, additional_service_id) values(5,6
 -- ADDITIONAL SERVICES END --
 
 --TERMS START--
-INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
-    values(1, '2022-06-06T10:00:00',  '2022-06-12T10:00:00' , 1);
-INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
-        values(2, '2022-06-13T10:00:00',  '2022-06-14T10:00:00' , 1);
-INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
-    values(3, '2022-05-22T10:00:00',  '2022-05-23T10:00:00' , 2);
-INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
-    values(4, '2022-05-30T10:00:00',  '2022-07-23T10:00:00' , 2);
+-- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+--     values(1, '2022-06-06T10:00:00',  '2022-06-12T10:00:00' , 1);
+-- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+--         values(2, '2022-06-13T10:00:00',  '2022-06-14T10:00:00' , 1);
+-- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+--     values(3, '2022-05-22T10:00:00',  '2022-05-23T10:00:00' , 2);
+-- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
+--     values(4, '2022-05-30T10:00:00',  '2022-07-23T10:00:00' , 2);
 --TERMS END--
 
 --DELETE REQUEST BEGIN--

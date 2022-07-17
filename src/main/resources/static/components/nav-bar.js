@@ -52,6 +52,12 @@ template: `
                                     <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>
                                     <a href="#/" @click="signOut" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
                                 </div>
+
+                                <div v-show="loggedUser.userType == 'BUNGALOW_OWNER'">
+                                    <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>
+                                    <a href="#/" @click="signOut" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
+                                </div>
+
                             </nav>
                         </div>
                     </div>

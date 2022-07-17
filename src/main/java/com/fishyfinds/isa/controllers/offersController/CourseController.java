@@ -2,7 +2,6 @@ package com.fishyfinds.isa.controllers.offersController;
 
 import com.fishyfinds.isa.dto.OfferDTO;
 import com.fishyfinds.isa.model.beans.Subscriber;
-import com.fishyfinds.isa.model.beans.offers.boats.Boat;
 import com.fishyfinds.isa.model.beans.offers.courses.Course;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.SubscriberService;

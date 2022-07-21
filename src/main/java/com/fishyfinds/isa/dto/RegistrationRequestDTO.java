@@ -3,7 +3,7 @@ package com.fishyfinds.isa.dto;
 
 import com.fishyfinds.isa.model.enums.RegistrationStatus;
 
-public class RegistrationRequestDto {
+public class RegistrationRequestDTO {
 
 	private String firstName;
 	private String lastName;

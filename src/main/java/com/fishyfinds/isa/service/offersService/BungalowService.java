@@ -1,7 +1,6 @@
 package com.fishyfinds.isa.service.offersService;
 
-import com.fishyfinds.isa.dto.AddNewBungalowDto;
-import com.fishyfinds.isa.mappers.DtoToOffer;
+import com.fishyfinds.isa.dto.AddNewBungalowDTO;
 import com.fishyfinds.isa.model.beans.offers.AdditionalService;
 import com.fishyfinds.isa.model.beans.offers.ImageItem;
 import com.fishyfinds.isa.model.beans.offers.Location;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class BungalowService {
@@ -61,7 +59,7 @@ public class BungalowService {
         return true;
     }*/
 
-    public boolean addNewBungalow(AddNewBungalowDto addNewBungalowDto, String username) {
+    public boolean addNewBungalow(AddNewBungalowDTO addNewBungalowDto, String username) {
         User user = userRepository.findByEmail(username);
         if (user == null) return false;
         Bungalow bungalow = new Bungalow();

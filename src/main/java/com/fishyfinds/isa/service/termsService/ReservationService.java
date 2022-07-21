@@ -1,27 +1,29 @@
 package com.fishyfinds.isa.service.termsService;
 
-import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
-import com.fishyfinds.isa.model.beans.terms.bungalows.BungalowReservation;
-import com.fishyfinds.isa.model.beans.terms.bungalows.BungalowTerm;
-import com.fishyfinds.isa.model.enums.ReservationType;
-import com.fishyfinds.isa.model.enums.StatusOfReservation;
-import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
-import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
-import com.fishyfinds.isa.repository.termsRepository.BungalowTermRepository;
-import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
+import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
-public class BungalowReservationService {
+public class ReservationService {
+
     @Autowired
-    private BungalowRepository bungalowRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private BungalowTermRepository bungalowTermRepository;
+    private ReservationRepository reservationRepository;
+
+    // TODO: makeReservation - Bungalow, Boat (w/o captain), Course (pogledati kommentb blok dole)
+    public boolean makeReservation(Map<String, String> message) {
+        return false;
+    }
+
+    // TODO: makeReservationWithCaptain - Boat (with captain)
+    public boolean makeReservationWithCaptain(Map<String, String> message) {
+        return false;
+    }
+
+    /*
+
     public boolean makeReservation(Map<String, String> message) {
         BungalowReservation bungalowReservation = new BungalowReservation();
         Bungalow bungalow = bungalowRepository.findById(Long.valueOf(message.get("offerId"))).orElse(null);
@@ -38,4 +40,7 @@ public class BungalowReservationService {
         bungalowReservation.setStatusOfReservation(StatusOfReservation.ACTIVE);
         return false;
     }
+
+    */
+
 }

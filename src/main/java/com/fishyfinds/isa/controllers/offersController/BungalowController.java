@@ -1,6 +1,6 @@
 package com.fishyfinds.isa.controllers.offersController;
 
-import com.fishyfinds.isa.dto.AddNewBungalowDto;
+import com.fishyfinds.isa.dto.AddNewBungalowDTO;
 import com.fishyfinds.isa.dto.OfferDTO;
 import com.fishyfinds.isa.model.beans.Subscriber;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value="/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -94,7 +93,7 @@ public class BungalowController {
 
     @PostMapping("/addNewBungalow")
     public boolean addNewBungalow(@RequestHeader("Authorization") HttpHeaders header,
-                                  @RequestBody AddNewBungalowDto addNewBungalowDto){
+                                  @RequestBody AddNewBungalowDTO addNewBungalowDto){
         System.out.println("[BungalowController]-[api/addNewBungalow]");
         System.out.println(addNewBungalowDto.toString());
         try {

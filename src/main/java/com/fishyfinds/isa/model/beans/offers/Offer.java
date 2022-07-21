@@ -1,6 +1,6 @@
 package com.fishyfinds.isa.model.beans.offers;
 
-import com.fishyfinds.isa.model.beans.Term;
+import com.fishyfinds.isa.model.beans.terms.Term;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.OfferType;
 import lombok.Getter;
@@ -45,9 +45,10 @@ public class Offer {
 
     @Column(name = "rating", nullable = false)
     protected double rating;
-
+/*
     @OneToMany(mappedBy="id", fetch = FetchType.EAGER)
     protected Set<Term> terms;
+ */
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     protected Set<ImageItem> images = new HashSet<ImageItem>();

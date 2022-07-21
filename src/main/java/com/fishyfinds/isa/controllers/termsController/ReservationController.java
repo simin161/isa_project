@@ -1,0 +1,36 @@
+package com.fishyfinds.isa.controllers.termsController;
+
+import com.fishyfinds.isa.service.termsService.ReservationService;
+import com.fishyfinds.isa.service.termsService.TermService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@RestController
+@RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
+public class ReservationController {
+
+    @Autowired
+    private ReservationService reservationService;
+
+    @PostMapping("/makeReservation")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public boolean makeReservation(@RequestHeader HttpHeaders header,
+                                   @RequestBody Map<String, String> message){
+        return reservationService.makeReservation(message);
+    }
+
+    @PostMapping("/makeReservationWithCaptain")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public boolean makeReservationWithCaptain(@RequestHeader HttpHeaders header,
+                                            @RequestBody Map<String, String> message){
+        return reservationService.makeReservationWithCaptain(message);
+    }
+
+
+
+}

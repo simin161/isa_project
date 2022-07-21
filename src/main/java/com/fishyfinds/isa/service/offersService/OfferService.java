@@ -117,6 +117,15 @@ public class OfferService {
         return retVal;
     }
 
+    public Offer findOfferByOfferId(Long offerId){
+        for(Offer offer : offerRepository.findAll()){
+            if(offer.getId().equals(offerId)){
+                return offer;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Offer> getBungalowsByOwner(User bungalowOwner) {
         return (ArrayList<Offer>)offerRepository.findAllByUser(bungalowOwner);
     }

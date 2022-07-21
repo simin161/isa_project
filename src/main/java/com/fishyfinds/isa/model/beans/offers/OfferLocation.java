@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+// TODO: DELETE THIS: OfferLocation (offer_location table)
+/*
 @Entity
 @Getter
 @Setter
@@ -22,3 +24,4 @@ public class OfferLocation {
     private int locationId;
 
 }
+*/

@@ -119,15 +119,25 @@ insert into offer_additional_service(offer_id, additional_service_id) values(5,6
 -- ADDITIONAL SERVICES END --
 
 --TERMS START--
--- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
---     values(1, '2022-06-06T10:00:00',  '2022-06-12T10:00:00' , 1);
--- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
---         values(2, '2022-06-13T10:00:00',  '2022-06-14T10:00:00' , 1);
--- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
---     values(3, '2022-05-22T10:00:00',  '2022-05-23T10:00:00' , 2);
--- INSERT INTO public.bungalow_term(id, start_time, end_time, bungalow_id)
---     values(4, '2022-05-30T10:00:00',  '2022-07-23T10:00:00' , 2);
+-- TODO: Inserting terms...
+INSERT INTO public.term(id, start_date, end_date, offer)
+     values(1, '2022-06-06T10:00:00',  '2022-06-12T10:00:00' , 1); -- Bungy Wumby
+INSERT INTO public.term(id, start_date, end_date, offer)
+     values(2, '2022-07-06T10:00:00',  '2022-07-12T10:00:00' , 1); -- Bungy Wumby
 --TERMS END--
+
+--RESERVATIONS START--
+-- TODO: Inserting reservations...
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer)
+    values(1, '2022-07-08T10:00:00',  '2022-07-09T10:00:00' , 0, 0, 1);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer)
+    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1);
+-- TODO: Inserting boatReservations... (reservation with 'captain' field)
+INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
+   VALUES(2,4);
+--RESERVATIONS END--
+
+
 
 --DELETE REQUEST BEGIN--
 INSERT INTO public.delete_request(id, explanation, status, users)

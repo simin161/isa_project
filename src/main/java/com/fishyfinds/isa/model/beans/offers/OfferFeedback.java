@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+// TODO: DELETE THIS: OfferFeedback (offer_feedback table)
+
+/*
 @Entity
 @Getter
 @Setter
@@ -22,3 +25,4 @@ public class OfferFeedback {
     private int feedbackId;
 
 }
+*/

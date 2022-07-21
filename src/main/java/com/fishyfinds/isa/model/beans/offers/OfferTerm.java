@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+// TODO: DELETE THIS: OfferTerm (offer_term table)
+
+/*
 @Entity
 @Getter
 @Setter
@@ -22,3 +25,4 @@ public class OfferTerm {
     private int termId;
 
 }
+*/

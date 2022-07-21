@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Reservation")
 public class Reservation {
 

@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+// TODO: DELETE THIS: OwnerBungalow (relation_owner_bungalow table)
+/*
 @Entity
 @Getter
 @Setter
@@ -22,3 +24,4 @@ public class OwnerBungalow {
     private int bungalowId;
 
 }
+*/

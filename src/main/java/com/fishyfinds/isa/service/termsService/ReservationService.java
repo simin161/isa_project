@@ -1,20 +1,58 @@
 package com.fishyfinds.isa.service.termsService;
 
+import com.fishyfinds.isa.model.beans.terms.Reservation;
+import com.fishyfinds.isa.model.beans.terms.Term;
+import com.fishyfinds.isa.model.beans.users.User;
+import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.enums.ReservationStatus;
+import com.fishyfinds.isa.model.enums.ReservationType;
 import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
+import com.fishyfinds.isa.repository.termsRepository.TermRepository;
+import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
 public class ReservationService {
-
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private TermRepository termRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
-    // TODO: makeReservation - Bungalow, Boat (w/o captain), Course (pogledati kommentb blok dole)
-    public boolean makeReservation(Map<String, String> message) {
-        return false;
+    public boolean makeReservation(Map<String, String> message, String username) {
+        boolean retVal = true;
+        try {
+            LocalDateTime startDate = LocalDateTime.parse(message.get("startDate"));
+            LocalDateTime endDate = LocalDateTime.parse(message.get("endDate"));
+            if(termRepository.checkIfReservationIsAvailable(Long.parseLong(message.get("id")),startDate,endDate) == null){
+                Customer customer = customerRepository.findByEmail(username);
+                Reservation reservation = new Reservation();
+                reservation.setReservationStatus(ReservationStatus.ACTIVE);
+                reservation.setReservationType(ReservationType.DEFAULT);
+                reservation.setCustomer(customer);
+                reservation.setStartDate(startDate);
+                reservation.setEndDate(endDate);
+                reservationRepository.save(reservation);
+                updateTermsReservation(Long.parseLong(message.get("id")), reservation);
+            }
+        }catch(Exception e){
+            retVal = false;
+        }
+        return retVal;
+    }
+
+    private void updateTermsReservation(Long termId, Reservation reservation){
+        Term term = termRepository.findById(termId).orElse(null);
+        if(term != null){
+            term.getReservations().add(reservation);
+            termRepository.save(term);
+        }
     }
 
     // TODO: makeReservationWithCaptain - Boat (with captain)

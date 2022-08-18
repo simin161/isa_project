@@ -1,7 +1,9 @@
 package com.fishyfinds.isa.controllers.termsController;
 
+import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.termsService.ReservationService;
 import com.fishyfinds.isa.service.termsService.TermService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,11 +19,24 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private TokenUtils tokenUtils;
+
     @PostMapping("/makeReservation")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean makeReservation(@RequestHeader HttpHeaders header,
                                    @RequestBody Map<String, String> message){
-        return reservationService.makeReservation(message);
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.makeReservation(message, username);
+
+        }catch(Exception e){
+        }
+
+        return false;
     }
 
     @PostMapping("/makeReservationWithCaptain")

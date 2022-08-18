@@ -61,7 +61,18 @@ template: `
     },
     methods: {
         makeReservation : function(term){
-
+            axios.post("/api/makeReservation", term)
+                 .then((response) => {
+                    if(response.data){
+                        Swal.fire('Reservation made successfuly!',
+                                  '',
+                                 'success')
+                    }else{
+                        Swal.fire('Ooops, something went wrong!',
+                                  'Please, try again later.',
+                                  'failure')
+                    }
+                 })
         },
         filterTerms : function(){
             axios.post("/api/filterAvailableTerms", this.filterDto)

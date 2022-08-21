@@ -1,6 +1,7 @@
 package com.fishyfinds.isa.model.beans.terms;
 
 
+import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.model.enums.ReservationStatus;
 import com.fishyfinds.isa.model.enums.ReservationType;
@@ -40,7 +41,9 @@ public class Reservation {
     @JoinColumn(name="customer", referencedColumnName = "id")
     private Customer customer;
 
-
+    @OneToOne
+    @JoinColumn(name="offer", referencedColumnName = "id")
+    private Offer offer;
     public Reservation() { }
 
     public Reservation(LocalDateTime startDate, LocalDateTime endDate, Customer customer, ReservationStatus reservationStatus) {

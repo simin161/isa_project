@@ -3,6 +3,7 @@ package com.fishyfinds.isa.model.beans.terms;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,12 +14,12 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "Term")
+@SequenceGenerator(name = "sequence", sequenceName = "mySequence")
 public class Term {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@SequenceGenerator(name="mySeqGen_Term", sequenceName = "mySeq_Term", initialValue = 5, allocationSize = 1)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_Term")
+	@GenericGenerator(name = "seq", strategy="increment")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
 	private Long id;
 
 	@OneToOne

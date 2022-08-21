@@ -4,6 +4,7 @@ import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
 import com.fishyfinds.isa.model.beans.users.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -11,12 +12,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table
+@SequenceGenerator(name = "sequence", sequenceName = "mySequence")
 public class ImageItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //    @SequenceGenerator(name="mySeqGen_Image", sequenceName = "mySeq_Image", initialValue = 2, allocationSize = 1)
-    //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_Image")
+    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     private Long id;
 
     @Column(name="name")

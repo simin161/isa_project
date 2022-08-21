@@ -6,6 +6,7 @@ import com.fishyfinds.isa.model.enums.ReservationStatus;
 import com.fishyfinds.isa.model.enums.ReservationType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,10 +16,12 @@ import java.time.LocalDateTime;
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Reservation")
+@SequenceGenerator(name = "sequence", sequenceName = "mySequence")
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     private Long id;
 
     @Column(name = "startDate")

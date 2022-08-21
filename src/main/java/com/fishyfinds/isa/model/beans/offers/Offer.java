@@ -5,6 +5,7 @@ import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.OfferType;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,12 +16,12 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "Offer")
+@SequenceGenerator(name = "sequence", sequenceName = "mySequence")
 public class Offer {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name="mySeqGen_Offer", sequenceName = "mySeq_Offer", initialValue = 6, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_Offer")
+    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     protected Long id;
 
     @Column(name = "offerType", nullable = false)

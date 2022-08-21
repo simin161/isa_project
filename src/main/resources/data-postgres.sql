@@ -97,25 +97,25 @@ INSERT INTO public.boat(boat_length, boat_type, id, engine)
 --OFFERS END--
 
 -- ADDITIONAL SERVICES START --
-insert into additional_service(name, type) values ('Wi-fi', 'ADDITIONAL_SERVICE'); -- 1
-insert into additional_service(name, type) values ('Parking', 'ADDITIONAL_SERVICE'); -- 2
+--insert into additional_service(name, type) values ('Wi-fi', 'ADDITIONAL_SERVICE'); -- 1
+--insert into additional_service(name, type) values ('Parking', 'ADDITIONAL_SERVICE'); -- 2
 
-insert into additional_service(name, type) values ('Nets', 'FISHING_TOOL'); -- 3
-insert into additional_service(name, type) values ('Hooks', 'FISHING_TOOL'); -- 4
-insert into additional_service(name, type) values ('Traps', 'FISHING_TOOL'); -- 5
+--insert into additional_service(name, type) values ('Nets', 'FISHING_TOOL'); -- 3
+--insert into additional_service(name, type) values ('Hooks', 'FISHING_TOOL'); -- 4
+--insert into additional_service(name, type) values ('Traps', 'FISHING_TOOL'); -- 5
 
-insert into additional_service(name, type) values ('GPS', 'NAVIGATIONAL_TOOL'); -- 6
-insert into additional_service(name, type) values ('Compass', 'NAVIGATIONAL_TOOL'); -- 7
-insert into additional_service(name, type) values ('Auto Pilot', 'NAVIGATIONAL_TOOL'); -- 8
+--insert into additional_service(name, type) values ('GPS', 'NAVIGATIONAL_TOOL'); -- 6
+--insert into additional_service(name, type) values ('Compass', 'NAVIGATIONAL_TOOL'); -- 7
+--insert into additional_service(name, type) values ('Auto Pilot', 'NAVIGATIONAL_TOOL'); -- 8
 
-insert into offer_additional_service(offer_id, additional_service_id) values(1,1);
-insert into offer_additional_service(offer_id, additional_service_id) values(2,2);
-insert into offer_additional_service(offer_id, additional_service_id) values(3,1);
+--insert into offer_additional_service(offer_id, additional_service_id) values(1,1);
+--insert into offer_additional_service(offer_id, additional_service_id) values(2,2);
+--insert into offer_additional_service(offer_id, additional_service_id) values(3,1);
 
-insert into offer_additional_service(offer_id, additional_service_id) values(4,3);
+--insert into offer_additional_service(offer_id, additional_service_id) values(4,3);
 
-insert into offer_additional_service(offer_id, additional_service_id) values(5,3);
-insert into offer_additional_service(offer_id, additional_service_id) values(5,6);
+--insert into offer_additional_service(offer_id, additional_service_id) values(5,3);
+--insert into offer_additional_service(offer_id, additional_service_id) values(5,6);
 -- ADDITIONAL SERVICES END --
 
 --TERMS START--

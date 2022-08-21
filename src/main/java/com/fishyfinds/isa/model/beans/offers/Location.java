@@ -2,6 +2,7 @@ package com.fishyfinds.isa.model.beans.offers;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -9,12 +10,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "Location")
+@SequenceGenerator(name = "sequence", sequenceName = "mySequence")
 public class Location{
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name="mySeqGen_Location", sequenceName = "mySeq_Location", initialValue = 2, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGen_Location")
+    @GenericGenerator(name = "seq", strategy="increment")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     private Long id;
 
     @Column(name = "longitude")

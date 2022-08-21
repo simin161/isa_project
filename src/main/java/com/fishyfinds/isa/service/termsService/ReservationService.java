@@ -25,6 +25,12 @@ public class ReservationService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    /**
+     * Customer side method
+     * @param message - map containing values same as in TermDTO
+     * @param username - customer email
+     * @return - boolean value depending on result of query execution - true -> success, fase -> failure
+     */
     public boolean makeReservation(Map<String, String> message, String username) {
         boolean retVal = true;
         try {
@@ -47,17 +53,32 @@ public class ReservationService {
         return retVal;
     }
 
+    /**
+     * Customer side method
+     * @param id - reservation id
+     * @param username - customer email
+     * @return - boolean value depending on result of query execution - true -> success, fase -> failure
+     */
+    public boolean makeReservationAction(Long id, String username){
+        boolean retVal = true;
+        try{
+            Reservation reservation = reservationRepository.findById(id).orElse(null);
+            if(reservation != null){
+                reservation.setCustomer(customerRepository.findByEmail(username));
+                reservationRepository.save(reservation);
+            }
+        }catch(Exception e){
+            retVal = false;
+        }
+        return retVal;
+    }
+
     private void updateTermsReservation(Long termId, Reservation reservation){
         Term term = termRepository.findById(termId).orElse(null);
         if(term != null){
             term.getReservations().add(reservation);
             termRepository.save(term);
         }
-    }
-
-    // TODO: makeReservationWithCaptain - Boat (with captain)
-    public boolean makeReservationWithCaptain(Map<String, String> message) {
-        return false;
     }
 
     /*

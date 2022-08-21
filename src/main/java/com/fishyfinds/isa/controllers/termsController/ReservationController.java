@@ -39,11 +39,21 @@ public class ReservationController {
         return false;
     }
 
-    @PostMapping("/makeReservationWithCaptain")
+    @PostMapping("/makeReservationAction")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean makeReservationWithCaptain(@RequestHeader HttpHeaders header,
-                                            @RequestBody Map<String, String> message){
-        return reservationService.makeReservationWithCaptain(message);
+                                            @RequestBody String id){
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.makeReservationAction(Long.valueOf(id), username);
+
+        }catch(Exception e){
+        }
+
+        return false;
     }
 
 

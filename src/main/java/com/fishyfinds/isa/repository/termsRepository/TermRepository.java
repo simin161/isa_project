@@ -15,4 +15,7 @@ public interface TermRepository extends JpaRepository<Term, Long> {
             "r.endDate between :startDate and :endDate", nativeQuery = true)
     List<Term> checkIfReservationIsAvailable(@Param("id")long id, @Param("startDate")LocalDateTime startDate,
                                              @Param("endDate")LocalDateTime endDate);
+
+    @Query(value = "SELECT * term t, termReservation tr where t.id = tr.term and tr.reservation = :reservationID", nativeQuery = true)
+    Term findTermByReservation(@Param("reservationID")long id);
 }

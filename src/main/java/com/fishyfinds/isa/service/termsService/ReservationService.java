@@ -81,25 +81,26 @@ public class ReservationService {
         }
     }
 
-    /*
+    public boolean cancelReservation(Long id) {
+        boolean retVal = true;
+        try{
+            Reservation reservation = reservationRepository.findById(id).orElse(null);
+            if(reservation.getReservationType() == ReservationType.QUICK) {
+                reservation.setCustomer(null);
+                reservation.setReservationStatus(ReservationStatus.CANCELLED);
+                reservationRepository.save(reservation);
+            }else{
+                reservationRepository.deleteById(id);
+                //TODO: discuss the necessity of deleting cancelled reservation if DEFAULT, -> should be deleted also from terms
+                Term term = termRepository.findTermByReservation(id);
+                term.getReservations().remove(reservation);
+                termRepository.save(term);
+            }
 
-    public boolean makeReservation(Map<String, String> message) {
-        BungalowReservation bungalowReservation = new BungalowReservation();
-        Bungalow bungalow = bungalowRepository.findById(Long.valueOf(message.get("offerId"))).orElse(null);
-        bungalowReservation.setBungalow(bungalow);
-        bungalowReservation.setCustomer(customerRepository.findByEmail(message.get("email")));
-        BungalowTerm term = bungalowTermRepository.findById(Long.valueOf(message.get("termId"))).orElse(null);
-        bungalowReservation.setStartTime(term.getStartTime());
-        bungalowReservation.setEndTime(term.getEndTime());
-        bungalowReservation.setAdditionalServices(message.get("additionalServices"));
-        bungalowReservation.setReservationType(ReservationType.DEFAULT);
-        bungalowReservation.setMaxNumberOfPeople(Integer.parseInt(message.get("numOfPeople")));
-        double price = Integer.parseInt(message.get("numOfPeople")) * bungalow.getUnitPrice();
-        bungalowReservation.setPrice(price);
-        bungalowReservation.setStatusOfReservation(StatusOfReservation.ACTIVE);
-        return false;
+        }catch(Exception e){
+            retVal = false;
+        }
+
+        return retVal;
     }
-
-    */
-
 }

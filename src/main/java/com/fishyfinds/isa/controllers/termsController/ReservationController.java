@@ -56,6 +56,9 @@ public class ReservationController {
         return false;
     }
 
-
+    @PutMapping("/cancelReservation")
+    public boolean cancelReservation(@RequestBody String id){
+        return reservationService.cancelReservation(Long.parseLong(id));
+    }
 
 }

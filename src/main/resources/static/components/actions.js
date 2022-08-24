@@ -1,48 +1,13 @@
-Vue.component('upcoming', {
+Vue.component('actions', {
 data: function(){
     		return{
     			showPage: 0,
     			sortOption: "",
-    			bungalowToShow: {
-    			    id: 0,
-    			    offerType: "BUNGALOW",
-                    offerName: "",
-                    user: {
-                        biography: "",
-                        email: "",
-                        firstName: "",
-                        lastName: "",
-                        phoneNumber: ""
-                    },
-                    location:{
-                        country: "",
-                        city: "",
-                        street: "",
-                        streetNumber:""
-                    },
-                    description:"",
-                    unitPrice:"",
-                    maxCustomerCapacity:"",
-                    maxCustomerCapacity:"",
-                    rulesOfConduct:"",
-                    additionalServices:"",
-                    cancellationPolicy:""
-    			},
     			searchParams: {
     			    bungalowName : "",
     			    bungalowLocation: ""
     			},
-    			reservations:[],
-    			complaint:{
-    			    content: "",
-    			    offer: null,
-    			    user: null
-    			},
-                feedback:{
-                    content: "",
-                    id: null,
-                    rate: null
-                }
+    			reservations:[]
     		}
     	},
     template: `
@@ -96,30 +61,6 @@ data: function(){
     						</div>
     					</div>
     				</div>
-                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 1">
-                        <div class="container" v-show="showPage == 1">
-                            <div class="container align-items-start">
-                                <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-                                <p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
-                                <form class="justify-content-center">
-                                    <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                                        <tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
-                                        <tr class="d-flex justify-content-evenly">
-                                            <td><input type="text" placeholder="   Country" class="input-text"  v-model="bungalowToShow.location.country"/></td>
-                                            <td><input type="text" placeholder="   City" class="input-text"  v-model="bungalowToShow.location.city"/></td></tr><br>
-                                        <tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="bungalowToShow.location.street"/></td></tr><br>
-                                        <tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="bungalowToShow.location.streetNumber"/></td></tr><br>
-                                        <tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="bungalowToShow.unitPrice"/></td></tr><br>
-                                        <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="bungalowToShow.description" ></textarea></tr><br>
-                                        <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="bungalowToShow.maxCustomerCapacity"/></td></tr><br>
-                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="bungalowToShow.additionalServices" ></textarea></tr><br>
-                                        <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="bungalowToShow.rulesOfConduct" ></textarea></tr><br>
-                                        <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="bungalowToShow.cancellationPolicy" ></textarea></tr><br>
-                                    </table>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                	</div>
             </div>
     	</div>
@@ -136,23 +77,18 @@ data: function(){
           }
           ,
           methods : {
-            showMore : function(bung){
-               this.bungalowToShow = bung.offer;
-               this.showPage = 1;
-            },
             search : function(){
                 axios.get('/api/search', {
                      params: this.axiosParams
                 }).then(response => (this.bungalows = response.data))
             },
-            cancelReservation : function(reservation){
-                axios.post("/api/makeReservationAction", reservation.id)
+            makeReservation : function(reservation){
+                axios.post("/api/cancelReservation", reservation.id)
                      .then((response)=>{
                         if(response.data){
-                            axios.defaults.headers.common["Authorization"] =
-                                           localStorage.getItem("user");
-                            axios.get("/api/upcomingReservationsForCustomer")
-                                 .then((response) => {this.reservations = response.data})
+                           Swal.fire( 'Success!',
+                                      '',
+                                      'success')
                         }else{
                             Swal.fire('Ooops, something went wrong!',
                 	                  'Please, try again later',
@@ -224,9 +160,10 @@ data: function(){
              }
           },
         mounted(){
+            id = "1"
             axios.defaults.headers.common["Authorization"] =
                                             localStorage.getItem("user");
-            axios.get("/api/upcomingReservationsForCustomer")
+            axios.post("/api/getActionsForOffer", id)
                  .then((response) => {this.reservations = response.data})
         }
 

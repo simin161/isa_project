@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -110,5 +111,16 @@ public class ReservationService {
 
     public List<Reservation> upcomingReservationsForCustomer(String username) {
         return reservationRepository.findAllUpcomingReservationsForUser(username, LocalDateTime.now());
+    }
+
+    public List<Reservation> getActionsForOffer(String id) {
+        List<Reservation> allActions = reservationRepository.findAllActionsForOffer(id);
+        if(allActions != null){
+            allActions = allActions.stream().filter(a ->{
+                return a.getReservationType() == ReservationType.QUICK && (a.getReservationStatus() == ReservationStatus.CANCELLED
+                        || (a.getReservationStatus() == ReservationStatus.ACTIVE && a.getCustomer() == null));
+            }).collect(Collectors.toList());
+        }
+        return allActions;
     }
 }

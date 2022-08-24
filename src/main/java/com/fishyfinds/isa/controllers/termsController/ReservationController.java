@@ -47,7 +47,7 @@ public class ReservationController {
 
     @PostMapping("/makeReservationAction")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public boolean makeReservationWithCaptain(@RequestHeader HttpHeaders header,
+    public boolean makeReservationAction(@RequestHeader HttpHeaders header,
                                             @RequestBody String id){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
@@ -111,5 +111,11 @@ public class ReservationController {
         }
 
         return new ArrayList<>();
+    }
+
+    @PostMapping("/getActionsForOffer")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public List<Reservation> getActionsForOffer(@RequestBody String id){
+        return reservationService.getActionsForOffer(id);
     }
 }

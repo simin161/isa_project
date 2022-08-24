@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.controllers.termsController;
 
+import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.termsService.ReservationService;
 import com.fishyfinds.isa.service.termsService.TermService;
@@ -10,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -61,4 +64,19 @@ public class ReservationController {
         return reservationService.cancelReservation(Long.parseLong(id));
     }
 
+    @GetMapping("/historyOfReservationsForCustomer")
+    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header){
+
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.historyOfReservationsForCustomer(username);
+
+        }catch(Exception e){
+        }
+
+        return new ArrayList<>();
+    }
 }

@@ -32,8 +32,8 @@ public class Term {
 	@Column(name = "endDate")
 	private LocalDateTime endDate;
 
-	@OneToMany(mappedBy="id", cascade = CascadeType.ALL)
-	@Column(name = "reservations")
+	@OneToMany
+	@JoinColumn(name="reservation", referencedColumnName = "id")
 	private List<Reservation> reservations;
 
 	public Term() {	}

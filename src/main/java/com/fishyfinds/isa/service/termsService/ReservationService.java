@@ -114,7 +114,7 @@ public class ReservationService {
     }
 
     public List<Reservation> getActionsForOffer(String id) {
-        List<Reservation> allActions = reservationRepository.findAllActionsForOffer(id);
+        List<Reservation> allActions = reservationRepository.findAllActionsForOffer(id, LocalDateTime.now());
         if(allActions != null){
             allActions = allActions.stream().filter(a ->{
                 return a.getReservationType() == ReservationType.QUICK && (a.getReservationStatus() == ReservationStatus.CANCELLED

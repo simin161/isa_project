@@ -13,7 +13,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query( value = "SELECT * FROM reservation WHERE reservation_type = 1 AND customer IS NULL", nativeQuery = true)
     List<Reservation> findAllUnreservedActions();
 
+    //checking out reservation status == ACTIVE -> not to show cancelled reservations
+    @Query( value = "SELECT r.*, u.*, o.* FROM reservation r LEFT OUTER JOIN users u on r.customer = u.id " +
+            "LEFT OUTER JOIN offer o on r.offer = o.id WHERE r.end_date<=:dateParam AND u.email = :username AND r.reservation_status = 0", nativeQuery = true)
+    List<Reservation> findAllPassedReservationsForCustomer(@Param("username")String username,@Param("dateParam") LocalDateTime dateParam);
+
     @Query( value = "SELECT r.*, u.*, o.*, 1 as clazz_ FROM reservation r LEFT OUTER JOIN users u on r.customer = u.id " +
-            "LEFT OUTER JOIN offer o on r.offer = o.id ", nativeQuery = true)
-    List<Reservation> findAllPassedReservationsForCustomer(@Param("username")String username,@Param("date") LocalDateTime date);
+            "LEFT OUTER JOIN offer o on r.offer = o.id WHERE r.end_date<=:dateParam AND u.email = :username AND r.reservation_status = 0 ", nativeQuery = true)
+    List<Reservation> findAllUpcomingReservationsForUser(String username,@Param("dateParam") LocalDateTime dateParam);
 }

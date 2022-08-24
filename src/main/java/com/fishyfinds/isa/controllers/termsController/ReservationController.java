@@ -96,4 +96,20 @@ public class ReservationController {
 
         return new ArrayList<>();
     }
+    @GetMapping("/upcomingReservationsForCustomer")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public List<Reservation> upcomingReservationsForCustomer(@RequestHeader HttpHeaders header){
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.upcomingReservationsForCustomer(username);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
 }

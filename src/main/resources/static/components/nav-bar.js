@@ -45,7 +45,7 @@ template: `
                                             <a href="#/bungalowReservationHistory">Bungalows</a>
                                             <a href="#/boatReservationHistory">Boats</a>
                                             <a href="#/courseReservationHistory">Instructors</a>
-                                            <a href="#/">Upcoming</a>
+                                            <a href="#/upcomingReservations">Upcoming</a>
                                             <a href="#/makeReservation">Make reservation</a>
                                         </div>
                                     </span>

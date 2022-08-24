@@ -107,4 +107,8 @@ public class ReservationService {
         List<Reservation> reservations = reservationRepository.findAllPassedReservationsForCustomer(username, LocalDateTime.now());
         return reservations != null ? reservations : new ArrayList<>();
     }
+
+    public List<Reservation> upcomingReservationsForCustomer(String username) {
+        return reservationRepository.findAllUpcomingReservationsForUser(username, LocalDateTime.now());
+    }
 }

@@ -25,6 +25,7 @@ public class ReservationService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
      * Customer side method
      * @param message - map containing values same as in TermDTO
@@ -85,16 +86,12 @@ public class ReservationService {
         boolean retVal = true;
         try{
             Reservation reservation = reservationRepository.findById(id).orElse(null);
-            if(reservation.getReservationType() == ReservationType.QUICK) {
-                reservation.setCustomer(null);
+            LocalDateTime dateTimeNow = LocalDateTime.now();
+            if(dateTimeNow.plusDays(MAX_NUM_OF_DAYS_BEFORE_CANCELLING).isBefore(reservation.getStartDate())){
                 reservation.setReservationStatus(ReservationStatus.CANCELLED);
                 reservationRepository.save(reservation);
             }else{
-                reservationRepository.deleteById(id);
-                //TODO: discuss the necessity of deleting cancelled reservation if DEFAULT, -> should be deleted also from terms
-                Term term = termRepository.findTermByReservation(id);
-                term.getReservations().remove(reservation);
-                termRepository.save(term);
+                retVal = false;
             }
 
         }catch(Exception e){

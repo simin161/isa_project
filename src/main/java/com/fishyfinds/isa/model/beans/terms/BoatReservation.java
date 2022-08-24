@@ -6,15 +6,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
-@Getter
-@Setter
-@Table(name="BoatReservation")
-@PrimaryKeyJoinColumn(name = "id")
-public class BoatReservation extends Reservation{
+//@Entity
+//@Getter
+//@Setter
+//@Table(name="BoatReservation")
+//@PrimaryKeyJoinColumn(name = "id")
+public class BoatReservation/* extends Reservation*/{
 
-  	@OneToOne
-	@JoinColumn(name="captain", referencedColumnName = "id")
+  	//@OneToOne
+	//@JoinColumn(name="captain", referencedColumnName = "id")
     private User captain;
 
 }

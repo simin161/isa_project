@@ -32,7 +32,7 @@ data: function(){
     			    bungalowName : "",
     			    bungalowLocation: ""
     			},
-    			bungalows:[],
+    			reservations:[],
     			complaint:{
     			    content: "",
     			    offer: null,
@@ -42,7 +42,8 @@ data: function(){
                     content: "",
                     id: null,
                     rate: null
-                }
+                },
+                offerType: "BUNGALOW"
     		}
     	},
     template: `
@@ -78,17 +79,17 @@ data: function(){
     					</table>
     				</form>
     				<div class="container mt-5">
-    					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="bungalow in bungalows">
+    					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="reservation in reservations">
     						<div class="row g-0">
     							<div class="col-md-4" style="text-align:center;">
     								<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">
-    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{bungalow.offerName}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{bungalow.description}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{bungalow.unitPrice}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{bungalow.rating}}</p>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offer.offerName}}</h5>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(bungalow)">Show more</button>
     									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="showFeedback(bungalow)">Add feedback</button>
     									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="showComplaint(bungalow)">Add complaint</button>
@@ -184,15 +185,15 @@ data: function(){
           ,
           methods : {
             showMore : function(bung){
-               this.bungalowToShow = bung;
+               this.bungalowToShow = bung.offer;
                this.showPage = 1;
             },
             showFeedback : function(bung){
-                this.bungalowToShow = bung;
+                this.bungalowToShow = bung.offer;
                 this.showPage = 2;
             },
             showComplaint : function(bung){
-                this.bungalowToShow = bung;
+                this.bungalowToShow = bung.offer;
                 this.showPage = 3;
             },
             search : function(){
@@ -306,6 +307,12 @@ data: function(){
                         return this.bungalows.sort(compare);
                     }
              }
-          }
+          },
+        mounted(){
+            axios.defaults.headers.common["Authorization"] =
+                                            localStorage.getItem("user");
+            axios.post("/api/historyOfReservationsForCustomer", this.offerType)
+                 .then((response) => {this.reservations = response.data})
+        }
 
 });

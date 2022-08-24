@@ -1,6 +1,8 @@
 package com.fishyfinds.isa.controllers.termsController;
 
+import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.terms.Reservation;
+import com.fishyfinds.isa.model.enums.OfferType;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.termsService.ReservationService;
 import com.fishyfinds.isa.service.termsService.TermService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
@@ -60,21 +63,35 @@ public class ReservationController {
     }
 
     @PutMapping("/cancelReservation")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean cancelReservation(@RequestBody String id){
         return reservationService.cancelReservation(Long.parseLong(id));
     }
 
-    @GetMapping("/historyOfReservationsForCustomer")
-    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header){
+    @PostMapping("/historyOfReservationsForCustomer")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header, @RequestBody String offerType){
 
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return reservationService.historyOfReservationsForCustomer(username);
+            List<Reservation> reservations = reservationService.historyOfReservationsForCustomer(username);
+            OfferType oft = OfferType.INVALID;
+            switch(offerType){
+                case "BUNGALOW": oft = OfferType.BUNGALOW;
+                break;
+                case "BOAT": oft = OfferType.BOAT;
+                break;
+                case "COURSE": oft = OfferType.COURSE;
+                break;
+            }
+            final OfferType finalOft = oft;
+            return reservations.stream().filter(r ->{ return r.getOffer() != null && r.getOffer().getOfferType() == finalOft;}).collect(Collectors.toList());
 
         }catch(Exception e){
+            e.printStackTrace();
         }
 
         return new ArrayList<>();

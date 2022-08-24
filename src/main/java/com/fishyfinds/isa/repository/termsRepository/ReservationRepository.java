@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    @Query( value = "SELECT * FROM reservation WHERE reservationType = 1 AND customer IS NULL", nativeQuery = true)
+    @Query( value = "SELECT * FROM reservation WHERE reservation_type = 1 AND customer IS NULL", nativeQuery = true)
     List<Reservation> findAllUnreservedActions();
 
-    @Query( value = "SELECT * FROM reservation r, users u WHERE r.customer = u.id AND u.email = :username and reservation.endDate <= :date", nativeQuery = true)
+    @Query( value = "SELECT r.*, u.*, o.*, 1 as clazz_ FROM reservation r LEFT OUTER JOIN users u on r.customer = u.id " +
+            "LEFT OUTER JOIN offer o on r.offer = o.id ", nativeQuery = true)
     List<Reservation> findAllPassedReservationsForCustomer(@Param("username")String username,@Param("date") LocalDateTime date);
 }

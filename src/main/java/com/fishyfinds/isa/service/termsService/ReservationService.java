@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -103,6 +104,7 @@ public class ReservationService {
     }
 
     public List<Reservation> historyOfReservationsForCustomer(String username){
-        return reservationRepository.findAllPassedReservationsForCustomer(username, LocalDateTime.now());
+        List<Reservation> reservations = reservationRepository.findAllPassedReservationsForCustomer(username, LocalDateTime.now());
+        return reservations != null ? reservations : new ArrayList<>();
     }
 }

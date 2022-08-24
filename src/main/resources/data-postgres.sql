@@ -133,8 +133,8 @@ INSERT INTO public.reservation(id, start_date, end_date, reservation_status, res
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer)
     values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1);
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
-INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
-   VALUES(2,4);
+--INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
+ --  VALUES(2,4);
 --RESERVATIONS END--
 
 

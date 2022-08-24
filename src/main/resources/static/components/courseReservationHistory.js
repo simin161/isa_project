@@ -1,7 +1,7 @@
 Vue.component('courseReservationHistory', {
 	data: function(){
 		return{
-			courses: null,
+			reservations: null,
 			courseToShow: {
 			     offerType: "COURSE",
                  offerName: "",
@@ -42,7 +42,8 @@ Vue.component('courseReservationHistory', {
                 content: "",
                 id: null,
                 rate: null
-            }
+            },
+            offerType: "COURSE"
         }
 	},
 template: `
@@ -79,21 +80,21 @@ template: `
                 			</table>
                 		</form>
                 		<div class="container mt-5">
-                			<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="course in courses">
+                			<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="reservation in reservations">
                 				<div class="row g-0">
                 					<div class="col-md-4" style="text-align:center;">
                 						<img src="../images/bungalow-images/register-instructor.png" class="img-fluid rounded" style="margin:0 auto;"alt="Instructor">
                 					</div>
                 					<div class="col-md-8">
                 						<div class="card-body">
-                                            <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{course.offerName}}</h5>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Instructor: {{course.user.firstName}} {{course.user.lastName}}</p>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{course.description}}</p>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{course.unitPrice}}</p>
-                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{course.rating}}</p>
-                                            <button class="float-end btn btn-light" @click="showMore(course)">Show more</button>
-                                            <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(course)">Add feedback</button>
-                                            <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showComplaint(course)">Add complaint</button>
+                                            <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offer.offerName}}</h5>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Instructor: {{reservation.offer.user.firstName}} {{reservation.offer.user.lastName}}</p>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
+                                            <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
+                                            <button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
+                                            <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(reservation.offer)">Add feedback</button>
+                                            <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showComplaint(reservation.offer)">Add complaint</button>
                                         </div>
                 					</div>
                 				</div>
@@ -322,6 +323,11 @@ template: `
                  }
              }
 
+          },
+          mounted(){
+              axios.defaults.headers.common["Authorization"] =
+                    localStorage.getItem("user");
+              axios.post("/api/historyOfReservationsForCustomer", this.offerType)
+                   .then((response) => {this.reservations = response.data})
           }
-
 });

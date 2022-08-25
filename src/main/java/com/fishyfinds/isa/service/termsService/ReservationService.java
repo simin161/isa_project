@@ -113,7 +113,7 @@ public class ReservationService {
         return reservationRepository.findAllUpcomingReservationsForUser(username, LocalDateTime.now());
     }
 
-    public List<Reservation> getActionsForOffer(String id) {
+    public List<Reservation> getActionsForOffer(Long id) {
         List<Reservation> allActions = reservationRepository.findAllActionsForOffer(id, LocalDateTime.now());
         if(allActions != null){
             allActions = allActions.stream().filter(a ->{

@@ -160,10 +160,10 @@ data: function(){
              }
           },
         mounted(){
-            id = "1"
+            const id = window.location.hash.split('/')[2];
             axios.defaults.headers.common["Authorization"] =
                                             localStorage.getItem("user");
-            axios.post("/api/getActionsForOffer", id)
+            axios.post("/api/getActionsForOffer", {"id" : id})
                  .then((response) => {this.reservations = response.data})
         }
 

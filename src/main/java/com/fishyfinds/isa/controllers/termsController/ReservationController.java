@@ -115,7 +115,7 @@ public class ReservationController {
 
     @PostMapping("/getActionsForOffer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Reservation> getActionsForOffer(@RequestBody String id){
-        return reservationService.getActionsForOffer(id);
+    public List<Reservation> getActionsForOffer(@RequestBody Map<String, String> id){
+        return reservationService.getActionsForOffer(Long.valueOf(id.get("id")));
     }
 }

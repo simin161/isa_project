@@ -80,6 +80,7 @@ Vue.component('bungalows', {
     									<button class="float-end btn btn-light" @click="showMore(b.offer)">Show more</button>
     									<span v-show="loggedUser.userType === 'CUSTOMER'">
     									    <button v-show="!b.followed" class="float-end btn btn-light" @click="follow(b.offer)">Follow</button>
+    									    <button class="float-end btn btn-light" @click="showActions(b.offer.id)">Show actions</button>
     								    </span>
     								</div>
     							</div>
@@ -137,6 +138,9 @@ Vue.component('bungalows', {
             showMore : function(bung){
                this.bungalowToShow = bung;
                this.showPage = 1;
+            },
+            showActions : function(id){
+                router.push("actions/" + id);
             },
             follow : function(bung){
                 axios.defaults.headers.common["Authorization"] =

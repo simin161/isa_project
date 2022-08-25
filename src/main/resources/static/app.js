@@ -15,6 +15,7 @@ const following = {template: '<following></following>'}
 const penals = {template: '<penals></penals>'}
 const makeReservation = {template: '<makeReservation></makeReservation>'}
 const upcomingReservations = {template: '<upcoming></upcoming>'}
+const actions = {template: '<actions></actions>'}
 // -- For owners only
 const myBungalows = {template: '<owner-my-bungalows></owner-my-bungalows>'}
 const myBoats = {template: '<owner-my-boats></owner-my-boats>'}
@@ -46,6 +47,7 @@ const router = new VueRouter({
 		{ path: '/penals', component: penals},
 		{ path: '/makeReservation', component: makeReservation},
 		{ path: '/upcomingReservations', component: upcomingReservations},
+		{ path: '/actions/:id', component: actions},
 		// For owners only
 		{ path: '/my-bungalows', component: myBungalows},
 		{ path: '/my-boats', component: myBoats},

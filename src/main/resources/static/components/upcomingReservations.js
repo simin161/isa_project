@@ -90,7 +90,7 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
-    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="cancel(reservation)">Cancel reservation</button>
+    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="cancelReservation(reservation)">Cancel reservation</button>
     								</div>
     							</div>
     						</div>
@@ -146,7 +146,7 @@ data: function(){
                 }).then(response => (this.bungalows = response.data))
             },
             cancelReservation : function(reservation){
-                axios.post("/api/makeReservationAction", reservation.id)
+                axios.post("/api/cancelReservation", {"id" : reservation.id})
                      .then((response)=>{
                         if(response.data){
                             axios.defaults.headers.common["Authorization"] =

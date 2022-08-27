@@ -1,17 +1,20 @@
 package com.fishyfinds.isa.service.termsService;
 
+import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.model.beans.terms.Term;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.model.enums.ReservationStatus;
 import com.fishyfinds.isa.model.enums.ReservationType;
+import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
 import com.fishyfinds.isa.repository.termsRepository.TermRepository;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class ReservationService {
     private TermRepository termRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private OfferRepository offerRepository;
 
     private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
@@ -48,6 +53,9 @@ public class ReservationService {
                 reservation.setCustomer(customer);
                 reservation.setStartDate(startDate);
                 reservation.setEndDate(endDate);
+                reservation.setNumberOfPeople(Integer.parseInt(message.get("numberOfPeople")));
+                Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
+                reservation.setTotalPrice(offer.getUnitPrice()* reservation.getNumberOfPeople()); //TODO: add discount
                 reservationRepository.save(reservation);
                 updateTermsReservation(Long.parseLong(message.get("id")), reservation);
             }

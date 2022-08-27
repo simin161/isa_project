@@ -62,15 +62,15 @@ public class ReservationController {
         return false;
     }
 
-    @PutMapping("/cancelReservation")
+    @PostMapping("/cancelReservation")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public boolean cancelReservation(@RequestBody String id){
-        return reservationService.cancelReservation(Long.parseLong(id));
+    public boolean cancelReservation(@RequestBody Map<String, String> id){
+        return reservationService.cancelReservation(Long.parseLong(id.get("id")));
     }
 
     @PostMapping("/historyOfReservationsForCustomer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header, @RequestBody String offerType){
+    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header, @RequestBody Map<String, String> offerType){
 
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
@@ -79,7 +79,7 @@ public class ReservationController {
             String username = tokenUtils.getUsernameFromToken(user);
             List<Reservation> reservations = reservationService.historyOfReservationsForCustomer(username);
             OfferType oft = OfferType.INVALID;
-            switch(offerType){
+            switch(offerType.get("offerType")){
                 case "BUNGALOW": oft = OfferType.BUNGALOW;
                 break;
                 case "BOAT": oft = OfferType.BOAT;

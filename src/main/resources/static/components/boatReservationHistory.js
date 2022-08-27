@@ -90,9 +90,9 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(boat)">Show more</button>
-    									<button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(boat)">Add feedback</button>
-                                        <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showComplaint(boat)">Add complaint</button>
+    									<button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
+    									<button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(reservation)">Add feedback</button>
+                                        <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showComplaint(reservation)">Add complaint</button>
     								</div>
     							</div>
     						</div>
@@ -314,7 +314,7 @@ data: function(){
           mounted(){
               axios.defaults.headers.common["Authorization"] =
                             localStorage.getItem("user");
-              axios.post("/api/historyOfReservationsForCustomer", this.offerType)
+              axios.post("/api/historyOfReservationsForCustomer", {"offerType" : this.offerType})
                    .then((response) => {this.reservations = response.data})
           }
 });

@@ -92,7 +92,7 @@ template: `
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-                                            <button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
+                                            <button class="float-end btn btn-light" @click="showMore(reservation.offer)">Show more</button>
                                             <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(reservation.offer)">Add feedback</button>
                                             <button class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showComplaint(reservation.offer)">Add complaint</button>
                                         </div>
@@ -327,7 +327,7 @@ template: `
           mounted(){
               axios.defaults.headers.common["Authorization"] =
                     localStorage.getItem("user");
-              axios.post("/api/historyOfReservationsForCustomer", this.offerType)
+              axios.post("/api/historyOfReservationsForCustomer", {"offerType" : this.offerType})
                    .then((response) => {this.reservations = response.data})
           }
 });

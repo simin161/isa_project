@@ -37,6 +37,12 @@ public class Reservation {
     @Column(name="reservationStatus")
     private ReservationStatus reservationStatus;
 
+    @Column(name="numberOfPeople")
+    private int numberOfPeople;
+
+    @Column(name="totalPrice")
+    private double totalPrice;
+
     @OneToOne
     @JoinColumn(name="customer", referencedColumnName = "id")
     private Customer customer;

@@ -48,13 +48,13 @@ public class ReservationController {
     @PostMapping("/makeReservationAction")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean makeReservationAction(@RequestHeader HttpHeaders header,
-                                            @RequestBody String id){
+                                            @RequestBody Map<String, String> id){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return reservationService.makeReservationAction(Long.valueOf(id), username);
+            return reservationService.makeReservationAction(Long.valueOf(id.get("id")), username);
 
         }catch(Exception e){
         }

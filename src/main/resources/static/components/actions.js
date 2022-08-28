@@ -50,12 +50,14 @@ data: function(){
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">
+    								    <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.startDate}} - {{reservation.endDate}}</h5>
     									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offer.offerName}}</h5>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Number of people: {{reservation.numberOfPeople}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{reservation.totalPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
-    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="cancel(reservation)">Cancel reservation</button>
+    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="makeReservation(reservation)">Book!</button>
     								</div>
     							</div>
     						</div>
@@ -83,12 +85,15 @@ data: function(){
                 }).then(response => (this.bungalows = response.data))
             },
             makeReservation : function(reservation){
-                axios.post("/api/cancelReservation", reservation.id)
+            axios.defaults.headers.common["Authorization"] =
+                           localStorage.getItem("user");
+                axios.post("/api/makeReservationAction",{"id" : reservation.id})
                      .then((response)=>{
                         if(response.data){
-                           Swal.fire( 'Success!',
-                                      '',
-                                      'success')
+                           axios.defaults.headers.common["Authorization"] =
+                                                                       localStorage.getItem("user");
+                                       axios.post("/api/getActionsForOffer", {"id" : id})
+                                            .then((response) => {this.reservations = response.data})
                         }else{
                             Swal.fire('Ooops, something went wrong!',
                 	                  'Please, try again later',

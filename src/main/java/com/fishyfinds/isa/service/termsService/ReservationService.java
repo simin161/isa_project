@@ -48,15 +48,11 @@ public class ReservationService {
             Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
             if(term != null && isFree(term, startDate, endDate)){
                 Customer customer = customerRepository.findByEmail(username);
-                Reservation reservation = new Reservation();
-                reservation.setReservationStatus(ReservationStatus.ACTIVE);
-                reservation.setReservationType(ReservationType.DEFAULT);
-                reservation.setCustomer(customer);
-                reservation.setStartDate(startDate);
-                reservation.setEndDate(endDate);
-                reservation.setNumberOfPeople(Integer.parseInt(message.get("numberOfPeople")));
                 Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
-                reservation.setTotalPrice(offer.getUnitPrice()* reservation.getNumberOfPeople()); //TODO: add discount
+                int numberOfPeople =  Integer.parseInt(message.get("numberOfPeople"));
+                //TODO: add discount
+                Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
+                        numberOfPeople, numberOfPeople*offer.getUnitPrice(), offer);
                 reservationRepository.save(reservation);
                 updateTermsReservation(term.getId(), reservation);
                 retVal = true;

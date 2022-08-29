@@ -18,13 +18,20 @@ public class LoyaltyProgram {
     @Column(name = "categoryName")
     private String categoryName;
 
-    @Column(name = "requiredPoints")
-    private int requiredPoints;
+    @Column(name = "minPoints")
+    private int minPoints;
 
     @Column(name = "categoryDiscount")
     private double categoryDiscount;
 
     @Column(name = "earningRate")
     private double earningRate;
+
+    @Column(name = "maxPoints")
+    private int maxPoints;
+
+    // ako je 0 onda je customer, ako je 1 onda je instruktor i owner
+    @Column(name = "type")
+    private int type;
 
 }

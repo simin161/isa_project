@@ -11,7 +11,7 @@ import java.util.List;
 public interface TermRepository extends JpaRepository<Term, Long> {
 
     @Query(value = "SELECT * from term t, reservation " +
-            "r where t.id = :id and r.reservation = :id and t.id and r.start_date between :startDate and :endDate or" +
+            "r where t.id = :id and r.reservation = :id and r.start_date between :startDate and :endDate or " +
             "r.end_date between :startDate and :endDate", nativeQuery = true)
     List<Term> checkIfReservationIsAvailable(@Param("id")long id, @Param("startDate")LocalDateTime startDate,
                                              @Param("endDate")LocalDateTime endDate);

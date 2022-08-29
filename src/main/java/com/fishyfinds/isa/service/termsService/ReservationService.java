@@ -41,11 +41,12 @@ public class ReservationService {
      * @return - boolean value depending on result of query execution - true -> success, fase -> failure
      */
     public boolean makeReservation(Map<String, String> message, String username) {
-        boolean retVal = true;
+        boolean retVal = false;
         try {
             LocalDateTime startDate = LocalDateTime.parse(message.get("startDate"));
             LocalDateTime endDate = LocalDateTime.parse(message.get("endDate"));
-            if(termRepository.checkIfReservationIsAvailable(Long.parseLong(message.get("id")),startDate,endDate) == null){
+            Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
+            if(term != null && isFree(term, startDate, endDate)){
                 Customer customer = customerRepository.findByEmail(username);
                 Reservation reservation = new Reservation();
                 reservation.setReservationStatus(ReservationStatus.ACTIVE);
@@ -57,12 +58,35 @@ public class ReservationService {
                 Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
                 reservation.setTotalPrice(offer.getUnitPrice()* reservation.getNumberOfPeople()); //TODO: add discount
                 reservationRepository.save(reservation);
-                updateTermsReservation(Long.parseLong(message.get("id")), reservation);
+                updateTermsReservation(term.getId(), reservation);
+                retVal = true;
             }
         }catch(Exception e){
+            e.printStackTrace();
             retVal = false;
         }
         return retVal;
+    }
+
+    private boolean isFree(Term term, LocalDateTime startDate, LocalDateTime endDate){
+        boolean retVal = true;
+        List<Reservation> reservations = term.getReservations();
+        boolean isInValidTermRange = startDate.isAfter(term.getStartDate()) && startDate.isBefore(term.getEndDate()) &&
+                endDate.isBefore(term.getEndDate()) && endDate.isAfter(term.getStartDate());
+
+        if(!isInValidTermRange)
+            return false;
+
+        boolean hasReservationInTermRange = false;
+        for(Reservation r : reservations){
+            if((startDate.isAfter(r.getStartDate()) || startDate.isEqual(r.getStartDate())) && (startDate.isBefore(r.getEndDate()) || startDate.isEqual(r.getEndDate())) &&
+                    (endDate.isBefore(r.getEndDate()) || endDate.isEqual(r.getEndDate())) && (endDate.isAfter(r.getStartDate()) || endDate.isEqual(r.getStartDate()))){
+                hasReservationInTermRange = true;
+                break;
+            }
+        }
+
+        return isInValidTermRange && !hasReservationInTermRange;
     }
 
     /**

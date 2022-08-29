@@ -27,7 +27,6 @@ public class ReservationController {
 
     @Autowired
     private TokenUtils tokenUtils;
-
     @PostMapping("/makeReservation")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean makeReservation(@RequestHeader HttpHeaders header,

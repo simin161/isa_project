@@ -77,7 +77,7 @@ public class TermService {
     }
 
 
-
-
-
+    public Term getTermById(Long id) {
+        return termRepository.findById(id).orElse(null);
+    }
 }

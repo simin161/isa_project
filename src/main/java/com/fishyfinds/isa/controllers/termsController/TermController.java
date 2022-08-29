@@ -2,6 +2,7 @@ package com.fishyfinds.isa.controllers.termsController;
 
 import com.fishyfinds.isa.dto.TermDTO;
 import com.fishyfinds.isa.model.beans.offers.Offer;
+import com.fishyfinds.isa.model.beans.terms.Term;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.AuthenticationService;
 import com.fishyfinds.isa.service.offersService.OfferService;
@@ -57,16 +58,9 @@ public class TermController {
         return  false;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    @PostMapping("/getTermById")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public Term getTermById(@RequestBody Map<String, String> id){
+        return termService.getTermById(Long.parseLong(id.get("id")));
+    }
 }

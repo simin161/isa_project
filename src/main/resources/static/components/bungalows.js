@@ -130,6 +130,7 @@ Vue.component('bungalows', {
                         <span v-show="loggedUser.userType === 'CUSTOMER'">
                             <button class="float-end btn btn-light" @click="showReservation(term)">Make reservation</button>
                         </span>
+                        <br/>
                         </hr>
                     </div>
                 </div>
@@ -151,7 +152,7 @@ Vue.component('bungalows', {
           ,
           methods : {
             showReservation : function(term){
-
+                router.push('/reservationForm/' + term.id);
             },
             showTerms : function(bung){
                 axios.defaults.headers.common["Authorization"] =

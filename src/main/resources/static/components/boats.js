@@ -27,7 +27,8 @@ data: function(){
                     boatName : "",
                     boatLocation: ""
                 },
-    			boats:[]
+    			boats:[],
+    			terms:[]
     		}
     	},
     template: `
@@ -76,7 +77,7 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.offer.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(boat.offer)">Show more</button>
     									<span v-show="loggedUser.userType === 'CUSTOMER'">
-    									<button v-show="!boat.followed" class="float-end btn btn-light" @click="follow(boat.offer)">Follow/unfollow</button>
+    									    <button v-show="!boat.followed" class="float-end btn btn-light" @click="follow(boat.offer)">Follow/unfollow</button>
     								    </span>
     								</div>
     							</div>
@@ -85,7 +86,7 @@ data: function(){
     				</div>
 
                    	</div>
-                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
+                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 1">
                    	<div class="container" v-show="showPage == 1">
     					<div class="container align-items-start">
     						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
@@ -108,6 +109,23 @@ data: function(){
     						</form>
     					</div>
                    	</div>
+                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 2">
+                       <div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 2">
+                                       <div class="container" v-show="showPage == 2">
+                                                   <div class="container align-items-start">
+                                           <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
+                                           <p class="title-text-bold" style="margin-top:10px; text-align:center;">Show all terms</p>
+                                           <div v-for="term in terms" style="border-bottom: solid thick white">
+                                               <p style="color:#fff;font-family:poppins-light; font-size:12px;">Start date: {{term.startTime}}</p>
+                                               <p style="color:#fff;font-family:poppins-light; font-size:12px;">End date: {{term.endTime}}</p>
+                                               <span v-show="loggedUser.userType === 'CUSTOMER'">
+                                                   <button class="float-end btn btn-light" @click="showReservation(term)">Make reservation</button>
+                                               </span>
+                                               <br/>
+                                               </hr>
+                                           </div>
+                                       </div>
+                                  </div>
                	</div>
     		</div>
     	</div>
@@ -124,6 +142,9 @@ data: function(){
           }
           ,
           methods : {
+           showReservation : function(term){
+                          router.push('/reservationForm/' + term.id);
+            },
             showMore : function(bung){
                this.boatToShow = bung;
                this.showPage = 1;

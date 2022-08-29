@@ -50,8 +50,16 @@ public class LoyaltyProgramService {
         return false;
     }
 
-    public void deleteLoyalty(LoyaltyProgram loyalty){
-        loyaltyProgramRepository.delete(loyalty);
+    public void deleteLoyalty(Map<String, String> message){
+
+        try {
+            LoyaltyProgram loyalty = loyaltyProgramRepository.findById(Long.parseLong(message.get("id"))).orElse(null);
+            if (loyalty != null) {
+                loyaltyProgramRepository.delete(loyalty);
+            }
+        }catch (Exception e){
+            System.out.print(e.toString());
+        }
     }
 
     public List<LoyaltyProgram> getAllLoyalties(){

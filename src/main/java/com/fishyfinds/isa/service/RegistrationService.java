@@ -2,6 +2,7 @@ package com.fishyfinds.isa.service;
 
 import com.fishyfinds.isa.mappers.DtoToUser;
 import com.fishyfinds.isa.model.beans.AccountDeletionRequest;
+import com.fishyfinds.isa.model.beans.LoyaltyProgram;
 import com.fishyfinds.isa.model.beans.users.Admin;
 import com.fishyfinds.isa.model.beans.users.Authority;
 import com.fishyfinds.isa.model.beans.users.User;

@@ -57,12 +57,13 @@ public class ReservationService {
                 if (term != null && isFree(term, startDate, endDate)) {
                     Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
                     int numberOfPeople = Integer.parseInt(message.get("numberOfPeople"));
-                    double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * customer.getLoyaltyProgram().getCategoryDiscount() / 100;
+                    double discount = customer.getLoyaltyProgram() != null ? customer.getLoyaltyProgram().getCategoryDiscount() / 100 : 0;
+                    double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * discount;
                     Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
                             numberOfPeople, totalPrice, offer);
                     reservationRepository.save(reservation);
-                    mailService.sendSuccessfulReservationEmail(customer, reservation);
                     updateTermsReservation(term.getId(), reservation);
+                    mailService.sendSuccessfulReservationEmail(customer, reservation);
                     retVal = true;
                 }
             }
@@ -109,6 +110,7 @@ public class ReservationService {
                 if (reservation != null) {
                     reservation.setCustomer(customer);
                     reservationRepository.save(reservation);
+                    mailService.sendSuccessfulReservationEmail(customer, reservation);
                     retVal = true;
                 }
             } catch (Exception e) {

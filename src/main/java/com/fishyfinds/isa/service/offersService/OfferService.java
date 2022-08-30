@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.service.offersService;
 
+import com.fishyfinds.isa.dto.TermDTO;
 import com.fishyfinds.isa.model.beans.offers.ImageItem;
 import com.fishyfinds.isa.model.beans.offers.Location;
 import com.fishyfinds.isa.model.beans.offers.Offer;
@@ -12,9 +13,11 @@ import com.fishyfinds.isa.repository.offersRepository.BungalowRepository;
 import com.fishyfinds.isa.repository.offersRepository.CourseRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import com.fishyfinds.isa.repository.usersRepository.ImageItemRepository;
+import com.fishyfinds.isa.service.termsService.TermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -33,10 +36,10 @@ public class OfferService {
     private CourseRepository courseRepository;
     @Autowired
     private ImageItemRepository imageItemRepository;
+    @Autowired
+    private TermService termService;
 
-
-
-    public List<? extends Offer> search(String name, String location, OfferType type, String firstLastName){
+    public List<? extends Offer> search(String name, String location, OfferType type, String firstLastName, LocalDateTime startDate, LocalDateTime endDate){
         List<? extends Offer> searched;
 
         if(type == OfferType.BUNGALOW) {
@@ -49,7 +52,7 @@ public class OfferService {
             searched = boatRepository.findAll();
         }
 
-        if(name.equals("") && location.equals("") && firstLastName.equals(""))
+        if(name.equals("") && location.equals("") && firstLastName.equals("") && startDate == null && endDate == null)
             return searched;
 
         List<Offer> retVal = new ArrayList<>();
@@ -58,6 +61,8 @@ public class OfferService {
                 retVal.add(searched.get(i));
             }
         }
+        if(name.equals("") && location.equals(""))
+            retVal = (List<Offer>)searched;
 
         if(!firstLastName.equals("")){
             List<Offer> retValInst = new ArrayList<>();
@@ -70,11 +75,25 @@ public class OfferService {
             retVal = retValInst;
         }
 
+        if(startDate != null && endDate != null){
+            List<TermDTO> terms = termService.filterAvailableTerms(startDate, endDate, type.toString());
+            List<Offer> retValTemp = new ArrayList<>();
+            OUTER: for(Offer o : retVal){
+               for(TermDTO t : terms){
+                    if(o.getId() == t.getOffer().getId()){
+                        retValTemp.add(o);
+                        continue OUTER;
+                    }
+                }
+            }
+            retVal = retValTemp;
+        }
+
         return retVal;
     }
 
     public List<? extends Offer> searchMyOffers(Long loggedUserId, String name, String location, OfferType type, String firstLastName){
-        List<? extends Offer> searched = search(name, location, type,firstLastName);
+        List<? extends Offer> searched = search(name, location, type,firstLastName, null, null);
         List<Offer> searchedMyOffers = new ArrayList<>();
         for(Offer offer : searched){
             if(offer.getUser().getId() == loggedUserId){

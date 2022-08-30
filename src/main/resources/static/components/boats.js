@@ -25,7 +25,9 @@ data: function(){
     			},
                 searchParams: {
                     boatName : "",
-                    boatLocation: ""
+                    boatLocation: "",
+                    startDate: "",
+                    endDate: ""
                 },
     			boats:[],
     			terms:[]
@@ -42,8 +44,12 @@ data: function(){
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.boatName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's name" /></td>
     							<td colspan="1"><input v-model="searchParams.boatLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's location"/></td>
-    							<td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
-    						</tr>
+    					        <td colspan="1"><input v-model="searchParams.startDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                          </tr>
+                          <tr>
+                             <td colspan="1"><input v-model="searchParams.endDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                             <td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+                          </tr>
     						<br>
     						<tr>
     							<td colspan="2">
@@ -138,6 +144,8 @@ data: function(){
                   params.append('name', this.searchParams.boatName);
                   params.append('location', this.searchParams.boatLocation);
                   params.append('type', 'BOAT');
+                  params.append('startDate', this.searchParams.startDate);
+                  params.append('endDate', this.searchParams.endDate);
                   return params;
               }
           }

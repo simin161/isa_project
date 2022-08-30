@@ -25,7 +25,9 @@ Vue.component('bungalows', {
     			},
     			searchParams: {
     			    bungalowName : "",
-    			    bungalowLocation: ""
+    			    bungalowLocation: "",
+    			    startDate: "",
+    			    endDate: ""
     			},
     			bungalows:[],
     			terms: []
@@ -44,8 +46,12 @@ Vue.component('bungalows', {
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
     							<td colspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
-    							<td rowspan="2"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
-    						</tr>
+    							<td colspan="1"><input v-model="searchParams.startDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                            </tr>
+                            <tr>
+                                 <td colspan="1"><input v-model="searchParams.endDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                                 <td rowspan="2"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+                            </tr>
     						<br>
     						<tr>
     							<td colspan="2">
@@ -146,6 +152,8 @@ Vue.component('bungalows', {
                   params.append('name', this.searchParams.bungalowName);
                   params.append('location', this.searchParams.bungalowLocation);
                   params.append('type', 'BUNGALOW');
+                  params.append('startDate', this.searchParams.startDate);
+                  params.append('endDate', this.searchParams.endDate);
                   return params;
               }
           }
@@ -186,7 +194,9 @@ Vue.component('bungalows', {
             search : function(){
                 axios.get('/api/search', {
                      params: this.axiosParams
-                }).then(response => (this.bungalows = response.data))
+                }).then(response => {
+                    this.bungalows = response.data;
+                })
             }
             ,
              sortedArray: function() {

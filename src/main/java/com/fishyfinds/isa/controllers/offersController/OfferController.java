@@ -1,18 +1,28 @@
 package com.fishyfinds.isa.controllers.offersController;
 
+import com.fishyfinds.isa.dto.OfferDTO;
+import com.fishyfinds.isa.model.beans.Subscriber;
 import com.fishyfinds.isa.model.beans.offers.ImageItem;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.offers.boats.Boat;
 import com.fishyfinds.isa.model.beans.offers.bungalows.Bungalow;
+import com.fishyfinds.isa.model.beans.offers.courses.Course;
 import com.fishyfinds.isa.model.enums.OfferType;
+import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.ImageService;
+import com.fishyfinds.isa.service.SubscriberService;
 import com.fishyfinds.isa.service.offersService.OfferService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,13 +31,50 @@ public class OfferController {
 
     @Autowired
     private OfferService offerService;
-
+    @Autowired
+    private TokenUtils tokenUtils;
+    @Autowired
+    private SubscriberService subscriberService;
     @GetMapping("/search")
-    public List<? extends Offer> searchBungalows(@RequestParam(name = "name", required = false) String name, //location = address + num + city + country
+    public List<OfferDTO> searchBungalows(@RequestHeader("Authorization") HttpHeaders header,
+                                                 @RequestParam(name = "name", required = false) String name, //location = address + num + city + country
                                                  @RequestParam(name = "location", required = false) String location,
                                                  @RequestParam(name = "type", required = true) OfferType type,
-                                                 @RequestParam(name = "firstLastName", defaultValue = "", required = false) String firstAndLastName){
-        return offerService.search(name, location, type, firstAndLastName);
+                                                 @RequestParam(name = "firstLastName", defaultValue = "", required = false) String firstAndLastName,
+                                                 @RequestParam(name = "startDate", required = false) String startDate,
+                                                 @RequestParam(name = "endDate", required = false) String endDate){
+        List<? extends Offer> offers = offerService.search(name, location, type, firstAndLastName, LocalDateTime.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                LocalDateTime.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        List<OfferDTO> retVal = new ArrayList<>();
+        try {
+            final String value = header.getFirst(HttpHeaders.AUTHORIZATION);
+            if(value != null && !value.isEmpty()){
+                final JSONObject obj = new JSONObject(value);
+                String user = obj.getString("accessToken");
+                String username = tokenUtils.getUsernameFromToken(user);
+                List<Subscriber> subscribers = subscriberService.getSubscriptionsByUser(username);
+                for(Offer b : offers){
+                    OfferDTO dto = new OfferDTO();
+                    dto.setOffer(b);
+                    for(Subscriber s : subscribers){
+                        if(s.isRelevant() && s.getFollowing().getId().equals(b.getId())){
+                            dto.setFollowed(true);
+                            break;
+                        }
+                    }
+                    retVal.add(dto);
+                }}
+            else{
+                for(Offer b : offers){
+                    OfferDTO dto = new OfferDTO();
+                    dto.setOffer(b);
+                    retVal.add(dto);
+                }
+            }
+        }catch(Exception e){
+
+        }
+        return retVal;
     }
 
     @GetMapping("/search/{loggedUserId}")

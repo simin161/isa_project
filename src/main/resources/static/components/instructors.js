@@ -32,7 +32,9 @@ Vue.component('instructors', {
             searchParams: {
                  courseName : "",
                  courseLocation: "",
-                 instructorsName: ""
+                 instructorsName: "",
+                 startDate: "",
+                 endDate: ""
             },
 			showPage: 0,
 			sortOption: "",
@@ -51,7 +53,11 @@ template: `
                 				<tr><td colspan="1"><input v-model="searchParams.courseName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's name" /></td>
                 					<td colspan="1"><input v-model="searchParams.courseLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's location"/></td>
                 					<td colspan="1"><input v-model="searchParams.instructorsName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Instructor's name"/></td>
-                					<td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+                				    <td colspan="1"><input v-model="searchParams.startDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                				</tr>
+                				<tr>
+    							    <td colspan="1"><input v-model="searchParams.endDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                				    <td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
                 				</tr>
                 				<br>
                 				<tr>
@@ -156,6 +162,8 @@ template: `
                   params.append('location', this.searchParams.courseLocation);
                   params.append('type', 'COURSE');
                   params.append('firstLastName', this.searchParams.instructorsName);
+                  params.append('startDate', this.searchParams.startDate);
+                  params.append('endDate', this.searchParams.endDate);
                   return params;
               }
           }

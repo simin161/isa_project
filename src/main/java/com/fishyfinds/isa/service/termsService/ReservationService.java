@@ -50,9 +50,9 @@ public class ReservationService {
                 Customer customer = customerRepository.findByEmail(username);
                 Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
                 int numberOfPeople =  Integer.parseInt(message.get("numberOfPeople"));
-                //TODO: add discount
+                double totalPrice = numberOfPeople*offer.getUnitPrice() - numberOfPeople*offer.getUnitPrice()*customer.getLoyaltyProgram().getCategoryDiscount()/100;
                 Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
-                        numberOfPeople, numberOfPeople*offer.getUnitPrice(), offer);
+                        numberOfPeople, totalPrice, offer);
                 reservationRepository.save(reservation);
                 updateTermsReservation(term.getId(), reservation);
                 retVal = true;

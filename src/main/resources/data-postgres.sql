@@ -88,7 +88,9 @@ INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
     values(4, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Coursy Wumby', 2, 3.5, 'Sex, drugs and alcohol', 10.5, 6, 1);
-
+INSERT INTO public.course(
+	id)
+	VALUES (4);
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
     values(5, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Boaty Wumby', 1, 4.8, 'Sex, drugs and alcohol', 10.5, 4, 1);

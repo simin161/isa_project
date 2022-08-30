@@ -130,12 +130,12 @@ INSERT INTO public.term(id, start_date, end_date, offer)
 
 --RESERVATIONS START--
 -- TODO: Inserting reservations...
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price)
-    values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 0, 1,1,2,200);
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price)
-    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,1,2,200);
-    INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price)
-        values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount)
+    values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 0, 1,1,2,200, 0.0);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount)
+    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,1,2,200, 0.0);
+    INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount)
+        values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200, 25.0);
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
 --INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
  --  VALUES(2,4);

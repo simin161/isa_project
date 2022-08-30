@@ -43,6 +43,9 @@ public class Reservation {
     @Column(name="totalPrice")
     private double totalPrice;
 
+    @Column(name="discount")
+    private double discount;
+
     @OneToOne
     @JoinColumn(name="customer", referencedColumnName = "id")
     private Customer customer;

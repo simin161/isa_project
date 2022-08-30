@@ -12,6 +12,7 @@ import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
 import com.fishyfinds.isa.repository.termsRepository.TermRepository;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
 import com.fishyfinds.isa.service.MailService;
+import com.fishyfinds.isa.service.PenalService;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,8 @@ public class ReservationService {
     private OfferRepository offerRepository;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private PenalService penalService;
 
     private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
@@ -47,7 +50,7 @@ public class ReservationService {
         boolean retVal = false;
         try {
             Customer customer = customerRepository.findByEmail(username);
-            if(customer.getNumberOfPenalty() < 3) {
+            if(penalService.getPenalForUser(customer.getEmail()).getNumber() < 3) {
                 LocalDateTime startDate = LocalDateTime.parse(message.get("startDate"));
                 LocalDateTime endDate = LocalDateTime.parse(message.get("endDate"));
                 Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
@@ -100,7 +103,7 @@ public class ReservationService {
     public boolean makeReservationAction(Long id, String username){
         boolean retVal = false;
         Customer customer = customerRepository.findByEmail(username);
-        if(customer.getNumberOfPenalty() < 3) {
+        if(penalService.getPenalForUser(customer.getEmail()).getNumber() < 3) {
             try {
                 Reservation reservation = reservationRepository.findById(id).orElse(null);
                 if (reservation != null) {

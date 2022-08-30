@@ -76,6 +76,7 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{boat.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.offer.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(boat.offer)">Show more</button>
+    									<button class="float-end btn btn-light" @click="showTerms(boat.offer)">Show terms</button>
     									<span v-show="loggedUser.userType === 'CUSTOMER'">
     									    <button v-show="!boat.followed" class="float-end btn btn-light" @click="follow(boat.offer)">Follow/unfollow</button>
     								    </span>
@@ -144,12 +145,21 @@ data: function(){
           methods : {
            showReservation : function(term){
                           router.push('/reservationForm/' + term.id);
-            },
-            showMore : function(bung){
+           },
+           showTerms : function(bung){
+                axios.defaults.headers.common["Authorization"] =
+                                       localStorage.getItem("user");
+                axios.get('/api/getTermsByOfferId/' + bung.id)
+                     .then((result) => {
+                         this.terms = result.data;
+                         this.showPage = 2;
+                })
+           },
+           showMore : function(bung){
                this.boatToShow = bung;
                this.showPage = 1;
-            },
-            follow : function(bung){
+           },
+           follow : function(bung){
                 axios.defaults.headers.common["Authorization"] =
                                localStorage.getItem("user");
                 axios.post("/api/addFollower", {"id" : bung.id})

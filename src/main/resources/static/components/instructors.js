@@ -86,6 +86,7 @@ template: `
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{course.offer.unitPrice}}</p>
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{course.offer.rating}}</p>
                                             <button class="float-end btn btn-light" @click="showMore(course.offer)">Show more</button>
+                                            <button class="float-end btn btn-light" @click="showTerms(course.offer)">Show terms</button>
                                             <span v-show="loggedUser.userType === 'CUSTOMER'">
                                             <button v-show="!course.followed" class="float-end btn btn-light" @click="follow(course.offer)">Follow</button>
                                             </span>
@@ -162,7 +163,16 @@ template: `
           methods : {
             showReservation : function(term){
                           router.push('/reservationForm/' + term.id);
-                      },
+            },
+            showTerms : function(bung){
+                axios.defaults.headers.common["Authorization"] =
+                                       localStorage.getItem("user");
+                axios.get('/api/getTermsByOfferId/' + bung.id)
+                     .then((result) => {
+                        this.terms = result.data;
+                        this.showPage = 2;
+                     })
+            },
             showMore : function(course){
                 this.courseToShow = course;
                 this.courseToShow.user = course.user;

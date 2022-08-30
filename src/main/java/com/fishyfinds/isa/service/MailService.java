@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.service;
 
+import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,36 @@ public class MailService {
     }
 
     public void sendCreationDenyReasonEmail(User user, String explanation) {
+    }
+
+    public void sendSuccessfulReservationEmail(Customer user, Reservation reservation)
+            throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress= user.getEmail();
+        String fromAddress= "findsfishy@gmail.com";
+        String senderName= "Fishy Finds";
+        String subject = "Your reservation is successful.";
+        String content = "Dear [[name]],<br>"
+                + "You made reservation for:<br>"
+                + reservation.getOffer().getOfferName() + "<br>"
+                + "Starting: " + reservation.getStartDate() + "<br>"
+                + "Ending: " + reservation.getEndDate() + "<br>"
+                + "Total price: " + reservation.getTotalPrice() + "<br>"
+                + "Discount: " + user.getLoyaltyProgram().getCategoryDiscount() + "% <br>"
+                + "Fishy Finds.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", user.getFirstName());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+
     }
 }

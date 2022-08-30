@@ -11,6 +11,7 @@ import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
 import com.fishyfinds.isa.repository.termsRepository.TermRepository;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
+import com.fishyfinds.isa.service.MailService;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,8 @@ public class ReservationService {
     private CustomerRepository customerRepository;
     @Autowired
     private OfferRepository offerRepository;
+    @Autowired
+    private MailService mailService;
 
     private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
@@ -54,6 +57,7 @@ public class ReservationService {
                 Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
                         numberOfPeople, totalPrice, offer);
                 reservationRepository.save(reservation);
+                mailService.sendSuccessfulReservationEmail(customer, reservation);
                 updateTermsReservation(term.getId(), reservation);
                 retVal = true;
             }

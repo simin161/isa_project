@@ -3,6 +3,7 @@ package com.fishyfinds.isa.service;
 import com.fishyfinds.isa.mappers.DtoToUser;
 import com.fishyfinds.isa.model.beans.AccountDeletionRequest;
 import com.fishyfinds.isa.model.beans.users.Admin;
+import com.fishyfinds.isa.model.beans.users.Authority;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.model.beans.users.instructors.Instructor;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -41,6 +44,8 @@ public class RegistrationService {
     private AccountDeletionRequestService accountDeletionRequestService;
     @Autowired
     private PenalService penalService;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     public boolean registerUser(Map<String, String> map, String siteURL){
         boolean successfullyRegistered = true;
@@ -75,8 +80,12 @@ public class RegistrationService {
             customer.setNumberOfLogIns(0);
             setVerificationCode(RandomString.make(64), customer);
             try {
-                customerRepository.save(customer);
                 mailService.sendVerificationEmail(customer, siteURL);
+                List<Authority> auth = new ArrayList<>();
+                auth.add(authorityRepository.findByName("ROLE_CUSTOMER"));
+                auth.add(authorityRepository.findByName("ROLE_COMMON"));
+                customer.setAuthorities(auth);
+                customerRepository.save(customer);
             } catch (Exception e) {
                 successfullyRegistered = false;
             }

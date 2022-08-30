@@ -46,20 +46,22 @@ public class ReservationService {
     public boolean makeReservation(Map<String, String> message, String username) {
         boolean retVal = false;
         try {
-            LocalDateTime startDate = LocalDateTime.parse(message.get("startDate"));
-            LocalDateTime endDate = LocalDateTime.parse(message.get("endDate"));
-            Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
-            if(term != null && isFree(term, startDate, endDate)){
-                Customer customer = customerRepository.findByEmail(username);
-                Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
-                int numberOfPeople =  Integer.parseInt(message.get("numberOfPeople"));
-                double totalPrice = numberOfPeople*offer.getUnitPrice() - numberOfPeople*offer.getUnitPrice()*customer.getLoyaltyProgram().getCategoryDiscount()/100;
-                Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
-                        numberOfPeople, totalPrice, offer);
-                reservationRepository.save(reservation);
-                mailService.sendSuccessfulReservationEmail(customer, reservation);
-                updateTermsReservation(term.getId(), reservation);
-                retVal = true;
+            Customer customer = customerRepository.findByEmail(username);
+            if(customer.getNumberOfPenalty() < 3) {
+                LocalDateTime startDate = LocalDateTime.parse(message.get("startDate"));
+                LocalDateTime endDate = LocalDateTime.parse(message.get("endDate"));
+                Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
+                if (term != null && isFree(term, startDate, endDate)) {
+                    Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
+                    int numberOfPeople = Integer.parseInt(message.get("numberOfPeople"));
+                    double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * customer.getLoyaltyProgram().getCategoryDiscount() / 100;
+                    Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
+                            numberOfPeople, totalPrice, offer);
+                    reservationRepository.save(reservation);
+                    mailService.sendSuccessfulReservationEmail(customer, reservation);
+                    updateTermsReservation(term.getId(), reservation);
+                    retVal = true;
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -96,15 +98,19 @@ public class ReservationService {
      * @return - boolean value depending on result of query execution - true -> success, fase -> failure
      */
     public boolean makeReservationAction(Long id, String username){
-        boolean retVal = true;
-        try{
-            Reservation reservation = reservationRepository.findById(id).orElse(null);
-            if(reservation != null){
-                reservation.setCustomer(customerRepository.findByEmail(username));
-                reservationRepository.save(reservation);
+        boolean retVal = false;
+        Customer customer = customerRepository.findByEmail(username);
+        if(customer.getNumberOfPenalty() < 3) {
+            try {
+                Reservation reservation = reservationRepository.findById(id).orElse(null);
+                if (reservation != null) {
+                    reservation.setCustomer(customer);
+                    reservationRepository.save(reservation);
+                    retVal = true;
+                }
+            } catch (Exception e) {
+                retVal = false;
             }
-        }catch(Exception e){
-            retVal = false;
         }
         return retVal;
     }

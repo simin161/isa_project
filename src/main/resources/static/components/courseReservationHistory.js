@@ -47,7 +47,7 @@ template: `
                 <br>
                 <br>
                 <div class="my-bungalows">
-                	<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
+                	<div class="col-md-4 left-div overflow-auto" v-show="showPage == 0" style="margin-top:-20px; margin-left: 22%; height:80vh">
                 		<form class="justify-content-center">
                 			<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
                 				<tr><td colspan="1"><input v-model="searchParams.courseName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's name" /></td>
@@ -94,64 +94,64 @@ template: `
                 				</div>
                 			</div>
                 		</div>
-                        </div>
-                          	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 1">
-                           	    <div class="container" v-show="showPage == 1">
-                		    	    <div class="container align-items-start">
-                						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-                						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show instructor </p>
-                						<form class="justify-content-center">
-                                            <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                                            	<tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="courseToShow.offerName"/></td></tr><br>
-                                            	<tr class="d-flex justify-content-evenly">
-                                                    <td><input type="text" placeholder="   First Name" class="input-text"  v-model="courseToShow.user.firstName"/></td>
-                                                    <td><input type="text" placeholder="   Last Name" class="input-text"  v-model="courseToShow.user.lastName"/></td></tr><br>
-                                                <tr>
-                                                <tr class="d-flex justify-content-evenly">
-                                                    <td><input type="text" placeholder="   E-mail" class="input-text"  v-model="courseToShow.user.email"/></td>
-                                                    <td><input type="text" placeholder="   Phone number" class="input-text"  v-model="courseToShow.user.phoneNumber"/></td></tr><br>
-                                                <tr>
-                                        		<tr><textarea rowspan="3"name="text" placeholder="   Biography" class="input-text-area"  v-model="courseToShow.user.biography" ></textarea></tr><br>
-                                            	<tr class="d-flex justify-content-evenly">
-                                                	<td><input type="text" placeholder="   Country" class="input-text"  v-model="courseToShow.location.country"/></td>
-                                            	    <td><input type="text" placeholder="   City" class="input-text"  v-model="courseToShow.location.city"/></td></tr><br>
-                                            	<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="courseToShow.location.street"/></td></tr><br>
-                                            	<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="courseToShow.location.streetNumber"/></td></tr><br>
-                                            	<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="courseToShow.unitPrice"/></td></tr><br>
-                                            	<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="courseToShow.description" ></textarea></tr><br>
-                                            	<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="courseToShow.maxCustomerCapacity"/></td></tr><br>
-                                        		<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="courseToShow.additionalServices" ></textarea></tr><br>
-                                            	<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="courseToShow.rulesOfConduct" ></textarea></tr><br>
-                                        		<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="courseToShow.cancellationPolicy" ></textarea></tr><br>
-                                        	</table>
-                                        </form>
-                					</div>
-                               	</div>
-                           	</div>
-                            <div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 2">
-                                 <div class="container" v-show="showPage == 2">
-                                	    <div class="container align-items-start">
-                                			<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-                                			<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Feedback for course and instructor </p>
-                                			<form class="justify-content-center">
-                                				<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                                					<tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="courseToShow.offerName"/></td></tr><br>
-                                					<tr class="d-flex justify-content-evenly">
-                                					    <td><input type="text" placeholder="   First name" class="input-text" v-model="courseToShow.user.firstName"/></td>
-                                					    <td><input type="text" placeholder="   Last name"  class="input-text" v-model="courseToShow.user.lastName"/></td>
-                                					</tr><br>
-                                					<tr>
-                                					    <td><input type="number" placeholder="   Rating" class="input-text" v-model="feedback.rate"/></td>
-                                					</tr>
-                                					<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" v-model="feedback.content"></textarea></tr><br>
-                                					<tr><button type="button" @click="addFeedback" class="float-end btn btn-light">Send</button></tr>
-                                				</table>
-                                			</form>
-                                    	</div>
-                                 </div>
-                            </div>
+                    </div>
+                    <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 1">
+                         <div class="container" v-show="showPage == 1">
+                		     <div class="container align-items-start">
+                			    <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
+                				<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show instructor </p>
+                				<form class="justify-content-center">
+                                    <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+                                        <tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="courseToShow.offerName"/></td></tr><br>
+                                        <tr class="d-flex justify-content-evenly">
+                                            <td><input type="text" placeholder="   First Name" class="input-text"  v-model="courseToShow.user.firstName"/></td>
+                                            <td><input type="text" placeholder="   Last Name" class="input-text"  v-model="courseToShow.user.lastName"/></td></tr><br>
+                                        <tr>
+                                        <tr class="d-flex justify-content-evenly">
+                                            <td><input type="text" placeholder="   E-mail" class="input-text"  v-model="courseToShow.user.email"/></td>
+                                            <td><input type="text" placeholder="   Phone number" class="input-text"  v-model="courseToShow.user.phoneNumber"/></td></tr><br>
+                                        <tr>
+                                        <tr><textarea rowspan="3"name="text" placeholder="   Biography" class="input-text-area"  v-model="courseToShow.user.biography" ></textarea></tr><br>
+                                        <tr class="d-flex justify-content-evenly">
+                                             <td><input type="text" placeholder="   Country" class="input-text"  v-model="courseToShow.location.country"/></td>
+                                             <td><input type="text" placeholder="   City" class="input-text"  v-model="courseToShow.location.city"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="courseToShow.location.street"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="courseToShow.location.streetNumber"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="courseToShow.unitPrice"/></td></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="courseToShow.description" ></textarea></tr><br>
+                                        <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="courseToShow.maxCustomerCapacity"/></td></tr><br>
+                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="courseToShow.additionalServices" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="courseToShow.rulesOfConduct" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="courseToShow.cancellationPolicy" ></textarea></tr><br>
+                                    </table>
+                                </form>
+                			 </div>
+                         </div>
+                    </div>
+                    <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left:22%; height:80vh" v-show="showPage == 2">
+                         <div class="container" v-show="showPage == 2">
+                              <div class="container align-items-start">
+                                	<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
+                                	<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Feedback for course and instructor </p>
+                                	<form class="justify-content-center">
+                                		<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+                                			<tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="courseToShow.offerName"/></td></tr><br>
+                                			<tr class="d-flex justify-content-evenly">
+                                			    <td><input type="text" placeholder="   First name" class="input-text" v-model="courseToShow.user.firstName"/></td>
+                                				<td><input type="text" placeholder="   Last name"  class="input-text" v-model="courseToShow.user.lastName"/></td>
+                                			</tr><br>
+                                			<tr>
+                                				<td><input type="number" placeholder="   Rating" class="input-text" v-model="feedback.rate"/></td>
+                                			</tr>
+                                				<tr><textarea rowspan="3" name="text" placeholder="   Feedback" class="input-text-area" v-model="feedback.content"></textarea></tr><br>
+                                				<tr><button type="button" @click="addFeedback" class="confirm">Send</button></tr>
+                                		</table>
+                                	</form>
+                              </div>
                         </div>
                     </div>
+                </div>
+            </div>
           `
           ,
           computed: {

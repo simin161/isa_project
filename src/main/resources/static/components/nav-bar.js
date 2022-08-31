@@ -37,6 +37,7 @@ template: `
                                 </a>
                             <nav class="col-sm-8">
                                 <div v-show="loggedUser.userType == 'CUSTOMER'">
+                                    <a href="#/complaints" style="font-family: poppins-bold; font-size: 24px;">Complaints</a>
                                     <a href="#/penals" style="font-family: poppins-bold; font-size: 24px;">Penals</a>
                                     <a href="#/following" style="font-family: poppins-bold; font-size: 24px;">Following</a>
                                     <span class="dropdown">

@@ -166,4 +166,20 @@ public class ReservationService {
         }
         return allActions;
     }
+
+    public List<Offer> allPassedReservationsForCustomerWithoutDuplicatedOffers(String username) {
+        List<Reservation> reservations = reservationRepository.findAllPassedReservationsForCustomer(username, LocalDateTime.now());
+        List<Offer> retVal = new ArrayList<>();
+        if(reservations != null){
+            reservations = reservations.stream().filter(r -> r.getReservationStatus() == ReservationStatus.ACTIVE).collect(Collectors.toList());
+            List<Reservation> temp = new ArrayList<>();
+            List<Offer> offers = new ArrayList<>();
+            for(Reservation r : reservations){
+                offers.add(r.getOffer());
+            }
+            retVal = offers.stream().distinct().collect(Collectors.toList());
+
+        }
+        return retVal;
+    }
 }

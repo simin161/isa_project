@@ -91,10 +91,10 @@ template: `
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{course.offer.description}}</p>
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{course.offer.unitPrice}}</p>
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{course.offer.rating}}</p>
-                                            <button class="float-end btn btn-light" @click="showMore(course.offer)">Show more</button>
+                                            <button class="float-end btn btn-light" @click="showMore(course.offer)" style="margin-left: 5px;">Show more</button>
                                             <button class="float-end btn btn-light" @click="showTerms(course.offer)">Show terms</button>
                                             <span v-show="loggedUser.userType === 'CUSTOMER'">
-                                            <button v-show="!course.followed" class="float-end btn btn-light" @click="follow(course.offer)">Follow</button>
+                                            <button v-show="!course.followed" class="float-end btn btn-light" style="background-color: #DED528; margin-left: 5px; margin-right: 5px;" @click="follow(course.offer)">Follow</button>
                                             </span>
                                         </div>
                 					</div>

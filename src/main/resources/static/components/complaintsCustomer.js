@@ -1,4 +1,4 @@
-Vue.component('actions', {
+Vue.component('complaints', {
 data: function(){
     		return{
     			showPage: 0,
@@ -7,6 +7,20 @@ data: function(){
     			    bungalowName : "",
     			    bungalowLocation: ""
     			},
+    			 complaint:{
+                    content: "",
+                    offer: null,
+                    user: null
+                 },
+                 choosenOffer: {
+                    offerId: "",
+                    offerName: "",
+                    offerUser: {
+                        id: "",
+                        firstName: "",
+                        lastName: ""
+                    }
+                 },
     			reservations:[]
     		}
     	},
@@ -16,8 +30,8 @@ data: function(){
     		<br>
     		<br>
             <div class="my-bungalows">
-    			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh">
-    				<form class="justify-content-center">
+    			<div class="col-md-4 left-div overflow-auto" style="margin-top: -5px; margin-left: 22%; height: 80vh;" v-show="showPage == 0">
+    				<form class="justify-content-center" >
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
     							<td colspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
@@ -42,7 +56,7 @@ data: function(){
     						</tr>
     					</table>
     				</form>
-    				<div class="container mt-5">
+    				<div class="container mt-5" v-show="showPage == 0">
     					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="reservation in reservations">
     						<div class="row g-0">
     							<div class="col-md-4" style="text-align:center;">
@@ -50,21 +64,38 @@ data: function(){
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">
-    								    <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.startDate}} - {{reservation.endDate}}</h5>
-    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offer.offerName}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Number of people: {{reservation.numberOfPeople}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{reservation.totalPrice}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Discount: {{reservation.discount}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="makeReservation(reservation)">Book!</button>
+    								    <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offerName}}</h5>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.user.firstName}} {{reservation.user.lastName}}</h5>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.description}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.rating}}</p>
+    									<input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" @click="showComplaintForm(reservation)" value="Write complaint" />
     								</div>
     							</div>
     						</div>
     					</div>
     				</div>
-               	</div>
+    		    </div>
+    				<div class="col-md-4 left-div overflow-auto" style="margin-top: -5px; margin-left: 22%; height: 80vh;" v-show="showPage == 1">
+                          <div class="container" v-show="showPage == 1">
+                               <div class="container align-items-start">
+                                   <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
+                                   <p class="title-text-bold" style="margin-top:10px; text-align:center;"> Complaint form for owner and offer </p>
+                                   <form class="justify-content-center">
+                                        <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+                                             <tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="choosenOffer.offerName"/></td></tr><br>
+                                             <tr class="d-flex justify-content-evenly">
+                                                  <td><input type="text" placeholder="   First name" class="input-text" v-model="choosenOffer.offerUser.firstName"/></td>
+                                                  <td><input type="text" placeholder="   Last name"  class="input-text" v-model="choosenOffer.offerUser.lastName"/></td>
+                                             </tr>
+                                             <br>
+                                             <br>
+                                             <tr><textarea rowspan="3" name="text" v-model="complaint.content" placeholder="   Complaint" class="input-text-area" ></textarea></tr><br>
+                                             <tr><input @click="addComplaint" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Send"/></tr>
+                                        </table>
+                                   </form>
+                               </div>
+                          </div>
+                    </div>
             </div>
     	</div>
     		`
@@ -80,26 +111,38 @@ data: function(){
           }
           ,
           methods : {
+            showComplaintForm : function(reservation){
+                this.choosenOffer.offerId = reservation.id;
+                this.choosenOffer.offerName = reservation.offerName;
+                this.choosenOffer.offerUser.id = reservation.user.id;
+                this.choosenOffer.offerUser.firstName = reservation.user.firstName;
+                this.choosenOffer.offerUser.lastName = reservation.user.lastName;
+                this.showPage = 1;
+            },
             search : function(){
                 axios.get('/api/search', {
                      params: this.axiosParams
                 }).then(response => (this.bungalows = response.data))
             },
-            makeReservation : function(reservation){
-            axios.defaults.headers.common["Authorization"] =
-                           localStorage.getItem("user");
-                axios.post("/api/makeReservationAction",{"id" : reservation.id})
-                     .then((response)=>{
-                        if(response.data){
-                           axios.defaults.headers.common["Authorization"] =
-                                                                       localStorage.getItem("user");
-                                       axios.post("/api/getActionsForOffer", {"id" : id})
-                                            .then((response) => {this.reservations = response.data})
-                        }else{
-                            Swal.fire('Ooops, something went wrong!',
-                	                  'Please, try again later',
-                	                  'error')
-                        }
+            addComplaint : function(){
+                axios.defaults.headers.common["Authorization"] =
+                                       localStorage.getItem("user");
+                 axios.post('/api/addComplaint', {"content": this.complaint.content,
+                                                  "offerID": this.choosenOffer.offerId})
+                     .then(response => {
+                         if(response.data){
+                             Swal.fire(
+                                 'Complaint sent successfuly!',
+                                 '',
+                                 'success'
+                             )
+                         }else{
+                             Swal.fire(
+                                 'Ooops, something went wrong!',
+                                 'Please, try again later!',
+                                 'error'
+                             )
+                         }
                      })
             },
             sortedArray: function() {
@@ -169,7 +212,7 @@ data: function(){
             const id = window.location.hash.split('/')[2];
             axios.defaults.headers.common["Authorization"] =
                                             localStorage.getItem("user");
-            axios.post("/api/getActionsForOffer", {"id" : id})
+            axios.get("/api/allPassedReservationsForCustomerWithoutDuplicatedOffers")
                  .then((response) => {this.reservations = response.data})
         }
 

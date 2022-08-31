@@ -84,10 +84,10 @@ Vue.component('bungalows', {
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{b.offer.description}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{b.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{b.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(b.offer)">Show more</button>
+    									<button class="float-end btn btn-light" @click="showMore(b.offer)" style="margin-left: 5px;">Show more</button>
     									<button class="float-end btn btn-light" @click="showTerms(b.offer)">Show terms</button>
     									<span v-show="loggedUser.userType === 'CUSTOMER'">
-    									    <button v-show="!b.followed" class="float-end btn btn-light" @click="follow(b.offer)">Follow</button>
+    									    <button v-show="!b.followed" class="float-end btn btn-light" style="background-color: #DED528; margin-left: 5px; margin-right: 5px;" @click="follow(b.offer)">Follow</button>
     									    <button class="float-end btn btn-light" @click="showActions(b.offer.id)">Show actions</button>
     								    </span>
     								</div>

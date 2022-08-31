@@ -43,8 +43,12 @@ public class OfferController {
                                                  @RequestParam(name = "firstLastName", defaultValue = "", required = false) String firstAndLastName,
                                                  @RequestParam(name = "startDate", required = false) String startDate,
                                                  @RequestParam(name = "endDate", required = false) String endDate){
-        List<? extends Offer> offers = offerService.search(name, location, type, firstAndLastName, LocalDateTime.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                LocalDateTime.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        List<? extends Offer> offers = new ArrayList<>();
+        if(startDate == null || startDate.equals("") && endDate == null || endDate.equals(""))
+            offers = offerService.search(name, location, type, firstAndLastName, null,null);
+        else
+            offers = offerService.search(name, location, type, firstAndLastName, LocalDateTime.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                    LocalDateTime.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         List<OfferDTO> retVal = new ArrayList<>();
         try {
             final String value = header.getFirst(HttpHeaders.AUTHORIZATION);

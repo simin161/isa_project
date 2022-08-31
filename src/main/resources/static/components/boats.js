@@ -81,10 +81,10 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{boat.offer.description}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{boat.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(boat.offer)">Show more</button>
+    									<button class="float-end btn btn-light" @click="showMore(boat.offer)" style="margin-left: 5px;">Show more</button>
     									<button class="float-end btn btn-light" @click="showTerms(boat.offer)">Show terms</button>
     									<span v-show="loggedUser.userType === 'CUSTOMER'">
-    									    <button v-show="!boat.followed" class="float-end btn btn-light" @click="follow(boat.offer)">Follow/unfollow</button>
+    									    <button v-show="!boat.followed" class="float-end btn btn-light" style="background-color: #DED528; margin-left: 5px; margin-right: 5px;" @click="follow(boat.offer)">Follow/unfollow</button>
     								    </span>
     								</div>
     							</div>

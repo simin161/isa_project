@@ -112,6 +112,23 @@ public class ReservationController {
         return new ArrayList<>();
     }
 
+    @GetMapping("/allPassedReservationsForCustomerWithoutDuplicatedOffers")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public List<Offer> allPassedReservationsForCustomerWithoutDuplicatedOffers(@RequestHeader HttpHeaders header){
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.allPassedReservationsForCustomerWithoutDuplicatedOffers(username);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
     @PostMapping("/getActionsForOffer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public List<Reservation> getActionsForOffer(@RequestBody Map<String, String> id){

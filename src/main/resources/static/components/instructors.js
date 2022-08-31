@@ -6,28 +6,8 @@ Vue.component('instructors', {
             },
 			courses: null,
 			courseToShow: {
-			     offerType: "COURSE",
-                 offerName: "",
-                 user: {
-                    biography: "",
-                    email: "",
-                    firstName: "",
-                    lastName: "",
-                    phoneNumber: ""
-                 },
-                 location:{
-                    country: "",
-                    city: "",
-                    street: "",
-                    streetNumber:""
-                 },
-                 description:"",
-                 unitPrice:"",
-                 maxCustomerCapacity:"",
-                 maxCustomerCapacity:"",
-                 rulesOfConduct:"",
-                 additionalServices:"",
-                 cancellationPolicy:""
+			    offer: null,
+			    followed: false
 			},
             searchParams: {
                  courseName : "",
@@ -92,8 +72,7 @@ template: `
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{course.offer.description}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{course.offer.unitPrice}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{course.offer.rating}}</p>
-                                         <button class="float-end btn btn-light" @click="showMore(course.offer)" style="margin-left: 5px;">Show more</button>
-                                        <button class="float-end btn btn-light" @click="showTerms(course.offer)">Show terms</button>
+                                        <button class="float-end btn btn-light" @click="showMore(course)" style="margin-left: 5px;">Show more</button>
                                         <span v-show="loggedUser.userType === 'CUSTOMER'">
                                             <button v-show="!course.followed" class="float-end btn btn-light" style="background-color: #DED528; margin-left: 5px; margin-right: 5px;" @click="follow(course.offer)">Follow</button>
                                         </span>
@@ -105,31 +84,39 @@ template: `
                     <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 1">
                          <div class="container" v-show="showPage == 1">
                 		    <div class="container align-items-start">
-                				<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
+                				<input class="confirm-profile" type="button" value="Back" style="width:15%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/>
+                				<input type="button" class="confirm-profile" value="Show terms" style="width:15%; float:left; margin-left: 8px; margin-right: 8px; font-size:12px; background-color: white; color: black;" @click="showTerms(courseToShow.offer)"/>
+                				<input class="confirm-profile" type="button" value="Show gallery" style="width:15%; float:left; margin-left: 8px; margin-right: 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 3"/>
+                                <input class="confirm-profile" type="button" value="Show reviews" style="width:15%; float:left; margin-left 8px; margin-right: 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 4"/>
+                                <span v-show="loggedUser.userType === 'CUSTOMER'">
+                                    <input type="button" v-show="!courseToShow.followed" class="confirm-profile" style="width:15%; float:left; margin-left 8px; font-size:12px; background-color: white; color: black;" @click="follow(courseToShow.offer)" value="Follow"/>
+                                    <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(courseToShow.offer.id)" value="Show actions"/>
+                                </span>
+                                <br><br><br>
                 				<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show instructor </p>
                 				<form class="justify-content-center">
                                      <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                                         <tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="courseToShow.offerName"/></td></tr><br>
+                                         <p>{{courseToShow.offerName}}</p>
                                          <tr class="d-flex justify-content-evenly">
-                                             <td><input type="text" placeholder="   First Name" class="input-text"  v-model="courseToShow.user.firstName"/></td>
-                                             <td><input type="text" placeholder="   Last Name" class="input-text"  v-model="courseToShow.user.lastName"/></td>
+                                             <td><input type="text" placeholder="   First Name" disabled style="color:white" class="input-text"  v-model="courseToShow.offer.user.firstName"/></td>
+                                             <td><input type="text" placeholder="   Last Name" disabled style="color:white" class="input-text"  v-model="courseToShow.offer.user.lastName"/></td>
                                          </tr><br>
                                          <tr class="d-flex justify-content-evenly">
-                                              <td><input type="text" placeholder="   E-mail" class="input-text"  v-model="courseToShow.user.email"/></td>
-                                              <td><input type="text" placeholder="   Phone number" class="input-text"  v-model="courseToShow.user.phoneNumber"/></td>
+                                              <td><input type="text" placeholder="   E-mail" disabled style="color:white" class="input-text"  v-model="courseToShow.offer.user.email"/></td>
+                                              <td><input type="text" placeholder="   Phone number" disabled style="color:white" class="input-text"  v-model="courseToShow.offer.user.phoneNumber"/></td>
                                          </tr><br>
-                                        <tr><textarea rowspan="3"name="text" placeholder="   Biography" class="input-text-area"  v-model="courseToShow.user.biography" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3"name="text" placeholder="   Biography" disabled style="color:white" class="input-text-area"  v-model="courseToShow.offer.user.biography" ></textarea></tr><br>
                                         <tr class="d-flex justify-content-evenly">
-                                            <td><input type="text" placeholder="   Country" class="input-text"  v-model="courseToShow.location.country"/></td>
-                                            <td><input type="text" placeholder="   City" class="input-text"  v-model="courseToShow.location.city"/></td></tr><br>
-                                        <tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="courseToShow.location.street"/></td></tr><br>
-                                        <tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="courseToShow.location.streetNumber"/></td></tr><br>
-                                        <tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="courseToShow.unitPrice"/></td></tr><br>
-                                        <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="courseToShow.description" ></textarea></tr><br>
-                                        <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="courseToShow.maxCustomerCapacity"/></td></tr><br>
-                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="courseToShow.additionalServices" ></textarea></tr><br>
-                                        <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="courseToShow.rulesOfConduct" ></textarea></tr><br>
-                                        <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="courseToShow.cancellationPolicy" ></textarea></tr><br>
+                                            <td><input type="text" placeholder="   Country" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.location.country"/></td>
+                                            <td><input type="text" placeholder="   City" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.location.city"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Street" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.location.street"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Street number" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.location.streetNumber"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Unit price" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.unitPrice"/></td></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area" disabled style="color:white"  v-model="courseToShow.offer.description" ></textarea></tr><br>
+                                        <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.maxCustomerCapacity"/></td></tr><br>
+                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color:white" class="input-text-area"  v-model="courseToShow.offer.additionalServices" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area" disabled style="color:white"  v-model="courseToShow.offer.rulesOfConduct" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area" disabled style="color:white"  v-model="courseToShow.offer.cancellationPolicy" ></textarea></tr><br>
                                      </table>
                                 </form>
                 			</div>
@@ -139,7 +126,7 @@ template: `
                         <div class="container" v-show="showPage == 2">
                             <div class="container align-items-start">
                                  <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
-                                 <p class="title-text-bold" style="margin-top:10px; text-align:center;">Show all terms</p>
+                                 <p class="title-text-bold" style="margin-top:10px; text-align:center;">All terms</p>
                                  <div v-for="term in terms" style="border-bottom: solid thick white">
                                       <p style="color:#fff;font-family:poppins-light; font-size:12px;">Start date: {{term.startTime}}</p>
                                       <p style="color:#fff;font-family:poppins-light; font-size:12px;">End date: {{term.endTime}}</p>
@@ -187,7 +174,6 @@ template: `
             },
             showMore : function(course){
                 this.courseToShow = course;
-                this.courseToShow.user = course.user;
                 this.showPage = 1;
             }
             ,
@@ -278,6 +264,7 @@ template: `
           mounted(){
             axios.get("/api/allCourses")
                  .then(response => {this.courses = response.data;
+                    this.courseToShow = this.courses[0];
                     axios.defaults.headers.common["Authorization"] =
                                    localStorage.getItem("user");
                     axios.get("/api/authenticateUser")

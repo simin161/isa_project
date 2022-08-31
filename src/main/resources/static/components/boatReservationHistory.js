@@ -46,7 +46,7 @@ data: function(){
     		<br>
     		<br>
             <div class="my-bungalows">
-    			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
+    			<div class="col-md-4 left-div overflow-auto" v-show="showPage == 0" style="margin-top:-20px; margin-left: 22%; height:80vh">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.boatName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's name" /></td>
@@ -91,51 +91,50 @@ data: function(){
     						</div>
     					</div>
     				</div>
-
-                   	</div>
-                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 1">
+    		    </div>
+                <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 1">
                    	<div class="container" v-show="showPage == 1">
     					<div class="container align-items-start">
     						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
     						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
     						<form class="justify-content-center">
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-    								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Bungalow's name" disabled style="color: white" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
     								<tr class="d-flex justify-content-evenly">
-    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.location.country"/></td>
-    									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.location.city"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="boatToShow.location.street"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="boatToShow.location.streetNumber"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="boatToShow.unitPrice"/></td></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="boatToShow.description" ></textarea></tr><br>
-    								<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="boatToShow.maxCustomerCapacity"/></td></tr><br>
-    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="boatToShow.additionalServices" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="boatToShow.rulesOfConduct" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="boatToShow.cancellationPolicy" ></textarea></tr><br>
+    									<td><input type="text" placeholder="   Country" disabled style="color: white" class="input-text"  v-model="boatToShow.location.country"/></td>
+    									<td><input type="text" placeholder="   City" disabled style="color: white" class="input-text"  v-model="boatToShow.location.city"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street" disabled style="color: white" class="input-text"  v-model="boatToShow.location.street"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street number" disabled style="color: white" class="input-text"  v-model="boatToShow.location.streetNumber"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Unit price" disabled style="color: white" class="input-text"  v-model="boatToShow.unitPrice"/></td></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Description" disabled style="color: white" class="input-text-area"  v-model="boatToShow.description" ></textarea></tr><br>
+    								<tr><td><input type="text" placeholder="   Maximum capacity" disabled style="color: white" class="input-text"  v-model="boatToShow.maxCustomerCapacity"/></td></tr><br>
+    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="boatToShow.additionalServices" ></textarea></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area" disabled style="color: white"  v-model="boatToShow.rulesOfConduct" ></textarea></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area" disabled style="color: white"  v-model="boatToShow.cancellationPolicy" ></textarea></tr><br>
     							</table>
     						</form>
     					</div>
                    	</div>
                	</div>
-	            <div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 2">
+	            <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 2">
                    	<div class="container" v-show="showPage == 2">
     					<div class="container align-items-start">
     						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
     						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Feedback for boat and owner </p>
     						<form class="justify-content-center">
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-    								<tr><td><input type="text" placeholder="   Boat's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Boat's name" disabled style="color: white" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
                                     <tr class="d-flex justify-content-evenly">
-                                        <td><input v-model="boatToShow.user.firstName" type="text" placeholder="   First name" class="input-text"/></td>
-                                        <td><input v-model="boatToShow.user.lastName"  type="text" placeholder="   Last name"  class="input-text"/></td>
+                                        <td><input v-model="boatToShow.user.firstName" disabled style="color: white" type="text" placeholder="   First name" class="input-text"/></td>
+                                        <td><input v-model="boatToShow.user.lastName" disabled style="color: white" type="text" placeholder="   Last name"  class="input-text"/></td>
                                     </tr>
                                     <br>
                                     <tr>
-                                        <td><input type="number" placeholder="    Rating" v-model="feedback.rate" class="input-text" /></td>
+                                        <td><input type="number" placeholder="    Rating" v-model="feedback.rate" min="1" max="5" class="input-text" /></td>
                                     </tr>
                                     <br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Feedback" v-model="feedback.content" class="input-text-area"></textarea></tr><br>
-                                	<tr><button type="button" @click="addFeedback" class="float-end btn btn-light">Send</button></tr>
+                                	<tr><button type="button" @click="addFeedback" class="confirm">Send</button></tr>
    							</table>
     						</form>
     					</div>

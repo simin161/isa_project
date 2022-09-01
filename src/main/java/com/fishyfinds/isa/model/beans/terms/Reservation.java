@@ -46,6 +46,9 @@ public class Reservation {
     @Column(name="discount")
     private double discount;
 
+    @Column(name="hasComplaint")
+    private boolean hasComplaint;
+
     @OneToOne
     @JoinColumn(name="customer", referencedColumnName = "id")
     private Customer customer;

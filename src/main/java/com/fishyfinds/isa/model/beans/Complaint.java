@@ -1,8 +1,10 @@
 package com.fishyfinds.isa.model.beans;
 
 import com.fishyfinds.isa.model.beans.offers.Offer;
+import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.ComplaintStatus;
+import com.fishyfinds.isa.model.enums.ComplaintType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,28 +21,26 @@ public class Complaint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content")
-    private String content;
-
     @Column(name="status")
     private ComplaintStatus status;
 
-    @OneToOne
-    @JoinColumn(name="customer", referencedColumnName = "id")
-    private User user;
+    @Column(name="complaintType")
+    private ComplaintType complaintType;
 
-    @OneToOne
-    @JoinColumn(name="offer", referencedColumnName = "id")
-    private Offer offer;
+    @Column(name="content")
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name="reservation", referencedColumnName = "id")
+    private Reservation reservation;
 
     public Complaint(){}
-
-    public Complaint(Long id, String content, ComplaintStatus status, User user, Offer offer) {
-        this.id = id;
-        this.content = content;
+    public Complaint(ComplaintStatus status, String content, Reservation reservation, ComplaintType complaintType) {
         this.status = status;
-        this.user = user;
-        this.offer = offer;
-
+        this.content = content;
+        this.reservation = reservation;
+        this.complaintType = complaintType;
     }
+
+
 }

@@ -9,8 +9,8 @@ data: function(){
     			},
     			 complaint:{
                     content: "",
-                    offer: null,
-                    user: null
+                    complaintType: "OWNER_COMPLAINT",
+                    reservationId : ""
                  },
                  choosenOffer: {
                     offerId: "",
@@ -64,10 +64,11 @@ data: function(){
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">
-    								    <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offerName}}</h5>
-    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.user.firstName}} {{reservation.user.lastName}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.description}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.rating}}</p>
+    								    <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.startDate}} - {{reservation.endDate}}</h5>
+    								    <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offer.offerName}}</h5>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offer.user.firstName}} {{reservation.offer.user.lastName}}</h5>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
+    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
     									<input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" @click="showComplaintForm(reservation)" value="Write complaint" />
     								</div>
     							</div>
@@ -80,17 +81,27 @@ data: function(){
                                <div class="container align-items-start">
                                    <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
                                    <p class="title-text-bold" style="margin-top:10px; text-align:center;"> Complaint form for owner and offer </p>
+                                   <p class="title-text-bold" style="margin-top:10px; font-size: 15px;  text-align:center;"> Please, choose your complaint type: </p>
                                    <form class="justify-content-center">
                                         <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                                             <tr><td><input type="text" placeholder="   Course's name" class="input-text" v-model="choosenOffer.offerName"/></td></tr><br>
+                                             <tr>
+                                                <td>
+                                                    <select style="width: 100%; font-size: 18px;" v-model="complaint.complaintType">
+                                                        <option value="OWNER_COMPLAINT">Owner</option>
+                                                        <option value="OFFER_COMPLAINT">Offer</option>
+                                                        <option value="BOTH_COMPLAINT">Both</option>
+                                                    </select>
+                                                </td>
+                                             </tr>
+                                             <tr><td><input type="text" placeholder="   Course's name" disabled style="color: white" class="input-text" v-model="choosenOffer.offerName"/></td></tr><br>
                                              <tr class="d-flex justify-content-evenly">
-                                                  <td><input type="text" placeholder="   First name" class="input-text" v-model="choosenOffer.offerUser.firstName"/></td>
-                                                  <td><input type="text" placeholder="   Last name"  class="input-text" v-model="choosenOffer.offerUser.lastName"/></td>
+                                                  <td><input type="text" placeholder="   First name" disabled style="color: white" class="input-text" v-model="choosenOffer.offerUser.firstName"/></td>
+                                                  <td><input type="text" placeholder="   Last name" disabled style="color: white" class="input-text" v-model="choosenOffer.offerUser.lastName"/></td>
                                              </tr>
                                              <br>
                                              <br>
                                              <tr><textarea rowspan="3" name="text" v-model="complaint.content" placeholder="   Complaint" class="input-text-area" ></textarea></tr><br>
-                                             <tr><input @click="addComplaint" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Send"/></tr>
+                                             <tr><input :disabled="isFilled" @click="addComplaint" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Send"/></tr>
                                         </table>
                                    </form>
                                </div>
@@ -107,16 +118,19 @@ data: function(){
                   params.append('location', this.searchParams.bungalowLocation);
                   params.append('type', 'BUNGALOW');
                   return params;
+              },
+              isFilled(){
+                return !/\S/.test(this.complaint.content);
               }
           }
           ,
           methods : {
             showComplaintForm : function(reservation){
                 this.choosenOffer.offerId = reservation.id;
-                this.choosenOffer.offerName = reservation.offerName;
-                this.choosenOffer.offerUser.id = reservation.user.id;
-                this.choosenOffer.offerUser.firstName = reservation.user.firstName;
-                this.choosenOffer.offerUser.lastName = reservation.user.lastName;
+                this.choosenOffer.offerName = reservation.offer.offerName;
+                this.choosenOffer.offerUser.id = reservation.offer.user.id;
+                this.choosenOffer.offerUser.firstName = reservation.offer.user.firstName;
+                this.choosenOffer.offerUser.lastName = reservation.offer.user.lastName;
                 this.showPage = 1;
             },
             search : function(){
@@ -128,7 +142,8 @@ data: function(){
                 axios.defaults.headers.common["Authorization"] =
                                        localStorage.getItem("user");
                  axios.post('/api/addComplaint', {"content": this.complaint.content,
-                                                  "offerID": this.choosenOffer.offerId})
+                                                  "reservationId": this.choosenOffer.offerId,
+                                                  "complaintType": this.complaint.complaintType})
                      .then(response => {
                          if(response.data){
                              Swal.fire(
@@ -136,6 +151,11 @@ data: function(){
                                  '',
                                  'success'
                              )
+                             axios.defaults.headers.common["Authorization"] =
+                                                                         localStorage.getItem("user");
+                             axios.get("/api/allPassedReservationsForCustomerWithoutDuplicatedOffers")
+                                   .then((response) => {this.reservations = response.data; this.showPage = 0;})
+
                          }else{
                              Swal.fire(
                                  'Ooops, something went wrong!',

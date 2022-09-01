@@ -3,10 +3,13 @@ package com.fishyfinds.isa.service;
 import com.fishyfinds.isa.model.beans.Complaint;
 import com.fishyfinds.isa.model.beans.ResolveComplaintRequest;
 import com.fishyfinds.isa.model.beans.offers.Offer;
+import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.enums.ComplaintStatus;
+import com.fishyfinds.isa.model.enums.ComplaintType;
 import com.fishyfinds.isa.repository.ComplaintRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
+import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
 import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +22,7 @@ import java.util.Optional;
 public class ComplaintService {
 
     @Autowired
-    private OfferRepository offerRepository;
+    private ReservationRepository reservationRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -27,12 +30,18 @@ public class ComplaintService {
     @Autowired
     private ComplaintRepository complaintRepository;
 
-    public boolean add(String username, String content, String offerID) {
+    public boolean add(String username, String content, String reservationId, String complaintType) {
         User user = userRepository.findByEmail(username);
-        Offer offer = offerRepository.findById(Long.parseLong(offerID)).orElseGet(null);
-        Complaint complaint = new Complaint(Long.valueOf(complaintRepository.findAll().size() + 1), content, ComplaintStatus.PENDING,user, offer);
+        Reservation reservation = reservationRepository.findById(Long.parseLong(reservationId)).orElseGet(null);
+        ComplaintType type = ComplaintType.OWNER_COMPLAINT;
+        if(complaintType.equals("OFFER_COMPLAINT"))
+            type= ComplaintType.OFFER_COMPLAINT;
+        else if(complaintType.equals("BOTH_COMPLAINT"))
+            type = ComplaintType.BOTH_COMPLAINT;
+        Complaint complaint = new Complaint(ComplaintStatus.PENDING, content, reservation, type);
         complaintRepository.save(complaint);
-
+        reservation.setHasComplaint(true);
+        reservationRepository.save(reservation);
         return true;
     }
 

@@ -114,7 +114,7 @@ public class ReservationController {
 
     @GetMapping("/allPassedReservationsForCustomerWithoutDuplicatedOffers")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Offer> allPassedReservationsForCustomerWithoutDuplicatedOffers(@RequestHeader HttpHeaders header){
+    public List<Reservation> allPassedReservationsForCustomerWithoutDuplicatedOffers(@RequestHeader HttpHeaders header){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);

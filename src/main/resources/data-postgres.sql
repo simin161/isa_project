@@ -138,6 +138,10 @@ INSERT INTO public.reservation(id, start_date, end_date, reservation_status, res
         values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200, 25.0, false, false);
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback)
         values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback)
+        values(5, '2022-08-015T10:00:00',  '2022-08-20T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback)
+        values(6, '2022-08-015T10:00:00',  '2022-08-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false);
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
 --INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
  --  VALUES(2,4);

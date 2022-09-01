@@ -99,25 +99,21 @@ INSERT INTO public.boat(boat_length, boat_type, id, engine)
 --OFFERS END--
 
 -- ADDITIONAL SERVICES START --
---insert into additional_service(name, type) values ('Wi-fi', 'ADDITIONAL_SERVICE'); -- 1
---insert into additional_service(name, type) values ('Parking', 'ADDITIONAL_SERVICE'); -- 2
+INSERT INTO additional_service(id, name, type) VALUES (1, 'Wi-fi', 'ADDITIONAL_SERVICE');
+INSERT INTO additional_service(id, name, type) VALUES (2, 'Parking', 'ADDITIONAL_SERVICE');
+INSERT INTO additional_service(id, name, type) VALUES (3, 'Nets', 'FISHING_TOOL');
+INSERT INTO additional_service(id, name, type) VALUES (4, 'Hooks', 'FISHING_TOOL');
+INSERT INTO additional_service(id, name, type) VALUES (5, 'Traps', 'FISHING_TOOL');
+INSERT INTO additional_service(id, name, type) VALUES (6, 'GPS', 'NAVIGATIONAL_TOOL');
+INSERT INTO additional_service(id, name, type) VALUES (7, 'Compass', 'NAVIGATIONAL_TOOL');
+INSERT INTO additional_service(id, name, type) VALUES (8, 'Auto Pilot', 'NAVIGATIONAL_TOOL');
 
---insert into additional_service(name, type) values ('Nets', 'FISHING_TOOL'); -- 3
---insert into additional_service(name, type) values ('Hooks', 'FISHING_TOOL'); -- 4
---insert into additional_service(name, type) values ('Traps', 'FISHING_TOOL'); -- 5
-
---insert into additional_service(name, type) values ('GPS', 'NAVIGATIONAL_TOOL'); -- 6
---insert into additional_service(name, type) values ('Compass', 'NAVIGATIONAL_TOOL'); -- 7
---insert into additional_service(name, type) values ('Auto Pilot', 'NAVIGATIONAL_TOOL'); -- 8
-
---insert into offer_additional_service(offer_id, additional_service_id) values(1,1);
---insert into offer_additional_service(offer_id, additional_service_id) values(2,2);
---insert into offer_additional_service(offer_id, additional_service_id) values(3,1);
-
---insert into offer_additional_service(offer_id, additional_service_id) values(4,3);
-
---insert into offer_additional_service(offer_id, additional_service_id) values(5,3);
---insert into offer_additional_service(offer_id, additional_service_id) values(5,6);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(1,1);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(2,2);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(3,1);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(4,3);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(5,3);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(5,6);
 -- ADDITIONAL SERVICES END --
 
 --TERMS START--
@@ -154,9 +150,18 @@ INSERT INTO public.delete_request(id, explanation, status, users)
 	VALUES (1, 'I just want to die, thank you goodbye <3', 0, 1);
 --DELETE REQUEST END--
 --USER FEEDBACK START--
--- INSERT INTO public.user_feedback VALUES (1, 'Too hot for me', 3, 0, 1, 1);
- --INSERT INTO public.user_feedback VALUES (2, 'I don''t know why "coursy wumby"???', 4, 0, 1, 4);
--- INSERT INTO public.user_feedback VALUES (3, 'Belly dancing with papa shark was better than this sh*t', 2, 0, 1, 3);
+INSERT INTO public.user_feedback(
+	id, content_for_offer, content_for_owner, rate_offer, rate_owner, status, reservation)
+	VALUES (1, 'Nice offer', 'Nice owner', 4, 4, 1 , 1);
+INSERT INTO public.user_feedback(
+	id, content_for_offer, content_for_owner, rate_offer, rate_owner, status, reservation)
+	VALUES (2, 'Nice offer1', 'Nice owner2', 4, 4, 1 , 1);
+INSERT INTO public.user_feedback(
+	id, content_for_offer, content_for_owner, rate_offer, rate_owner, status, reservation)
+	VALUES (3, 'Nice offer1', 'Nice owner2', 4, 4, 1 , 5);
+INSERT INTO public.user_feedback(
+	id, content_for_offer, content_for_owner, rate_offer, rate_owner, status, reservation)
+	VALUES (4, 'Nice offer1', 'Nice owner2', 4, 4, 1 , 6);
 --USER FEEDBACK END--
 
 --USER AUTHORITIES BEGIN--

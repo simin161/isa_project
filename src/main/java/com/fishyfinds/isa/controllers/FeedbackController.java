@@ -34,6 +34,7 @@ public class FeedbackController {
             return feedbackService.addFeedback(username, DtoToFeedback.MapToUserFeedback(params));
 
         }catch(Exception e){
+            e.printStackTrace();
         }
         return  false;
     }

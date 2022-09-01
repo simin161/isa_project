@@ -130,14 +130,14 @@ INSERT INTO public.term(id, start_date, end_date, offer)
 
 --RESERVATIONS START--
 -- TODO: Inserting reservations...
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
-    values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 0, 1,1,2,200, 0.0, false);
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
-    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,1,2,200, 0.0, false);
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
-        values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200, 25.0, false);
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
-        values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,1,2,200, 0.0, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback)
+    values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback)
+    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback)
+        values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200, 25.0, false, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback)
+        values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false);
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
 --INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
  --  VALUES(2,4);
@@ -150,9 +150,9 @@ INSERT INTO public.delete_request(id, explanation, status, users)
 	VALUES (1, 'I just want to die, thank you goodbye <3', 0, 1);
 --DELETE REQUEST END--
 --USER FEEDBACK START--
- INSERT INTO public.user_feedback VALUES (1, 'Too hot for me', 3, 0, 1, 1);
- INSERT INTO public.user_feedback VALUES (2, 'I don''t know why "coursy wumby"???', 4, 0, 1, 4);
- INSERT INTO public.user_feedback VALUES (3, 'Belly dancing with papa shark was better than this sh*t', 2, 0, 1, 3);
+-- INSERT INTO public.user_feedback VALUES (1, 'Too hot for me', 3, 0, 1, 1);
+ --INSERT INTO public.user_feedback VALUES (2, 'I don''t know why "coursy wumby"???', 4, 0, 1, 4);
+-- INSERT INTO public.user_feedback VALUES (3, 'Belly dancing with papa shark was better than this sh*t', 2, 0, 1, 3);
 --USER FEEDBACK END--
 
 --USER AUTHORITIES BEGIN--

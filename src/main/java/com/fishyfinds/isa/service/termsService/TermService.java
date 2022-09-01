@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TermService {
@@ -20,7 +21,7 @@ public class TermService {
     @Autowired
     private TermRepository termRepository;
 
-    public List<TermDTO> filterAvailableTerms(LocalDateTime startDateFilter, LocalDateTime endDateTimeFilter, String offerTypeFilter) {
+    public List<TermDTO> filterAvailableTerms(LocalDateTime startDateFilter, LocalDateTime endDateFilter, String offerTypeFilter, int numberOfPeople) {
         System.out.println("TermService - filterAvailableTerms()");
         // parameters
         // arrays
@@ -29,8 +30,24 @@ public class TermService {
         // business logic
         for (TermDTO termDTO : allTermDTOs) {
             if (offerTypeFilter.equals(termDTO.offer.getOfferType().toString())
-                    && (startDateFilter.isBefore(termDTO.startTime) || startDateFilter.isEqual(termDTO.startTime)) && !startDateFilter.isAfter(termDTO.endTime)
-                    && (endDateTimeFilter.isAfter(termDTO.endTime) || endDateTimeFilter.isEqual(termDTO.endTime)) && !endDateTimeFilter.isBefore(termDTO.startTime)) {
+                    && (startDateFilter.isAfter(termDTO.startTime) || startDateFilter.isEqual(termDTO.startTime)) && !startDateFilter.isAfter(termDTO.endTime)
+                    && (endDateFilter.isBefore(termDTO.endTime) || endDateFilter.isEqual(termDTO.endTime)) && !endDateFilter.isBefore(termDTO.startTime)) {
+                filteredTermDTOs.add(termDTO);
+            }
+        }
+        return filteredTermDTOs.stream().filter(t -> t.getOffer().getMaxCustomerCapacity() >= numberOfPeople).collect(Collectors.toList());
+    }
+    public List<TermDTO> filterAvailableTerms(LocalDateTime startDateFilter, LocalDateTime endDateFilter, String offerTypeFilter) {
+        System.out.println("TermService - filterAvailableTerms()");
+        // parameters
+        // arrays
+        List<TermDTO> allTermDTOs = findAllTermDTOs();
+        List<TermDTO> filteredTermDTOs = new ArrayList<>();
+        // business logic
+        for (TermDTO termDTO : allTermDTOs) {
+            if (offerTypeFilter.equals(termDTO.offer.getOfferType().toString())
+                    && (startDateFilter.isAfter(termDTO.startTime) || startDateFilter.isEqual(termDTO.startTime)) && !startDateFilter.isAfter(termDTO.endTime)
+                    && (endDateFilter.isBefore(termDTO.endTime) || endDateFilter.isEqual(termDTO.endTime)) && !endDateFilter.isBefore(termDTO.startTime)) {
                 filteredTermDTOs.add(termDTO);
             }
         }

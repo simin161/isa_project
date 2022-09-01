@@ -17,7 +17,8 @@ data: function(){
                     endDate: ""
                 },
     			boats:[],
-    			terms:[]
+    			terms:[],
+    			reviews: []
     		}
     	},
     template: `
@@ -81,7 +82,7 @@ data: function(){
     						<input class="confirm-profile" type="button" value="Back" style="width:15%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/>
     						<input type="button" class="confirm-profile" @click="showTerms(boatToShow.offer)" style="width:15%; margin-left: 8px; float:left; font-size:12px; background-color: white; color: black;" value="Show terms"/>
                             <input class="confirm-profile" type="button" value="Show gallery" style="width:15%; float:left; margin-left: 8px; margin-right: 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 3"/>
-                            <input class="confirm-profile" type="button" value="Show reviews" style="width:15%; float:left; margin-left 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 4"/>
+                            <input class="confirm-profile" type="button" value="Show reviews" style="width:15%; float:left; margin-left 8px; font-size:12px; background-color: white; color: black;" @click="showReviews(boatToShow.offer.id)"/>
                             <span v-show="loggedUser.userType === 'CUSTOMER'">
                                  <input type="button" v-show="!boatToShow.offer.followed" class="confirm-profile" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="follow(boatToShow.offer)" value="Follow"/>
                                  <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(boatToShow.offer.id)" value="Show actions"/>
@@ -109,7 +110,7 @@ data: function(){
                 <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 2">
                     <div class="container" v-show="showPage == 2">
                          <div class="container align-items-start">
-                             <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
+                             <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 1"/><br><br><br>
                              <p class="title-text-bold" style="margin-top:10px; text-align:center;">All terms</p>
                              <div v-for="term in terms" style="border-bottom: solid thick white">
                                  <p style="color:#fff;font-family:poppins-light; font-size:12px;">Start date: {{term.startTime}}</p>
@@ -122,6 +123,23 @@ data: function(){
                              </div>
                          </div>
                     </div>
+                </div>
+                <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 4">
+                    <div class="container mt-5">
+                        <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 1"/><br><br><br>
+    					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="r in reviews">
+    						<div class="row g-0">
+    							<div class="col-md-8">
+    								<div class="card-body">
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Feedback for owner: {{r.contentForOwner}}</h5>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Feedback for offer: {{r.contentForOffer}}</h5>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Rating for owner: {{r.rateOwner}}</h5>
+    									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">Rating for offer: {{r.rateOffer}}</h5>
+    								</div>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
                 </div>
     		</div>
     	</div>
@@ -140,7 +158,14 @@ data: function(){
           }
           ,
           methods : {
-          showActions : function(id){
+           showReviews : function(id){
+                axios.post('/api/allAcceptedFeedbacksForOffer', {"id" : id})
+                     .then((result) => {
+                         this.reviews = result.data;
+                         this.showPage = 4;
+                     })
+                },
+           showActions : function(id){
                           router.push("actions/" + id);
            },
            showReservation : function(term){

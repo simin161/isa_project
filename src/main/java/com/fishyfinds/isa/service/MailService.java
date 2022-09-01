@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @Service
 public class MailService {
@@ -110,5 +111,37 @@ public class MailService {
 
         mailSender.send(message);
 
+    }
+
+    public void sendNewCourseActionMail(List<String> subscribersByOffer, Reservation reservation)
+            throws MessagingException, UnsupportedEncodingException {
+        //String toAddress= user.getEmail();
+        //String senderName= "Fishy Finds";
+        //String subject = "Your reservation is successful.";
+        //double discount = user.getLoyaltyProgram() != null ? user.getLoyaltyProgram().getCategoryDiscount() : 0;
+        String content = "Dear user,"
+                + "A new action is created for:<br>"
+                + reservation.getOffer().getOfferName() + "<br>"
+                + "Starting: " + reservation.getStartDate() + "<br>"
+                + "Ending: " + reservation.getEndDate() + "<br>"
+                + "Total price: " + reservation.getTotalPrice() + "<br>"
+                + "Fishy Finds.";
+
+        for(String s : subscribersByOffer){
+            String toAddress = s.toString();
+            String senderName= "Fishy Finds";
+            String subject = "A new action";
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+
+            helper.setFrom(fromAddress, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+
+            helper.setText(content, true);
+
+            mailSender.send(message);
+        }
     }
 }

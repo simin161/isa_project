@@ -3,6 +3,7 @@ package com.fishyfinds.isa.service;
 import com.fishyfinds.isa.model.beans.Subscriber;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
+import com.fishyfinds.isa.model.enums.ReservationStatus;
 import com.fishyfinds.isa.repository.SubscriberRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class SubscriberService {
@@ -62,6 +64,15 @@ public class SubscriberService {
             if(s.isRelevant()){
                 retVal.add(s);
             }
+        }
+        return retVal;
+    }
+
+    public List<String> getSubscribersByOffer(Offer offer){
+        List<String> retVal = new ArrayList<>();
+        for(Subscriber s : subscriberRepository.findAllByFollowing(offer)){
+            if(s.isRelevant())
+                retVal.add(s.getFollower().getEmail());
         }
         return retVal;
     }

@@ -54,10 +54,7 @@ Vue.component('bungalows', {
           }
           ,
           methods : {
-            showMore : function(bung){
-               this.bungalowToShow = bung;
-               this.showPage = 1;
-            }
+
           }
           ,
           mounted(){

@@ -13,6 +13,7 @@ import com.fishyfinds.isa.repository.termsRepository.TermRepository;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
 import com.fishyfinds.isa.service.MailService;
 import com.fishyfinds.isa.service.PenalService;
+import com.fishyfinds.isa.service.SubscriberService;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,8 @@ public class ReservationService {
     private MailService mailService;
     @Autowired
     private PenalService penalService;
+    @Autowired
+    private SubscriberService subscriberService;
 
     private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
@@ -172,6 +175,33 @@ public class ReservationService {
         List<Reservation> retVal = new ArrayList<>();
         if(reservations != null){
             retVal = reservations.stream().filter(r -> r.getReservationStatus() == ReservationStatus.ACTIVE && !r.isHasComplaint()).collect(Collectors.toList());
+        }
+        return retVal;
+    }
+
+    public boolean makeCourseAction(Map<String, String> message, String username) {
+        boolean retVal = false;
+        try {
+
+                LocalDateTime startDate = LocalDateTime.parse(message.get("startDate"));
+                LocalDateTime endDate = LocalDateTime.parse(message.get("endDate"));
+                Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
+                if (term != null && isFree(term, startDate, endDate)) {
+                    Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
+                    int numberOfPeople = Integer.parseInt(message.get("numberOfPeople"));
+                    assert offer != null;
+                    double totalPrice = numberOfPeople * offer.getUnitPrice() - Double.parseDouble(message.get("discount"));
+                    Reservation reservation = new Reservation(startDate, endDate, new Customer(), ReservationStatus.ACTIVE, ReservationType.DEFAULT,
+                            numberOfPeople, totalPrice, offer);
+                    reservationRepository.save(reservation);
+                    updateTermsReservation(term.getId(), reservation);
+                    mailService.sendNewCourseActionMail(subscriberService.getSubscribersByOffer(offer), reservation);
+                    retVal = true;
+                }
+
+        }catch(Exception e){
+            e.printStackTrace();
+            retVal = false;
         }
         return retVal;
     }

@@ -134,4 +134,21 @@ public class ReservationController {
     public List<Reservation> getActionsForOffer(@RequestBody Map<String, String> id){
         return reservationService.getActionsForOffer(Long.valueOf(id.get("id")));
     }
+
+    @PostMapping("/makeCourseAction")
+    @PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
+    public boolean makeCourseAction(@RequestHeader HttpHeaders header,
+                                   @RequestBody Map<String, String> message){
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.makeCourseAction(message, username);
+
+        }catch(Exception e){
+        }
+
+        return false;
+    }
 }

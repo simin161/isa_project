@@ -36,7 +36,6 @@ Vue.component('bungalows', {
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Earning rate: {{l.earningRate}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Type: {{l.type}}</p>
     									<button class="float-end btn btn-light" @click="showMore(l)">Delete category</button>
-
     								</div>
     							</div>
     						</div>

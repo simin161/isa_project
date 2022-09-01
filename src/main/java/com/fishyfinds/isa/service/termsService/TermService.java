@@ -20,12 +20,9 @@ public class TermService {
     @Autowired
     private TermRepository termRepository;
 
-    public List<TermDTO> filterAvailableTerms(Map<String, String> message) {
+    public List<TermDTO> filterAvailableTerms(LocalDateTime startDateFilter, LocalDateTime endDateTimeFilter, String offerTypeFilter) {
         System.out.println("TermService - filterAvailableTerms()");
         // parameters
-        String offerTypeFilter = message.get("offerType");
-        LocalDateTime startDateFilter = LocalDateTime.parse(message.get("start"), DateTimeFormatter.ISO_DATE_TIME);
-        LocalDateTime endDateTimeFilter = LocalDateTime.parse(message.get("end"), DateTimeFormatter.ISO_DATE_TIME);
         // arrays
         List<TermDTO> allTermDTOs = findAllTermDTOs();
         List<TermDTO> filteredTermDTOs = new ArrayList<>();
@@ -77,7 +74,7 @@ public class TermService {
     }
 
 
-
-
-
+    public Term getTermById(Long id) {
+        return termRepository.findById(id).orElse(null);
+    }
 }

@@ -1,4 +1,4 @@
-Vue.component('bungalowReservationHistory', {
+Vue.component('upcoming', {
 data: function(){
     		return{
     			showPage: 0,
@@ -33,12 +33,16 @@ data: function(){
     			    bungalowLocation: ""
     			},
     			reservations:[],
+    			complaint:{
+    			    content: "",
+    			    offer: null,
+    			    user: null
+    			},
                 feedback:{
                     content: "",
                     id: null,
                     rate: null
-                },
-                offerType: "BUNGALOW"
+                }
     		}
     	},
     template: `
@@ -47,7 +51,7 @@ data: function(){
     		<br>
     		<br>
             <div class="my-bungalows">
-    			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 0">
+    			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
@@ -86,60 +90,36 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
     									<button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
-    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="showFeedback(reservation)">Add feedback</button>
+    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="cancelReservation(reservation)">Cancel reservation</button>
     								</div>
     							</div>
     						</div>
     					</div>
     				</div>
-                </div>
-                <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 1">
-                   	<div class="container" v-show="showPage == 1">
-    					<div class="container align-items-start">
-    						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
-    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
-    						<form class="justify-content-center">
-    							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-    								<tr><td><input type="text" placeholder="   Bungalow's name" disabled style="color: white" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
-    								<tr class="d-flex justify-content-evenly">
-    									<td><input type="text" placeholder="   Country" disabled style="color: white" class="input-text"  v-model="bungalowToShow.location.country"/></td>
-    									<td><input type="text" placeholder="   City" disabled style="color: white" class="input-text"  v-model="bungalowToShow.location.city"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street" disabled style="color: white" class="input-text"  v-model="bungalowToShow.location.street"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street number" disabled style="color: white" class="input-text"  v-model="bungalowToShow.location.streetNumber"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Unit price" disabled style="color: white" class="input-text"  v-model="bungalowToShow.unitPrice"/></td></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Description" disabled style="color: white" class="input-text-area"  v-model="bungalowToShow.description" ></textarea></tr><br>
-    								<tr><td><input type="text" placeholder="   Maximum capacity" disabled style="color: white" class="input-text"  v-model="bungalowToShow.maxCustomerCapacity"/></td></tr><br>
-    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="bungalowToShow.additionalServices" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area" disabled style="color: white"  v-model="bungalowToShow.rulesOfConduct" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area" disabled style="color: white"  v-model="bungalowToShow.cancellationPolicy" ></textarea></tr><br>
-    							</table>
-    						</form>
-    					</div>
-                   	</div>
-               	</div>
-                <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 2">
-                   	<div class="container" v-show="showPage == 2">
-    					<div class="container align-items-start">
-    						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
-    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Feedback for bungalow and owner </p>
-    						<form class="justify-content-center">
-    							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-    								<tr><td><input type="text" placeholder="   Bungalow's name" disabled class="input-text" style="color: white" v-model="bungalowToShow.offerName"/></td></tr><br>
-    								<tr class="d-flex justify-content-evenly">
-    								    <td><input type="text" placeholder="   First name" disabled class="input-text" style="color: white" v-model="bungalowToShow.user.firstName"/></td>
-    								    <td><input type="text" placeholder="   Last name"  disabled class="input-text" style="color: white" v-model="bungalowToShow.user.lastName"/></td>
-    								</tr>
-    								<br>
-    								<tr>
-                                        <td><input type="number" placeholder="    Rating" v-model="feedback.rate" min="1" max="5" class="input-text" /></td>
-                                    </tr>
-                                    <br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Feedback" v-model="feedback.content" class="input-text-area" ></textarea></tr><br>
-                                    <tr><button type="button" @click="addFeedback" class="confirm">Send</button></tr>
-    							</table>
-    						</form>
-    					</div>
-                   	</div>
+                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 1">
+                        <div class="container" v-show="showPage == 1">
+                            <div class="container align-items-start">
+                                <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
+                                <p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
+                                <form class="justify-content-center">
+                                    <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
+                                        <tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
+                                        <tr class="d-flex justify-content-evenly">
+                                            <td><input type="text" placeholder="   Country" class="input-text"  v-model="bungalowToShow.location.country"/></td>
+                                            <td><input type="text" placeholder="   City" class="input-text"  v-model="bungalowToShow.location.city"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="bungalowToShow.location.street"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="bungalowToShow.location.streetNumber"/></td></tr><br>
+                                        <tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="bungalowToShow.unitPrice"/></td></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="bungalowToShow.description" ></textarea></tr><br>
+                                        <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="bungalowToShow.maxCustomerCapacity"/></td></tr><br>
+                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="bungalowToShow.additionalServices" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="bungalowToShow.rulesOfConduct" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="bungalowToShow.cancellationPolicy" ></textarea></tr><br>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                	</div>
             </div>
     	</div>
@@ -160,38 +140,27 @@ data: function(){
                this.bungalowToShow = bung.offer;
                this.showPage = 1;
             },
-            showFeedback : function(bung){
-                this.bungalowToShow = bung.offer;
-                this.showPage = 2;
-            },
             search : function(){
                 axios.get('/api/search', {
                      params: this.axiosParams
                 }).then(response => (this.bungalows = response.data))
             },
-            addFeedback : function(){
-                this.feedback.id = this.bungalowToShow.id;
-                axios.defaults.headers.common["Authorization"] =
-                                    localStorage.getItem("user");
-                axios.post('/api/addFeedback', this.feedback)
-                     .then(response => {
-                         if(response.data){
-                             Swal.fire(
-                                 'Complaint sent successfuly!',
-                                 '',
-                                 'success'
-                             )
-                         }else{
-                             Swal.fire(
-                                 'Ooops, something went wrong!',
-                                 'Please, try again later!',
-                                 'error'
-                             )
-                         }
+            cancelReservation : function(reservation){
+                axios.post("/api/cancelReservation", {"id" : reservation.id})
+                     .then((response)=>{
+                        if(response.data){
+                            axios.defaults.headers.common["Authorization"] =
+                                           localStorage.getItem("user");
+                            axios.get("/api/upcomingReservationsForCustomer")
+                                 .then((response) => {this.reservations = response.data})
+                        }else{
+                            Swal.fire('Ooops, something went wrong!',
+                	                  'Please, try again later',
+                	                  'error')
+                        }
                      })
-
             },
-             sortedArray: function() {
+            sortedArray: function() {
                    if(this.sortOption === 'DescAlpha'){
                        function compare(a, b) {
                          if (a.offerName > b.offerName)
@@ -257,7 +226,7 @@ data: function(){
         mounted(){
             axios.defaults.headers.common["Authorization"] =
                                             localStorage.getItem("user");
-            axios.post("/api/historyOfReservationsForCustomer", { "offerType" : this.offerType })
+            axios.get("/api/upcomingReservationsForCustomer")
                  .then((response) => {this.reservations = response.data})
         }
 

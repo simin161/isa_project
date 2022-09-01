@@ -69,31 +69,33 @@ INSERT INTO public.engine(
 --OFFERS BEGIN--
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(1, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 5, 'Bungy Wumby', 0, 4.0, 'Sex, drugs and alcohol', 10.5, 2, 1);
+    values(1, 'In case of cancellation -> half of the price is returned', 'Bungalow at seaside. 5 minutes walking distance to beach.', 5, 'Nikos', 0, 4.0, 'Rest time from 15h to 18h.', 10.5, 2, 1);
 INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
     VALUES(2, 2, 1);
 
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(2, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Bungy Lumby', 0, 5.0, 'Sex, drugs and alcohol', 12.5, 2, 1);
+    values(2, 'In case of cancellation -> full price is returned', 'Bungalow in the middle of swamp', 2, 'Shrek house', 0, 5.0, 'No rules of conduct', 12.5, 2, 1);
 INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
     VALUES(4, 2, 2);
 
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(3, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 10, 'Bungy Expensive Jumby', 0, 5.0, 'Sex, drugs and alcohol', 50.0, 3, 1);
+    values(3, 'No cancellation policies', 'Castle-like bungalow', 10, 'Fiona', 0, 5.0, 'No rules of conduct', 50.0, 3, 1);
 INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
     VALUES(10, 2, 3);
 
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(4, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Coursy Wumby', 2, 3.5, 'Sex, drugs and alcohol', 10.5, 6, 1);
-
+    values(4, 'In case of cancellation -> 2/3 of price is returned', 'Exploring the nature of Nile. Kids belove 15 are not allowed', 2, 'Racing with the hippos', 2, 3.5, 'Must not separate from the group', 10.5, 6, 1);
+INSERT INTO public.course(
+	id)
+	VALUES (4);
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(5, 'No cancellation policies _namyg_', 'Very hot and sexy bungy', 2, 'Boaty Wumby', 1, 4.8, 'Sex, drugs and alcohol', 10.5, 4, 1);
+    values(5, 'No cancellation policies', 'Big boat, might sink', 2, 'Titanik', 1, 4.8, 'No rules of conduct', 10.5, 4, 1);
 INSERT INTO public.boat(boat_length, boat_type, id, engine)
-    VALUES(500.0,'very big boat', 5, 1);
+    VALUES(500.0,'sinking boat', 5, 1);
 --OFFERS END--
 
 -- ADDITIONAL SERVICES START --
@@ -128,10 +130,14 @@ INSERT INTO public.term(id, start_date, end_date, offer)
 
 --RESERVATIONS START--
 -- TODO: Inserting reservations...
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer)
-    values(1, '2022-07-08T10:00:00',  '2022-07-09T10:00:00' , 0, 0, 1);
-INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer)
-    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
+    values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 0, 1,1,2,200, 0.0, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
+    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,1,2,200, 0.0, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
+        values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200, 25.0, false);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint)
+        values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,1,2,200, 0.0, false);
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
 --INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
  --  VALUES(2,4);

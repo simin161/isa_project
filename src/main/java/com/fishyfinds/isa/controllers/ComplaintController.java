@@ -40,7 +40,7 @@ public class ComplaintController {
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return complaintService.add(username, message.get("content"), message.get("offerID"));
+            return complaintService.add(username, message.get("content"), message.get("reservationId"), message.get("complaintType"));
 
         }catch(Exception e){
         }

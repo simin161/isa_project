@@ -20,6 +20,7 @@ public class PenalService {
 
     public Penal getPenalForUser(String username) {
         Customer customer = (Customer) userRepository.findByEmail(username);
+        Penal penal = penalRepository.findByCustomer(customer);
         return penalRepository.findByCustomer(customer);
     }
 

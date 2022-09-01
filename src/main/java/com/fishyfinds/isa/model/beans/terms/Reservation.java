@@ -37,6 +37,18 @@ public class Reservation {
     @Column(name="reservationStatus")
     private ReservationStatus reservationStatus;
 
+    @Column(name="numberOfPeople")
+    private int numberOfPeople;
+
+    @Column(name="totalPrice")
+    private double totalPrice;
+
+    @Column(name="discount")
+    private double discount;
+
+    @Column(name="hasComplaint")
+    private boolean hasComplaint;
+
     @OneToOne
     @JoinColumn(name="customer", referencedColumnName = "id")
     private Customer customer;
@@ -46,10 +58,14 @@ public class Reservation {
     private Offer offer;
     public Reservation() { }
 
-    public Reservation(LocalDateTime startDate, LocalDateTime endDate, Customer customer, ReservationStatus reservationStatus) {
+    public Reservation(LocalDateTime startDate, LocalDateTime endDate, Customer customer, ReservationStatus reservationStatus, ReservationType reservationType, int numberOfPeople, double totalPrice, Offer offer) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.customer = customer;
+        this.reservationType = reservationType;
         this.reservationStatus = reservationStatus;
+        this.numberOfPeople = numberOfPeople;
+        this.totalPrice = totalPrice;
+        this.offer = offer;
     }
 }

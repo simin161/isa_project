@@ -27,7 +27,6 @@ public class ReservationController {
 
     @Autowired
     private TokenUtils tokenUtils;
-
     @PostMapping("/makeReservation")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public boolean makeReservation(@RequestHeader HttpHeaders header,
@@ -47,14 +46,14 @@ public class ReservationController {
 
     @PostMapping("/makeReservationAction")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public boolean makeReservationWithCaptain(@RequestHeader HttpHeaders header,
-                                            @RequestBody String id){
+    public boolean makeReservationAction(@RequestHeader HttpHeaders header,
+                                            @RequestBody Map<String, String> id){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return reservationService.makeReservationAction(Long.valueOf(id), username);
+            return reservationService.makeReservationAction(Long.valueOf(id.get("id")), username);
 
         }catch(Exception e){
         }
@@ -62,15 +61,15 @@ public class ReservationController {
         return false;
     }
 
-    @PutMapping("/cancelReservation")
+    @PostMapping("/cancelReservation")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public boolean cancelReservation(@RequestBody String id){
-        return reservationService.cancelReservation(Long.parseLong(id));
+    public boolean cancelReservation(@RequestBody Map<String, String> id){
+        return reservationService.cancelReservation(Long.parseLong(id.get("id")));
     }
 
     @PostMapping("/historyOfReservationsForCustomer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header, @RequestBody String offerType){
+    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header, @RequestBody Map<String, String> offerType){
 
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
@@ -79,7 +78,7 @@ public class ReservationController {
             String username = tokenUtils.getUsernameFromToken(user);
             List<Reservation> reservations = reservationService.historyOfReservationsForCustomer(username);
             OfferType oft = OfferType.INVALID;
-            switch(offerType){
+            switch(offerType.get("offerType")){
                 case "BUNGALOW": oft = OfferType.BUNGALOW;
                 break;
                 case "BOAT": oft = OfferType.BOAT;
@@ -95,5 +94,44 @@ public class ReservationController {
         }
 
         return new ArrayList<>();
+    }
+    @GetMapping("/upcomingReservationsForCustomer")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public List<Reservation> upcomingReservationsForCustomer(@RequestHeader HttpHeaders header){
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.upcomingReservationsForCustomer(username);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+    @GetMapping("/allPassedReservationsForCustomerWithoutDuplicatedOffers")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public List<Reservation> allPassedReservationsForCustomerWithoutDuplicatedOffers(@RequestHeader HttpHeaders header){
+        try {
+            final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
+            final JSONObject obj = new JSONObject(value);
+            String user = obj.getString("accessToken");
+            String username = tokenUtils.getUsernameFromToken(user);
+            return reservationService.allPassedReservationsForCustomerWithoutDuplicatedOffers(username);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+    @PostMapping("/getActionsForOffer")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public List<Reservation> getActionsForOffer(@RequestBody Map<String, String> id){
+        return reservationService.getActionsForOffer(Long.valueOf(id.get("id")));
     }
 }

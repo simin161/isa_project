@@ -7,27 +7,17 @@ data: function(){
     			showPage: 0,
     			sortOption: "",
     			boatToShow: {
-    			    offerType: "BOAT",
-                    offerName: "",
-                    location:{
-                        country: "",
-                        city: "",
-                        street: "",
-                        streetNumber:""
-                    },
-                    description:"",
-                    unitPrice:"",
-                    maxCustomerCapacity:"",
-                    maxCustomerCapacity:"",
-                    rulesOfConduct:"",
-                    additionalServices:"",
-                    cancellationPolicy:""
+    			    offer: null,
+    			    followed: false
     			},
                 searchParams: {
                     boatName : "",
-                    boatLocation: ""
+                    boatLocation: "",
+                    startDate: "",
+                    endDate: ""
                 },
-    			boats:[]
+    			boats:[],
+    			terms:[]
     		}
     	},
     template: `
@@ -36,14 +26,18 @@ data: function(){
     		<br>
     		<br>
             <div class="my-bungalows">
-    			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
+    			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 0">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.boatName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's name" /></td>
     							<td colspan="1"><input v-model="searchParams.boatLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's location"/></td>
-    							<td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
-    						</tr>
-    						<br>
+    					        <td colspan="1"><input v-model="searchParams.startDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                          </tr>
+                          <tr>
+                             <td colspan="1"><input v-model="searchParams.endDate" class="update-text-profile" class="datetime-local" type="datetime-local" style="height:20px; font-size:12px; font-family:'poppins-light'"/></td>
+                             <td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+                          </tr>
+    				 		<br>
     						<tr>
     							<td colspan="2">
     								<select v-model="sortOption" class="select-sort" name="select" id="format">
@@ -74,41 +68,61 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{boat.offer.description}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{boat.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{boat.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(boat.offer)">Show more</button>
-    									<span v-show="loggedUser.userType === 'CUSTOMER'">
-    									<button v-show="!boat.followed" class="float-end btn btn-light" @click="follow(boat.offer)">Follow/unfollow</button>
-    								    </span>
+    									<button class="float-end btn btn-light" @click="showMore(boat)" style="margin-left: 5px;">Show more</button>
     								</div>
     							</div>
     						</div>
     					</div>
     				</div>
-
-                   	</div>
-                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage != 0">
+                </div>
+                <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 1">
                    	<div class="container" v-show="showPage == 1">
     					<div class="container align-items-start">
-    						<input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
+    						<input class="confirm-profile" type="button" value="Back" style="width:15%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/>
+    						<input type="button" class="confirm-profile" @click="showTerms(boatToShow.offer)" style="width:15%; margin-left: 8px; float:left; font-size:12px; background-color: white; color: black;" value="Show terms"/>
+                            <input class="confirm-profile" type="button" value="Show gallery" style="width:15%; float:left; margin-left: 8px; margin-right: 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 3"/>
+                            <input class="confirm-profile" type="button" value="Show reviews" style="width:15%; float:left; margin-left 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 4"/>
+                            <span v-show="loggedUser.userType === 'CUSTOMER'">
+                                 <input type="button" v-show="!boatToShow.offer.followed" class="confirm-profile" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="follow(boatToShow.offer)" value="Follow"/>
+                                 <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(boatToShow.offer.id)" value="Show actions"/>
+                            </span>
+                            <br><br><br>
+    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> {{boatToShow.offer.offerName}} </p>
     						<form class="justify-content-center">
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-    								<tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="boatToShow.offerName"/></td></tr><br>
     								<tr class="d-flex justify-content-evenly">
-    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.location.country"/></td>
-    									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.location.city"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="boatToShow.location.street"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="boatToShow.location.streetNumber"/></td></tr><br>
-    								<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="boatToShow.unitPrice"/></td></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="boatToShow.description" ></textarea></tr><br>
-    								<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="boatToShow.maxCustomerCapacity"/></td></tr><br>
-    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="boatToShow.additionalServices" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="boatToShow.rulesOfConduct" ></textarea></tr><br>
-    								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="boatToShow.cancellationPolicy" ></textarea></tr><br>
+    									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.offer.location.country"/></td>
+    									<td><input type="text" placeholder="   City" class="input-text"  v-model="boatToShow.offer.location.city"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="boatToShow.offer.location.street"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="boatToShow.offer.location.streetNumber"/></td></tr><br>
+    								<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="boatToShow.offer.unitPrice"/></td></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="boatToShow.offer.description" ></textarea></tr><br>
+    								<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="boatToShow.offer.maxCustomerCapacity"/></td></tr><br>
+    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="boatToShow.offer.additionalServices" ></textarea></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="boatToShow.offer.rulesOfConduct" ></textarea></tr><br>
+    								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="boatToShow.offer.cancellationPolicy" ></textarea></tr><br>
     							</table>
     						</form>
     					</div>
                    	</div>
-               	</div>
+                </div>
+                <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 2">
+                    <div class="container" v-show="showPage == 2">
+                         <div class="container align-items-start">
+                             <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/><br><br><br>
+                             <p class="title-text-bold" style="margin-top:10px; text-align:center;">All terms</p>
+                             <div v-for="term in terms" style="border-bottom: solid thick white">
+                                 <p style="color:#fff;font-family:poppins-light; font-size:12px;">Start date: {{term.startTime}}</p>
+                                 <p style="color:#fff;font-family:poppins-light; font-size:12px;">End date: {{term.endTime}}</p>
+                                 <span v-show="loggedUser.userType === 'CUSTOMER'">
+                                     <button class="float-end btn btn-light" @click="showReservation(term)">Make reservation</button>
+                                 </span>
+                                 <br/>
+                                 </hr>
+                             </div>
+                         </div>
+                    </div>
+                </div>
     		</div>
     	</div>
     		`
@@ -119,16 +133,33 @@ data: function(){
                   params.append('name', this.searchParams.boatName);
                   params.append('location', this.searchParams.boatLocation);
                   params.append('type', 'BOAT');
+                  params.append('startDate', this.searchParams.startDate);
+                  params.append('endDate', this.searchParams.endDate);
                   return params;
               }
           }
           ,
           methods : {
-            showMore : function(bung){
+          showActions : function(id){
+                          router.push("actions/" + id);
+           },
+           showReservation : function(term){
+                          router.push('/reservationForm/' + term.id);
+           },
+           showTerms : function(bung){
+                axios.defaults.headers.common["Authorization"] =
+                                       localStorage.getItem("user");
+                axios.get('/api/getTermsByOfferId/' + bung.id)
+                     .then((result) => {
+                         this.terms = result.data;
+                         this.showPage = 2;
+                })
+           },
+           showMore : function(bung){
                this.boatToShow = bung;
                this.showPage = 1;
-            },
-            follow : function(bung){
+           },
+           follow : function(bung){
                 axios.defaults.headers.common["Authorization"] =
                                localStorage.getItem("user");
                 axios.post("/api/addFollower", {"id" : bung.id})
@@ -214,6 +245,7 @@ data: function(){
 	mounted(){
 	    axios.get("/api/allBoats")
 	         .then(response => {this.boats = response.data;
+	            this.boatToShow = this.boats[0];
 	         axios.defaults.headers.common["Authorization"] =
                             localStorage.getItem("user");
              axios.get("/api/authenticateUser")

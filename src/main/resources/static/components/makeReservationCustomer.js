@@ -13,7 +13,8 @@ Vue.component('makeReservation', {
                 offerId : "",
                 startDate : "",
                 duration : "",
-                numberOfPeople: ""
+                numberOfPeople: "",
+                additionalServices: ""
             },
             choosenOfferTerm: null,
             showPage: 0
@@ -68,8 +69,8 @@ template: `
                                 <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{choosenOfferTerm.offer.unitPrice * filterDto.numberOfPeople}}</p>
                                 <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Choose additional services: </p>
                                 <div v-for="a in choosenOfferTerm.offer.additionalServices">
-                                    <input type="checkbox" id="vehicle1"/>
-                                    <label for="vehicle1"> {{a.name}}</label><br>
+                                    <input type="checkbox" name="addService" :id="a.name"/>
+                                    <label :for="a.name"> {{a.name}}</label><br>
                                 </div>
                                 <button class="float-end btn btn-light" @click="makeReservation" style="margin-left: 5px;">Book!</button>
                             </div>
@@ -96,6 +97,17 @@ template: `
             this.dto.duration = this.filterDto.duration;
             this.dto.startDate = this.filterDto.start;
             this.dto.numberOfPeople = this.filterDto.numberOfPeople;
+
+            var checkboxes = document.getElementsByName('addService');
+              var checkboxesChecked = "";
+              // loop over them all
+              for (var i=0; i<checkboxes.length; i++) {
+                 // And stick the checked ones onto an array...
+                 if (checkboxes[i].checked) {
+                    checkboxesChecked = checkboxesChecked + " " + checkboxes[i].id;
+                 }
+              }
+            this.dto.additionalServices = checkboxesChecked;
             axios.defaults.headers.common["Authorization"] =
                                          localStorage.getItem("user");
             axios.post("/api/makeReservation", this.dto)

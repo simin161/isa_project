@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.service;
 
+import com.fishyfinds.isa.model.beans.UserFeedback;
 import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
@@ -173,5 +174,33 @@ public class MailService {
         mailSender.send(message1);
 
 
+    }
+
+    public void sendFeedbackAcceptMail(User owner, UserFeedback feedback) throws MessagingException, UnsupportedEncodingException {
+        String toAddress= owner.getEmail();
+        String senderName= "Fishy Finds";
+        String subject = "A new review";
+        String content = "Dear [[name]],<br>"
+                +"You have recieved a new review! <br>" +
+                "Service: [[CONTENT]] <br>" +
+                "Personal: [[PERSONAL]] <br>" +
+                "Best regards,<br>" +
+                "Fishy Finds.";
+
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", owner.getFirstName());
+        content = content.replace("[[CONTENT]]", feedback.getContentForOffer());
+        content = content.replace("[[PERSONAL]]", feedback.getContentForOwner());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
     }
 }

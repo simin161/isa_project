@@ -63,11 +63,11 @@ public class FeedbackController {
 
     @PostMapping("/acceptFeedback")
     public boolean acceptFeedback(@RequestBody Map<String, String> message){
-        return false;
+        return feedbackService.acceptFeedback(message);
     }
 
     @PostMapping("/declineFeedback")
     public boolean declineFeedback(@RequestBody Map<String, String> message){
-        return false;
+        return feedbackService.denyFeedback(message);
     }
 }

@@ -56,15 +56,15 @@ template: `
                    </tr><br>
                    <tr>
                        <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Number of people:</p></td>
-                       <td><input type="number" min="1" :max="term.offer.maxCustomerCapacity" v-model="dto.numberOfPeople"/></td>
+                       <td><input type="number" onKeyDown="return false" min="1" :max="term.offer.maxCustomerCapacity" v-model="dto.numberOfPeople"/></td>
                    </tr>
                    <tr>
                        <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Start date: </p></td>
-                       <td><input class="datetime-local" type="datetime-local" v-model="dto.startDate" :min="term.startDate" /></td>
+                       <td><input class="datetime-local" type="datetime-local" v-model="dto.startDate" /></td>
                    </tr>
                    <tr>
                        <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">End date: </p></td>
-                       <td><input class="datetime-local" type="datetime-local" :max="dto.endDate" v-model="dto.endDate"/></td>
+                       <td><input class="datetime-local" type="datetime-local" v-model="dto.endDate"/></td>
                    </tr>
                    <tr>
                        <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{dto.numberOfPeople * term.offer.unitPrice}}</p></td>

@@ -132,8 +132,8 @@ data: function(){
                                     </tr>
                                     <br>
                                     <tr class="d-flex justify-content-evenly">
-                                        <td style="width: 100%;"><input type="number" placeholder="    Rating for offer" v-model="feedback.rateForOffer" min="1" max="5" class="input-text" /></td>
-                                        <td style="width: 100%;"><input type="number" placeholder="    Rating for owner" v-model="feedback.rateForOwner" min="1" max="5" class="input-text" /></td>
+                                        <td style="width: 100%;"><input type="number" onKeyDown="return false" placeholder="    Rating for offer" v-model="feedback.rateForOffer" min="1" max="5" class="input-text" /></td>
+                                        <td style="width: 100%;"><input type="number" onKeyDown="return false" placeholder="    Rating for owner" v-model="feedback.rateForOwner" min="1" max="5" class="input-text" /></td>
                                     </tr>
                                     <br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Feedback for offer" v-model="feedback.contentForOffer" class="input-text-area"></textarea></tr><br>

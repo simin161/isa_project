@@ -142,8 +142,8 @@ template: `
                                 				<td><input type="text" placeholder="   Last name" disabled style="color: white"  class="input-text" v-model="courseToShow.user.lastName"/></td>
                                 			</tr><br>
                                 			<tr class="d-flex justify-content-evenly">
-                                				<td style="width: 100%"><input type="number" placeholder="   Rating for offer" class="input-text" v-model="feedback.rateForOffer"/></td>
-                                				<td style="width: 100%"><input type="number" placeholder="   Rating for owner" class="input-text" v-model="feedback.rateForOwner"/></td>
+                                				<td style="width: 100%"><input type="number" onKeyDown="return false" placeholder="   Rating for offer" class="input-text" v-model="feedback.rateForOffer"/></td>
+                                				<td style="width: 100%"><input type="number" onKeyDown="return false" placeholder="   Rating for owner" class="input-text" v-model="feedback.rateForOwner"/></td>
                                 			</tr> <br>
                                 				<tr><textarea rowspan="3" name="text" placeholder="   Feedback for offer" class="input-text-area" v-model="feedback.contentForOffer"></textarea></tr><br>
                                 				<tr><textarea rowspan="3" name="text" placeholder="   Feedback for owner" class="input-text-area" v-model="feedback.contentForOwner"></textarea></tr><br>

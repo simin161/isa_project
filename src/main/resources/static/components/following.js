@@ -20,8 +20,7 @@ template: `
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{o.offer.description}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{o.offer.unitPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{o.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(boat.offer)">Show more</button>
-    									<button v-show="o.followed" class="float-end btn btn-light" style="color: #DED528" @click="follow(o.offer)">Unfollow</button>
+    									<button v-show="o.followed" class="float-end btn btn-light" style="backgorund-color: #DED528" @click="follow(o.offer)">Unfollow</button>
     								</div>
     							</div>
     						</div>

@@ -2,6 +2,7 @@ package com.fishyfinds.isa.controllers;
 
 import com.fishyfinds.isa.mappers.DtoToFeedback;
 import com.fishyfinds.isa.model.beans.UserFeedback;
+import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.security.TokenUtils;
 import com.fishyfinds.isa.service.FeedbackService;
 import org.json.JSONObject;
@@ -11,8 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
@@ -34,6 +37,7 @@ public class FeedbackController {
             return feedbackService.addFeedback(username, DtoToFeedback.MapToUserFeedback(params));
 
         }catch(Exception e){
+            e.printStackTrace();
         }
         return  false;
     }
@@ -46,6 +50,15 @@ public class FeedbackController {
     @GetMapping("/allAcceptedFeedbacks")
     public List<UserFeedback> findAllAcceptedFeedbacks(){
         return feedbackService.findAllAcceptedFeedbacks();
+    }
+
+    @PostMapping("/allAcceptedFeedbacksForOffer")
+    public List<UserFeedback> findAllAcceptedFeedbacksForOffer(@RequestBody Map<String, String> id){
+        List<UserFeedback> retVal = feedbackService.findAllAcceptedFeedbacks();
+        return retVal != null ?
+            retVal.stream().filter(r -> r.getReservation().getOffer().getId() == Long.parseLong(id.get("id"))).collect(Collectors.toList())
+            : new ArrayList<>();
+
     }
 
     @PostMapping("/acceptFeedback")

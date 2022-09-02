@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,10 @@ public class TermController {
     @PostMapping("/filterAvailableTerms")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public List<TermDTO> filterAvailableTerms(@RequestBody Map<String, String> message){
-        return termService.filterAvailableTerms(LocalDateTime.parse(message.get("start")), LocalDateTime.parse(message.get("end")), message.get("offerType"));
+        int duration = Integer.parseInt(message.get("duration"));
+        LocalDateTime start = LocalDateTime.parse(message.get("start"));
+        LocalDateTime end = start.plusDays(duration);
+        return termService.filterAvailableTerms(start, end, message.get("offerType"), Integer.parseInt(message.get("numberOfPeople")));
     }
 
     @GetMapping("/getTermsByOfferId/{offerId}")

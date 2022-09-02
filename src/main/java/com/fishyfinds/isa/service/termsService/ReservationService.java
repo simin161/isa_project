@@ -56,7 +56,8 @@ public class ReservationService {
             Customer customer = customerRepository.findByEmail(username);
             if(penalService.getPenalForUser(customer.getEmail()).getNumber() < 3) {
                 LocalDateTime startDate = LocalDateTime.parse(message.get("startDate"));
-                LocalDateTime endDate = LocalDateTime.parse(message.get("endDate"));
+                int duration = Integer.parseInt(message.get("duration"));
+                LocalDateTime endDate = startDate.plusDays(duration);
                 Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
                 if (term != null && isFree(term, startDate, endDate)) {
                     Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
@@ -65,6 +66,7 @@ public class ReservationService {
                     double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * discount;
                     Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
                             numberOfPeople, totalPrice, offer);
+                    reservation.setAdditionalServices(message.get("additionalServices"));
                     reservationRepository.save(reservation);
                     updateTermsReservation(term.getId(), reservation);
                     mailService.sendSuccessfulReservationEmail(customer, reservation);

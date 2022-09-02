@@ -82,14 +82,17 @@ public class ComplaintService {
             c.setStatus(ComplaintStatus.ACCEPTED);
             complaintRepository.save(c);
             User customer = userRepository.findById(Long.valueOf(message.get("userId"))).orElse(null);
-            Offer offer = offerRepository.findById(Long.valueOf(message.get("offerId"))).orElse(null);
-            if(offer != null) {
-                User owner = userRepository.findByEmail(offer.getUser().getEmail());
-                if(customer != null && owner != null){
-                    mailService.sendComplaintAcceptedMail(message.get("reply"), customer.getEmail(), owner.getEmail());
-                    return true;
-                }else{
-                    return false;
+            Reservation reservation = reservationRepository.findById(Long.valueOf(message.get("reservationId"))).orElse(null);
+            if(reservation!=null) {
+                Offer offer = reservation.getOffer();
+                if (offer != null) {
+                    User owner = userRepository.findByEmail(offer.getUser().getEmail());
+                    if (customer != null && owner != null) {
+                        mailService.sendComplaintAcceptedMail(message.get("reply"), customer.getEmail(), owner.getEmail());
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
@@ -106,14 +109,17 @@ public class ComplaintService {
             c.setStatus(ComplaintStatus.DECLINED);
             complaintRepository.save(c);
             User customer = userRepository.findById(Long.valueOf(message.get("userId"))).orElse(null);
-            Offer offer = offerRepository.findById(Long.valueOf(message.get("offerId"))).orElse(null);
-            if(offer != null) {
-                User owner = userRepository.findByEmail(offer.getUser().getEmail());
-                if(customer != null && owner != null){
-                    mailService.sendComplaintAcceptedMail(message.get("reply"), customer.getEmail(), owner.getEmail());
-                    return true;
-                }else{
-                    return false;
+            Reservation reservation = reservationRepository.findById(Long.valueOf(message.get("reservationId"))).orElse(null);
+            if(reservation!=null) {
+                Offer offer = reservation.getOffer();
+                if (offer != null) {
+                    User owner = userRepository.findByEmail(offer.getUser().getEmail());
+                    if (customer != null && owner != null) {
+                        mailService.sendComplaintAcceptedMail(message.get("reply"), customer.getEmail(), owner.getEmail());
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         }

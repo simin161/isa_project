@@ -30,8 +30,8 @@ template: `
                 <option>COURSE</option>
             </select>
             <input v-model="filterDto.start" style="margin-left: 15px;" class="datetime-local" type="datetime-local" id="start-time" name="start-time" />
-            <input  type="number" min="1" v-model="filterDto.duration" style="margin-left: 15px" placeholder="Duration"/>
-            <input  type="number" min="1" v-model="filterDto.numberOfPeople" style="margin-left: 15px" placeholder="Number of people"/>
+            <input  type="number" min="1" v-model="filterDto.duration" onKeyDown="return false" style="margin-left: 15px" placeholder="Duration" />
+            <input  type="number" min="1" v-model="filterDto.numberOfPeople" onKeyDown="return false" style="margin-left: 15px" placeholder="Number of people" />
             <input :disabled="isComplete" type="button" value="Go!" @click="filterTerms"/>
         </div>
         <div class="col-md-1 left-div overflow-auto" style="margin-top: 60px; margin-left: 22%; height:60vh" v-show="showPage == 0">
@@ -83,7 +83,9 @@ template: `
 `,
     computed: {
         isComplete(){
-            return !(/\S/.test(this.filterDto.offerType) && /\S/.test(this.filterDto.start) && /\S/.test(this.filterDto.end));
+            let today = new Date();
+            let start = new Date(this.filterDto.start);
+            return /\S/.test(this.filterDto.offerType) && /\S/.test(this.filterDto.start) && /\S/.test(this.filterDto.duration) && /\S/.test(this.filterDto.numberOfPeople) && (start >= today);
         }
     },
     methods: {

@@ -133,7 +133,7 @@ INSERT INTO public.reservation(id, start_date, end_date, reservation_status, res
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services)
         values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200, 25.0, false, false, 'Wi-Fi');
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services)
-        values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false, 'Wi-Fi');
+        values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false, 'Wi-Fi');
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services)
         values(5, '2022-08-015T10:00:00',  '2022-08-20T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false, 'Wi-Fi');
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services)

@@ -40,7 +40,8 @@ Vue.component('courseReservationHistory', {
                 rateForOffer: null,
                 rateForOwner: null
             },
-            offerType: "COURSE"
+            offerType: "COURSE",
+            additionalServices: ""
         }
 	},
 template: `
@@ -89,7 +90,7 @@ template: `
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
                                             <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-                                            <button class="float-end btn btn-light" @click="showMore(reservation.offer)">Show more</button>
+                                            <button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
                                             <button v-show="!reservation.hasFeedback" class="float-end btn btn-light" style="margin-right: 2.5%;" @click="showFeedback(reservation)">Add feedback</button>
                                         </div>
                 					</div>
@@ -121,7 +122,7 @@ template: `
                                         <tr><td><input type="text" placeholder="   Unit price" class="input-text" disabled style="color: white" v-model="courseToShow.unitPrice"/></td></tr><br>
                                         <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area" disabled style="color: white" v-model="courseToShow.description" ></textarea></tr><br>
                                         <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text" disabled style="color: white" v-model="courseToShow.maxCustomerCapacity"/></td></tr><br>
-                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="courseToShow.additionalServices" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="additionalServices" ></textarea></tr><br>
                                         <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area" disabled style="color: white" v-model="courseToShow.rulesOfConduct" ></textarea></tr><br>
                                         <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area" disabled style="color: white" v-model="courseToShow.cancellationPolicy" ></textarea></tr><br>
                                     </table>
@@ -170,8 +171,9 @@ template: `
           ,
           methods : {
             showMore : function(course){
-                this.courseToShow = course;
-                this.courseToShow.user = course.user;
+                this.courseToShow = course.offer;
+                this.courseToShow.user = course.offer.user;
+                this.additionalServices = course.additionalServices;
                 this.showPage = 1;
             },
             showFeedback : function(reservation){

@@ -18,7 +18,8 @@ Vue.component('bungalows', {
     			},
     			bungalows:[],
     			terms: [],
-    			reviews: []
+    			reviews: [],
+    			additionalServices: ""
     		}
     	},
     template: `
@@ -90,8 +91,8 @@ Vue.component('bungalows', {
                                 <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(bungalowToShow.offer.id)" value="Show actions"/>
                             </span>
                             <br><br><br>
-                            <p class="title-text-bold" style="margin-top:10px; text-align:center;"> {{bungalowToShow.offerName}} </p>
                             <form class="justify-content-center">
+                              <p class="title-text-bold" style="margin-top:10px; text-align:center;"> {{bungalowToShow.offer.offerName}} </p>
                               <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
                                 <tr class="d-flex justify-content-evenly">
                                   <td><input type="text" placeholder="   Country" disabled style="color: white" class="input-text"  v-model="bungalowToShow.offer.location.country"/></td>
@@ -101,7 +102,7 @@ Vue.component('bungalows', {
                                 <tr><td><input type="text" placeholder="   Unit price" disabled style="color: white" class="input-text"  v-model="bungalowToShow.offer.unitPrice"/></td></tr><br>
                                 <tr><textarea rowspan="3" name="text" placeholder="   Description" disabled style="color: white" class="input-text-area"  v-model="bungalowToShow.offer.description" ></textarea></tr><br>
                                 <tr><td><input type="text" placeholder="   Maximum capacity" disabled style="color: white" class="input-text"  v-model="bungalowToShow.offer.maxCustomerCapacity"/></td></tr><br>
-                                <tr><textarea rowspan="3" name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="bungalowToShow.offer.additionalServices" ></textarea></tr><br>
+                                <tr><textarea rowspan="3" name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="additionalServices" ></textarea></tr><br>
                                 <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area" disabled style="color: white"  v-model="bungalowToShow.offer.rulesOfConduct" ></textarea></tr><br>
                                 <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area" disabled style="color: white" v-model="bungalowToShow.offer.cancellationPolicy" ></textarea></tr><br>
                               </table>
@@ -181,6 +182,9 @@ Vue.component('bungalows', {
             },
             showMore : function(bung){
                this.bungalowToShow = bung;
+               for(let i = 0; i < this.bungalowToShow.offer.additionalServices.length; i++){
+                   this.additionalServices = this.additionalServices + " " + this.bungalowToShow.offer.additionalServices[i].name;
+               }
                this.showPage = 1;
             },
             showActions : function(id){

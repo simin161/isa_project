@@ -18,7 +18,8 @@ data: function(){
                 },
     			boats:[],
     			terms:[],
-    			reviews: []
+    			reviews: [],
+    			additionalServices: ""
     		}
     	},
     template: `
@@ -88,8 +89,8 @@ data: function(){
                                  <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(boatToShow.offer.id)" value="Show actions"/>
                             </span>
                             <br><br><br>
-    						<p class="title-text-bold" style="margin-top:10px; text-align:center;"> {{boatToShow.offer.offerName}} </p>
     						<form class="justify-content-center">
+    						    <p class="title-text-bold" style="margin-top:10px; text-align:center;"> {{boatToShow.offer.offerName}} </p>
     							<table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
     								<tr class="d-flex justify-content-evenly">
     									<td><input type="text" placeholder="   Country" class="input-text"  v-model="boatToShow.offer.location.country"/></td>
@@ -99,7 +100,7 @@ data: function(){
     								<tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="boatToShow.offer.unitPrice"/></td></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="boatToShow.offer.description" ></textarea></tr><br>
     								<tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="boatToShow.offer.maxCustomerCapacity"/></td></tr><br>
-    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="boatToShow.offer.additionalServices" ></textarea></tr><br>
+    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" class="input-text-area"  v-model="additionalServices" ></textarea></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="boatToShow.offer.rulesOfConduct" ></textarea></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="boatToShow.offer.cancellationPolicy" ></textarea></tr><br>
     							</table>
@@ -182,6 +183,9 @@ data: function(){
            },
            showMore : function(bung){
                this.boatToShow = bung;
+               for(let i = 0; i < this.boatToShow.offer.additionalServices.length; i++){
+                    this.additionalServices = this.additionalServices + " " + this.boatToShow.offer.additionalServices[i].name;
+               }
                this.showPage = 1;
            },
            follow : function(bung){

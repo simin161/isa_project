@@ -62,11 +62,13 @@ public class FeedbackController {
     }
 
     @PostMapping("/acceptFeedback")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public boolean acceptFeedback(@RequestBody Map<String, String> message){
         return feedbackService.acceptFeedback(message);
     }
 
     @PostMapping("/declineFeedback")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public boolean declineFeedback(@RequestBody Map<String, String> message){
         return feedbackService.denyFeedback(message);
     }

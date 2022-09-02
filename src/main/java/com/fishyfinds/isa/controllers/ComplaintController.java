@@ -61,7 +61,7 @@ public class ComplaintController {
     public boolean acceptComplaint(@RequestBody Map<String, String> message){
         try {
 
-            return complaintService.acceptComplaint(DtoToResolveComplaint.MapToResolveRequest(message));
+            return complaintService.acceptComplaint(message);
 
         }catch(Exception e){
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class ComplaintController {
     @PostMapping("/denyComplaint")
     public boolean denyComplaint(@RequestBody Map<String,String>map){
         try{
-            return complaintService.denyComplaint(DtoToResolveComplaint.MapToResolveRequest(map));
+            return complaintService.denyComplaint(map);
         }catch(Exception e){
             e.printStackTrace();
             return false;

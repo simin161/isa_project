@@ -14,8 +14,11 @@ import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -29,6 +32,12 @@ public class ComplaintService {
 
     @Autowired
     private ComplaintRepository complaintRepository;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private OfferRepository offerRepository;
 
     public boolean add(String username, String content, String reservationId, String complaintType) {
         User user = userRepository.findByEmail(username);
@@ -65,29 +74,50 @@ public class ComplaintService {
         return allAcceptedComplaints;
     }
 
-    public boolean acceptComplaint(ResolveComplaintRequest mapToResolveRequest) {
-
-        Complaint c = complaintRepository.findById(mapToResolveRequest.getComplaintId().intValue()).orElse(null);
+    public boolean acceptComplaint(Map<String, String> message) throws MessagingException, UnsupportedEncodingException {
+        Complaint c = complaintRepository.findById(Integer.valueOf(message.get("complaintId"))).orElse(null);
         if(c == null){
             return false;
         }else{
             c.setStatus(ComplaintStatus.ACCEPTED);
             complaintRepository.save(c);
-            return true;
+            User customer = userRepository.findById(Long.valueOf(message.get("userId"))).orElse(null);
+            Offer offer = offerRepository.findById(Long.valueOf(message.get("offerId"))).orElse(null);
+            if(offer != null) {
+                User owner = userRepository.findByEmail(offer.getUser().getEmail());
+                if(customer != null && owner != null){
+                    mailService.sendComplaintAcceptedMail(message.get("reply"), customer.getEmail(), owner.getEmail());
+                    return true;
+                }else{
+                    return false;
+                }
+            }
         }
+        return false;
     }
 
 
-    public boolean denyComplaint(ResolveComplaintRequest mapToResolveRequest) {
+    public boolean denyComplaint(Map<String, String> message) throws MessagingException, UnsupportedEncodingException {
 
-        Complaint c = complaintRepository.findById(mapToResolveRequest.getComplaintId().intValue()).orElse(null);
-        if(c==null){
+        Complaint c = complaintRepository.findById(Integer.valueOf(message.get("complaintId"))).orElse(null);
+        if(c == null){
             return false;
         }else{
             c.setStatus(ComplaintStatus.DECLINED);
             complaintRepository.save(c);
-            return true;
+            User customer = userRepository.findById(Long.valueOf(message.get("userId"))).orElse(null);
+            Offer offer = offerRepository.findById(Long.valueOf(message.get("offerId"))).orElse(null);
+            if(offer != null) {
+                User owner = userRepository.findByEmail(offer.getUser().getEmail());
+                if(customer != null && owner != null){
+                    mailService.sendComplaintAcceptedMail(message.get("reply"), customer.getEmail(), owner.getEmail());
+                    return true;
+                }else{
+                    return false;
+                }
+            }
         }
+        return false;
 
     }
 }

@@ -144,4 +144,34 @@ public class MailService {
             mailSender.send(message);
         }
     }
+
+    public void sendComplaintAcceptedMail(String reply, String customerEmail, String ownerEmail) throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress= customerEmail;
+        String toAddress2 = ownerEmail;
+        String senderName= "Fishy Finds";
+        String subject = "Complaint on our services";
+        String content = "Dear user,<br>"
+                + reply
+                + "Best regards,<br>"
+                + "Fishy Finds.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
+
+        MimeMessage message1 = mailSender.createMimeMessage();
+        MimeMessageHelper helper1 = new MimeMessageHelper(message1);
+        helper1.setFrom(fromAddress, senderName);
+        helper1.setTo(toAddress2);
+        helper1.setSubject(subject);
+        helper1.setText(content, true);
+        mailSender.send(message1);
+
+
+    }
 }

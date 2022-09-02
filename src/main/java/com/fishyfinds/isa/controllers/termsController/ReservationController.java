@@ -147,8 +147,17 @@ public class ReservationController {
             return reservationService.makeCourseAction(message, username);
 
         }catch(Exception e){
+            return false;
         }
+    }
 
-        return false;
+    @PostMapping("/makeCourseReservation")
+    @PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
+    public boolean makeCourseReservation(@RequestHeader HttpHeaders header, @RequestBody Map<String, String> message){
+        try{
+            return reservationService.makeReservationInstructor(message);
+        }catch(Exception e){
+            return false;
+        }
     }
 }

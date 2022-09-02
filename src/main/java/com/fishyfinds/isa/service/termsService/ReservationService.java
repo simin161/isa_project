@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -204,5 +205,33 @@ public class ReservationService {
             retVal = false;
         }
         return retVal;
+    }
+
+    public boolean makeReservationInstructor(Map<String, String> message){
+        try {
+            Offer offer = offerRepository.findById(Long.valueOf(message.get("offerId"))).orElse(null);
+            Customer customer = customerRepository.findByEmail(message.get("customerEmail"));
+            Term term = termRepository.findById(Long.valueOf(message.get("termId"))).orElse(null);
+            if(offer == null || customer == null || term == null){
+                return false;
+            }else{
+                if(isFree(term, LocalDateTime.parse(message.get("startDate")), LocalDateTime.parse(message.get("endDate")))){
+                    int numberOfPeople = Integer.parseInt(message.get("numberOfPeople"));
+                    double discount = customer.getLoyaltyProgram() != null ? customer.getLoyaltyProgram().getCategoryDiscount() / 100 : 0;
+                    double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * discount;
+                    Reservation reservation = new Reservation(LocalDateTime.parse(message.get("startDate")), LocalDateTime.parse(message.get("endDate")), customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
+                            numberOfPeople, totalPrice, offer);
+                    reservationRepository.save(reservation);
+                    updateTermsReservation(term.getId(), reservation);
+                    mailService.sendSuccessfulReservationEmail(customer, reservation);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
 }

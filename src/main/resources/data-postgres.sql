@@ -142,6 +142,8 @@ INSERT INTO public.reservation(id, start_date, end_date, reservation_status, res
         values(7, '2022-04-015T10:00:00',  '2022-04-25T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false, 'Wi-Fi', 10);
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration)
         values(8, '2022-09-015T10:00:00',  '2022-09-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false, 'Wi-Fi', 5);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration)
+        values(9, '2022-09-025T10:00:00',  '2022-09-30T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false, 'Wi-Fi', 5);
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
 --INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
  --  VALUES(2,4);

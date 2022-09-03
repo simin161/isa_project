@@ -40,7 +40,8 @@ data: function(){
                     rateForOffer: null,
                     rateForOwner: null
                 },
-                offerType: "BUNGALOW"
+                offerType: "BUNGALOW",
+                additionalServices: ""
     		}
     	},
     template: `
@@ -111,7 +112,7 @@ data: function(){
     								<tr><td><input type="text" placeholder="   Unit price" disabled style="color: white" class="input-text"  v-model="bungalowToShow.unitPrice"/></td></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Description" disabled style="color: white" class="input-text-area"  v-model="bungalowToShow.description" ></textarea></tr><br>
     								<tr><td><input type="text" placeholder="   Maximum capacity" disabled style="color: white" class="input-text"  v-model="bungalowToShow.maxCustomerCapacity"/></td></tr><br>
-    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="bungalowToShow.additionalServices" ></textarea></tr><br>
+    								<tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color: white" class="input-text-area"  v-model="additionalServices" ></textarea></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area" disabled style="color: white"  v-model="bungalowToShow.rulesOfConduct" ></textarea></tr><br>
     								<tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area" disabled style="color: white"  v-model="bungalowToShow.cancellationPolicy" ></textarea></tr><br>
     							</table>
@@ -133,8 +134,8 @@ data: function(){
     								</tr>
     								<br>
     								<tr class="d-flex justify-content-evenly">
-                                        <td style="width: 100%;"><input type="number" placeholder="    Rating for owner" v-model="feedback.rateForOwner" min="1" max="5" class="input-text" /></td>
-                                        <td style="width: 100%;"><input type="number" placeholder="    Rating for bungalow" v-model="feedback.rateForOffer" min="1" max="5" class="input-text" /></td>
+                                        <td style="width: 100%;"><input type="number" onKeyDown="return false" placeholder="    Rating for owner" v-model="feedback.rateForOwner" min="1" max="5" class="input-text" /></td>
+                                        <td style="width: 100%;"><input type="number" onKeyDown="return false" placeholder="    Rating for bungalow" v-model="feedback.rateForOffer" min="1" max="5" class="input-text" /></td>
                                     </tr>
                                     <br>
     								<tr><textarea rowspan="4" name="text" placeholder="   Feedback for owner" v-model="feedback.contentForOwner" class="input-text-area" ></textarea></tr><br>
@@ -165,6 +166,7 @@ data: function(){
           methods : {
             showMore : function(bung){
                this.bungalowToShow = bung.offer;
+               this.additionalServices = bung.additionalServices;
                this.showPage = 1;
             },
             showFeedback : function(bung){

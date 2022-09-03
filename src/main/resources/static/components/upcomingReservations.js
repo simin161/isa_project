@@ -51,7 +51,7 @@ data: function(){
     		<br>
     		<br>
             <div class="my-bungalows">
-    			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; height:80vh">
+    			<div class="col-md-4 left-div overflow-auto" v-show="showPage == 0 " style="margin-top:-20px; margin-left: 22%; height:80vh">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
     						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
@@ -96,14 +96,14 @@ data: function(){
     						</div>
     					</div>
     				</div>
-                   	<div class="col-md-4 right-div overflow-auto" style="margin-top:-20px; height:80vh" v-show="showPage == 1">
+    		    </div>
+                   	<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 1">
                         <div class="container" v-show="showPage == 1">
                             <div class="container align-items-start">
                                 <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: gray" @click="showPage = 0"/><br><br><br>
-                                <p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show a new Bungalow </p>
+                                <p class="title-text-bold" style="margin-top:10px; text-align:center;"> {{bungalowToShow.offerName}} </p>
                                 <form class="justify-content-center">
                                     <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                                        <tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="bungalowToShow.offerName"/></td></tr><br>
                                         <tr class="d-flex justify-content-evenly">
                                             <td><input type="text" placeholder="   Country" class="input-text"  v-model="bungalowToShow.location.country"/></td>
                                             <td><input type="text" placeholder="   City" class="input-text"  v-model="bungalowToShow.location.city"/></td></tr><br>
@@ -120,7 +120,6 @@ data: function(){
                             </div>
                         </div>
                     </div>
-               	</div>
             </div>
     	</div>
     		`
@@ -138,6 +137,11 @@ data: function(){
           methods : {
             showMore : function(bung){
                this.bungalowToShow = bung.offer;
+               let addServices = "";
+               for(let i = 0; i < this.bungalowToShow.additionalServices.length; i++){
+                addServices = addServices + " " + this.bungalowToShow.additionalServices[i].name;
+               }
+               this.bungalowToShow.additionalServices = addServices;
                this.showPage = 1;
             },
             search : function(){

@@ -30,9 +30,9 @@ template: `
                 <option>COURSE</option>
             </select>
             <input v-model="filterDto.start" style="margin-left: 15px;" class="datetime-local" type="datetime-local" id="start-time" name="start-time" />
-            <input  type="number" min="1" v-model="filterDto.duration" style="margin-left: 15px" placeholder="Duration"/>
-            <input  type="number" min="1" v-model="filterDto.numberOfPeople" style="margin-left: 15px" placeholder="Number of people"/>
-            <input :disabled="isComplete" type="button" value="Go!" @click="filterTerms"/>
+            <input type="number" min="1" v-model="filterDto.duration" onKeyDown="return false" style="margin-left: 15px" placeholder="Duration" />
+            <input type="number" min="1" v-model="filterDto.numberOfPeople" onKeyDown="return false" style="margin-left: 15px" placeholder="Number of people" />
+            <input type="button" value="Search!" @click="filterTerms"/>
         </div>
         <div class="col-md-1 left-div overflow-auto" style="margin-top: 60px; margin-left: 22%; height:60vh" v-show="showPage == 0">
             <div class="container mt-5">
@@ -81,11 +81,6 @@ template: `
     	<div>
     </div>
 `,
-    computed: {
-        isComplete(){
-            return !(/\S/.test(this.filterDto.offerType) && /\S/.test(this.filterDto.start) && /\S/.test(this.filterDto.end));
-        }
-    },
     methods: {
         showMakeReservation : function(term){
             this.choosenOfferTerm = term;
@@ -124,11 +119,25 @@ template: `
                  })
         },
         filterTerms : function(){
-            axios.post("/api/filterAvailableTerms", this.filterDto)
-                 .then((response) =>{
-                    this.allTerms = response.data;
-                    this.choosenOfferTerm = this.allTerms[0];
-                 })
+            if(/\S/.test(this.filterDto.start) && /\S/.test(this.filterDto.duration) && /\S/.test(this.filterDto.numberOfPeople)){
+                let start = new Date(this.filterDto.start);
+                let today = new Date();
+                if(start >= today){
+                    axios.post("/api/filterAvailableTerms", this.filterDto)
+                         .then((response) =>{
+                            this.allTerms = response.data;
+                            this.choosenOfferTerm = this.allTerms[0];
+                         })
+                }else{
+                    Swal.fire('Date cannot be in the past!',
+                              '',
+                              'error')
+                }
+            }else{
+                    Swal.fire('Please, fill all fields!',
+                              '',
+                              'error')
+            }
         }
     }
 });

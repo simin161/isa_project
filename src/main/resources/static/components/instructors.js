@@ -19,7 +19,8 @@ Vue.component('instructors', {
 			showPage: 0,
 			sortOption: "",
 			terms: [],
-			reviews: []
+			reviews: [],
+			additionalServices: ""
 		}
 	},
 template: `	
@@ -94,10 +95,9 @@ template: `
                                     <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(courseToShow.offer.id)" value="Show actions"/>
                                 </span>
                                 <br><br><br>
-                				<p class="title-text-bold" style="margin-top:10px; text-align:center;"> Show instructor </p>
                 				<form class="justify-content-center">
                                      <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                                         <p>{{courseToShow.offerName}}</p>
+                                         <p class="title-text-bold" style="margin-top:10px; text-align:center;">{{courseToShow.offer.offerName}}</p>
                                          <tr class="d-flex justify-content-evenly">
                                              <td><input type="text" placeholder="   First Name" disabled style="color:white" class="input-text"  v-model="courseToShow.offer.user.firstName"/></td>
                                              <td><input type="text" placeholder="   Last Name" disabled style="color:white" class="input-text"  v-model="courseToShow.offer.user.lastName"/></td>
@@ -115,7 +115,7 @@ template: `
                                         <tr><td><input type="text" placeholder="   Unit price" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.unitPrice"/></td></tr><br>
                                         <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area" disabled style="color:white"  v-model="courseToShow.offer.description" ></textarea></tr><br>
                                         <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text" disabled style="color:white"  v-model="courseToShow.offer.maxCustomerCapacity"/></td></tr><br>
-                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color:white" class="input-text-area"  v-model="courseToShow.offer.additionalServices" ></textarea></tr><br>
+                                        <tr><textarea rowspan="3"name="text" placeholder="   Additional services (Wi-fi, Parking, etc.)" disabled style="color:white" class="input-text-area"  v-model="additionalServices" ></textarea></tr><br>
                                         <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area" disabled style="color:white"  v-model="courseToShow.offer.rulesOfConduct" ></textarea></tr><br>
                                         <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area" disabled style="color:white"  v-model="courseToShow.offer.cancellationPolicy" ></textarea></tr><br>
                                      </table>
@@ -199,6 +199,9 @@ template: `
             },
             showMore : function(course){
                 this.courseToShow = course;
+                for(let i = 0; i < this.courseToShow.offer.additionalServices.length; i++){
+                    this.additionalServices = this.additionalServices + " " + this.courseToShow.offer.additionalServices[i].name;
+                }
                 this.showPage = 1;
             }
             ,

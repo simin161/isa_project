@@ -26,50 +26,42 @@ Vue.component('reservationForm', {
                 termId : "",
                 offerId : "",
                 startDate : "",
-                endDate : "",
-                numberOfPeople: ""
+                duration : "",
+                numberOfPeople: "",
+                additionalServices: ""
             }
 		};
 	},
 template: `
 	<div>
         <nav-bar></nav-bar>
-        <div>
+        <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh">
             <form class="justify-content-center">
-               <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;" >
-                   <tr><td><input type="text" placeholder="   Bungalow's name" class="input-text" v-model="term.offer.offerName"/></td></tr><br>
-                   <tr class="d-flex justify-content-evenly">
-                        <td><input type="text" placeholder="   Country" class="input-text"  v-model="term.offer.location.country"/></td>
-                        <td><input type="text" placeholder="   City" class="input-text"  v-model="term.offer.location.city"/></td></tr><br>
-                   <tr><td><input type="text" placeholder="   Street" class="input-text"  v-model="term.offer.location.street"/></td></tr><br>
-                   <tr><td><input type="text" placeholder="   Street number" class="input-text"  v-model="term.offer.location.streetNumber"/></td></tr><br>
-                   <tr><td><input type="text" placeholder="   Unit price" class="input-text"  v-model="term.offer.unitPrice"/></td></tr><br>
-                   <tr><textarea rowspan="3" name="text" placeholder="   Description" class="input-text-area"  v-model="term.offer.description" ></textarea></tr><br>
-                   <tr><td><input type="text" placeholder="   Maximum capacity" class="input-text"  v-model="term.offer.maxCustomerCapacity"/></td></tr><br>
-                   <tr><textarea rowspan="3" name="text" placeholder="   Rules of Conduct" class="input-text-area"  v-model="term.offer.rulesOfConduct" ></textarea></tr><br>
-                   <tr><textarea rowspan="3" name="text" placeholder="   Cancellation policy" class="input-text-area"  v-model="term.offer.cancellationPolicy" ></textarea></tr><br>
+                <p class="title-text-bold" style="margin-top:10px; text-align:center;"> {{term.offer.offerName}} </p>
+                <p class="title-text-bold" style="margin-top:10px; text-align:center;">Available from: {{term.startDate}} to: {{term.endDate}} </p>
+                <p class="title-text-bold" style="margin-top:10px; text-align:center;">Unit price: {{term.offer.unitPrice}} </p>
+                <p class="title-text-bold" style="margin-top:10px; text-align:center;">Customer capacity: {{term.offer.maxCustomerCapacity}} </p>
+                <table class="justify-content-center" style="width:75%; margin: auto; table-layout:fixed;">
                    <tr>
-                        <td v-for="a in term.offer.additionalServices">
-                            <input type="checkbox" style="color: white" v-model="a.id" checked />
-                            <label>{{a.name}}</label>
-                        </td>
-                   </tr><br>
-                   <tr>
-                       <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Number of people:</p></td>
-                       <td><input type="number" min="1" :max="term.offer.maxCustomerCapacity" v-model="dto.numberOfPeople"/></td>
+                       <td><p style="color:#fff;font-family:poppins-bold; font-size:15px;">Start date: </p></td>
+                       <td><input class="input-text" type="datetime-local" v-model="dto.startDate" /></td>
                    </tr>
                    <tr>
-                       <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Start date: </p></td>
-                       <td><input class="datetime-local" type="datetime-local" v-model="dto.startDate" :min="term.startDate" /></td>
+                       <td><p style="color:#fff;font-family:poppins-bold; font-size:15px;">Duration: </p></td>
+                       <td><input class="input-text" type="number" min="1" v-model="dto.duration"/></td>
                    </tr>
                    <tr>
-                       <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">End date: </p></td>
-                       <td><input class="datetime-local" type="datetime-local" :max="dto.endDate" v-model="dto.endDate"/></td>
+                      <td><p style="color:#fff;font-family:poppins-bold; font-size:15px;">Number of people: </p></td>
+                      <td><input class="input-text" type="number" min="1" onKeyDown="return false" v-model="dto.numberOfPeople" :max="term.offer.maxCustomerCapacity"/></td>
                    </tr>
+                   <td v-for="a in term.offer.additionalServices">
+                       <input type="checkbox" style="color: white" v-model="a.id" checked />
+                       <label style="color: white">{{a.name}}</label>
+                   </td>
                    <tr>
-                       <td><p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{dto.numberOfPeople * term.offer.unitPrice}}</p></td>
+                       <td><p style="color:#fff;font-family:poppins-bold; font-size:15px;">Total price: {{dto.numberOfPeople * term.offer.unitPrice}}</p></td>
                    </tr>
-                   <tr><td><input type="button" value="Book!" @click="makeReservation"/></td></tr>
+                   <tr><td><input type="button"  class="confirm-profile" value="Book!" @click="makeReservation"/></td></tr>
                </table>
             </form>
         </div>
@@ -77,22 +69,38 @@ template: `
 `,
     methods: {
         makeReservation : function(){
-            this.dto.termId = this.term.id;
-            this.dto.offerId = this.term.offer.id;
-            axios.defaults.headers.common["Authorization"] =
-                                   localStorage.getItem("user");
-            axios.post("/api/makeReservation", this.dto)
-                 .then((response) => {
-                     if(response.data){
-                         Swal.fire('Reservation made successfuly!',
-                                   '',
-                                   'success')
-                     }else{
-                         Swal.fire('Ooops, something went wrong!',
-                                   'Please, try again later.',
-                                   'failure')
-                     }
-                 })
+            if(/\S/.test(this.dto.start) && /\S/.test(this.dto.duration) && /\S/.test(this.dto.numberOfPeople)){
+                let start = new Date(this.dto.startDate);
+                let startTerm = new Date(this.term.startDate);
+                let endTerm = new Date(this.term.endDate);
+                let newDate = moment(start, "DD-MM-YYYY").add(this.dto.duration, 'days');
+                if(start >= startTerm && start <= endTerm && newDate._d >= startTerm && newDate <= endTerm){
+                    this.dto.termId = this.term.id;
+                    this.dto.offerId = this.term.offer.id;
+                    axios.defaults.headers.common["Authorization"] =
+                                           localStorage.getItem("user");
+                    axios.post("/api/makeReservation", this.dto)
+                         .then((response) => {
+                             if(response.data){
+                                 Swal.fire('Reservation made successfuly!',
+                                           '',
+                                           'success')
+                             }else{
+                                 Swal.fire('Ooops, something went wrong!',
+                                           'Please, try again later.',
+                                           'error')
+                             }
+                         })
+                }else{
+                Swal.fire('Please, check the dates!',
+                          '',
+                          'error')
+                }
+            }else{
+                Swal.fire('Please, fill all fields!',
+                          '',
+                          'error')
+            }
         }
     },
     mounted(){

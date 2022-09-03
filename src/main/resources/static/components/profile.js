@@ -59,7 +59,6 @@ template: `
                         <div class="container" v-show="showForm == 0">
                             <div class="row">
                                 <p class="title-text-bold">Options</p>
-                                <p class="title-text-light" style="font-size:15px;">Aliquam dapibus tristique ante, vitae ullamcorper sem mollis a.  Maecenas cursus libero ac diam rutrum, at lobortis nunc tincidunt.</p>
                             </div>
                             <div class="row options justify-content-evenly" v-if="dto.userType == 'ADMIN'">
                                 <div class="options-3-horizontal justify-content-center" @click="showForm = 1">
@@ -89,7 +88,6 @@ template: `
 
                         <div class="container align-items-start" v-show="showForm == 1">
                             <p class="title-text-bold">Update your profile</p>
-                            <p class="title-text-light" style="font-size:15px;">Aliquam dapibus tristique ante, vitae ullamcorper sem mollis a.  Maecenas cursus libero ac diam rutrum, at lobortis nunc tincidunt.</p>
                             <form class="justify-content-center">
                                 <table class="justify-content-center" style="width:75%; margin: auto;" >
                                     <tr>
@@ -129,7 +127,6 @@ template: `
 
                         <div class="container align-items-start" v-show="showForm == 2">
                             <p class="title-text-bold">Change your password</p>
-                            <p class="title-text-light" style="font-size:15px;">Aliquam dapibus tristique ante, vitae ullamcorper sem mollis a.  Maecenas cursus libero ac diam rutrum, at lobortis nunc tincidunt.</p>
                             <form class="justify-content-center">
                                 <table class="justify-content-center" style="width:75%; margin: auto;" >
                                     <tr>
@@ -156,7 +153,6 @@ template: `
 
                         <div class="container align-items-start" v-show="showForm == 3">
                             <p class="title-text-bold">Delete your account</p>
-                            <p class="title-text-light" style="font-size:15px;">Aliquam dapibus tristique ante, vitae ullamcorper sem mollis a.  Maecenas cursus libero ac diam rutrum, at lobortis nunc tincidunt.</p>
                             <form class="justify-content-center">
                                 <table class="justify-content-center" style="width:75%; margin: auto;" >
                                     <tr>

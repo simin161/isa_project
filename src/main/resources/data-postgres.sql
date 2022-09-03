@@ -122,6 +122,8 @@ INSERT INTO public.term(id, start_date, end_date, offer)
      values(1, '2022-06-06T10:00:00',  '2022-06-12T10:00:00' , 1); -- Bungy Wumby
 INSERT INTO public.term(id, start_date, end_date, offer)
      values(2, '2022-07-06T10:00:00',  '2022-07-12T10:00:00' , 1); -- Bungy Wumby
+INSERT INTO public.term(id, start_date, end_date, offer)
+     values(3, '2022-09-01T10:00:00',  '2022-09-30T10:00:00' , 1);
 --TERMS END--
 
 --RESERVATIONS START--

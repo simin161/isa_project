@@ -60,9 +60,12 @@ public class TermService {
         List<TermDTO> allTermDTOs = findAllTermDTOs();
         List<TermDTO> offerTermDTOs = new ArrayList<>();
         // business logic
+        LocalDateTime today = LocalDateTime.now();
         for (TermDTO termDTO : allTermDTOs) {
             if (termDTO.getOffer().getId().equals(offerId)) {
-                offerTermDTOs.add(termDTO);
+                if((today.isAfter(termDTO.startTime) || today.isEqual(termDTO.startTime)) &&
+                    today.isBefore(termDTO.endTime))
+                    offerTermDTOs.add(termDTO);
             }
         }
         return offerTermDTOs;

@@ -212,9 +212,9 @@ template: `
                                                                    .then(response => {
                                                                     axios.defaults.headers.common["Authorization"] =
                                                                                              localStorage.getItem("user");
-                                                                               axios.get("/api/allBoats")
+                                                                               axios.get("/api/allCourses")
                                                                                     .then(response => {
-                                                                                       this.boats = response.data;
+                                                                                       this.courses = response.data;
                                                                                 })
                                                                    });
             },

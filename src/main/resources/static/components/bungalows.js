@@ -260,7 +260,7 @@ Vue.component('bungalows', {
                            return 1;
                         return 0;
                       }
-                       return this.bungalows.sort(compare);
+                      return this.bungalows.sort(compare);
                    }
                     if(this.sortOption === 'AscPrice'){
                         function compare(a, b) {

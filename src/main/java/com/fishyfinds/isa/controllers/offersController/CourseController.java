@@ -10,13 +10,12 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value="/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,5 +60,12 @@ public class CourseController {
 
         }
         return retVal;
+    }
+
+    @PostMapping("/newCourse")
+    @PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
+    public void addNewCourse(@RequestHeader HttpHeaders header, @RequestBody Map<String, String> message){
+        String email = "";
+        courseService.addNewCourse(email, message);
     }
 }

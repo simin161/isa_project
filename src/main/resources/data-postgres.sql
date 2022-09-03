@@ -10,7 +10,7 @@ INSERT INTO authority values (6, 'ROLE_COMMON');
 INSERT INTO location values (1, 'Forgotten town', 'Belgrade', 23.5, 44.5, '64', 4);
 --LOCATIONS END--
 --LOYALTY PROGRAM BEGIN--
-INSERT INTO loyalty_program values (1, 23.4, 'shark', 0,  40);
+INSERT INTO loyalty_program values (1, 23.4, 'shark', 0,  40, 0, 0);
 --LOYALTY PROGRAM END--
 --USERS BEGIN--
 -- User 1: - Customer -> UserType = 0

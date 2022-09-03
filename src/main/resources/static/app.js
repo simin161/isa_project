@@ -23,6 +23,7 @@ const myBungalows = {template: '<owner-my-bungalows></owner-my-bungalows>'}
 const myBoats = {template: '<owner-my-boats></owner-my-boats>'}
 // -- For instructors only
 const myCourses = {template: '<instructor-my-courses></instructor-my-courses>'}
+const newCourse = {template: '<newCourse></newCourse>'}
 // For admins only
 const adminRegReqComplaints = {template: '<admin-reg-req-complaints></admin-reg-req-complaints>'}
 const adminRegister = {template: '<admin-register></admin-register>'}
@@ -57,6 +58,7 @@ const router = new VueRouter({
 		{ path: '/my-boats', component: myBoats},
 		// For instructors only
 		{ path: '/my-courses', component: myCourses},
+		{ path: '/newCourse', component: newCourse},
 		// For admins only
         { path: '/admin-reg-req-complaints', component: adminRegReqComplaints},
         { path: '/admin-register', component: adminRegister},

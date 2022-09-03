@@ -53,6 +53,15 @@ template: `
                                     <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>
                                     <a href="#/" @click="signOut" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
                                 </div>
+                                <div v-show="loggedUser.userType == 'INSTRUCTOR'">
+                                    <a href="#/newCourse" style="font-family: poppins-bold; font-size: 24px;">Add new course</a>
+                                    <a href="#/reservationHistoryInstructor" style="font-family: poppins-bold; font-size: 24px;">Reservation history</a>
+                                    <a href="#/instructorAction" style="font-family: poppins-bold; font-size: 24px;">Create an action</a>
+                                    <a href="#/makeReservationInstructor" style="font-family: poppins-bold; font-size: 24px;">Make reservation</a>
+                                    <a href="#/calendar" style="font-family: poppins-bold; font-size: 24px;">Calendar</a>
+                                    <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>
+                                    <a href="#/" @click="signOut" style="font-family: poppins-bold; font-size: 24px;">Sign out</a>
+                                </div>
 
                                 <div v-show="loggedUser.userType == 'BUNGALOW_OWNER'">
                                     <a href="#/account" style="font-family: poppins-bold; font-size: 24px;">My Account</a>

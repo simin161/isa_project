@@ -24,6 +24,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "LEFT OUTER JOIN offer o on r.offer = o.id WHERE r.start_date>=:dateParam AND u.email = :username AND r.reservation_status = 0 ", nativeQuery = true)
     List<Reservation> findAllUpcomingReservationsForUser(@Param("username")String username,@Param("dateParam") LocalDateTime dateParam);
 
-    @Query( value = "SELECT *, 1 as clazz_ FROM reservation r WHERE r.offer = :id AND r.end_date <= :dateParam", nativeQuery = true)
+    @Query( value = "SELECT *, 1 as clazz_ FROM reservation r WHERE r.offer = :id AND r.start_date > :dateParam", nativeQuery = true)
     List<Reservation> findAllActionsForOffer(@Param("id")Long id, @Param("dateParam")LocalDateTime dateParam);
 }

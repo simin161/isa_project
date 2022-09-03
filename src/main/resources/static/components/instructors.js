@@ -219,10 +219,36 @@ template: `
                                                                    });
             },
             search : function(){
-                   axios.get('/api/search', {
-                            params: this.axiosParams
-                   }).then(response => {this.courses = response.data; console.log(this.courses)})
-            }
+                if((this.searchParams.startDate != "" && this.searchParams.endDate == "") || (this.searchParams.startDate == "" && this.searchParams.endDate != "")){
+                    Swal.fire('Please, fill are date fields!',
+                              '',
+                              'error')
+                }else if(this.searchParams.startDate == "" && this.searchParams.endDate == ""){
+                    axios.get('/api/search', {
+                         params: this.axiosParams
+                    }).then(response => {
+                        this.courses = response.data;
+                    })
+                }else if(this.searchParams.startDate != "" && this.searchParams.endDate != ""){
+                    let today = new Date();
+                    let startDate = new Date(this.searchParams.startDate);
+                    let endDate = new Date(this.searchParams.endDate);
+                    if(startDate <= today || endDate <= today){
+                        Swal.fire('Date cannot be in the past!',
+                                  '',
+                                  'error')
+                    }else if(startDate > today && endDate > today && startDate < endDate){
+                        axios.get('/api/search', {
+                             params: this.axiosParams
+                        }).then(response => {
+                            this.courses = response.data;
+                        })
+                    }else{
+                        Swal.fire('Please, enter valid values for start and end date!',
+                                  'Start date must be before end date',
+                                  'error')
+                    }
+                }            }
             ,
             sortedArray: function() {
                   if(this.sortOption === 'DescAlpha'){

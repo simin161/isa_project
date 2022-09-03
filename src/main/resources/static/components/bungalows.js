@@ -204,7 +204,6 @@ Vue.component('bungalows', {
                       });
             },
             search : function(){
-                let today = new Date();
                 if((this.searchParams.startDate != "" && this.searchParams.endDate == "") || (this.searchParams.startDate == "" && this.searchParams.endDate != "")){
                     Swal.fire('Please, fill are date fields!',
                               '',

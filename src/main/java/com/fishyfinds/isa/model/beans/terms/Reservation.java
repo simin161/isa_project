@@ -55,6 +55,9 @@ public class Reservation {
     @Column(name="additionalServices")
     private String additionalServices;
 
+    @Column(name="duration")
+    private int duration;
+
     @OneToOne
     @JoinColumn(name="customer", referencedColumnName = "id")
     private Customer customer;

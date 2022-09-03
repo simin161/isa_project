@@ -62,6 +62,7 @@ public class ReservationService {
                     double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * discount;
                     Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
                             numberOfPeople, totalPrice, offer);
+                    reservation.setDuration(duration);
                     reservation.setAdditionalServices(message.get("additionalServices"));
                     reservationRepository.save(reservation);
                     updateTermsReservation(term.getId(), reservation);

@@ -4,7 +4,8 @@ Vue.component('following', {
             offers: [],
             copyOfOffers: [],
             sortOption: "",
-            searchName: ""
+            searchName: "",
+            filterOptions: "noFilter"
 		}
 	},
 template: `
@@ -32,6 +33,18 @@ template: `
                                         </select>
                                     </td>
                                     <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" @click="sortedArray" value="Sort"/></td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td colspan="2">
+                                    	<select v-model="filterOptions" class="select-sort" name="select" id="format">
+                                    		<option selected value="noFilter">No filter applied</option>
+                                            <option value="BUNGALOW" >Bungalows</option>
+                                            <option value="BOAT">Boats</option>
+                                            <option value="COURSE">Courses</option>
+                                    	</select>
+                                    </td>
+                                    <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Filter" @click="filterArray"/></td>
                                 </tr>
                             </table>
                         </form>
@@ -72,6 +85,17 @@ template: `
                                      this.offers = response.data;
                                })
                           });
+            },
+            filterArray: function(){
+                if(this.filterOptions === "noFilter"){
+                    this.offers = this.copyOfOffers;
+                }else{
+                    this.offers = this.copyOfOffers;
+                    let newArray = this.offers.filter(el => {
+                        return el.offer.offerType === this.filterOptions;
+                    })
+                    this.offers = newArray;
+                }
             },
             search: function(){
                 this.offers = this.copyOfOffers;

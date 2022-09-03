@@ -32,8 +32,8 @@ data: function(){
     			<div class="col-md-4 left-div overflow-auto" style="margin-top: -5px; margin-left: 22%; height: 80vh;" v-show="showPage == 0">
     				<form class="justify-content-center" >
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-    						<tr><td colspan="1"><input v-model="offerName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Offer's name" /></td>
-    							<td rowspan="2"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+    						<tr><td colspan="2"><input v-model="offerName" class="update-text-profile" type="text" style="height:20px;  width: 20em; font-size:12px; font-family:'poppins-light'" placeholder="Offer's name" /></td>
+    							<td colspan="1"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
     						</tr>
     						<br>
     						<tr>

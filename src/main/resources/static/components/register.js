@@ -136,12 +136,12 @@ template: `
                 	                          'success')
                 	            }
                 	            else{
-                	                Swal.fire('Ooops, something went wron!',
+                	                Swal.fire('Ooops, something went wrong!',
                 	                           'Please, try again later',
                 	                           'error')
                 	            }
                 	        }).catch(
-                	                Swal.fire('Ooops, something went wron!',
+                	                Swal.fire('Ooops, something went wrong!',
                                               'Please, try again later',
                                               'error')
                 	        )

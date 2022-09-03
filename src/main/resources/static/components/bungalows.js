@@ -204,11 +204,37 @@ Vue.component('bungalows', {
                       });
             },
             search : function(){
-                axios.get('/api/search', {
-                     params: this.axiosParams
-                }).then(response => {
-                    this.bungalows = response.data;
-                })
+                let today = new Date();
+                if((this.searchParams.startDate != "" && this.searchParams.endDate == "") || (this.searchParams.startDate == "" && this.searchParams.endDate != "")){
+                    Swal.fire('Please, fill are date fields!',
+                              '',
+                              'error')
+                }else if(this.searchParams.startDate == "" && this.searchParams.endDate == ""){
+                    axios.get('/api/search', {
+                         params: this.axiosParams
+                    }).then(response => {
+                        this.bungalows = response.data;
+                    })
+                }else if(this.searchParams.startDate != "" && this.searchParams.endDate != ""){
+                    let today = new Date();
+                    let startDate = new Date(this.searchParams.startDate);
+                    let endDate = new Date(this.searchParams.endDate);
+                    if(startDate <= today || endDate <= today){
+                        Swal.fire('Date cannot be in the past!',
+                                  '',
+                                  'error')
+                    }else if(startDate > today && endDate > today && startDate < endDate){
+                        axios.get('/api/search', {
+                             params: this.axiosParams
+                        }).then(response => {
+                            this.bungalows = response.data;
+                        })
+                    }else{
+                        Swal.fire('Please, enter valid values for start and end date!',
+                                  'Start date must be before end date',
+                                  'error')
+                    }
+                }
             }
             ,
              sortedArray: function() {

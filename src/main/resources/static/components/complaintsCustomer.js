@@ -3,16 +3,14 @@ data: function(){
     		return{
     			showPage: 0,
     			sortOption: "",
-    			searchParams: {
-    			    bungalowName : "",
-    			    bungalowLocation: ""
-    			},
-    			 complaint:{
+    			offerName: "",
+    			filterOptions: "noFilter",
+    			complaint:{
                     content: "",
                     complaintType: "OWNER_COMPLAINT",
                     reservationId : ""
-                 },
-                 choosenOffer: {
+                },
+                choosenOffer: {
                     offerId: "",
                     offerName: "",
                     offerUser: {
@@ -20,8 +18,9 @@ data: function(){
                         firstName: "",
                         lastName: ""
                     }
-                 },
-    			reservations:[]
+                },
+    			reservations:[],
+    			copyOfReservations: []
     		}
     	},
     template: `
@@ -33,8 +32,7 @@ data: function(){
     			<div class="col-md-4 left-div overflow-auto" style="margin-top: -5px; margin-left: 22%; height: 80vh;" v-show="showPage == 0">
     				<form class="justify-content-center" >
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-    						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
-    							<td colspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
+    						<tr><td colspan="1"><input v-model="offerName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Offer's name" /></td>
     							<td rowspan="2"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
     						</tr>
     						<br>
@@ -42,17 +40,35 @@ data: function(){
     							<td colspan="2">
     								<select v-model="sortOption" class="select-sort" name="select" id="format">
     									<option selected disabled>Sort by</option>
-    									<option value="AscAlpha" >Sort alphabetically (A-Z)</option>
-    									<option value="DescAlpha">Sort alphabetically (Z-A)</option>
-    									<option value="AscRating">Sort by average rating (Asc)</option>
-    									<option value="DescRating">Sort by average rating (Desc)</option>
-    									<option value="AscPrice">Sort by price: low to high</option>
-    									<option value="DescPrice">Sort by price: hight to low</option>
+                                        <option value="AscAlpha" >Sort alphabetically (A-Z)</option>
+                                        <option value="DescAlpha">Sort alphabetically (Z-A)</option>
+                                        <option value="AscRating">Sort by average rating (Asc)</option>
+                                        <option value="DescRating">Sort by average rating (Desc)</option>
+                                        <option value="AscPrice">Sort by unit price: low to high</option>
+                                        <option value="DescPrice">Sort by unit price: high to low</option>
+                                        <option value="AscTotalPrice">Sort by total price: low to high</option>
+                                        <option value="DescTotalPrice">Sort by total price: high to low</option>
+                                        <option value="AscDuration">Sort by duration (asc)</option>
+                                        <option value="DescDuration">Sort by duration (desc)</option>
+                                        <option value="AscStartDate">Sort by start date (asc)</option>
+                                        <option value="DescStartDate">Sort by start date (desc)</option>
+                                        <option value="AscEndDate">Sort by end date (asc)</option>
+                                        <option value="DescEndDate">Sort by end date (desc)</option>
     								</select>
     							</td>
-    							<tr>
-    							    <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort" @click="sortedArray"/></td>
-    							</tr>
+    							<td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort" @click="sortedArray"/></td>
+    						</tr>
+                            <br>
+    						<tr>
+    							<td colspan="2">
+    								<select v-model="filterOptions" class="select-sort" name="select" id="format">
+    									<option selected value="noFilter">No filter applied</option>
+                                        <option value="BUNGALOW" >Bungalows</option>
+                                        <option value="BOAT">Boats</option>
+                                        <option value="COURSE">Courses</option>
+    								</select>
+    							</td>
+    							<td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Filter" @click="filterArray"/></td>
     						</tr>
     					</table>
     				</form>
@@ -134,9 +150,23 @@ data: function(){
                 this.showPage = 1;
             },
             search : function(){
-                axios.get('/api/search', {
-                     params: this.axiosParams
-                }).then(response => (this.bungalows = response.data))
+                let newArray = this.reservations.filter(el => {
+                    let text = this.offerName;
+                    return el.offer.offerName.toLowerCase().includes(text);
+                })
+                this.reservations = newArray;
+            },
+            filterArray: function(){
+                if(this.filterOptions === "noFilter"){
+                    this.reservations = this.copyOfReservations;
+                }else{
+                    this.reservations = this.copyOfReservations;
+                    let newArray = this.reservations.filter(el => {
+                        return el.offer.offerType === this.filterOptions;
+                    })
+
+                    this.reservations = newArray;
+                }
             },
             addComplaint : function(){
                 axios.defaults.headers.common["Authorization"] =
@@ -166,66 +196,146 @@ data: function(){
                      })
             },
             sortedArray: function() {
-                   if(this.sortOption === 'DescAlpha'){
-                       function compare(a, b) {
-                         if (a.offerName > b.offerName)
+                if(this.sortOption === 'DescAlpha'){
+                    function compare(a, b) {
+                       if (a.offer.offerName > b.offer.offerName)
                            return -1;
-                         if (a.offerName < b.offerName)
+                       if (a.offer.offerName < b.offer.offerName)
                            return 1;
-                        return 0;
-                      }
-                       return this.bungalows.sort(compare);
-                   }
-                    if(this.sortOption === 'AscAlpha'){
-                        function compare(a, b) {
-                            if (a.offerName < b.offerName)
-                               return -1;
-                            if (a.offerName > b.offerName)
-                               return 1;
-                            return 0;
-                        }
-                        return this.bungalows.sort(compare);
+                       return 0;
                     }
-                    if(this.sortOption === 'DescRating'){
-                       function compare(a, b) {
-                         if (a.rating > b.rating)
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'AscAlpha'){
+                    function compare(a, b) {
+                       if (a.offer.offerName < b.offer.offerName)
                            return -1;
-                         if (a.rating < b.rating)
+                       if (a.offer.offerName > b.offer.offerName)
                            return 1;
-                        return 0;
-                      }
-                       return this.bungalows.sort(compare);
-                   }
-                    if(this.sortOption === 'AscRating'){
-                        function compare(a, b) {
-                            if (a.rating < b.rating)
-                               return -1;
-                            if (a.rating > b.rating)
-                               return 1;
-                            return 0;
-                        }
-                        return this.bungalows.sort(compare);
+                       return 0;
                     }
-                    if(this.sortOption === 'DescPrice'){
-                       function compare(a, b) {
-                         if (a.unitPrice > b.unitPrice)
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'DescRating'){
+                    function compare(a, b) {
+                        if (a.offer.rating > b.offer.rating)
+                            return -1;
+                        if (a.offer.rating < b.offer.rating)
+                            return 1;
+                        return 0;
+                    }
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'AscRating'){
+                    function compare(a, b) {
+                        if (a.offer.rating < b.offer.rating)
+                            return -1;
+                        if (a.offer.rating > b.offer.rating)
+                            return 1;
+                        return 0;
+                    }
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'DescPrice'){
+                    function compare(a, b) {
+                        if (a.offer.unitPrice > b.offer.unitPrice)
+                            return -1;
+                        if (a.offer.unitPrice < b.offer.unitPrice)
+                            return 1;
+                        return 0;
+                    }
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'AscPrice'){
+                   function compare(a, b) {
+                      if (a.offer.unitPrice < b.offer.unitPrice)
+                          return -1;
+                     if (a.offer.unitPrice > b.offer.unitPrice)
+                          return 1;
+                     return 0;
+                     }
+                  return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'DescTotalPrice'){
+                    function compare(a, b) {
+                       if (a.totalPrice > b.totalPrice)
                            return -1;
-                         if (a.unitPrice < b.unitPrice)
+                       if (a.totalPrice < b.totalPrice)
                            return 1;
-                        return 0;
-                      }
-                       return this.bungalows.sort(compare);
+                       return 0;
                    }
-                    if(this.sortOption === 'AscPrice'){
-                        function compare(a, b) {
-                            if (a.unitPrice < b.unitPrice)
-                               return -1;
-                            if (a.unitPrice > b.unitPrice)
-                               return 1;
-                            return 0;
-                        }
-                        return this.bungalows.sort(compare);
+                  return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'AscTotalPrice'){
+                    function compare(a, b) {
+                       if (a.totalPrice < b.totalPrice)
+                           return -1;
+                       if (a.totalPrice > b.totalPrice)
+                           return 1;
+                       return 0;
                     }
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'DescDuration'){
+                   function compare(a, b) {
+                      if (a.duration > b.duration)
+                          return -1;
+                      if (a.duration < b.duration)
+                          return 1;
+                      return 0;
+                   }
+                   return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'AscDuration'){
+                   function compare(a, b) {
+                      if (a.duration < b.duration)
+                          return -1;
+                      if (a.duration > b.duration)
+                          return 1;
+                      return 0;
+                   }
+                   return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'DescStartDate'){
+                   function compare(a, b) {
+                      if (a.startDate > b.startDate)
+                         return -1;
+                      if (a.startDate < b.startDate)
+                         return 1;
+                      return 0;
+                  }
+                  return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'AscStartDate'){
+                    function compare(a, b) {
+                        if (a.startDate < b.startDate)
+                            return -1;
+                        if (a.startDate > b.startDate)
+                            return 1;
+                        return 0;
+                    }
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'DescEndDate'){
+                    function compare(a, b) {
+                       if (a.endDate > b.endDate)
+                           return -1;
+                       if (a.endDate < b.endDate)
+                           return 1;
+                       return 0;
+                    }
+                    return this.reservations.sort(compare);
+                }
+                if(this.sortOption === 'AscEndDate'){
+                   function compare(a, b) {
+                      if (a.endDate < b.endDate)
+                          return -1;
+                      if (a.endDate > b.endDate)
+                          return 1;
+                      return 0;
+                   }
+                   return this.reservations.sort(compare);
+                }
              }
           },
         mounted(){
@@ -233,7 +343,7 @@ data: function(){
             axios.defaults.headers.common["Authorization"] =
                                             localStorage.getItem("user");
             axios.get("/api/allPassedReservationsForCustomerWithoutDuplicatedOffers")
-                 .then((response) => {this.reservations = response.data})
+                 .then((response) => {this.reservations = response.data; this.copyOfReservations = response.data;})
         }
 
 });

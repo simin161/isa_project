@@ -3,11 +3,7 @@ data: function(){
     		return{
     			showPage: 0,
     			sortOption: "",
-    			searchParams: {
-    			    bungalowName : "",
-    			    bungalowLocation: ""
-    			},
-    			reservations:[]
+    			reservations:[],
     		}
     	},
     template: `
@@ -19,21 +15,19 @@ data: function(){
     			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-    						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
-    							<td colspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
-    							<td rowspan="2"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
-    						</tr>
     						<br>
     						<tr>
     							<td colspan="2">
     								<select v-model="sortOption" class="select-sort" name="select" id="format">
     									<option selected disabled>Sort by</option>
-    									<option value="AscAlpha" >Sort alphabetically (A-Z)</option>
-    									<option value="DescAlpha">Sort alphabetically (Z-A)</option>
-    									<option value="AscRating">Sort by average rating (Asc)</option>
-    									<option value="DescRating">Sort by average rating (Desc)</option>
-    									<option value="AscPrice">Sort by price: low to high</option>
-    									<option value="DescPrice">Sort by price: hight to low</option>
+    									<option value="AscPrice">Sort by total price: low to high</option>
+    									<option value="DescPrice">Sort by total price: high to low</option>
+    									<option value="AscDuration">Sort by duration (asc)</option>
+                                        <option value="DescDuration">Sort by duration (desc)</option>
+                                        <option value="AscStart">Sort by start date (asc)</option>
+                                        <option value="DescStart">Sort by start date (desc)</option>
+                                        <option value="AscEnd">Sort by end date (asc)</option>
+                                        <option value="DescEnd">Sort by end date (desc)</option>
     								</select>
     							</td>
     							<tr>
@@ -103,65 +97,85 @@ data: function(){
                      })
             },
             sortedArray: function() {
-                   if(this.sortOption === 'DescAlpha'){
-                       function compare(a, b) {
-                         if (a.offerName > b.offerName)
-                           return -1;
-                         if (a.offerName < b.offerName)
-                           return 1;
-                        return 0;
-                      }
-                       return this.bungalows.sort(compare);
-                   }
-                    if(this.sortOption === 'AscAlpha'){
-                        function compare(a, b) {
-                            if (a.offerName < b.offerName)
-                               return -1;
-                            if (a.offerName > b.offerName)
-                               return 1;
-                            return 0;
-                        }
-                        return this.bungalows.sort(compare);
-                    }
-                    if(this.sortOption === 'DescRating'){
-                       function compare(a, b) {
-                         if (a.rating > b.rating)
-                           return -1;
-                         if (a.rating < b.rating)
-                           return 1;
-                        return 0;
-                      }
-                       return this.bungalows.sort(compare);
-                   }
-                    if(this.sortOption === 'AscRating'){
-                        function compare(a, b) {
-                            if (a.rating < b.rating)
-                               return -1;
-                            if (a.rating > b.rating)
-                               return 1;
-                            return 0;
-                        }
-                        return this.bungalows.sort(compare);
-                    }
                     if(this.sortOption === 'DescPrice'){
                        function compare(a, b) {
-                         if (a.unitPrice > b.unitPrice)
+                         if (a.totalPrice > b.totalPrice)
                            return -1;
-                         if (a.unitPrice < b.unitPrice)
+                         if (a.totalPrice < b.totalPrice)
                            return 1;
                         return 0;
                       }
-                       return this.bungalows.sort(compare);
+                       return this.reservations.sort(compare);
                    }
                     if(this.sortOption === 'AscPrice'){
                         function compare(a, b) {
-                            if (a.unitPrice < b.unitPrice)
+                            if (a.totalPrice < b.totalPrice)
                                return -1;
-                            if (a.unitPrice > b.unitPrice)
+                            if (a.totalPrice > b.totalPrice)
                                return 1;
                             return 0;
                         }
-                        return this.bungalows.sort(compare);
+                        return this.reservations.sort(compare);
+                    }
+                    if(this.sortOption === 'DescDuration'){
+                       function compare(a, b) {
+                         if (a.duration > b.duration)
+                           return -1;
+                         if (a.duration < b.duration)
+                           return 1;
+                        return 0;
+                      }
+                       return this.reservations.sort(compare);
+                   }
+                    if(this.sortOption === 'AscDuration'){
+                        function compare(a, b) {
+                            if (a.duration < b.duration)
+                               return -1;
+                            if (a.duration > b.duration)
+                               return 1;
+                            return 0;
+                        }
+                        return this.reservations.sort(compare);
+                    }
+                    if(this.sortOption === 'DescStart'){
+                       function compare(a, b) {
+                         if (a.startDate > b.startDate)
+                           return -1;
+                         if (a.startDate < b.startDate)
+                           return 1;
+                        return 0;
+                      }
+                       return this.reservations.sort(compare);
+                   }
+                    if(this.sortOption === 'AscStart'){
+                        function compare(a, b) {
+                            if (a.startDate < b.startDate)
+                               return -1;
+                            if (a.startDate > b.startDate)
+                               return 1;
+                            return 0;
+                        }
+                        return this.reservations.sort(compare);
+                    }
+                    if(this.sortOption === 'DescEnd'){
+                       function compare(a, b) {
+                         if (a.endDate > b.endDate)
+                           return -1;
+                         if (a.endDate < b.endDate)
+                           return 1;
+                        return 0;
+                      }
+                       return this.reservations.sort(compare);
+                   }
+                    if(this.sortOption === 'AscEnd'){
+                        function compare(a, b) {
+                            if (a.endDate < b.endDate)
+                               return -1;
+                            if (a.endDate > b.endDate)
+                               return 1;
+                            return 0;
+                        }
+                        return this.reservations.sort(compare);
                     }
              }
           },

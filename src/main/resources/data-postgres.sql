@@ -127,7 +127,7 @@ INSERT INTO public.term(id, start_date, end_date, offer)
 --RESERVATIONS START--
 -- TODO: Inserting reservations...
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration)
-    values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false, 'Wi-Fi', 9 );
+    values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 1, null,1,2,200, 0.0, false, false, 'Wi-Fi', 9 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration)
     values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false, 'Wi-Fi', 5);
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration)
@@ -144,6 +144,8 @@ INSERT INTO public.reservation(id, start_date, end_date, reservation_status, res
         values(8, '2022-09-015T10:00:00',  '2022-09-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false, 'Wi-Fi', 5);
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration)
         values(9, '2022-09-025T10:00:00',  '2022-09-30T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false, 'Wi-Fi', 5);
+INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration)
+        values(10, '2022-10-10T10:00:00',  '2022-10-20T10:00:00' , 0, 1, null,1,2,250, 15.0, false, false, 'Wi-Fi', 10);
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
 --INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
  --  VALUES(2,4);

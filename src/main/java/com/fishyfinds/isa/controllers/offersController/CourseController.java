@@ -65,7 +65,7 @@ public class CourseController {
     @PostMapping("/newCourse")
     @PreAuthorize("hasRole('ROLE_INSTRUCTOR')")
     public void addNewCourse(@RequestHeader HttpHeaders header, @RequestBody Map<String, String> message){
-        String email = "";
+        String email = tokenUtils.getUsernameFromToken(header.getFirst(HttpHeaders.AUTHORIZATION));
         courseService.addNewCourse(email, message);
     }
 }

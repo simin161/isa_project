@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.fishyfinds.isa.model.beans.offers.ImageItem;
 import javaxt.utils.Base64;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,26 @@ public class ImageService {
         ImageIO.write(img, ext, file);
         imagePath  += File.separator +  file.getName();
         return imagePath;
+    }
+
+    public boolean uploadImage(String imagePath, String offerId) {
+        String image="";
+        if(imagePath==null || imagePath.equals("")){
+            image="todo:dodati link do slike";
+        }else{
+            ImageItem u = new ImageItem();
+            try{
+                //u.setProfileImagePath(imageService.saveProfileImage(imagePath, UUID.randomUUID().toString()));
+                String base64Image = imagePath.split(",")[1];
+                u.setPath(base64Image);
+                u.setName(offerId);
+                //imageRepository.save(u);
+                return true;
+            }catch(Exception e){
+                return false;
+            }
+        }
+        return false;
     }
 
     public byte[] getImage(String name){

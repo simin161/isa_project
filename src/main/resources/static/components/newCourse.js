@@ -9,6 +9,7 @@ Vue.component('newCourse', {
                 streetNumber:"",
                 description: "",
                 rulesOfConduct: "",
+                additional: ""
 
             }
 		};
@@ -59,6 +60,10 @@ template: `
                    <tr>
                         <td><p style="color:#fff;font-family:poppins-bold; font-size:15px;">Cancellation policy: </p></td>
                         <td><input class="input-text" type="text"  v-model="dto.cancellationPolicy"/></td>
+                   </tr>
+                   <tr>
+                        <td><p style="color:#fff;font-family:poppins-bold; font-size:15px;">Additional services: </p></td>
+                        <td><input class="input-text" type="text"  v-model="dto.additional"/></td>
                    </tr>
                    <tr><td><input type="button"  class="confirm-profile" value="Create offer!" @click="addNewCourse"/></td></tr>
                </table>

@@ -214,9 +214,9 @@ Vue.component('bungalows', {
              sortedArray: function() {
                    if(this.sortOption === 'DescAlpha'){
                        function compare(a, b) {
-                         if (a.offerName > b.offerName)
+                         if (a.offer.offerName > b.offer.offerName)
                            return -1;
-                         if (a.offerName < b.offerName)
+                         if (a.offer.offerName < b.offer.offerName)
                            return 1;
                         return 0;
                       }
@@ -224,9 +224,9 @@ Vue.component('bungalows', {
                    }
                     if(this.sortOption === 'AscAlpha'){
                         function compare(a, b) {
-                            if (a.offerName < b.offerName)
+                            if (a.offer.offerName < b.offer.offerName)
                                return -1;
-                            if (a.offerName > b.offerName)
+                            if (a.offer.offerName > b.offer.offerName)
                                return 1;
                             return 0;
                         }
@@ -234,9 +234,9 @@ Vue.component('bungalows', {
                     }
                     if(this.sortOption === 'DescRating'){
                        function compare(a, b) {
-                         if (a.rating > b.rating)
+                         if (a.offer.rating > b.offer.rating)
                            return -1;
-                         if (a.rating < b.rating)
+                         if (a.offer.rating < b.offer.rating)
                            return 1;
                         return 0;
                       }
@@ -244,9 +244,9 @@ Vue.component('bungalows', {
                    }
                     if(this.sortOption === 'AscRating'){
                         function compare(a, b) {
-                            if (a.rating < b.rating)
+                            if (a.offer.rating < b.offer.rating)
                                return -1;
-                            if (a.rating > b.rating)
+                            if (a.offer.rating > b.offer.rating)
                                return 1;
                             return 0;
                         }
@@ -254,9 +254,9 @@ Vue.component('bungalows', {
                     }
                     if(this.sortOption === 'DescPrice'){
                        function compare(a, b) {
-                         if (a.unitPrice > b.unitPrice)
+                         if (a.offer.unitPrice > b.offer.unitPrice)
                            return -1;
-                         if (a.unitPrice < b.unitPrice)
+                         if (a.offer.unitPrice < b.offer.unitPrice)
                            return 1;
                         return 0;
                       }
@@ -264,9 +264,9 @@ Vue.component('bungalows', {
                    }
                     if(this.sortOption === 'AscPrice'){
                         function compare(a, b) {
-                            if (a.unitPrice < b.unitPrice)
+                            if (a.offer.unitPrice < b.offer.unitPrice)
                                return -1;
-                            if (a.unitPrice > b.unitPrice)
+                            if (a.offer.unitPrice > b.offer.unitPrice)
                                return 1;
                             return 0;
                         }

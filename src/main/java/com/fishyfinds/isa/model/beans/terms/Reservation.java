@@ -25,6 +25,9 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     private Long id;
 
+    @Version
+    private int version;
+
     @Column(name = "startDate")
     private LocalDateTime startDate;
 

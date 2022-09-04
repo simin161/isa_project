@@ -18,6 +18,7 @@ import com.fishyfinds.isa.service.PenalService;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -114,6 +115,7 @@ public class ReservationService {
      * @param username - customer email
      * @return - boolean value depending on result of query execution - true -> success, fase -> failure
      */
+    @Transactional(propagation =  Propagation.REQUIRES_NEW)
     public boolean makeReservationAction(Long id, String username){
         boolean retVal = false;
         Customer customer = customerRepository.findByEmail(username);

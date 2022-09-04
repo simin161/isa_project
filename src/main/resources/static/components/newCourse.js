@@ -9,9 +9,13 @@ Vue.component('newCourse', {
                 streetNumber:"",
                 description: "",
                 rulesOfConduct: "",
-                additional: ""
+                additional: "",
+                checkboxesChecked: "",
+                maxCapacity: "",
+                unitPrice: ""
 
-            }
+            },
+            additional: []
 		};
 	},
 template: `
@@ -63,7 +67,11 @@ template: `
                    </tr>
                    <tr>
                         <td><p style="color:#fff;font-family:poppins-bold; font-size:15px;">Additional services: </p></td>
-                        <td><input class="input-text" type="text"  v-model="dto.additional"/></td>
+                        <td><div v-for="a in additional">
+                                                            <input type="checkbox" name="addService" :id="a.name" />
+                                                            <label style="color:#fff;font-family:poppins-bold; font-size:15px;" :for="a.name"> {{a.name}}</label><br>
+                                                        </div>
+                        </td>
                    </tr>
                    <tr><td><input type="button"  class="confirm-profile" value="Create offer!" @click="addNewCourse"/></td></tr>
                </table>
@@ -75,6 +83,14 @@ template: `
          addNewCourse : function(){
             axios.defaults.headers.common["Authorization"] =
                 localStorage.getItem("user");
+            var checkboxes = document.getElementsByName('addService');
+            var checkboxesChecked = "";
+            for(var i=0; i<checkboxes.length; i++){
+                if(checkboxes[i].checked){
+                    checkboxesChecked = checkboxesChecked + " " + checkboxes[i].id;
+                }
+            }
+            this.dto.checkboxesChecked = checkboxesChecked;
             axios.post("/api/newCourse", this.dto)
             .then(response=> {
                 console.log(response.data);
@@ -85,6 +101,10 @@ template: `
      const id = window.location.hash.split('/')[2];
      axios.defaults.headers.common["Authorization"] =
                             localStorage.getItem("user");
+     axios.get("/api/getAllAdditionalServicesForBoatsAndCourses")
+     .then(response=>{
+        this.additional = response.data;
+     })
 
     }
 });

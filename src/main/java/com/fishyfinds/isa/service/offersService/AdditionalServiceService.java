@@ -28,6 +28,10 @@ public class AdditionalServiceService {
         return (ArrayList<AdditionalService>) additionalServiceRepository.findAll();
     }
 
+    public AdditionalService findByName(String name){
+        return additionalServiceRepository.findByName(name);
+    }
+
 
 
 

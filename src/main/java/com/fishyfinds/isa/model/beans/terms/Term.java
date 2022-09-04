@@ -22,6 +22,9 @@ public class Term {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
 	private Long id;
 
+	@Version
+	private int version;
+
 	@OneToOne
 	@JoinColumn(name="offer", referencedColumnName = "id")
 	private Offer offer;

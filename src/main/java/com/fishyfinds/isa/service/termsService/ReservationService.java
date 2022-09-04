@@ -53,6 +53,7 @@ public class ReservationService {
      * @param username - customer email
      * @return - boolean value depending on result of query execution - true -> success, fase -> failure
      */
+    @Transactional(propagation =  Propagation.REQUIRES_NEW)
     public boolean makeReservation(Map<String, String> message, String username) {
         boolean retVal = false;
         try {
@@ -141,6 +142,7 @@ public class ReservationService {
         return retVal;
     }
 
+    @Transactional
     private void updateTermsReservation(Long termId, Reservation reservation){
         Term term = termRepository.findById(termId).orElse(null);
         if(term != null){

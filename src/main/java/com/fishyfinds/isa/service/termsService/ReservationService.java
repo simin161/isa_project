@@ -62,18 +62,22 @@ public class ReservationService {
                 LocalDateTime endDate = startDate.plusDays(duration);
                 Term term = termRepository.findById(Long.parseLong(message.get("termId"))).orElse(null);
                 if (term != null && isFree(term, startDate, endDate)) {
+                    List<CancelledReservation> cR = cancelledReservationService.findAllPassedReservationsForCustomer(username);
                     Offer offer = offerRepository.findById(Long.parseLong(message.get("offerId"))).orElse(null);
-                    int numberOfPeople = Integer.parseInt(message.get("numberOfPeople"));
-                    double discount = customer.getLoyaltyProgram() != null ? customer.getLoyaltyProgram().getCategoryDiscount() / 100 : 0;
-                    double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * discount;
-                    Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
-                            numberOfPeople, totalPrice, offer);
-                    reservation.setDuration(duration);
-                    reservation.setAdditionalServices(message.get("additionalServices"));
-                    reservationRepository.save(reservation);
-                    updateTermsReservation(term.getId(), reservation);
-                    mailService.sendSuccessfulReservationEmail(customer, reservation);
-                    retVal = true;
+                    if(offer != null && cR.stream().filter(r -> r.getOffer().getId() == offer.getId() && r.getStartDate().isEqual(startDate) &&
+                            r.getEndDate().isEqual(endDate)).collect(Collectors.toList()).isEmpty()) {
+                        int numberOfPeople = Integer.parseInt(message.get("numberOfPeople"));
+                        double discount = customer.getLoyaltyProgram() != null ? customer.getLoyaltyProgram().getCategoryDiscount() / 100 : 0;
+                        double totalPrice = numberOfPeople * offer.getUnitPrice() - numberOfPeople * offer.getUnitPrice() * discount;
+                        Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
+                                numberOfPeople, totalPrice, offer);
+                        reservation.setDuration(duration);
+                        reservation.setAdditionalServices(message.get("additionalServices"));
+                        reservationRepository.save(reservation);
+                        updateTermsReservation(term.getId(), reservation);
+                        mailService.sendSuccessfulReservationEmail(customer, reservation);
+                        retVal = true;
+                    }
                 }
             }
         }catch(Exception e){
@@ -95,7 +99,7 @@ public class ReservationService {
         boolean hasReservationInTermRange = false;
         for(Reservation r : reservations){
             if((startDate.isAfter(r.getStartDate()) || startDate.isEqual(r.getStartDate())) && (startDate.isBefore(r.getEndDate()) || startDate.isEqual(r.getEndDate())) &&
-                    (endDate.isBefore(r.getEndDate()) || endDate.isEqual(r.getEndDate())) && (endDate.isAfter(r.getStartDate()) || endDate.isEqual(r.getStartDate()))){
+                    (endDate.isBefore(r.getEndDate()) || endDate.isEqual(r.getEndDate())) && (endDate.isAfter(r.getStartDate()) || endDate.isEqual(r.getStartDate())) && r.getReservationStatus() != ReservationStatus.CANCELLED){
                 hasReservationInTermRange = true;
                 break;
             }

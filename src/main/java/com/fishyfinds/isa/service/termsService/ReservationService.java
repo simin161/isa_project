@@ -42,6 +42,8 @@ public class ReservationService {
     private PenalService penalService;
     @Autowired
     private CancelledReservationRepositoty cancelledReservationRepositoty;
+    @Autowired
+    private CancelledReservationService cancelledReservationService;
 
     private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
@@ -115,10 +117,16 @@ public class ReservationService {
             try {
                 Reservation reservation = reservationRepository.findById(id).orElse(null);
                 if (reservation != null) {
-                    reservation.setCustomer(customer);
-                    reservationRepository.save(reservation);
-                    mailService.sendSuccessfulReservationEmail(customer, reservation);
-                    retVal = true;
+                    List<CancelledReservation> cR = cancelledReservationService.findAllPassedReservationsForCustomer(username);
+                    if(cR.stream().filter(r -> r.getCancelledReservationId() == id).collect(Collectors.toList()).isEmpty()) {
+                        reservation.setCustomer(customer);
+                        reservation.setReservationStatus(ReservationStatus.ACTIVE);
+                        reservationRepository.save(reservation);
+                        mailService.sendSuccessfulReservationEmail(customer, reservation);
+                        retVal = true;
+                    }else{
+                        retVal = false;
+                    }
                 }
             } catch (Exception e) {
                 retVal = false;

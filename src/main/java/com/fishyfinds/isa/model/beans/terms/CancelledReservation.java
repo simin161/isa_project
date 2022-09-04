@@ -55,6 +55,9 @@ public class CancelledReservation {
     @Column(name="duration")
     private int duration;
 
+    @Column(name="cancelledReservation")
+    private Long cancelledReservationId;
+
     @OneToOne
     @JoinColumn(name="customer", referencedColumnName = "id")
     private Customer customer;
@@ -77,5 +80,6 @@ public class CancelledReservation {
         this.duration = reservation.getDuration();
         this.discount = reservation.getDiscount();
         this.additionalServices = reservation.getAdditionalServices();
+        this.cancelledReservationId = reservation.getId();
     }
 }

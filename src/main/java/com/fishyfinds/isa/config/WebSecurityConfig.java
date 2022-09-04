@@ -76,6 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/allCourses").permitAll()
                 .antMatchers("/api/getTermsByOfferId/{offerId}").permitAll()
                 .antMatchers("/api/allAcceptedFeedbacksForOffer").permitAll()
+                .antMatchers("/api/addPenals").permitAll() //disabled authorization -> endpoint just for testing
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase

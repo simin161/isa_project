@@ -6,6 +6,7 @@ import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.repository.SubscriberRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
+import com.fishyfinds.isa.repository.usersRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,15 @@ public class SubscriberService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private OfferRepository offerRepository;
     @Autowired
     private SubscriberRepository subscriberRepository;
 
     public void addSubscription(Map<String, String> message){
         Subscriber subscriber = new Subscriber();
-        Customer follower = customerRepository.findByEmail(message.get("user"));
+        Customer follower = (Customer)userRepository.findByEmail(message.get("user"));
         Offer following = offerRepository.findById(Long.parseLong(message.get("id"))).orElseGet(null);
         List<Subscriber> subByUser = subscriberRepository.findAllByFollower(follower);
         List<Subscriber> subByOff = subscriberRepository.findAllByFollowing(following);
@@ -56,7 +59,7 @@ public class SubscriberService {
     }
 
     public List<Subscriber> getSubscriptionsByUser(String username) {
-        Customer user = customerRepository.findByEmail(username);
+        Customer user = (Customer) userRepository.findByEmail(username);
         List<Subscriber> retVal = new ArrayList<>();
         for(Subscriber s : subscriberRepository.findAllByFollower(user)){
             if(s.isRelevant()){

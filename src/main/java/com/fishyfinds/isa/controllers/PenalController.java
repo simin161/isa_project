@@ -34,4 +34,17 @@ public class PenalController {
             return null;
         }
     }
+
+    /**
+     * Method used for testing pessimistic locking -> endpoint for adding penals
+     * @param message - contains only username (user email)
+     * postman call: server:port/api/addPenals
+     *         body: {
+     *                "username" : _userEmail_
+     *         }
+     */
+    @PostMapping("/addPenals")
+    public void addPenal(@RequestBody Map<String, String> message){
+         penalService.updateExistingPenal(message.get("username"), 5);
+    }
 }

@@ -41,7 +41,9 @@ data: function(){
                     rateForOwner: null
                 },
                 offerType: "BUNGALOW",
-                additionalServices: ""
+                additionalServices: "",
+                copyOfReservations: [],
+                filterOptions: "noFilter"
     		}
     	},
     template: `
@@ -53,9 +55,8 @@ data: function(){
     			<div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 0">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-    						<tr><td colspan="1"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's name" /></td>
-    							<td colspan="1"><input v-model="searchParams.bungalowLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Bungalow's location"/></td>
-    							<td rowspan="2"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+    						<tr><td colspan="2"><input v-model="searchParams.bungalowName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'; width: 20em;" placeholder="Bungalow's name" /></td>
+    							<td colspan="1"><input @click="search" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
     						</tr>
     						<br>
     						<tr>
@@ -78,9 +79,19 @@ data: function(){
                                         <option value="DescEndDate">Sort by end date (desc)</option>
     								</select>
     							</td>
-    							<tr>
-    							    <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort" @click="sortedArray"/></td>
-    							</tr>
+    							<td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort" @click="sortedArray"/></td>
+    						</tr>
+                            <br>
+    						<tr>
+    							<td colspan="2">
+    								<select v-model="filterOptions" class="select-sort" name="select" id="format">
+    									<option selected value="noFilter">No filter</option>
+    									<option value="CANCEL" >Cancelled</option>
+    									<option value="FAIL">Failed (did not show up)</option>
+    									<option value="ACTIVE">Successful</option>
+    								</select>
+    							</td>
+    							<td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Filter" @click="filterArray"/></td>
     						</tr>
     					</table>
     				</form>
@@ -185,10 +196,24 @@ data: function(){
                 this.feedback.id = bung.id;
                 this.showPage = 2;
             },
+            filterArray : function(){
+                if(this.filterOptions === "noFilter"){
+                    this.reservations = this.copyOfReservations;
+                }else{
+                    this.reservations = this.copyOfReservations;
+                    let newArray = this.reservations.filter(el => {
+                        return el.reservationStatus === this.filterOptions;
+                    })
+
+                    this.reservations = newArray;
+                }
+            },
             search : function(){
-                axios.get('/api/search', {
-                     params: this.axiosParams
-                }).then(response => (this.bungalows = response.data))
+                let newArray = this.reservations.filter(el => {
+                    let text = this.searchParams.bungalowName;
+                    return el.offer.offerName.toLowerCase().includes(text);
+                })
+                this.reservations = newArray;
             },
             addFeedback : function(){
                 axios.defaults.headers.common["Authorization"] =
@@ -362,7 +387,7 @@ data: function(){
             axios.defaults.headers.common["Authorization"] =
                                             localStorage.getItem("user");
             axios.post("/api/historyOfReservationsForCustomer", { "offerType" : this.offerType })
-                 .then((response) => {this.reservations = response.data})
+                 .then((response) => {this.reservations = response.data; this.copyOfReservations = response.data;})
         }
 
 });

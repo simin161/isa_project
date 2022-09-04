@@ -28,7 +28,6 @@ Vue.component('courseReservationHistory', {
 			},
             searchParams: {
                  courseName : "",
-                 courseLocation: "",
                  instructorsName: ""
             },
 			showPage: 0,
@@ -41,7 +40,9 @@ Vue.component('courseReservationHistory', {
                 rateForOwner: null
             },
             offerType: "COURSE",
-            additionalServices: ""
+            additionalServices: "",
+            filterOptions: "noFilter",
+            copyOfReservations: []
         }
 	},
 template: `
@@ -54,9 +55,8 @@ template: `
                 		<form class="justify-content-center">
                 			<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
                 				<tr><td colspan="1"><input v-model="searchParams.courseName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's name" /></td>
-                					<td colspan="1"><input v-model="searchParams.courseLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Course's location"/></td>
                 					<td colspan="1"><input v-model="searchParams.instructorsName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Instructor's name"/></td>
-                					<td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+                					<td colspan="1"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
                 				</tr>
                 				<br>
                 				<tr>
@@ -78,10 +78,20 @@ template: `
                                             <option value="DescEndDate">Sort by end date (desc)</option>
                 						</select>
                 					</td>
-                					<tr>
-                					    <td><input @click="sortedArray" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort"/></td>
-                					</tr>
+                					<td><input @click="sortedArray" class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort"/></td>
                 				</tr>
+                                <br>
+                                <tr>
+                                    <td colspan="2">
+                                        <select v-model="filterOptions" class="select-sort" name="select" id="format">
+                                            <option selected value="noFilter">No filter</option>
+                                            <option value="CANCEL" >Cancelled</option>
+                                            <option value="FAIL">Failed (did not show up)</option>
+                                            <option value="ACTIVE">Successful</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Filter" @click="filterArray"/></td>
+                                </tr>
                 			</table>
                 		</form>
                 		<div class="container mt-5">
@@ -193,6 +203,18 @@ template: `
                 this.feedback.id = reservation.id;
                 this.showPage = 2;
             },
+            filterArray : function(){
+                if(this.filterOptions === "noFilter"){
+                    this.reservations = this.copyOfReservations;
+                }else{
+                    this.reservations = this.copyOfReservations;
+                    let newArray = this.reservations.filter(el => {
+                        return el.reservationStatus === this.filterOptions;
+                    })
+
+                    this.reservations = newArray;
+                }
+            },
             addFeedback : function(){
                 axios.defaults.headers.common["Authorization"] =
                                     localStorage.getItem("user");
@@ -220,9 +242,29 @@ template: `
             }
             ,
             search : function(){
-                   axios.get('/api/search', {
-                            params: this.axiosParams
-                   }).then(response => {this.courses = response.data; console.log(this.courses)})
+                if(this.searchParams.courseName != "" && this.searchParams.instructorsName == ""){
+                    let newArray = this.reservations.filter(el => {
+                         let text = this.searchParams.courseName;
+                         return el.offer.offerName.toLowerCase().includes(text);
+                     })
+                     this.reservations = newArray;
+                }else if(this.searchParams.courseName == "" && this.searchParams.instructorsName != ""){
+                    let newArray = this.reservations.filter(el => {
+                         let text = this.searchParams.instructorsName;
+                         return el.offer.user.firstName.toLowerCase().includes(text) ||
+                                el.offer.user.lastName.toLowerCase().includes(text);
+                     })
+                     this.reservations = newArray;
+                }else if(this.searchParams.courseName != "" && this.searchParams.instructorsName != ""){
+                    let newArray = this.reservations.filter(el => {
+                         let courseText = this.searchParams.courseName;
+                         let instructorText = this.searchParams.instructorsName;
+                         return el.offer.offerName.toLowerCase().includes(courseText) ||
+                                el.offer.user.firstName.toLowerCase().includes(instructorText) ||
+                                el.offer.user.lastName.toLowerCase().includes(instructorText);
+                     })
+                     this.reservations = newArray;
+                }
             }
             ,
             sortedArray: function() {
@@ -373,6 +415,6 @@ template: `
               axios.defaults.headers.common["Authorization"] =
                     localStorage.getItem("user");
               axios.post("/api/historyOfReservationsForCustomer", {"offerType" : this.offerType})
-                   .then((response) => {this.reservations = response.data})
+                   .then((response) => {this.reservations = response.data; this.copyOfReservations = response.data;})
           }
 });

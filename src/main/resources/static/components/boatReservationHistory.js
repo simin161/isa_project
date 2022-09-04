@@ -40,7 +40,9 @@ data: function(){
                     rateForOwner: null
                 },
                 offerType: "BOAT",
-                additionalServices: ""
+                additionalServices: "",
+                filterOptions: "noFilter",
+                copyOfReservations: []
     		}
     	},
     template: `
@@ -52,9 +54,8 @@ data: function(){
     			<div class="col-md-4 left-div overflow-auto" v-show="showPage == 0" style="margin-top:-20px; margin-left: 22%; height:80vh">
     				<form class="justify-content-center">
     					<table class="justify-content-center" style="width:90%; margin-left:5%; table-layout:fixed;" >
-    						<tr><td colspan="1"><input v-model="searchParams.boatName" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's name" /></td>
-    							<td colspan="1"><input v-model="searchParams.boatLocation" class="update-text-profile" type="text" style="height:20px; font-size:12px; font-family:'poppins-light'" placeholder="Boat's location"/></td>
-    							<td rowspan="2"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
+    						<tr><td colspan="2"><input v-model="searchParams.boatName" class="update-text-profile" type="text" style="height:20px; width: 20em; font-size:12px; font-family:'poppins-light'" placeholder="Boat's name" /></td>
+    							<td colspan="1"><input class="confirm-profile" @click="search" type="button" style="background-color: #1b4560; font-size: 15px;" value="Search" /></td>
     						</tr>
     						<br>
     						<tr>
@@ -74,11 +75,22 @@ data: function(){
                                         <option value="AscStartDate">Sort by start date (asc)</option>
                                         <option value="DescStartDate">Sort by start date (desc)</option>
                                         <option value="AscEndDate">Sort by end date (asc)</option>
-                                        <option value="DescEndDate">Sort by end date (desc)</option>    								</select>
+                                        <option value="DescEndDate">Sort by end date (desc)</option>
+                                    </select>
     							</td>
     							<td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Sort" @click="sortedArray"/></td>
-    						</tr>
-    						<tr>
+    				        </tr>
+    						<br>
+                            <tr>
+                                <td colspan="2">
+                                	<select v-model="filterOptions" class="select-sort" name="select" id="format">
+                                		<option selected value="noFilter">No filter</option>
+                                		<option value="CANCEL" >Cancelled</option>
+                                		<option value="FAIL">Failed (did not show up)</option>
+                                		<option value="ACTIVE">Successful</option>
+                                	</select>
+                               	</td>
+                                <td><input class="confirm-profile" type="button" style="background-color: #1b4560; font-size: 15px;" value="Filter" @click="filterArray"/></td>
                             </tr>
     					</table>
     				</form>
@@ -207,11 +219,24 @@ data: function(){
             }
             ,
             search : function(){
-                axios.get('/api/search', {
-                     params: this.axiosParams
-                }).then(response => {this.boats = response.data; console.log(this.boats)})
-            }
-            ,
+                let newArray = this.reservations.filter(el => {
+                     let text = this.searchParams.boatName;
+                     return el.offer.offerName.toLowerCase().includes(text);
+                 })
+                 this.reservations = newArray;
+            },
+            filterArray : function(){
+                if(this.filterOptions === "noFilter"){
+                    this.reservations = this.copyOfReservations;
+                }else{
+                    this.reservations = this.copyOfReservations;
+                    let newArray = this.reservations.filter(el => {
+                        return el.reservationStatus === this.filterOptions;
+                    })
+
+                    this.reservations = newArray;
+                }
+            },
             sortedArray: function() {
                                if(this.sortOption === 'DescAlpha'){
                                    function compare(a, b) {
@@ -359,6 +384,6 @@ data: function(){
               axios.defaults.headers.common["Authorization"] =
                             localStorage.getItem("user");
               axios.post("/api/historyOfReservationsForCustomer", {"offerType" : this.offerType})
-                   .then((response) => {this.reservations = response.data})
+                   .then((response) => {this.reservations = response.data; this.copyOfReservations = response.data;})
           }
 });

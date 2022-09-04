@@ -1,6 +1,7 @@
 package com.fishyfinds.isa.service.termsService;
 
 import com.fishyfinds.isa.model.beans.offers.Offer;
+import com.fishyfinds.isa.model.beans.terms.CancelledReservation;
 import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.model.beans.terms.Term;
 import com.fishyfinds.isa.model.beans.users.User;
@@ -8,6 +9,7 @@ import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.model.enums.ReservationStatus;
 import com.fishyfinds.isa.model.enums.ReservationType;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
+import com.fishyfinds.isa.repository.termsRepository.CancelledReservationRepositoty;
 import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
 import com.fishyfinds.isa.repository.termsRepository.TermRepository;
 import com.fishyfinds.isa.repository.usersRepository.CustomerRepository;
@@ -38,6 +40,8 @@ public class ReservationService {
     private MailService mailService;
     @Autowired
     private PenalService penalService;
+    @Autowired
+    private CancelledReservationRepositoty cancelledReservationRepositoty;
 
     private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
@@ -136,9 +140,12 @@ public class ReservationService {
         try{
             Reservation reservation = reservationRepository.findById(id).orElse(null);
             LocalDateTime dateTimeNow = LocalDateTime.now();
-            if(dateTimeNow.plusDays(MAX_NUM_OF_DAYS_BEFORE_CANCELLING).isBefore(reservation.getStartDate())){
+            if( reservation != null && dateTimeNow.plusDays(MAX_NUM_OF_DAYS_BEFORE_CANCELLING).isBefore(reservation.getStartDate())){
                 reservation.setReservationStatus(ReservationStatus.CANCELLED);
+                CancelledReservation cancelledReservation = new CancelledReservation(reservation);
+                reservation.setCustomer(null);
                 reservationRepository.save(reservation);
+                cancelledReservationRepositoty.save(cancelledReservation);
             }else{
                 retVal = false;
             }

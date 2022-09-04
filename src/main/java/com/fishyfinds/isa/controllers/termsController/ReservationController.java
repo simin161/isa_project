@@ -1,9 +1,12 @@
 package com.fishyfinds.isa.controllers.termsController;
 
+import com.fishyfinds.isa.dto.ReservationDto;
 import com.fishyfinds.isa.model.beans.offers.Offer;
+import com.fishyfinds.isa.model.beans.terms.CancelledReservation;
 import com.fishyfinds.isa.model.beans.terms.Reservation;
 import com.fishyfinds.isa.model.enums.OfferType;
 import com.fishyfinds.isa.security.TokenUtils;
+import com.fishyfinds.isa.service.termsService.CancelledReservationService;
 import com.fishyfinds.isa.service.termsService.ReservationService;
 import com.fishyfinds.isa.service.termsService.TermService;
 import org.json.JSONObject;
@@ -24,6 +27,9 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private CancelledReservationService cancelledReservationService;
 
     @Autowired
     private TokenUtils tokenUtils;
@@ -69,14 +75,16 @@ public class ReservationController {
 
     @PostMapping("/historyOfReservationsForCustomer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Reservation> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header, @RequestBody Map<String, String> offerType){
+    public List<ReservationDto> historyOfReservationsForCustomer(@RequestHeader HttpHeaders header, @RequestBody Map<String, String> offerType){
 
         try {
+            List<ReservationDto> retVal = new ArrayList<>();
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
             List<Reservation> reservations = reservationService.historyOfReservationsForCustomer(username);
+            List<CancelledReservation> cancelledReservations = cancelledReservationService.findAllPassedReservationsForCustomer(username);
             OfferType oft = OfferType.INVALID;
             switch(offerType.get("offerType")){
                 case "BUNGALOW": oft = OfferType.BUNGALOW;
@@ -87,7 +95,20 @@ public class ReservationController {
                 break;
             }
             final OfferType finalOft = oft;
-            return reservations.stream().filter(r ->{ return r.getOffer() != null && r.getOffer().getOfferType() == finalOft;}).collect(Collectors.toList());
+            reservations = reservations.stream().filter(r ->{ return r.getOffer() != null && r.getOffer().getOfferType() == finalOft;}).collect(Collectors.toList());
+            cancelledReservations = cancelledReservations.stream().filter(r ->{ return r.getOffer() != null && r.getOffer().getOfferType() == finalOft;}).collect(Collectors.toList());
+            if(reservations != null){
+                for(Reservation r : reservations){
+                    retVal.add(new ReservationDto(r));
+                }
+            }
+            if(cancelledReservations != null){
+                for(CancelledReservation r : cancelledReservations){
+                    retVal.add(new ReservationDto(r));
+                }
+            }
+
+            return retVal;
 
         }catch(Exception e){
             e.printStackTrace();

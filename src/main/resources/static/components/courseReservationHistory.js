@@ -85,7 +85,7 @@ template: `
                                     <td colspan="2">
                                         <select v-model="filterOptions" class="select-sort" name="select" id="format">
                                             <option selected value="noFilter">No filter</option>
-                                            <option value="CANCEL" >Cancelled</option>
+                                            <option value="CANCELLED" >Cancelled</option>
                                             <option value="FAIL">Failed (did not show up)</option>
                                             <option value="ACTIVE">Successful</option>
                                         </select>

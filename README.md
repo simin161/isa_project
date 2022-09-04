@@ -13,3 +13,6 @@
 # 5.1 save/apply
 # 5.2 pronaci IsaApplication fajl u project sekciji -> desni klik
 # -> Run 'IsaApplication.main()' ili kliknuti na zeleni trougao nakon postavljanja konfiguracije
+# Skripta sa test podacima se nalazi u main/resources folderu u projektu, data-postgres.sql
+# Baza: fishyfinds_db
+# Kreirati novog usera: username: root, password: root i dodeliti korisnika na bazu

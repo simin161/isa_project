@@ -108,10 +108,15 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Number of people: {{reservation.numberOfPeople}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
+                                        <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Discount: {{reservation.discount}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{reservation.totalPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Duration: {{reservation.duration}}</p>
        									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
+       									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Additional services: {{reservation.additionalServices}}</p>
+       									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rules of conduct: {{reservation.offer.rulesOfConduct}}</p>
+       									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Cancellation policy: {{reservation.offer.cancellationPolicy}}</p>
+    									<p v-if="reservation.reservationStatus == 'ACTIVE'" class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Reservation status: SUCCESS</p>
+    									<p v-if="reservation.reservationStatus != 'ACTIVE'" class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Reservation status: {{reservation.reservationStatus}}</p>
     									<button v-show="!reservation.hasFeedback" class="float-end btn btn-light" style="margin-right:2.5%;" @click="showFeedback(reservation)">Add feedback</button>
     								</div>
     							</div>

@@ -16,14 +16,21 @@ Vue.component('makeReservation', {
                 numberOfPeople: "",
                 additionalServices: ""
             },
-            choosenOfferTerm: null,
+            choosenOfferTerm: {
+                id: "",
+                offer: {
+                    offerId: "",
+                    unitPrice: "",
+                    additionalServices: []
+                }
+            },
             showPage: 0
 		};
 	},
 template: `
 	<div>
         <nav-bar></nav-bar>
-        <div style="margin-left: 29%; margin-top: 2.5%">
+        <div style="margin-left: 29%; margin-top: 2.5%" v-show="showPage == 0">
             <select  v-model="filterDto.offerType">
                 <option>BUNGALOW</option>
                 <option>BOAT</option>
@@ -59,7 +66,9 @@ template: `
     	</div>
         <div class="col-md-1 left-div overflow-auto" style="margin-top: 60px; margin-left: 22%; height:60vh" v-show="showPage == 1">
             <div class="container mt-5">
-    			<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="b in allTerms">
+            <input class="confirm-profile" type="button" value="Back" style="width:15%; float:left; font-size:12px; background-color: #881A02" @click="showPage = 0"/>
+            <br>
+    			<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" >
     				<div class="row g-0">
                         <div class="col-md-8">
                             <div class="card-body">
@@ -80,7 +89,7 @@ template: `
     			    </div>
     			</div>
     		</div>
-    	<div>
+    	</div>
     </div>
 `,
     methods: {

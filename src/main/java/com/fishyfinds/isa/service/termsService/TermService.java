@@ -63,7 +63,7 @@ public class TermService {
         LocalDateTime today = LocalDateTime.now();
         for (TermDTO termDTO : allTermDTOs) {
             if (termDTO.getOffer().getId().equals(offerId)) {
-                if((today.isAfter(termDTO.startTime) || today.isEqual(termDTO.startTime)) &&
+                if((termDTO.startTime.isAfter(today) && today.isBefore(termDTO.endTime)) || (today.isAfter(termDTO.startTime) || today.isEqual(termDTO.startTime)) &&
                     today.isBefore(termDTO.endTime))
                     offerTermDTOs.add(termDTO);
             }

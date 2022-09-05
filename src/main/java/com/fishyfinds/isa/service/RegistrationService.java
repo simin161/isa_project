@@ -11,6 +11,7 @@ import com.fishyfinds.isa.model.beans.users.instructors.Instructor;
 import com.fishyfinds.isa.model.beans.users.owners.BoatOwner;
 import com.fishyfinds.isa.model.beans.users.owners.BungalowOwner;
 import com.fishyfinds.isa.model.enums.UserType;
+import com.fishyfinds.isa.repository.LoyaltyProgramRepository;
 import com.fishyfinds.isa.repository.usersRepository.*;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,8 @@ public class RegistrationService {
     private PenalService penalService;
     @Autowired
     private AuthorityRepository authorityRepository;
+    @Autowired
+    private LoyaltyProgramRepository lpRepo;
 
     public boolean registerUser(Map<String, String> map, String siteURL){
         boolean successfullyRegistered = true;
@@ -86,6 +89,7 @@ public class RegistrationService {
                 auth.add(authorityRepository.findByName("ROLE_CUSTOMER"));
                 auth.add(authorityRepository.findByName("ROLE_COMMON"));
                 customer.setAuthorities(auth);
+                customer.setLoyaltyProgram(lpRepo.findById(1).orElse(null));
                 customerRepository.save(customer);
             } catch (Exception e) {
                 successfullyRegistered = false;

@@ -1,5 +1,6 @@
 package com.fishyfinds.isa.service.termsService;
 
+import com.fishyfinds.isa.model.beans.LoyaltyProgram;
 import com.fishyfinds.isa.model.beans.offers.Offer;
 import com.fishyfinds.isa.model.beans.terms.CancelledReservation;
 import com.fishyfinds.isa.model.beans.terms.Reservation;
@@ -8,6 +9,7 @@ import com.fishyfinds.isa.model.beans.users.User;
 import com.fishyfinds.isa.model.beans.users.customers.Customer;
 import com.fishyfinds.isa.model.enums.ReservationStatus;
 import com.fishyfinds.isa.model.enums.ReservationType;
+import com.fishyfinds.isa.repository.LoyaltyProgramRepository;
 import com.fishyfinds.isa.repository.offersRepository.OfferRepository;
 import com.fishyfinds.isa.repository.termsRepository.CancelledReservationRepositoty;
 import com.fishyfinds.isa.repository.termsRepository.ReservationRepository;
@@ -46,6 +48,8 @@ public class ReservationService {
     private CancelledReservationRepositoty cancelledReservationRepositoty;
     @Autowired
     private CancelledReservationService cancelledReservationService;
+    @Autowired
+    private LoyaltyProgramRepository lRP;
 
     private final int MAX_NUM_OF_DAYS_BEFORE_CANCELLING = 3;
     /**
@@ -75,9 +79,20 @@ public class ReservationService {
                         Reservation reservation = new Reservation(startDate, endDate, customer, ReservationStatus.ACTIVE, ReservationType.DEFAULT,
                                 numberOfPeople, totalPrice, offer);
                         reservation.setDuration(duration);
+                        reservation.setDiscount(discount);
                         reservation.setAdditionalServices(message.get("additionalServices"));
                         reservationRepository.save(reservation);
                         updateTermsReservation(term.getId(), reservation);
+                        customer.setEarnedPoints(customer.getEarnedPoints() + 5);
+                        int earnedPoints = customer.getEarnedPoints();
+                        if(earnedPoints >= 50 && earnedPoints < 100){
+                            customer.setLoyaltyProgram(lRP.findById(2).orElse(null));
+                        }else if(earnedPoints >= 100 && earnedPoints < 500){
+                            customer.setLoyaltyProgram(lRP.findById(3).orElse(null));
+                        }else if(earnedPoints >= 500){
+                            customer.setLoyaltyProgram(lRP.findById(4).orElse(null));
+                        }
+                        customerRepository.save(customer);
                         mailService.sendSuccessfulReservationEmail(customer, reservation);
                         retVal = true;
                     }
@@ -130,6 +145,16 @@ public class ReservationService {
                         reservation.setCustomer(customer);
                         reservation.setReservationStatus(ReservationStatus.ACTIVE);
                         reservationRepository.save(reservation);
+                        customer.setEarnedPoints(customer.getEarnedPoints() + 5);
+                        int earnedPoints = customer.getEarnedPoints();
+                        if(earnedPoints >= 50 && earnedPoints < 100){
+                            customer.setLoyaltyProgram(lRP.findById(2).orElse(null));
+                        }else if(earnedPoints >= 100 && earnedPoints < 500){
+                            customer.setLoyaltyProgram(lRP.findById(3).orElse(null));
+                        }else if(earnedPoints >= 500){
+                            customer.setLoyaltyProgram(lRP.findById(4).orElse(null));
+                        }
+                        customerRepository.save(customer);
                         mailService.sendSuccessfulReservationEmail(customer, reservation);
                         retVal = true;
                     }else{

@@ -7,55 +7,58 @@ INSERT INTO authority values (5, 'ROLE_ADMIN');
 INSERT INTO authority values (6, 'ROLE_COMMON');
 --AUTHORITIES END--
 --LOCATIONS BEGIN--
-INSERT INTO location values (1, 'Forgotten town', 'Belgrade', 23.5, 44.5, '64', 4);
+INSERT INTO location values (1, 'Leptokaria', 'Greece', 23.5, 44.5, 'Portokalo', 4);
 --LOCATIONS END--
 --LOYALTY PROGRAM BEGIN--
-INSERT INTO loyalty_program values (1, 23.4, 'shark', 0,  40);
+INSERT INTO loyalty_program values (1, 0, 'Unborn Shark', 0,  0);
+INSERT INTO loyalty_program values (2, 20, 'Baby Shark', 0,  50);
+INSERT INTO loyalty_program values (3, 40, 'Parent Shark', 0,  100);
+INSERT INTO loyalty_program values (4, 60, 'Grandparent Shark', 0,  500);
 --LOYALTY PROGRAM END--
 --USERS BEGIN--
 -- User 1: - Customer -> UserType = 0
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (1, 'a', 'a', 'a', 'mail@mail.com', 'Papi', true, false, 'Papi', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 0, '');
-INSERT INTO customer values (45,0, 1, 1);
+	VALUES (1, 'Nikole Pasica 9', 'Novi Sad', 'Serbia', 'mail@mail.com', 'Miroslav', true, false, 'Bozidarovic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06234578', 0, '');
+INSERT INTO customer values (15,0, 1, 1);
 INSERT INTO public.penal(id, customer, number)
     VALUES(1, 1, 2);
 -- User 2,3: Bungalow owner -> UserType = 1git
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (2, 'a', 'a', 'a', 'zokaMagic@mail.com', 'Zorica', true, false, 'Markovic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 1, '');
+	VALUES (2, 'Zorana Radmilovica 6', 'Novi Sad', 'Serbia', 'zokaMagic@mail.com', 'Zorica', true, false, 'Randjelovic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06345678', 1, '');
 INSERT INTO bungalow_owner values ('I just want to drink rakia with my comrades',0, 2, 1);
 --
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (3, 'a', 'a', 'a', 'peterParker@mail.com', 'Peter', true, false, 'Parker', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 1, '');
+	VALUES (3, 'Boska Buhe 2', 'Novi Sad', 'Serbia', 'petarParkerovic@mail.com', 'Petar', true, false, 'Parkerovic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06145678', 1, '');
 INSERT INTO bungalow_owner values ('I just want to drink rakia with my comrades',0, 3, 1);
 
 -- User 4,5: Boat owner -> UserType = 2
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (4, 'a', 'a', 'a', 'zokiSumi@mail.com', 'Zoran', true, false, 'Sumadinac', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 2, '');
+	VALUES (4, 'Bulevar Oslobodjenja 4', 'Novi Sad', 'Serbia', 'zokiSumi@mail.com', 'Zoran', true, false, 'Sumadin', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06545678', 2, '');
 INSERT INTO boat_owner values ('200',0, 4, 1);
 --
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (5, 'a', 'a', 'a', 'superman@mail.com', 'Clark', true, false, 'Kent', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 2, '');
+	VALUES (5, 'Papa Pavla 4', 'Novi Sad', 'Serbia', 'pavlaPapa@mail.com', 'Pavle', true, false, 'Pap', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06745678', 2, '');
 INSERT INTO boat_owner values ('200',0, 5, 1);
 
 -- User 6,7 Instructor -> UserType = 3
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (6, 'a', 'a', 'a', 'vesnaVuki@mail.com', 'Vesna Vendi', true, false, 'Vukelic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 3, '');
+	VALUES (6, 'Kamenicki put 6a', 'Novi Sad', 'Serbia', 'vesnaVuki@mail.com', 'Vesna', true, false, 'Vukelic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06645699', 3, '');
 INSERT INTO instructor values ('This is healthy, and this is healthy ooooaaa','Hjaaaa hjaaaoooaaaaaa hjaaaa',0, 6, 1);
 
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (7, 'a', 'a', 'a', 'woderwoman@mail.com', 'Wunder', true, false, 'Wuman', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 3, '');
+	VALUES (7, 'Zmaj Jovina 15', 'Novi Sad', 'Serbia', 'woderwoman@mail.com', 'Zeljana', true, false, 'Cudesnic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06345111', 3, '');
 INSERT INTO instructor values ('This is healthy, and this is healthy ooooaaa','Hjaaaa hjaaaoooaaaaaa hjaaaa',0, 7, 1);
 
 INSERT INTO public.users(
 	id, address, city, country, email, first_name, is_activated, is_deleted, last_name, last_password_reset_date, number_of_log_ins, password, phone_number, user_type, verification_code)
-	VALUES (8, 'a', 'a', 'a', 'admin@admin.com', 'Papi', true, false, 'Papi', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '12345678', 4, '');
+	VALUES (8, 'Admina Adminovica 15', 'Admingrad', 'Adminia', 'admin@admin.com', 'Adam', true, false, 'Adminovic', '01-01-0001', 0, '$2a$10$S0qDDlMfhXUvj4bfwqtV9O2lEDkBPl1KEWl2MOtUtmSw9AdWO2VlG', '06445348', 4, '');
 
 --USERS END--
 
@@ -81,7 +84,7 @@ INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
 
 INSERT INTO public.offer(
     id, cancellation_policy, description, max_customer_capacity, offer_name, offer_type, rating, rules_of_conduct, unit_price, users, location)
-    values(3, 'No cancellation policies', 'Castle-like bungalow', 10, 'Fiona', 0, 5.0, 'No rules of conduct', 50.0, 3, 1);
+    values(3, 'No cancellation policies', 'Castle-like bungalow. No civilization in range of 15km', 10, 'Fiona', 0, 5.0, 'No rules of conduct', 50.0, 3, 1);
 INSERT INTO public.bungalow(number_of_beds, number_of_rooms, id)
     VALUES(10, 2, 3);
 
@@ -109,8 +112,10 @@ INSERT INTO additional_service(id, name, type) VALUES (7, 'Compass', 'NAVIGATION
 INSERT INTO additional_service(id, name, type) VALUES (8, 'Auto Pilot', 'NAVIGATIONAL_TOOL');
 
 INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(1,1);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(1,2);
 INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(2,2);
 INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(3,1);
+INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(4,4);
 INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(4,3);
 INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(5,3);
 INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(5,6);
@@ -119,11 +124,17 @@ INSERT INTO offer_additional_service(offer_id, additional_service_id) VALUES(5,6
 --TERMS START--
 -- TODO: Inserting terms...
 INSERT INTO public.term(id, start_date, end_date, offer, version)
-     values(1, '2022-06-06T10:00:00',  '2022-06-12T10:00:00' , 1, 1); -- Bungy Wumby
+     values(1, '2022-09-01T10:00:00',  '2022-12-01T10:00:00' , 1, 1);
 INSERT INTO public.term(id, start_date, end_date, offer, version)
-     values(2, '2022-07-06T10:00:00',  '2022-07-12T10:00:00' , 1, 1); -- Bungy Wumby
+     values(2, '2023-01-01T10:00:00',  '2023-04-01T10:00:00' , 1, 1);
 INSERT INTO public.term(id, start_date, end_date, offer, version)
-     values(3, '2022-09-01T10:00:00',  '2022-09-30T10:00:00' , 1, 1);
+     values(3, '2022-10-01T10:00:00',  '2022-12-30T10:00:00' , 2, 1);
+INSERT INTO public.term(id, start_date, end_date, offer, version)
+     values(4, '2022-10-01T10:00:00',  '2022-12-30T10:00:00' , 3, 1);
+INSERT INTO public.term(id, start_date, end_date, offer, version)
+     values(5, '2022-10-01T10:00:00',  '2022-12-30T10:00:00' , 4, 1);
+INSERT INTO public.term(id, start_date, end_date, offer, version)
+     values(6, '2022-09-05T10:00:00',  '2022-12-30T10:00:00' , 5, 1);
 --TERMS END--
 
 --RESERVATIONS START--
@@ -131,23 +142,23 @@ INSERT INTO public.term(id, start_date, end_date, offer, version)
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
     values(1, '2022-08-31T10:00:00',  '2022-09-01T10:00:00' , 0, 1, null,1,2,200, 0.0, false, false, 'Wi-Fi', 9, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,1,2,200, 0.0, false, false, 'Wi-Fi', 5, 1 );
+    values(2, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 0, 1,2,2,200, 0.0, false, false, 'Wi-Fi', 5, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,1,2,200, 25.0, false, false, 'Wi-Fi', 5, 1 );
+        values(3, '2022-07-09T10:00:00',  '2022-07-11T10:00:00' , 0, 1, null,3,2,200, 25.0, false, true, 'Wi-Fi', 5, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false, 'Wi-Fi', 5, 1 );
+        values(4, '2022-07-015T10:00:00',  '2022-07-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false, 'Nets', 5, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(5, '2022-08-015T10:00:00',  '2022-08-20T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false, 'Wi-Fi', 5, 1 );
+        values(5, '2022-08-015T10:00:00',  '2022-08-20T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, true, 'Wi-Fi', 5, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(6, '2022-05-015T10:00:00',  '2022-05-25T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false, 'Wi-Fi', 10, 1 );
+        values(6, '2022-05-015T10:00:00',  '2022-05-25T10:00:00' , 0, 0, 1,4,2,200, 0.0, true, false, 'Wi-Fi', 10, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(7, '2022-04-015T10:00:00',  '2022-04-25T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false, 'Wi-Fi', 10, 1 );
+        values(7, '2022-04-015T10:00:00',  '2022-04-25T10:00:00' , 0, 0, 1,5,2,200, 0.0, true, true, 'Wi-Fi', 10, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(8, '2022-09-015T10:00:00',  '2022-09-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, false, false, 'Wi-Fi', 5, 1 );
+        values(8, '2022-09-015T10:00:00',  '2022-09-20T10:00:00' , 0, 0, 1,4,2,200, 0.0, true, true, 'Wi-Fi', 5, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(9, '2022-09-025T10:00:00',  '2022-09-30T10:00:00' , 0, 0, 1,5,2,200, 0.0, false, false, 'Wi-Fi', 5, 1 );
+        values(9, '2022-09-025T10:00:00',  '2022-09-30T10:00:00' , 0, 0, 1,5,2,200, 0.0, true, false, 'Wi-Fi', 5, 1 );
 INSERT INTO public.reservation(id, start_date, end_date, reservation_status, reservation_type, customer, offer, number_of_people, total_price, discount, has_complaint, has_feedback, additional_services, duration, version)
-        values(10, '2022-10-10T10:00:00',  '2022-10-20T10:00:00' , 0, 1, null,1,2,250, 15.0, false, false, 'Wi-Fi', 10, 1 );
+        values(10, '2022-10-10T10:00:00',  '2022-10-20T10:00:00' , 0, 1, null,1,2,250, 15.0, true, true, 'Wi-Fi', 10, 1 );
 -- TODO: Inserting boatReservations... (reservation with 'captain' field)
 --INSERT INTO public.boat_reservation(id, captain) -- captain should be boatOwner (userId: 4 or 5)
  --  VALUES(2,4);

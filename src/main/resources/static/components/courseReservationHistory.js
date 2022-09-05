@@ -98,7 +98,7 @@ template: `
                 			<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="reservation in reservations">
                 				<div class="row g-0">
                 					<div class="col-md-4" style="text-align:center;">
-                						<img src="../images/bungalow-images/register-instructor.png" class="img-fluid rounded" style="margin:0 auto;"alt="Instructor">
+                						<img :src="reservation.path" class="img-fluid rounded" style="margin:0 auto;"alt="Instructor">
                 					</div>
                 					<div class="col-md-8">
                 						<div class="card-body">

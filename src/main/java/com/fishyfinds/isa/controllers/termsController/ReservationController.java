@@ -99,12 +99,16 @@ public class ReservationController {
             cancelledReservations = cancelledReservations.stream().filter(r ->{ return r.getOffer() != null && r.getOffer().getOfferType() == finalOft;}).collect(Collectors.toList());
             if(reservations != null){
                 for(Reservation r : reservations){
-                    retVal.add(new ReservationDto(r));
+                    ReservationDto d = new ReservationDto(r);
+                    d.setPath(r.getOffer().getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
+                    retVal.add(d);
                 }
             }
             if(cancelledReservations != null){
                 for(CancelledReservation r : cancelledReservations){
-                    retVal.add(new ReservationDto(r));
+                    ReservationDto d = new ReservationDto(r);
+                    d.setPath(r.getOffer().getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
+                    retVal.add(d);
                 }
             }
 

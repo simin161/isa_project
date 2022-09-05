@@ -45,6 +45,8 @@ public class ReservationDto {
 
     private Offer offer;
 
+    private String path;
+
     public ReservationDto() { }
 
     public ReservationDto(Reservation reservation) {

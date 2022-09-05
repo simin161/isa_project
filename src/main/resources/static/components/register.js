@@ -140,11 +140,7 @@ template: `
                 	                           'Please, try again later',
                 	                           'error')
                 	            }
-                	        }).catch(
-                	                Swal.fire('Ooops, something went wrong!',
-                                              'Please, try again later',
-                                              'error')
-                	        )
+                	        })
             }
             else{
                 console.log("Invalid password")

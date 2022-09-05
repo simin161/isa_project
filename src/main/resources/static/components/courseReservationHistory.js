@@ -168,8 +168,8 @@ template: `
                                 				<td><input type="text" placeholder="   Last name" disabled style="color: white"  class="input-text" v-model="courseToShow.user.lastName"/></td>
                                 			</tr><br>
                                 			<tr class="d-flex justify-content-evenly">
-                                				<td style="width: 100%"><input type="number" onKeyDown="return false" placeholder="   Rating for offer" class="input-text" v-model="feedback.rateForOffer"/></td>
-                                				<td style="width: 100%"><input type="number" onKeyDown="return false" placeholder="   Rating for owner" class="input-text" v-model="feedback.rateForOwner"/></td>
+                                				<td style="width: 100%"><input type="number" onKeyDown="return false" placeholder="   Rating for offer" min="1" max = "5" class="input-text" v-model="feedback.rateForOffer"/></td>
+                                				<td style="width: 100%"><input type="number" onKeyDown="return false" placeholder="   Rating for owner" min="1" max = "5" class="input-text" v-model="feedback.rateForOwner"/></td>
                                 			</tr> <br>
                                 				<tr><textarea rowspan="3" name="text" placeholder="   Feedback for offer" class="input-text-area" v-model="feedback.contentForOffer"></textarea></tr><br>
                                 				<tr><textarea rowspan="3" name="text" placeholder="   Feedback for owner" class="input-text-area" v-model="feedback.contentForOwner"></textarea></tr><br>
@@ -220,6 +220,25 @@ template: `
                 }
             },
             addFeedback : function(){
+                if(this.feedback.contentForOffer == "" && this.feedback.contentForOwner == "" && this.feedback.rateForOffer == null && this.feedback.rateForOwner == null){
+                                    Swal.fire(
+                                          'Fields are empty!',
+                                          'Please, fill the fields in order to send feedback!',
+                                          'error'
+                                          )
+                               }else if(this.feedback.rateForOffer != null && Number(this.feedback.rateForOffer) <= 0 || Number(this.feedback.rateForOffer > 5)){
+                                    Swal.fire(
+                                           'Invalid values for rate for offer!',
+                                           'Number must be from 1 to 5!',
+                                           'error'
+                                           )
+                               }else if(this.feedback.rateForOwner != null && Number(this.feedback.rateForOwner) <= 0 || Number(this.feedback.rateForOwner > 5)){
+                                     Swal.fire(
+                                           'Invalid values for rate for owner!',
+                                           'Number must be from 1 to 5!',
+                                           'error'
+                                     )
+                               }else{
                 axios.defaults.headers.common["Authorization"] =
                                     localStorage.getItem("user");
                 axios.post('/api/addFeedback', this.feedback)
@@ -242,7 +261,7 @@ template: `
                              )
                          }
                      })
-
+                }
             }
             ,
             search : function(){

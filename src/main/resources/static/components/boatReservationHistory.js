@@ -198,6 +198,25 @@ data: function(){
                 this.showPage = 2;
             },
             addFeedback : function(){
+            if(this.feedback.contentForOffer == "" && this.feedback.contentForOwner == "" && this.feedback.rateForOffer == null && this.feedback.rateForOwner == null){
+                                Swal.fire(
+                                      'Fields are empty!',
+                                      'Please, fill the fields in order to send feedback!',
+                                      'error'
+                                      )
+                           }else if(this.feedback.rateForOffer != null && Number(this.feedback.rateForOffer) <= 0 || Number(this.feedback.rateForOffer > 5)){
+                                Swal.fire(
+                                       'Invalid values for rate for offer!',
+                                       'Number must be from 1 to 5!',
+                                       'error'
+                                       )
+                           }else if(this.feedback.rateForOwner != null && Number(this.feedback.rateForOwner) <= 0 || Number(this.feedback.rateForOwner > 5)){
+                                 Swal.fire(
+                                       'Invalid values for rate for owner!',
+                                       'Number must be from 1 to 5!',
+                                       'error'
+                                 )
+                           }else{
                 axios.defaults.headers.common["Authorization"] =
                                     localStorage.getItem("user");
                 axios.post('/api/addFeedback', this.feedback)
@@ -220,7 +239,7 @@ data: function(){
                              )
                          }
                      })
-
+                }
             }
             ,
             search : function(){

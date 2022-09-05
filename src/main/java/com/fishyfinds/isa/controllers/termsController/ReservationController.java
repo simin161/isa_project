@@ -122,13 +122,22 @@ public class ReservationController {
     }
     @GetMapping("/upcomingReservationsForCustomer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Reservation> upcomingReservationsForCustomer(@RequestHeader HttpHeaders header){
+    public List<ReservationDto> upcomingReservationsForCustomer(@RequestHeader HttpHeaders header){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return reservationService.upcomingReservationsForCustomer(username);
+            List<Reservation> res = reservationService.upcomingReservationsForCustomer(username);
+            List<ReservationDto> retVal = new ArrayList<>();
+            if(res != null){
+                for(Reservation r : res){
+                    ReservationDto d = new ReservationDto(r);
+                    d.setPath(r.getOffer().getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
+                    retVal.add(d);
+                }
+            }
+            return retVal;
 
         }catch(Exception e){
             e.printStackTrace();
@@ -139,13 +148,22 @@ public class ReservationController {
 
     @GetMapping("/allPassedReservationsForCustomerWithoutDuplicatedOffers")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Reservation> allPassedReservationsForCustomerWithoutDuplicatedOffers(@RequestHeader HttpHeaders header){
+    public List<ReservationDto> allPassedReservationsForCustomerWithoutDuplicatedOffers(@RequestHeader HttpHeaders header){
         try {
             final String value =header.getFirst(HttpHeaders.AUTHORIZATION);
             final JSONObject obj = new JSONObject(value);
             String user = obj.getString("accessToken");
             String username = tokenUtils.getUsernameFromToken(user);
-            return reservationService.allPassedReservationsForCustomerWithoutDuplicatedOffers(username);
+            List<Reservation> res = reservationService.allPassedReservationsForCustomerWithoutDuplicatedOffers(username);
+            List<ReservationDto> retVal = new ArrayList<>();
+            if(res != null){
+                for(Reservation r : res){
+                    ReservationDto d = new ReservationDto(r);
+                    d.setPath(r.getOffer().getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
+                    retVal.add(d);
+                }
+            }
+            return retVal;
 
         }catch(Exception e){
             e.printStackTrace();
@@ -156,7 +174,16 @@ public class ReservationController {
 
     @PostMapping("/getActionsForOffer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Reservation> getActionsForOffer(@RequestBody Map<String, String> id){
-        return reservationService.getActionsForOffer(Long.valueOf(id.get("id")));
+    public List<ReservationDto> getActionsForOffer(@RequestBody Map<String, String> id){
+        List<Reservation> res = reservationService.getActionsForOffer(Long.valueOf(id.get("id")));
+        List<ReservationDto> retVal = new ArrayList<>();
+        if(res != null){
+            for(Reservation r : res){
+                ReservationDto d = new ReservationDto(r);
+                d.setPath(r.getOffer().getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
+                retVal.add(d);
+            }
+        }
+        return retVal;
     }
 }

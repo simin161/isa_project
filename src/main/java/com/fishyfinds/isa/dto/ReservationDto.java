@@ -52,7 +52,7 @@ public class ReservationDto {
         this.endDate = reservation.getEndDate();
         this.customer = reservation.getCustomer();
         this.reservationType = reservation.getReservationType();
-        this.reservationStatus = ReservationStatus.CANCELLED;
+        this.reservationStatus = reservation.getReservationStatus();
         this.numberOfPeople = reservation.getNumberOfPeople();
         this.totalPrice = reservation.getTotalPrice();
         this.offer = reservation.getOffer();

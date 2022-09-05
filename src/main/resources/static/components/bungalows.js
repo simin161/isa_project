@@ -143,6 +143,15 @@ Vue.component('bungalows', {
     					</div>
     				</div>
                 </div>
+                <div class="col-md-4 left-div overflow-auto" style="margin-top:-20px; margin-left: 22%; height:80vh" v-show="showPage == 3">
+                     <div class="container mt-5">
+                         <input class="confirm-profile" type="button" value="Back" style="width:20%; float:left; font-size:12px; background-color: #881A02" @click="showPage =1"/><br><br><br>
+                    	 <div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="i in bungalowToShow.offer.images">
+                    		<div class="row g-0">
+                    			<img :src="i.path"/>
+                    		</div>
+                    	 </div>
+                     </div>
             </div>
         </div>
     		`

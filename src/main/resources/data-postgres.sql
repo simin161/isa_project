@@ -174,6 +174,7 @@ INSERT INTO public.user_feedback(
 	VALUES (4, 'Nice offer1', 'Nice owner2', 4, 4, 1 , 6);
 --USER FEEDBACK END--
 
+-- IMAGE ITEMS --
 INSERT INTO public.image_item(
 	id, is_deleted, name, filepath)
 	VALUES (1, false, 'bungalow', '../images/bungalow-images/bung_1_0.jpg');
@@ -183,7 +184,25 @@ INSERT INTO public.image_item(
 INSERT INTO public.image_item(
     id, is_deleted, name, filepath)
     VALUES (3, false, 'bungalow2', '../images/bungalow-images/bung_2_1.jpg');
-
+INSERT INTO public.image_item(
+    id, is_deleted, name, filepath)
+    VALUES (4, false, 'boat', '../images/bungalow-images/boat_1_0.jpg');
+INSERT INTO public.image_item(
+    id, is_deleted, name, filepath)
+    VALUES (5, false, 'boat', '../images/bungalow-images/boat_1_1.jpg');
+INSERT INTO public.image_item(
+    id, is_deleted, name, filepath)
+    VALUES (6, false, 'boat', '../images/bungalow-images/boat_1_2.jpg');
+INSERT INTO public.image_item(
+    id, is_deleted, name, filepath)
+    VALUES (7, false, 'course', '../images/bungalow-images/course_1_0.jpg');
+INSERT INTO public.image_item(
+    id, is_deleted, name, filepath)
+    VALUES (8, false, 'course', '../images/bungalow-images/course_1_1.jpg');
+INSERT INTO public.image_item(
+    id, is_deleted, name, filepath)
+    VALUES (9, false, 'course', '../images/bungalow-images/course_1_2.jpg');
+-- IMAGE ITEMS END --
 INSERT INTO public.offer_images(
 	offer_id, images_id)
 	VALUES (1, 1);
@@ -193,6 +212,25 @@ INSERT INTO public.offer_images(
 INSERT INTO public.offer_images(
     offer_id, images_id)
     VALUES (2, 3);
+INSERT INTO public.offer_images(
+	offer_id, images_id)
+	VALUES (5, 4);
+INSERT INTO public.offer_images(
+	offer_id, images_id)
+	VALUES (5, 5);
+INSERT INTO public.offer_images(
+    offer_id, images_id)
+    VALUES (5, 6);
+INSERT INTO public.offer_images(
+	offer_id, images_id)
+	VALUES (4, 7);
+INSERT INTO public.offer_images(
+	offer_id, images_id)
+	VALUES (4, 8);
+INSERT INTO public.offer_images(
+    offer_id, images_id)
+    VALUES (4, 9);
+
 --USER AUTHORITIES BEGIN--
 INSERT INTO public.user_authority(
 	user_id, authority_id)

@@ -50,6 +50,7 @@ public class ReservationDto {
     public ReservationDto() { }
 
     public ReservationDto(Reservation reservation) {
+        this.id = reservation.getId();
         this.startDate = reservation.getStartDate();
         this.endDate = reservation.getEndDate();
         this.customer = reservation.getCustomer();
@@ -66,6 +67,7 @@ public class ReservationDto {
     }
 
     public ReservationDto(CancelledReservation reservation) {
+        this.id = reservation.getId();
         this.startDate = reservation.getStartDate();
         this.endDate = reservation.getEndDate();
         this.customer = reservation.getCustomer();

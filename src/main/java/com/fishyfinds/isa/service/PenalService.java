@@ -20,7 +20,7 @@ public class PenalService {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public Penal getPenalForUser(String username) {
         Customer customer = (Customer) userRepository.findByEmail(username);
         return penalRepository.findByCustomer(customer);
@@ -46,7 +46,7 @@ public class PenalService {
      * Method used for testing transactions -> called in PenalController
      * @param username -> customer email
      */
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void updateExistingPenal(String username, int number){
         Penal penal = getPenalForUser(username);
         penal.setNumber(penal.getNumber() + number);

@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
@@ -38,7 +39,13 @@ public class TermController {
         int duration = Integer.parseInt(message.get("duration"));
         LocalDateTime start = LocalDateTime.parse(message.get("start"));
         LocalDateTime end = start.plusDays(duration);
-        return termService.filterAvailableTerms(start, end, message.get("offerType"), Integer.parseInt(message.get("numberOfPeople")));
+        List<TermDTO> retVal =  termService.filterAvailableTerms(start, end, message.get("offerType"), Integer.parseInt(message.get("numberOfPeople")));
+        if(retVal != null) {
+            for (TermDTO d : retVal){
+                d.setPath(d.offer.getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
+            }
+        }
+        return retVal;
     }
 
     @GetMapping("/getTermsByOfferId/{offerId}")

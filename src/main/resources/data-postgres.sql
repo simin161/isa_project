@@ -202,6 +202,15 @@ INSERT INTO public.image_item(
 INSERT INTO public.image_item(
     id, is_deleted, name, filepath)
     VALUES (9, false, 'course', '../images/bungalow-images/course_1_2.jpg');
+INSERT INTO public.image_item(
+	id, is_deleted, name, filepath)
+	VALUES (10, false, 'bungalow3', '../images/bungalow-images/bung_3_0.jpg');
+INSERT INTO public.image_item(
+	id, is_deleted, name, filepath)
+	VALUES (11, false, 'bungalow3', '../images/bungalow-images/bung_3_1.jpg');
+INSERT INTO public.image_item(
+    id, is_deleted, name, filepath)
+    VALUES (12, false, 'bungalow3', '../images/bungalow-images/bung_3_2.jpg');
 -- IMAGE ITEMS END --
 INSERT INTO public.offer_images(
 	offer_id, images_id)
@@ -230,7 +239,15 @@ INSERT INTO public.offer_images(
 INSERT INTO public.offer_images(
     offer_id, images_id)
     VALUES (4, 9);
-
+INSERT INTO public.offer_images(
+	offer_id, images_id)
+	VALUES (3, 10);
+INSERT INTO public.offer_images(
+	offer_id, images_id)
+	VALUES (3, 11);
+INSERT INTO public.offer_images(
+    offer_id, images_id)
+    VALUES (3, 12);
 --USER AUTHORITIES BEGIN--
 INSERT INTO public.user_authority(
 	user_id, authority_id)

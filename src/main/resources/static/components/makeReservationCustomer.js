@@ -46,10 +46,10 @@ template: `
                                 <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{b.offer.offerName}}</h5>
                                 <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{b.offer.description}}</p>
                                 <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{b.offer.location.street}} {{b.offer.location.streetNumber}} {{b.offer.location.city}} {{b.offer.location.country}}</p>
-                                <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{b.offer.description}}</p>
+                                <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Cancellation policy: {{b.offer.cancellationPolicy}}</p>
+                                <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rules of conduct: {{b.offer.rulesOfConduct}}</p>
                                 <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{b.offer.unitPrice}}</p>
                                 <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{b.offer.rating}}</p>
-                                <button class="float-end btn btn-light"  style="margin-left: 5px;">Show more</button>
                                 <button class="float-end btn btn-light" @click="showMakeReservation(b)" style="margin-left: 5px;">Make reservation</button>
                             </div>
                         </div>

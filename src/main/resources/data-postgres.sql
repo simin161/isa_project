@@ -177,16 +177,16 @@ INSERT INTO public.user_feedback(
 -- IMAGE ITEMS --
 INSERT INTO public.image_item(
 	id, is_deleted, name, filepath)
-	VALUES (1, false, 'bungalow', '../images/bungalow-images/bung_1_0.jpg');
+	VALUES (1, false, 'first', '../images/bungalow-images/bung_1_0.jpg');
 INSERT INTO public.image_item(
 	id, is_deleted, name, filepath)
-	VALUES (2, false, 'bungalow2', '../images/bungalow-images/bung_2_0.jpg');
+	VALUES (2, false, 'first', '../images/bungalow-images/bung_2_0.jpg');
 INSERT INTO public.image_item(
     id, is_deleted, name, filepath)
     VALUES (3, false, 'bungalow2', '../images/bungalow-images/bung_2_1.jpg');
 INSERT INTO public.image_item(
     id, is_deleted, name, filepath)
-    VALUES (4, false, 'boat', '../images/bungalow-images/boat_1_0.jpg');
+    VALUES (4, false, 'first', '../images/bungalow-images/boat_1_0.jpg');
 INSERT INTO public.image_item(
     id, is_deleted, name, filepath)
     VALUES (5, false, 'boat', '../images/bungalow-images/boat_1_1.jpg');
@@ -195,7 +195,7 @@ INSERT INTO public.image_item(
     VALUES (6, false, 'boat', '../images/bungalow-images/boat_1_2.jpg');
 INSERT INTO public.image_item(
     id, is_deleted, name, filepath)
-    VALUES (7, false, 'course', '../images/bungalow-images/course_1_0.jpg');
+    VALUES (7, false, 'first', '../images/bungalow-images/course_1_0.jpg');
 INSERT INTO public.image_item(
     id, is_deleted, name, filepath)
     VALUES (8, false, 'course', '../images/bungalow-images/course_1_1.jpg');
@@ -204,7 +204,7 @@ INSERT INTO public.image_item(
     VALUES (9, false, 'course', '../images/bungalow-images/course_1_2.jpg');
 INSERT INTO public.image_item(
 	id, is_deleted, name, filepath)
-	VALUES (10, false, 'bungalow3', '../images/bungalow-images/bung_3_0.jpg');
+	VALUES (10, false, 'first', '../images/bungalow-images/bung_3_0.jpg');
 INSERT INTO public.image_item(
 	id, is_deleted, name, filepath)
 	VALUES (11, false, 'bungalow3', '../images/bungalow-images/bung_3_1.jpg');

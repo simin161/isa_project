@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api", produces= MediaType.APPLICATION_JSON_VALUE)
@@ -40,6 +41,7 @@ public class BoatController {
                 List<Subscriber> subscribers = subscriberService.getSubscriptionsByUser(username);
                 for(Boat b : boats){
                     OfferDTO dto = new OfferDTO();
+                    dto.setPath(b.getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
                     dto.setOffer(b);
                     for(Subscriber s : subscribers){
                         if(s.isRelevant() && s.getFollowing().getId().equals(b.getId())){
@@ -52,6 +54,7 @@ public class BoatController {
             else{
                 for(Boat b : boats){
                     OfferDTO dto = new OfferDTO();
+                    dto.setPath(b.getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
                     dto.setOffer(b);
                     retVal.add(dto);
                 }

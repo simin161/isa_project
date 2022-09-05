@@ -9,4 +9,5 @@ import lombok.Setter;
 public class OfferDTO {
     private Offer offer;
     private boolean isFollowed;
+    private String path;
 }

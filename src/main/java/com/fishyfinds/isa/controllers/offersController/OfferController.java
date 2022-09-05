@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,6 +60,7 @@ public class OfferController {
                 List<Subscriber> subscribers = subscriberService.getSubscriptionsByUser(username);
                 for(Offer b : offers){
                     OfferDTO dto = new OfferDTO();
+                    dto.setPath(b.getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
                     dto.setOffer(b);
                     for(Subscriber s : subscribers){
                         if(s.isRelevant() && s.getFollowing().getId().equals(b.getId())){
@@ -71,6 +73,7 @@ public class OfferController {
             else{
                 for(Offer b : offers){
                     OfferDTO dto = new OfferDTO();
+                    dto.setPath(b.getImages().stream().filter(i -> i.getName().equals("first")).collect(Collectors.toList()).get(0).getPath());
                     dto.setOffer(b);
                     retVal.add(dto);
                 }

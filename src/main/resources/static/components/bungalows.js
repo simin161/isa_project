@@ -61,7 +61,7 @@ Vue.component('bungalows', {
     					<div class="card mb-3" style="width: 96%; margin-left:2%; background-color:#225779;" v-for="b in bungalows">
     						<div class="row g-0">
     							<div class="col-md-4" style="text-align:center;">
-    								<img src="../images/bungalow-images/bungalow-1-out-1.jpg" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
+    								<img :src="b.path" class="img-fluid rounded" style="margin:0 auto;"alt="James Bond's Bungalow">
     							</div>
     							<div class="col-md-8">
     								<div class="card-body">

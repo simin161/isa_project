@@ -184,7 +184,7 @@ data: function(){
                              axios.defaults.headers.common["Authorization"] =
                                                                          localStorage.getItem("user");
                              axios.get("/api/allPassedReservationsForCustomerWithoutDuplicatedOffers")
-                                   .then((response) => {this.reservations = response.data; this.showPage = 0;})
+                                   .then((response) => {this.reservations = response.data; this.showPage = 0; this.copyOfReservations = response.data})
 
                          }else{
                              Swal.fire(

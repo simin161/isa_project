@@ -83,6 +83,7 @@ template: `
                           axios.get("/api/getSubscriptionsByUser")
                                .then(response => {
                                      this.offers = response.data;
+                                     this.copyOfOffers = response.data;
                                })
                           });
             },

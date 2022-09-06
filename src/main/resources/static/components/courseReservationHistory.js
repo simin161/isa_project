@@ -252,7 +252,7 @@ template: `
                               axios.defaults.headers.common["Authorization"] =
                                                  localStorage.getItem("user");
                                            axios.post("/api/historyOfReservationsForCustomer", {"offerType" : this.offerType})
-                                                .then((response) => {this.reservations = response.data; this.showPage = 0;})
+                                                .then((response) => {this.reservations = response.data; this.showPage = 0; this.copyOfReservations = response.data})
                          }else{
                              Swal.fire(
                                  'Ooops, something went wrong!',

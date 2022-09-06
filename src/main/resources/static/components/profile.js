@@ -193,7 +193,7 @@ template: `
                 return flag;
         },
         isCompletePassword () {
-                flag = /\S/.test(this.passwordDTO.newPassword) && /\S/.test(this.confirmPassword);
+                flag = /\S/.test(this.passwordDTO.newPassword) && /\S/.test(this.confirmPassword) && this.passwordDTO.newPassword.length >= 8 && /\S/.test(this.passwordDTO.oldPassword);
 
                 return flag;
         }

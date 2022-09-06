@@ -1,6 +1,9 @@
 Vue.component('actions', {
 data: function(){
     		return{
+    		    loggedUser: {
+                   userType:''
+                },
     			showPage: 0,
     			sortOption: "",
     			reservations:[],
@@ -52,7 +55,7 @@ data: function(){
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{reservation.totalPrice}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Discount: {{reservation.discount}}</p>
     									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-    									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="makeReservation(reservation)">Book!</button>
+    									<button v-show="loggedUser.userType == 'CUSTOMER'" class="float-end btn btn-light" style="margin-right:2.5%;" @click="makeReservation(reservation)">Book!</button>
     								</div>
     							</div>
     						</div>
@@ -184,7 +187,11 @@ data: function(){
             axios.defaults.headers.common["Authorization"] =
                                             localStorage.getItem("user");
             axios.post("/api/getActionsForOffer", {"id" : id})
-                 .then((response) => {this.reservations = response.data})
+                 .then((response) => {this.reservations = response.data;
+                  axios.defaults.headers.common["Authorization"] =
+                                                                  localStorage.getItem("user");
+                                             axios.get("/api/authenticateUser")
+                                                 .then(response => this.loggedUser = response.data);})
         }
 
 });

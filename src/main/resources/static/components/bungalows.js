@@ -86,7 +86,7 @@ Vue.component('bungalows', {
                             <input class="confirm-profile" type="button" value="Show terms" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showTerms(bungalowToShow.offer)"/>
                             <input class="confirm-profile" type="button" value="Show gallery" style="width:15%; float:left; margin-left: 8px; margin-right: 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 3"/>
                             <input class="confirm-profile" type="button" value="Show reviews" style="width:15%; float:left; margin-left 8px; font-size:12px; background-color: white; color: black;" @click="showReviews(bungalowToShow.offer.id)"/>
-                            <span v-show="loggedUser.userType === 'CUSTOMER'">
+                            <span >
                                 <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(bungalowToShow.offer.id)" value="Show actions"/>
                             </span>
                             <br><br><br>

@@ -94,6 +94,8 @@ public class RegistrationService {
             } catch (Exception e) {
                 successfullyRegistered = false;
             }
+        }else{
+            successfullyRegistered = false;
         }
         return successfullyRegistered;
     }

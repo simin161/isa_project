@@ -118,7 +118,8 @@ template: `
         		    /\S/.test(this.dto.country) &&
         		    /\S/.test(this.dto.email) &&
         		    /\S/.test(this.dto.password) &&
-        		    /\S/.test(this.confirmPassword);
+        		    /\S/.test(this.confirmPassword)
+        		    && this.dto.password.length >= 8;
 
         		    this.backgroundColor = flag ? "seagreen" : "#2e4f3c";
         		    this.cursorStyle = flag ? "pointer" : "default";
@@ -143,7 +144,9 @@ template: `
                 	        })
             }
             else{
-                console.log("Invalid password")
+                Swal.fire('Invalid password!',
+                                	                           '',
+                                	                           'error')
             }
         },
         registerCustomer : function(){

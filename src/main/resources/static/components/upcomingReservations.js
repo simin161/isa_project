@@ -103,13 +103,16 @@ data: function(){
     								<div class="card-body">
     								    <h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.startDate}} - {{reservation.endDate}}</h5>
     									<h5 class="card-title text-start mt-3" style="color:#fff;font-family:poppins-bold; font-size:15px;">{{reservation.offer.offerName}}</h5>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
-    									<p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Number of people: {{reservation.numberOfPeople}}</p>
+                                        <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">{{reservation.offer.description}}</p>
+                                        <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Number of people: {{reservation.numberOfPeople}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Unit price: {{reservation.offer.unitPrice}}</p>
+                                        <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Discount: {{reservation.discount}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Total price: {{reservation.totalPrice}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Duration: {{reservation.duration}}</p>
                                         <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rating: {{reservation.offer.rating}}</p>
-    									<button class="float-end btn btn-light" @click="showMore(reservation)">Show more</button>
+                                        <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Additional services: {{reservation.additionalServices}}</p>
+                                        <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Rules of conduct: {{reservation.offer.rulesOfConduct}}</p>
+                                        <p class="card-text line-clamp-2" style="color:#fff;font-family:poppins-light; font-size:12px;">Cancellation policy: {{reservation.offer.cancellationPolicy}}</p>
     									<button class="float-end btn btn-light" style="margin-right:2.5%;" @click="cancelReservation(reservation)">Cancel reservation</button>
     								</div>
     							</div>

@@ -87,7 +87,7 @@ data: function(){
     						<input type="button" class="confirm-profile" @click="showTerms(boatToShow.offer)" style="width:15%; margin-left: 8px; float:left; font-size:12px; background-color: white; color: black;" value="Show terms"/>
                             <input class="confirm-profile" type="button" value="Show gallery" style="width:15%; float:left; margin-left: 8px; margin-right: 8px; font-size:12px; background-color: white; color: black;" @click="showPage = 3"/>
                             <input class="confirm-profile" type="button" value="Show reviews" style="width:15%; float:left; margin-left 8px; font-size:12px; background-color: white; color: black;" @click="showReviews(boatToShow.offer.id)"/>
-                            <span v-show="loggedUser.userType === 'CUSTOMER'">
+                            <span>
                                  <input class="confirm-profile" type="button" style="width:15%; float:left; margin-left: 8px; font-size:12px; background-color: white; color: black;" @click="showActions(boatToShow.offer.id)" value="Show actions"/>
                             </span>
                             <br><br><br>

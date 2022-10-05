@@ -1,0 +1,144 @@
+.title-text-bold{
+    margin: 10px 0 10px 0;
+    font-family: poppins-bold; 
+    font-size: 24px; 
+    align-items: center; 
+    text-align: center; 
+    color: #FFFFFF;
+}
+.title-text-light{
+    margin: 10px 0 10px 0;
+    font-family: poppins-light;  
+    font-size: 24px; 
+    align-items: center; 
+    text-align: center; 
+    color: #FFFFFF;
+}
+
+.left-div{
+/* Rectangle 8 */
+
+    position: absolute;
+    padding: 0 0 10px 0;
+    width: 45%;
+    max-width: 45%;
+    top: 20%;
+    left:5%;
+    border: 5px solid #225779;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.right-div{
+    /* Rectangle 7 */
+
+    position: absolute;
+    padding: 0 0 10px 0;
+    width: 45%;
+    max-width: 45%;
+    top: 20%;
+    left: 50%;
+    border: 5px solid #225779;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+}
+
+.info-text-profile{
+    width: 90%;
+    height: 36px;
+    margin-top: 3%;
+    margin-left: 5%;
+    font-size: 18px;
+    font-family: poppins-bold;
+    color: white;
+    background: #225779;
+    border-radius: 5px;
+}
+.info-text-profile-small{
+    width: 42.5%;
+    height: 36px;
+    margin-top: 3%;
+    margin-left: 5%;
+    font-size: 18px;
+    font-family: poppins-bold;
+    float: left;
+    color: white;
+    background: #225779;
+    border-radius: 5px;
+}
+
+.update-text-profile{
+    width: 100%;
+    height: 36px;
+    
+    margin-top: 3%;
+    font-size: 18px;
+    font-family: poppins-bold;
+    color: white;
+    background: #225779;
+    border-radius: 5px;
+}
+
+.confirm-profile{
+    width: 100%;
+    height: 40px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 42px;
+    letter-spacing: -0.017em;
+    color: #FFFFFF;
+    background: #28A745;
+    border-radius: 5px;
+}
+
+.center-text-button{
+    line-height: 0;
+}
+
+.options-3-horizontal{
+    width: 30%;
+    margin-top: 5%;
+    position: relative;
+    background: #225779;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.options-4-horizontal{
+    width: 22.5%;
+    margin-top: 5%;
+    position: relative;
+    background: #225779;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+
+.image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: auto;
+    max-width: 96px;
+    max-height: 96px;
+}
+
+
+
+.button-options{
+    width: 100%;
+    height: 25px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.017em;
+    color: #FFFFFF;
+    background: #1b4560;
+    border-radius: 3px;
+}
